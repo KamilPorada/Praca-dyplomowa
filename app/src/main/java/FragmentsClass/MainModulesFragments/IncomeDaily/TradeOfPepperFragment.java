@@ -1,5 +1,10 @@
 package FragmentsClass.MainModulesFragments.IncomeDaily;
 
+import static OthersClass.ToolClass.checkValidateData;
+import static OthersClass.ToolClass.checkValidateYear;
+import static OthersClass.ToolClass.getActualYear;
+
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.database.Cursor;
@@ -17,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,26 +33,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pracadyplomowa.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
-import OthersClass.InformationDialog;
-import OthersClass.ShowAttention;
 import FragmentsClass.MainModulesFragments.IncomeDaily.TradeOfPepperViewsClasses.TradePepperAdapter;
 import FragmentsClass.MainModulesFragments.IncomeDaily.TradeOfPepperViewsClasses.TradePepperItem;
+import OthersClass.InformationDialog;
+import OthersClass.ShowAttention;
+import OthersClass.ToolClass;
 
 
 public class TradeOfPepperFragment extends Fragment {
 
     //----------------------PRIMARY VIEWS----------------------------//
     private Context context;
-    private  ArrayList<TradePepperItem> TradePepperList = new ArrayList<>();
+    private final ArrayList<TradePepperItem> TradePepperList = new ArrayList<>();
     private RecyclerView recyclerView;
-    private TradePepperAdapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
 
     //----------------------ADD ITEM WINDOWS VIEWS----------------------------//
+    private TextView title;
     private RadioGroup colorRadioGroup, vatRadioGroup, classRadioGroup;
     private RadioButton redColor, yellowColor, greenColor, orangeColor, blondColor,
                         zeroPercent, sevenPercent,
@@ -54,22 +61,19 @@ public class TradeOfPepperFragment extends Fragment {
     private EditText howPrice, howWeight, howDate, howPlace;
     private Button cancelButton, acceptButton;
 
-    //----------------------EDIT ITEM WINDOWS VIEWS----------------------------//
-    private RadioGroup colorRadioGroupp, vatRadioGroupp, classRadioGroupp;
-    private RadioButton redColorr, yellowColorr, greenColorr, orangeColorr, blondColorr,
-            zeroPercentt, sevenPercentt,
-            firstClasss, secondClasss, cuttingClasss;
-    private EditText howPricee, howWeightt, howDatee, howPlacee;
-    private Button cancelButtonn, updateButtonn;
+    //----------------------ADD ITEM WINDOWS VIEWS----------------------------//
+    private Button canButton, delButton;
 
     //----------------------EXTRA VARIABLES----------------------------//
     private String color;
     private int vat;
     private String clas;
+    private boolean isEditable=false;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        assert container != null;
         context=container.getContext();
         View view = inflater.inflate(R.layout.layout_trade_of_pepper,container,false);
         findViews(view);
@@ -91,107 +95,7 @@ public class TradeOfPepperFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    private void findViews(View view) {
-        recyclerView=view.findViewById(R.id.recycler_view);
-    }
-    private void startSettings() {
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(context);
-        adapter = new TradePepperAdapter(TradePepperList);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
-
-        adapter.setOnItemClickListener(new TradePepperAdapter.OnItemClickListener() {
-            @Override
-            public void onUpdateClick(int position) {
-                openEditItemDialog(position);
-            }
-
-            @Override
-            public void onDeleteClick(int position) {
-                DataBaseHelper db = new DataBaseHelper(context);
-                Cursor cursor = db.getItemID(DataBaseNames.TradeOfPepperItem.TABLE_NAME,DataBaseNames.TradeOfPepperItem._ID,
-                        DataBaseNames.TradeOfPepperItem.COLUMN_DATA_PASWORD,TradePepperList.get(position).getIDataPassword());
-                int id=0;
-                while (cursor.moveToNext())
-                {
-                    id=cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseNames.TradeOfPepperItem._ID));
-                }
-                db.deleteItem(DataBaseNames.TradeOfPepperItem.TABLE_NAME,id);
-                Fragment fragment = new TradeOfPepperFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
-                loadData();
-            }
-        });
-    }
-
-    private void loadData() {
-        DataBaseHelper dbHelper = new DataBaseHelper(context);
-        Cursor k =dbHelper.getTradeOfPepperItems();
-        int im = 0;
-        while(k.moveToNext())
-        {
-            String color=k.getString(1);
-            int vat=k.getInt(2);
-            String clas=k.getString(3);
-            double price=k.getDouble(4);
-            double weight=k.getDouble(5);
-            String date=k.getString(6);
-            String place=k.getString(7);
-            String key=k.getString(8);
-
-            switch (color)
-            {
-                case "czerwona":
-                {
-                    im=R.drawable.image_red_pepper;
-                }break;
-                case "żółta":
-                {
-                    im=R.drawable.image_yellow_pepper;
-                }break;
-                case "zielona":
-                {
-                    im=R.drawable.image_green_pepper;
-                }break;
-                case "pomarańczowa":
-                {
-                    im=R.drawable.image_orange_pepper;
-                }break;
-                case "blondyna":
-                {
-                    im=R.drawable.image_blond_pepper;
-                }break;
-            }
-            double totalSum=calculateTotalSum(price,vat,weight);
-            String stringTotalSum=String.format("%.2f", Math.round(totalSum * 100.0) / 100.0);
-
-            int year = getYear(date);
-            Date calendar = new Date();
-            if((calendar.getYear()+1900==year))
-                TradePepperList.add(new TradePepperItem(im,date,clas,price,weight,stringTotalSum, place,key));
-        }
-    }
-
-    private double calculateTotalSum(double price, double vat, double weight) {
-        if (vat==0)
-        {
-            return price*weight;
-        }
-        else
-        {
-            return price*((vat/100)+1)*weight;
-        }
-    }
-
-    private int getYear(String date) {
-        char[] charDate = date.toCharArray();
-        String stringYear = Character.toString(charDate[6]) + Character.toString(charDate[7]) +
-                Character.toString(charDate[8]) + Character.toString(charDate[9]);
-        int year = Integer.parseInt(stringYear);
-        return year;
-    }
-
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id=item.getItemId();
@@ -210,8 +114,33 @@ public class TradeOfPepperFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    private void findViews(View view) {
+        recyclerView=view.findViewById(R.id.recycler_view);
+    }
+
+    private void startSettings() {
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
+        TradePepperAdapter adapter = new TradePepperAdapter(TradePepperList);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new TradePepperAdapter.OnItemClickListener() {
+            @Override
+            public void onUpdateClick(int position) {
+                openEditItemDialog(position);
+            }
+
+            @Override
+            public void onDeleteClick(int position) {
+                openDialogQuestion(position);
+            }
+        });
+    }
+
     // ------------------------ADD ITEM WINDOW EVENTS---------------------------//
 
+    @SuppressLint("SetTextI18n")
     private void openAddItemWindow() {
         Dialog addItemWindow = new Dialog(context);
         addItemWindow.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
@@ -219,10 +148,13 @@ public class TradeOfPepperFragment extends Fragment {
         addItemWindow.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         addItemWindow.show();
         findAddItemDialogViews(addItemWindow);
-        createAndAddListeners(addItemWindow);
+        title.setText("Nowa sprzedaż");
+        isEditable=false;
+        createAndAddListeners(addItemWindow, 0);
     }
 
     private void findAddItemDialogViews(Dialog addItemWindow) {
+        title=addItemWindow.findViewById(R.id.title);
         colorRadioGroup=addItemWindow.findViewById(R.id.color_radio_group);
         vatRadioGroup=addItemWindow.findViewById(R.id.vat_radio_group);
         classRadioGroup=addItemWindow.findViewById(R.id.class_radio_group);
@@ -244,292 +176,225 @@ public class TradeOfPepperFragment extends Fragment {
         cuttingClass=addItemWindow.findViewById(R.id.cutting_class);
     }
 
-    private void createAndAddListeners(Dialog addItemWindow) {
-        colorRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId)
+    @SuppressLint("NonConstantResourceId")
+    private void createAndAddListeners(Dialog addItemWindow, int position) {
+        colorRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId)
+            {
+                case R.id.red_color:
                 {
-                    case R.id.red_color:
-                    {
-                        color="czerwona";
-                    }break;
-                    case R.id.yellow_color:
-                    {
-                        color="żółta";
-                    }break;
-                    case R.id.green_color:
-                    {
-                        color="zielona";
-                    }break;
-                    case R.id.orange_color:
-                    {
-                        color="pomarańczowa";
-                    }break;
-                    case R.id.blond_color:
-                    {
-                        color="blondyna";
-                    }break;
-                }
+                    color="czerwona";
+                }break;
+                case R.id.yellow_color:
+                {
+                    color="żółta";
+                }break;
+                case R.id.green_color:
+                {
+                    color="zielona";
+                }break;
+                case R.id.orange_color:
+                {
+                    color="pomarańczowa";
+                }break;
+                case R.id.blond_color:
+                {
+                    color="blondyna";
+                }break;
             }
         });
 
-        vatRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId)
+        vatRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId)
+            {
+                case R.id.zero_percent:
                 {
-                    case R.id.zero_percent:
-                    {
-                        vat=0;
-                    }break;
-                    case R.id.seven_percent:
-                    {
-                        vat=7;
-                    }break;
-                }
+                    vat=0;
+                }break;
+                case R.id.seven_percent:
+                {
+                    vat=7;
+                }break;
             }
         });
 
-        classRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId)
+        classRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId)
+            {
+                case R.id.first_class:
                 {
-                    case R.id.first_class:
-                    {
-                        clas="1";
-                    }break;
-                    case R.id.second_class:
-                    {
-                        clas="2";
-                    }break;
-                    case R.id.cutting_class:
-                    {
-                        clas="krojona";
-                    }break;
-                }
+                    clas="1";
+                }break;
+                case R.id.second_class:
+                {
+                    clas="2";
+                }break;
+                case R.id.cutting_class:
+                {
+                    clas="krojona";
+                }break;
             }
         });
 
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int id=v.getId();
-                switch (id)
+        View.OnClickListener listener = v -> {
+            int id=v.getId();
+            switch (id)
+            {
+                case R.id.accept_button:
                 {
-                    case R.id.accept_button:
-                    {
-                        validateData();
-                        addItemWindow.dismiss();
-                    }break;
-                    case R.id.cancel_button:
-                    {
-                        addItemWindow.dismiss();
-                    }break;
-                }
+                    validateData(position);
+                    addItemWindow.dismiss();
+                }break;
+                case R.id.cancel_button:
+                {
+                    addItemWindow.dismiss();
+                }break;
             }
         };
         acceptButton.setOnClickListener(listener);
         cancelButton.setOnClickListener(listener);
     }
 
-    private void validateData() {
-        boolean validateColor=false;
-        boolean validateVat=false;
-        boolean validateClass=false;
-        boolean validatePrice=false;
-        boolean validateWeight=false;
-        boolean validateDate=false;
-        boolean validatePlace=false;
+    private void validateData(int position) {
+        boolean validateColor, validateVat, validateClass;
+        boolean validatePrice;
+        boolean validateWeight;
+        boolean validateDate;
+        boolean validatePlace;
+        ShowAttention showAttention = new ShowAttention();
 
-        if(!redColor.isChecked() && !yellowColor.isChecked() && !greenColor.isChecked() &&
-                !orangeColor.isChecked() && !blondColor.isChecked())
-            validateColor=false;
-        else
-            validateColor=true;
-        if(!zeroPercent.isChecked() && !sevenPercent.isChecked())
-            validateVat=false;
-        else
-            validateVat=true;
-        if(!firstClass.isChecked() && !secondClass.isChecked() && !cuttingClass.isChecked())
-            validateClass=false;
-        else
-            validateClass=true;
-        if(String.valueOf(howPrice.getText().toString()).compareTo("")==0)
-            validatePrice=false;
-        else
-            validatePrice=true;
-        if(String.valueOf(howWeight.getText().toString()).compareTo("")==0)
-            validateWeight=false;
-        else
-            validateWeight=true;
-        if(String.valueOf(howDate.getText().toString()).compareTo("")==0 )
-            validateDate=false;
-        else
-            validateDate=true;
-        if(String.valueOf(howPlace.getText().toString()).compareTo("")==0)
-            validatePlace=false;
-        else
-            validatePlace=true;
+        validateColor= redColor.isChecked() || yellowColor.isChecked() || greenColor.isChecked() ||
+                orangeColor.isChecked() || blondColor.isChecked();
+        validateVat= zeroPercent.isChecked() || sevenPercent.isChecked();
+        validateClass= firstClass.isChecked() || secondClass.isChecked() || cuttingClass.isChecked();
+        validatePrice= howPrice.getText().toString().compareTo("") != 0;
+        validateWeight= howWeight.getText().toString().compareTo("") != 0;
+        validateDate= howDate.getText().toString().compareTo("") != 0;
+        validatePlace= howPlace.getText().toString().compareTo("") != 0;
 
         String date=howDate.getText().toString();
         if(validateColor && validateVat &&  validateClass && validatePrice &&
                 validateWeight && validateDate && validatePlace) {
-            checkValidateData(date);
+            if(checkValidateData(date))
+                if(checkValidateYear(date))
+                    if(isEditable)
+                        updateData(position);
+                    else
+                        addItemToDataBase();
+                else
+                    showAttention.showToast(R.layout.toast_layout,null, requireActivity(),context,"Podaj poprawny rok!\nMamy aktualnie "+getActualYear()+" rok!");
+            else
+                showAttention.showToast(R.layout.toast_layout, null, requireActivity(), context, "Zły format daty!\n[dd.mm.rrrr]");
         }
         else
-        {
-            ShowAttention showAttention = new ShowAttention();
-            showAttention.showToast(R.layout.toast_layout,null,getActivity(),context,"Uzupełnij wszystkie pola!");
-        }
+            showAttention.showToast(R.layout.toast_layout,null, requireActivity(),context,"Uzupełnij wszystkie pola!");
     }
 
-    private void checkValidateData(String date) {
-        ShowAttention showAttention = new ShowAttention();
-        boolean validateDay=false;
-        boolean validateMonth=false;
-        boolean validateDotts=false;
 
-
-        if(date.length()<10)
-            showAttention.showToast(R.layout.toast_layout,null,getActivity(),context,"Zły format daty!\n[dd.mm.rrrr]");
-        else {
-
-            char[] charDate = date.toCharArray();
-            String stringDay = Character.toString(charDate[0]) + Character.toString(charDate[1]);
-            String firstDots = Character.toString(charDate[2]);
-            String stringMonth = Character.toString(charDate[3]) + Character.toString(charDate[4]);
-            String secondDots = Character.toString(charDate[5]);
-            String stringYear = Character.toString(charDate[6]) + Character.toString(charDate[7]) +
-                    Character.toString(charDate[8]) + Character.toString(charDate[9]);
-
-            int day = Integer.parseInt(stringDay);
-            int month = Integer.parseInt(stringMonth);
-            int year = Integer.parseInt(stringYear);
-
-
-            if (day > 0 && day < 32)
-                validateDay = true;
-            else
-                validateDay = false;
-            if (month > 0 && month < 13)
-                validateMonth = true;
-            else
-                validateMonth = false;
-            if (firstDots.compareTo(".") == 0 && secondDots.compareTo(".") == 0)
-                validateDotts = true;
-            else
-                validateDotts = false;
-
-
-            if (validateDay && validateMonth && validateDotts) {
-                checkValidateYear(year);
-            }
-            else {
-                showAttention.showToast(R.layout.toast_layout, null, getActivity(), context, "Zły format daty!\n[dd.mm.rrrr]");
-            }
-        }
-
-    }
-
-    private void checkValidateYear(int year) {
-        Date date = new Date();
-        int actualYear=date.getYear()+1900;
-        if(year!=actualYear)
-        {
-            ShowAttention showAttention = new ShowAttention();
-            showAttention.showToast(R.layout.toast_layout,null,getActivity(),context,"Podaj poprawny rok!\nMamy aktualnie "+actualYear+" rok!");
-        }
-        else
-            addItemToDataBase();
-    }
-
+    @SuppressLint("DefaultLocale")
     private void addItemToDataBase() {
-        double price=0;
-        double weight=0;
-        String date="";
-        String place="";
-        String key="";
+        double price;
+        double weight;
+        double totalSum;
+        String date;
+        String place;
+        String key;
+        int image;
 
         price=Double.parseDouble(howPrice.getText().toString());
         weight=Double.parseDouble(howWeight.getText().toString());
         date=howDate.getText().toString();
         place=howPlace.getText().toString();
+        totalSum=calculateTotalSum(price,vat,weight);
+        image=ToolClass.getDrawable(color);
 
-        Date calendar = new Date();
-        key=String.valueOf(calendar.getDate())+String.valueOf(calendar.getMonth()+1)+String.valueOf(calendar.getYear()+1900)+
-                String.valueOf(calendar.getHours()+2)+String.valueOf(calendar.getMinutes())+String.valueOf(calendar.getSeconds());
+        Date d = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(d);
+        calendar.get(Calendar.YEAR);
+
+        key= calendar.get(Calendar.DATE) +String.valueOf(calendar.get(Calendar.MONTH)+1)+ calendar.get(Calendar.YEAR) +
+                calendar.get(Calendar.HOUR-1) + calendar.get(Calendar.MINUTE) + calendar.get(Calendar.SECOND);
 
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
-        dataBaseHelper.addTradeOfPepperItem(color,vat,clas,price,weight,date,place,key);
+        dataBaseHelper.addTradeOfPepperItem(color,vat,clas,price,weight,totalSum,date,place,image,key);
 
         Fragment fragment = new TradeOfPepperFragment();
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
         loadData();
+    }
+
+    private double calculateTotalSum(double price, double vat, double weight) {
+        if (vat==0)
+            return price*weight;
+        else
+            return price*((vat/100)+1)*weight;
+    }
+
+    private void loadData() {
+        DataBaseHelper dbHelper = new DataBaseHelper(context);
+        Cursor k =dbHelper.getTradeOfPepperItems();
+        while(k.moveToNext())
+        {
+            String clas=k.getString(k.getColumnIndexOrThrow(DataBaseNames.TradeOfPepperItem.COLUMN_CLASS_OF_PEPPER));
+            double price=k.getDouble(k.getColumnIndexOrThrow(DataBaseNames.TradeOfPepperItem.COLUMN_PRICE_OF_PEPPER));
+            double weight=k.getDouble(k.getColumnIndexOrThrow(DataBaseNames.TradeOfPepperItem.COLUMN_WEIGHT_OF_PEPPER));
+            double sum=k.getDouble(k.getColumnIndexOrThrow(DataBaseNames.TradeOfPepperItem.COLUMN_TOTAL_SUM));
+            String date=k.getString(k.getColumnIndexOrThrow(DataBaseNames.TradeOfPepperItem.COLUMN_DATE));
+            String place=k.getString(k.getColumnIndexOrThrow(DataBaseNames.TradeOfPepperItem.COLUMN_PLACE));
+            int image=k.getInt(k.getColumnIndexOrThrow(DataBaseNames.TradeOfPepperItem.COLUMN_IMAGE));
+            String key=k.getString(k.getColumnIndexOrThrow(DataBaseNames.TradeOfPepperItem.COLUMN_DATA_PASWORD));
+            @SuppressLint("DefaultLocale") String totalSum=String.format("%.2f", Math.round(sum * 100.0) / 100.0);
+
+            if(getActualYear()==ToolClass.getYear(date))
+                TradePepperList.add(new TradePepperItem(image,date,clas,price,weight,totalSum, place,key));
+        }
     }
 
     // ------------------------EDIT ITEM WINDOW EVENTS---------------------------//
 
+    @SuppressLint("SetTextI18n")
     private void openEditItemDialog(int position) {
-        Dialog editItemDialog = new Dialog(context);
-        editItemDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
-        editItemDialog.setContentView(R.layout.dialog_upadate_or_remove_trade_of_pepper);
-        editItemDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        editItemDialog.show();
-        findEditItemDialogviews(editItemDialog,position);
+        Dialog editItemWindow = new Dialog(context);
+        editItemWindow.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
+        editItemWindow.setContentView(R.layout.dialog_add_trade_of_pepper);
+        editItemWindow.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        editItemWindow.show();
+        findAddItemDialogViews(editItemWindow);
+        title.setText("Edycja sprzedaży");
+        isEditable=true;
         setData(position);
-        createAndAddListeners(editItemDialog, position);
+        createAndAddListeners(editItemWindow,position);
     }
 
-    private void findEditItemDialogviews(Dialog editItemDialog, int position) {
-        colorRadioGroupp=editItemDialog.findViewById(R.id.color_radio_group);
-        vatRadioGroupp=editItemDialog.findViewById(R.id.vat_radio_group);
-        classRadioGroupp=editItemDialog.findViewById(R.id.class_radio_group);
-        howPricee=editItemDialog.findViewById(R.id.how_price);
-        howWeightt=editItemDialog.findViewById(R.id.how_weight);
-        howDatee=editItemDialog.findViewById(R.id.how_date);
-        howPlacee=editItemDialog.findViewById(R.id.how_place);
-        cancelButtonn=editItemDialog.findViewById(R.id.cancel_button);
-        updateButtonn=editItemDialog.findViewById(R.id.update_button);
-        redColorr=editItemDialog.findViewById(R.id.red_color);
-        yellowColorr=editItemDialog.findViewById(R.id.yellow_color);
-        greenColorr=editItemDialog.findViewById(R.id.green_color);
-        orangeColorr=editItemDialog.findViewById(R.id.orange_color);
-        blondColorr=editItemDialog.findViewById(R.id.blond_color);
-        zeroPercentt=editItemDialog.findViewById(R.id.zero_percent);
-        sevenPercentt=editItemDialog.findViewById(R.id.seven_percent);
-        firstClasss=editItemDialog.findViewById(R.id.first_class);
-        secondClasss=editItemDialog.findViewById(R.id.second_class);
-        cuttingClasss=editItemDialog.findViewById(R.id.cutting_class);
-    }
 
+    @SuppressLint("NonConstantResourceId")
     private void setData(int position) {
         switch (TradePepperList.get(position).getIPepperImage())
         {
             case R.drawable.image_red_pepper:
             {
-                redColorr.setChecked(true);
+                redColor.setChecked(true);
                 color="czerwona";
             }break;
             case R.drawable.image_yellow_pepper:
             {
-                yellowColorr.setChecked(true);
+                yellowColor.setChecked(true);
                 color="żółta";
             }break;
             case R.drawable.image_green_pepper:
             {
-                greenColorr.setChecked(true);
+                greenColor.setChecked(true);
                 color="zielona";
             }break;
             case R.drawable.image_orange_pepper:
             {
-                orangeColorr.setChecked(true);
+                orangeColor.setChecked(true);
                 color="pomarańczowa";
             }break;
             case R.drawable.image_blond_pepper:
             {
-                blondColorr.setChecked(true);
+                blondColor.setChecked(true);
                 color="blondyna";
             }break;
         }
@@ -537,204 +402,97 @@ public class TradeOfPepperFragment extends Fragment {
         {
             case "1":
             {
-                firstClasss.setChecked(true);
+                firstClass.setChecked(true);
                 clas="1";
             }break;
             case "2":
             {
-                secondClasss.setChecked(true);
+                secondClass.setChecked(true);
                 clas="2";
             }break;
             case "krojona":
             {
-                cuttingClasss.setChecked(true);
+                cuttingClass.setChecked(true);
                 clas="krojona";
             }break;
         }
         double sum=TradePepperList.get(position).getIPrice()*1.07*TradePepperList.get(position).getIweight();
-        String stringSum=String.format("%.2f", Math.round(sum * 100.0) / 100.0);
+        @SuppressLint("DefaultLocale") String stringSum=String.format("%.2f", Math.round(sum * 100.0) / 100.0);
         if(TradePepperList.get(position).getITotalSum().compareTo(stringSum)==0) {
-            sevenPercentt.setChecked(true);
+            sevenPercent.setChecked(true);
             vat=7;
         }
         else {
-            zeroPercentt.setChecked(true);
+            zeroPercent.setChecked(true);
             vat=0;
         }
 
-        howPlacee.setText(TradePepperList.get(position).getIPlace());
-        howPricee.setText(String.valueOf(TradePepperList.get(position).getIPrice()));
-        howWeightt.setText(String.valueOf(TradePepperList.get(position).getIweight()));
-        howDatee.setText(TradePepperList.get(position).getIDate());
-
+        howPlace.setText(TradePepperList.get(position).getIPlace());
+        howPrice.setText(String.valueOf(TradePepperList.get(position).getIPrice()));
+        howWeight.setText(String.valueOf(TradePepperList.get(position).getIweight()));
+        howDate.setText(TradePepperList.get(position).getIDate());
     }
-
-    private void createAndAddListeners(Dialog editItemDialog, int position)
-    {
-        colorRadioGroupp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId)
-                {
-                    case R.id.red_color:
-                    {
-                        color="czerwona";
-                    }break;
-                    case R.id.yellow_color:
-                    {
-                        color="żółta";
-                    }break;
-                    case R.id.green_color:
-                    {
-                        color="zielona";
-                    }break;
-                    case R.id.orange_color:
-                    {
-                        color="pomarańczowa";
-                    }break;
-                    case R.id.blond_color:
-                    {
-                        color="blondyna";
-                    }break;
-                }
-            }
-        });
-
-        vatRadioGroupp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId)
-                {
-                    case R.id.zero_percent:
-                    {
-                        vat=0;
-                    }break;
-                    case R.id.seven_percent:
-                    {
-                        vat=7;
-                    }break;
-                }
-            }
-        });
-
-        classRadioGroupp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId)
-                {
-                    case R.id.first_class:
-                    {
-                        clas="1";
-                    }break;
-                    case R.id.second_class:
-                    {
-                        clas="2";
-                    }break;
-                    case R.id.cutting_class:
-                    {
-                        clas="krojona";
-                    }break;
-                }
-            }
-        });
-
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int id=v.getId();
-                switch (id)
-                {
-                    case R.id.cancel_button:
-                    {
-                        editItemDialog.dismiss();
-                    }break;
-                    case R.id.update_button:
-                    {
-                        updateData(position);
-                        editItemDialog.dismiss();
-                    }break;
-                }
-            }
-        };
-        cancelButtonn.setOnClickListener(listener);
-        updateButtonn.setOnClickListener(listener);
-
-    }
-
-    private boolean validateUpdateDialogData()
-    {
-        ShowAttention showAttention = new ShowAttention();
-        String date=howDatee.getText().toString();
-        boolean validateDay=false;
-        boolean validateMonth=false;
-        boolean validateDotts=false;
-
-        if(howPricee.getText().toString().compareTo("")==0 || howWeightt.getText().toString().compareTo("")==0 ||
-                howDatee.getText().toString().compareTo("")==0 || howPlacee.getText().toString().compareTo("")==0)
-        {
-            showAttention.showToast(R.layout.toast_layout,null,getActivity(),context,"Uzupełnij wszystkie pola!");
-            return false;
-        }
-        else {
-            if (date.length() < 10) {
-                showAttention.showToast(R.layout.toast_layout, null, getActivity(), context, "Zły format daty!\n[dd.mm.rrrr]");
-                return false;
-            } else {
-
-                char[] charDate = date.toCharArray();
-                String stringDay = Character.toString(charDate[0]) + Character.toString(charDate[1]);
-                String firstDots = Character.toString(charDate[2]);
-                String stringMonth = Character.toString(charDate[3]) + Character.toString(charDate[4]);
-                String secondDots = Character.toString(charDate[5]);
-                String stringYear = Character.toString(charDate[6]) + Character.toString(charDate[7]) +
-                        Character.toString(charDate[8]) + Character.toString(charDate[9]);
-
-                int day = Integer.parseInt(stringDay);
-                int month = Integer.parseInt(stringMonth);
-                int year = Integer.parseInt(stringYear);
-
-
-                if (day > 0 && day < 32)
-                    validateDay = true;
-                else
-                    validateDay = false;
-                if (month > 0 && month < 13)
-                    validateMonth = true;
-                else
-                    validateMonth = false;
-                if (firstDots.compareTo(".") == 0 && secondDots.compareTo(".") == 0)
-                    validateDotts = true;
-                else
-                    validateDotts = false;
-
-
-                if (validateDay && validateMonth && validateDotts) {
-                    Date calendar = new Date();
-                    int actualYear = calendar.getYear() + 1900;
-                    if (year != actualYear) {
-                        showAttention.showToast(R.layout.toast_layout, null, getActivity(), context, "Podaj poprawny rok!\nMamy aktualnie " + actualYear + " rok!");
-                        return false;
-                    } else
-                        return true;
-                } else {
-                    showAttention.showToast(R.layout.toast_layout, null, getActivity(), context, "Zły format daty!\n[dd.mm.rrrr]");
-                    return false;
-                }
-            }
-        }
-    }
-
 
     private void updateData(int position) {
-        if(validateUpdateDialogData()) {
             DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+            double sum = calculateTotalSum(Double.parseDouble(howPrice.getText().toString()),vat,Double.parseDouble(howWeight.getText().toString()));
             dataBaseHelper.updateTradeOfTradeOfPepperItems(TradePepperList.get(position).getIDataPassword(),
-                    color, vat, clas, Double.parseDouble(howPricee.getText().toString()), Double.parseDouble(howWeightt.getText().toString()),
-                    howDatee.getText().toString(), howPlacee.getText().toString());
+                     color, vat, clas, Double.parseDouble(howPrice.getText().toString()), Double.parseDouble(howWeight.getText().toString()), sum,
+                    howDate.getText().toString(),ToolClass.getDrawable(color), howPlace.getText().toString());
             Fragment fragment = new TradeOfPepperFragment();
-            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
             loadData();
-        }
     }
 
+    // ------------------------DELETE ITEM WINDOW EVENTS---------------------------//
+
+    private void openDialogQuestion(int position) {
+        Dialog questionWindow = new Dialog(context);
+        questionWindow.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
+        questionWindow.setContentView(R.layout.dialog_question);
+        questionWindow.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        questionWindow.show();
+        findQuestionDialogViews(questionWindow);
+        createAndAddListener(questionWindow, position);
+    }
+
+    private void findQuestionDialogViews(Dialog questionWindow) {
+        canButton=questionWindow.findViewById(R.id.cancel_button);
+        delButton=questionWindow.findViewById(R.id.delete_button);
+    }
+
+    private void createAndAddListener(Dialog questionWindow, int position) {
+        @SuppressLint("NonConstantResourceId") View.OnClickListener listener = v -> {
+            int id=v.getId();
+            switch (id)
+            {
+                case R.id.cancel_button:
+                {
+                    questionWindow.dismiss();
+                }break;
+                case R.id.delete_button:
+                {
+                    deleteItem(position);
+                    questionWindow.dismiss();
+                }break;
+            }
+        };
+        canButton.setOnClickListener(listener);
+        delButton.setOnClickListener(listener);
+    }
+
+    private void deleteItem(int position) {
+        DataBaseHelper db = new DataBaseHelper(context);
+        Cursor cursor = db.getItemID(DataBaseNames.TradeOfPepperItem.TABLE_NAME,DataBaseNames.TradeOfPepperItem._ID,
+                DataBaseNames.TradeOfPepperItem.COLUMN_DATA_PASWORD,TradePepperList.get(position).getIDataPassword());
+        int id=0;
+        while (cursor.moveToNext())
+        {
+            id=cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseNames.TradeOfPepperItem._ID));
+        }
+        db.deleteItem(DataBaseNames.TradeOfPepperItem.TABLE_NAME,id);
+        Fragment fragment = new TradeOfPepperFragment();
+        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+        loadData();
+    }
 }

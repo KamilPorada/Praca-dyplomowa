@@ -26,8 +26,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 DataBaseNames.TradeOfPepperItem.COLUMN_CLASS_OF_PEPPER + " TEXT NOT NULL," +
                 DataBaseNames.TradeOfPepperItem.COLUMN_PRICE_OF_PEPPER + " REAL NOT NULL," +
                 DataBaseNames.TradeOfPepperItem.COLUMN_WEIGHT_OF_PEPPER + " REAL NOT NULL," +
+                DataBaseNames.TradeOfPepperItem.COLUMN_TOTAL_SUM + " REAL NOT NULL," +
                 DataBaseNames.TradeOfPepperItem.COLUMN_DATE + " TEXT NOT NULL," +
                 DataBaseNames.TradeOfPepperItem.COLUMN_PLACE + " TEXT NOT NULL," +
+                DataBaseNames.TradeOfPepperItem.COLUMN_IMAGE + " INTEGER NOT NULL," +
                 DataBaseNames.TradeOfPepperItem.COLUMN_DATA_PASWORD + " TEXT NOT NULL" +
                 ");";
 
@@ -56,8 +58,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     //----------------------------TRADE_OF_PEPPER SQLITE QUERIES-------------------------------//
 
-    public void addTradeOfPepperItem(String color, int vat, String clas, double price, double weight,
-                                     String date, String place, String dataPassword) {
+    public void addTradeOfPepperItem(String color, int vat, String clas, double price, double weight, double sum,
+                                     String date, String place, int image, String dataPassword) {
         SQLiteDatabase db=getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(DataBaseNames.TradeOfPepperItem.COLUMN_COLOR_OF_PEPPER, color);
@@ -65,15 +67,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(DataBaseNames.TradeOfPepperItem.COLUMN_CLASS_OF_PEPPER, clas);
         values.put(DataBaseNames.TradeOfPepperItem.COLUMN_PRICE_OF_PEPPER, price);
         values.put(DataBaseNames.TradeOfPepperItem.COLUMN_WEIGHT_OF_PEPPER, weight);
+        values.put(DataBaseNames.TradeOfPepperItem.COLUMN_TOTAL_SUM, sum);
         values.put(DataBaseNames.TradeOfPepperItem.COLUMN_DATE, date);
         values.put(DataBaseNames.TradeOfPepperItem.COLUMN_PLACE, place);
+        values.put(DataBaseNames.TradeOfPepperItem.COLUMN_IMAGE, image);
         values.put(DataBaseNames.TradeOfPepperItem.COLUMN_DATA_PASWORD, dataPassword);
 
         db.insertOrThrow(DataBaseNames.TradeOfPepperItem.TABLE_NAME,null,values);
     }
     public void updateTradeOfTradeOfPepperItems(String passwordKey, String color, int vat,
-                                                String clas, double price, double weight,
-                                                String date, String place) {
+                                                String clas, double price, double weight, double sum,
+                                                String date, int image, String place) {
         SQLiteDatabase db =getWritableDatabase();
         ContentValues values =new ContentValues();
         values.put(DataBaseNames.TradeOfPepperItem.COLUMN_COLOR_OF_PEPPER,color);
@@ -81,10 +85,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(DataBaseNames.TradeOfPepperItem.COLUMN_CLASS_OF_PEPPER,clas);
         values.put(DataBaseNames.TradeOfPepperItem.COLUMN_PRICE_OF_PEPPER,price);
         values.put(DataBaseNames.TradeOfPepperItem.COLUMN_WEIGHT_OF_PEPPER,weight);
+        values.put(DataBaseNames.TradeOfPepperItem.COLUMN_TOTAL_SUM,sum);
         values.put(DataBaseNames.TradeOfPepperItem.COLUMN_DATE,date);
+        values.put(DataBaseNames.TradeOfPepperItem.COLUMN_IMAGE,image);
         values.put(DataBaseNames.TradeOfPepperItem.COLUMN_PLACE,place);
 
-        String args[]={passwordKey+""};
+        String[] args ={passwordKey+""};
         db.update(DataBaseNames.TradeOfPepperItem.TABLE_NAME,values,"dataPassword=?",args);
     }
 
@@ -92,11 +98,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String[] columns={DataBaseNames.TradeOfPepperItem._ID, DataBaseNames.TradeOfPepperItem.COLUMN_COLOR_OF_PEPPER,
                           DataBaseNames.TradeOfPepperItem.COLUMN_VAT, DataBaseNames.TradeOfPepperItem.COLUMN_CLASS_OF_PEPPER,
                           DataBaseNames.TradeOfPepperItem.COLUMN_PRICE_OF_PEPPER, DataBaseNames.TradeOfPepperItem.COLUMN_WEIGHT_OF_PEPPER,
-                          DataBaseNames.TradeOfPepperItem.COLUMN_DATE, DataBaseNames.TradeOfPepperItem.COLUMN_PLACE,
+                          DataBaseNames.TradeOfPepperItem.COLUMN_TOTAL_SUM,DataBaseNames.TradeOfPepperItem.COLUMN_DATE,
+                          DataBaseNames.TradeOfPepperItem.COLUMN_PLACE,DataBaseNames.TradeOfPepperItem.COLUMN_IMAGE,
                           DataBaseNames.TradeOfPepperItem.COLUMN_DATA_PASWORD};
         SQLiteDatabase db =getReadableDatabase();
-        Cursor kursor = db.query(DataBaseNames.TradeOfPepperItem.TABLE_NAME,columns, null,null,null,null,null);
-        return kursor;
+        return db.query(DataBaseNames.TradeOfPepperItem.TABLE_NAME,columns, null,null,null,null,null);
     }
 
     //-----------------------------OUTGOINGS SQLITE QUERIES---------------------------------//
@@ -118,8 +124,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                           DataBaseNames.OutgoingsItem.COLUMN_PRICE_OF_OUTGOING, DataBaseNames.OutgoingsItem.COLUMN_DESCRIBE_OF_OUTGOING,
                           DataBaseNames.OutgoingsItem.COLUMN_DATA_PASWORD};
         SQLiteDatabase db =getReadableDatabase();
-        Cursor kursor = db.query(DataBaseNames.OutgoingsItem.TABLE_NAME,columns, null,null,null,null,null);
-        return kursor;
+        return db.query(DataBaseNames.OutgoingsItem.TABLE_NAME,columns, null,null,null,null,null);
     }
     public void updateOutgoingItems(String passwordKey, String category,String describe, double price, String date) {
         SQLiteDatabase db =getWritableDatabase();
