@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navCalculator"
+            android:icon="@drawable/image_empty_calculator"
+            android:title="Kalkulatory ogrodnicze" />
+        <item
+            android:id="@+id/navIncomeNotes"
+            android:icon="@drawable/image_empty_money"
+            android:title="Dziennik dochodów" />
+        <item
+            android:id="@+id/navOperations"
+            android:icon="@drawable/image_empty_sprayer"
+            android:title="Zabiegi pielęgnacyjne" />
+        <item
+            android:id="@+id/navNotes"
+            android:icon="@drawable/image_empty_notes"
+            android:title="Notatki farmera" />
+        <item
+            android:id="@+id/navImportantPlaces"
+            android:icon="@drawable/image_empty_map"
+            android:title="Ważne miejsca" />
+        <item
+            android:id="@+id/navClock"
+            android:icon="@drawable/image_empty_clock"
+            android:title="Budzik farmera" />
+    </group>
+</menu>

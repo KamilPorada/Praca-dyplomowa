@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottom_farm"
+        android:icon="@drawable/image_farm"
+        android:title="Gospodarstwo" />
+    <item
+        android:id="@+id/bottom_home"
+        android:icon="@drawable/image_home"
+        android:title="Strona główna" />
+    <item
+        android:id="@+id/bottom_application"
+        android:icon="@drawable/image_telephone"
+        android:title="O aplikacji" />
+</menu>

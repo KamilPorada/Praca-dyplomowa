@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">E-Paprykarz</string>
+    <string name="navigation_drawer_open">Otwórz menu boczne</string>
+    <string name="navigation_drawer_close">Zamknij menu boczne</string>
+    <string name="application_describes">E-Paprykarz to aplikacja mobilna stworzona z myślą o plantatorach z Potworowskiego Zagłębia Paprykowego. Aplikacja pozwoli usprawnić pracę każdego ogrodnika, który zajmuje się uprawą tego jakże cenionego warzywa. Posiada ona szereg funkcji między innymi specjalistyczne kalkulatory ogrodnicze, dziennik dochodów a także  możliwość zaplanowania zabiegu pielęgnacyjnego oraz wiele wiele innych funkcjonalności, które pomogą w wykonywaniu codziennych czynności w gospodarstwie!\nAplikacja została wykonana w ramach pracy inżynierskiej\nRadom 2022</string>
+    <string name="describes_home">Witaj w aplikacji E-Paprykarz!\nPrzed tobą menu główne, wciśniej jeden z kafelków aby poznać kolejne funkcjonalności aplikacji!</string>
+    <string name="describes_farm">Przed tobą podstawowe dane gospodarstwa, którym zarządzasz. Możesz edytować te dane korzystając z ikonki edycji na pasku górnym. Okno dialogowe umożliwia edycję imienia i nazwiska właściciela, liczby tuneli foliowych czy powierzchnię gospodarstwa.Niestety nie możemy edytować pola stan konta gospodarstwa, to będzie obliczane na podstawie rzeczywistych dochodów obliczonych w Dzienniku dochodów :)</string>
+    <string name="describes_about_application">Jak sama nazwa wskazuje tutaj dowiesz się co tak naprawdę wykonuje aplikacja, którą pobrałeś!</string>
+    <string name="describes_calculators">Aplikacja oferuje 3 kalkulatory dzięki, którym będziesz mógł obliczyć powierzchnie działki, którą być może niedawno kupiłeś, obliczyć dokładne proporcję pestycydu oraz wody, za pomocą, których wykonasz potem zabieg ochronny czy wreszcie kalkulator sadzonek który pozwoli obliczyć dokładną ilość sadzonek papryki w każnej folii.</string>
+    <string name="describes_calculator_of_field">Kalkulator pola powierzchni działki to jeden z kalkulatorów, który oferuje nasza aplikacja. Podaj, co ważne w metrach, długość oraz szerokość działki, po czym wybierz jednostkę, w której chcesz otrzymać wynik!</string>
+    <string name="describes_calculator_of_plants">Kalkulator sadzonek to ostatni już z kalkulatorów, który stworzył twórca aplikacji. Wybierz wymiary folii oraz używając suwaka odległość sadzonki od sadzonki. Algorytm obliczy ile potrzebujesz rozsady do każdego tunelu foliowego.</string>
+    <string name="describes_income_daily">Bardzo ważną częścią życia każdego farmera jest zarabianie pieniędzy. Aplikacja pozowoli zapanować ci nad przepływem gotówki w twoim gospodarstwie. Będziesz mógł zapisywać każdą transakcję sprzedaży plonów oraz wszelkie wydatki. Klikając w ostatni z przycisków otrzymasz zwięzły bilans zysków i strat oraz wszelkie statystyki, które pomogą ci w wyciąganiu pewnych wniosków!</string>
+    <string name="opis_finalnych_zalecen">Rozmiary tunelu foliowego: 0m x 0m\nIlość redlanek w tunelu foliowym: 0\nIlość sadzonek w każdej redlance: 0\nIlość sadzonek w tunelu foliowym: 0</string>
+    <string-array name="colors">
+        <item>Czerwona</item>
+        <item>Żółta</item>
+        <item>Zielona</item>
+        <item>Blondyna</item>
+        <item>Pomarańczowa</item>
+    </string-array>
+</resources>

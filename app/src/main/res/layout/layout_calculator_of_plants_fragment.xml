@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_calculator_of_field_fragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="55dp"
+        android:layout_marginBottom="70dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/crete_round"
+            android:text="Kalkulator sadzonek"
+            android:textAlignment="center"
+            android:textColor="@color/blackToWhite"
+            android:textSize="22dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/radio_group"/>
+
+        <RadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintBottom_toTopOf="@id/how_distance"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:gravity="center"
+            >
+
+            <RadioButton
+                android:id="@+id/standard_highgroves"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/image_standard_highgroves"
+                android:buttonTint="@color/blackToWhite"
+                android:background="@drawable/shape_radio_button"
+                android:layout_margin="10dp"
+                />
+            <RadioButton
+                android:id="@+id/bigger_highgroves"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/image_bigger_highgroves"
+                android:buttonTint="@color/blackToWhite"
+                android:background="@drawable/shape_radio_button"
+                android:layout_margin="10dp"/>
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/how_distance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/crete_round"
+            android:text="Odległość sadzonki od sadzonki\n30cm"
+            android:textAlignment="center"
+            android:textColor="@color/blackToWhite"
+            android:textSize="22dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/radio_group"
+            app:layout_constraintBottom_toTopOf="@id/change_distance"
+            />
+
+        <SeekBar
+            android:id="@+id/change_distance"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            app:layout_constraintTop_toBottomOf="@id/how_distance"
+            app:layout_constraintBottom_toTopOf="@id/calculate_plants"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:min="30"
+            android:max="45"
+            android:progress="30"
+            android:thumb="@drawable/image_thumb_pepper"
+            android:progressDrawable="@drawable/shape_line_seekbar"
+            />
+
+        <Button
+            android:id="@+id/reset_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/change_distance"
+            app:layout_constraintBottom_toTopOf="@id/result_layout"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/calculate_plants"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/shape_button"
+            android:text="Reset"
+            android:textSize="20dp"
+            android:textColor="@color/white"/>
+        <Button
+            android:id="@+id/calculate_plants"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/change_distance"
+            app:layout_constraintBottom_toTopOf="@id/result_layout"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/reset_data"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/shape_button"
+            android:text="Oblicz"
+            android:textSize="20dp"
+            android:textColor="@color/white"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/result_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/calculate_plants"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_margin="5dp"
+            android:background="@drawable/shape_farm_icons">
+
+
+            <TextView
+                android:id="@+id/title_of_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/crete_round"
+                android:text="Finalne zalecenia"
+                android:textAlignment="center"
+                android:textColor="@color/blackToWhite"
+                android:textSize="28dp"
+                app:layout_constraintBottom_toTopOf="@id/description"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rajdhani"
+                android:text="@string/opis_finalnych_zalecen"
+                android:textAlignment="center"
+                android:textColor="@color/blackToWhite"
+                android:textSize="18dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title_of_result"
+                app:layout_constraintBottom_toTopOf="@id/final_answer"/>
+
+            <TextView
+                android:id="@+id/final_answer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/crete_round"
+                android:text="0"
+                android:textAlignment="center"
+                android:textColor="@color/blackToWhite"
+                android:textSize="28dp"
+                app:layout_constraintTop_toBottomOf="@id/description"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/image"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/final_answer"
+                app:layout_constraintTop_toBottomOf="@id/description"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/image_plant"
+                app:tint="@color/blackToWhite" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

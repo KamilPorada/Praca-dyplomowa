@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_gravity="center"
+    android:layout_width="350dp"
+    android:layout_height="500dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/shape_bottom_dialog">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/shape_top_dialog"
+        >
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="Zmiana danych"
+            android:textSize="25dp"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            />
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/icon_edit"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <EditText
+        android:id="@+id/edit_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/top"
+        app:layout_constraintBottom_toTopOf="@id/edit_highgroves"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="Imię i nazwisko właściciela"
+        android:textColor="@color/mainColor"
+        android:inputType="text"
+        android:drawableTint="@color/blackToWhite"
+        android:drawableStart="@drawable/image_small_farm"
+        android:drawablePadding="20dp"
+        android:textSize="18dp"
+        android:background="@drawable/shape_edit_text"
+        />
+    <EditText
+        android:id="@+id/edit_highgroves"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/edit_name"
+        app:layout_constraintBottom_toTopOf="@id/edit_field"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="Ilość tuneli foliowych"
+        android:textColor="@color/mainColor"
+        android:inputType="number"
+        android:drawableTint="@color/blackToWhite"
+        android:drawableStart="@drawable/image_small_highgrove"
+        android:drawablePadding="20dp"
+        android:textSize="18dp"
+        android:background="@drawable/shape_edit_text"
+        />
+    <EditText
+        android:id="@+id/edit_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/edit_highgroves"
+        app:layout_constraintBottom_toTopOf="@id/accept_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="Powierzchnia gospodarstwa"
+        android:textColor="@color/mainColor"
+        android:inputType="numberDecimal"
+        android:drawableTint="@color/blackToWhite"
+        android:drawableStart="@drawable/image_small_field"
+        android:drawablePadding="20dp"
+        android:textSize="18dp"
+        android:background="@drawable/shape_edit_text"
+        />
+
+    <Button
+        android:id="@+id/cancel_button"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/accept_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="15dp"
+        android:text="ANULUJ"
+        android:textColor="@color/white"
+        android:background="@drawable/shape_button"/>
+    <Button
+        android:id="@+id/accept_button"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/cancel_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="15dp"
+        android:text="ZATWIERDŹ"
+        android:textColor="@color/white"
+        android:background="@drawable/shape_button"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="55dp"
+    android:layout_marginBottom="70dp">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textAlignment="center"
+        android:layout_marginTop="10dp"
+        android:textSize="35dp"
+        android:fontFamily="@font/crete_round"
+        android:textColor="@color/blackToWhite"
+        android:text="Wydatki\nw liczbach"
+        />
+
+
+    <TableLayout
+        android:id="@+id/data_frame"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintBottom_toTopOf="@id/btn_outgoings_in_chart"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:layout_margin="40dp">
+        <TableRow>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Konstrukcje tuneli [zł]"
+                android:textColor="@android:color/white"
+                android:padding="5sp"
+                android:textSize="16sp"
+                android:layout_weight="7"
+                android:gravity="center_horizontal"
+                android:background="@color/mainColor"
+                />
+            <TextView
+                android:id="@+id/highroves"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="0.00 zł"
+                android:textColor="@color/blackToWhite"
+                android:padding="5sp"
+                android:textSize="16sp"
+                android:layout_weight="3"
+                android:gravity="center_horizontal"
+                android:background="@color/whiteToDarkGrey"
+                />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Folie ogrodnicze [zł]"
+                android:textColor="@android:color/white"
+                android:padding="5sp"
+                android:textSize="16sp"
+                android:layout_weight="7"
+                android:gravity="center_horizontal"
+                android:background="@color/mainColor"
+                />
+            <TextView
+                android:id="@+id/foils"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="0.00 zł"
+                android:textColor="@color/blackToWhite"
+                android:padding="5sp"
+                android:textSize="16sp"
+                android:layout_weight="3"
+                android:gravity="center_horizontal"
+                android:background="@color/whiteToDarkGrey"
+                />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Hydraulika w tunelach [zł]"
+                android:textColor="@android:color/white"
+                android:padding="5sp"
+                android:textSize="16sp"
+                android:layout_weight="7"
+                android:gravity="center_horizontal"
+                android:background="@color/mainColor"
+                />
+            <TextView
+                android:id="@+id/water"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="0.00 zł"
+                android:textColor="@color/blackToWhite"
+                android:padding="5sp"
+                android:textSize="16sp"
+                android:layout_weight="3"
+                android:gravity="center_horizontal"
+                android:background="@color/whiteToDarkGrey"
+                />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Paliki do tuneli [zł]"
+                android:textColor="@android:color/white"
+                android:padding="5sp"
+                android:textSize="16sp"
+                android:layout_weight="7"
+                android:gravity="center_horizontal"
+                android:background="@color/mainColor"
+                />
+            <TextView
+                android:id="@+id/sticks"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="0.00 zł"
+                android:textColor="@color/blackToWhite"
+                android:padding="5sp"
+                android:textSize="16sp"
+                android:layout_weight="3"
+                android:gravity="center_horizontal"
+                android:background="@color/whiteToDarkGrey"
+                />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Nasiona papryki [zł]"
+                android:textColor="@android:color/white"
+                android:padding="5sp"
+                android:textSize="16sp"
+                android:layout_weight="7"
+                android:gravity="center_horizontal"
+                android:background="@color/mainColor"
+                />
+            <TextView
+                android:id="@+id/seeds"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="0.00 zł"
+                android:textColor="@color/blackToWhite"
+                android:padding="5sp"
+                android:textSize="16sp"
+                android:layout_weight="3"
+                android:gravity="center_horizontal"
+                android:background="@color/whiteToDarkGrey"
+                />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Sadzonki papryki [zł]"
+                android:textColor="@android:color/white"
+                android:padding="5sp"
+                android:textSize="16sp"
+                android:layout_weight="7"
+                android:gravity="center_horizontal"
+                android:background="@color/mainColor"
+                />
+            <TextView
+                android:id="@+id/plants"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="0.00 zł"
+                android:textColor="@color/blackToWhite"
+                android:padding="5sp"
+                android:textSize="16sp"
+                android:layout_weight="3"
+                android:gravity="center_horizontal"
+                android:background="@color/whiteToDarkGrey"
+                />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Pestycydy [zł]"
+                android:textColor="@android:color/white"
+                android:padding="5sp"
+                android:textSize="16sp"
+                android:layout_weight="7"
+                android:gravity="center_horizontal"
+                android:background="@color/mainColor"
+                />
+            <TextView
+                android:id="@+id/pesticides"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="0.00 zł"
+                android:textColor="@color/blackToWhite"
+                android:padding="5sp"
+                android:textSize="16sp"
+                android:layout_weight="3"
+                android:gravity="center_horizontal"
+                android:background="@color/whiteToDarkGrey"
+                />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Nawozy [zł]"
+                android:textColor="@android:color/white"
+                android:padding="5sp"
+                android:textSize="16sp"
+                android:layout_weight="7"
+                android:gravity="center_horizontal"
+                android:background="@color/mainColor"
+                />
+            <TextView
+                android:id="@+id/fertilizers"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="0.00 zł"
+                android:textColor="@color/blackToWhite"
+                android:padding="5sp"
+                android:textSize="16sp"
+                android:layout_weight="3"
+                android:gravity="center_horizontal"
+                android:background="@color/whiteToDarkGrey"
+                />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Maszyny rolnicze [zł]"
+                android:textColor="@android:color/white"
+                android:padding="5sp"
+                android:textSize="16sp"
+                android:layout_weight="7"
+                android:gravity="center_horizontal"
+                android:background="@color/mainColor"
+                />
+            <TextView
+                android:id="@+id/machines"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="0.00 zł"
+                android:textColor="@color/blackToWhite"
+                android:padding="5sp"
+                android:textSize="16sp"
+                android:layout_weight="3"
+                android:gravity="center_horizontal"
+                android:background="@color/whiteToDarkGrey"
+                />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Narzędzia ogrodnicze [zł]"
+                android:textColor="@android:color/white"
+                android:padding="5sp"
+                android:textSize="16sp"
+                android:layout_weight="7"
+                android:gravity="center_horizontal"
+                android:background="@color/mainColor"
+                />
+            <TextView
+                android:id="@+id/tools"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="0.00 zł"
+                android:textColor="@color/blackToWhite"
+                android:padding="5sp"
+                android:textSize="16sp"
+                android:layout_weight="3"
+                android:gravity="center_horizontal"
+                android:background="@color/whiteToDarkGrey"
+                />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Inne [zł]"
+                android:textColor="@android:color/white"
+                android:padding="5sp"
+                android:textSize="16sp"
+                android:layout_weight="7"
+                android:gravity="center_horizontal"
+                android:background="@color/mainColor"
+                />
+            <TextView
+                android:id="@+id/others"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="0.00 zł"
+                android:textColor="@color/blackToWhite"
+                android:padding="5sp"
+                android:textSize="16sp"
+                android:layout_weight="3"
+                android:gravity="center_horizontal"
+                android:background="@color/whiteToDarkGrey"
+                />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="SUMA [zł]"
+                android:textColor="@android:color/white"
+                android:padding="5sp"
+                android:textSize="16sp"
+                android:layout_weight="7"
+                android:gravity="center_horizontal"
+                android:background="@color/mainColor"
+                />
+            <TextView
+                android:id="@+id/total_sum"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="0.00 zł"
+                android:textColor="@color/blackToWhite"
+                android:padding="5sp"
+                android:textSize="16sp"
+                android:layout_weight="3"
+                android:gravity="center_horizontal"
+                android:background="@color/whiteToDarkGrey"
+                />
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/btn_outgoings_in_chart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/shape_button"
+        android:text="Wydatki na wykresie"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:drawableLeft="@drawable/icon_pie_chart"
+        android:drawableTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
