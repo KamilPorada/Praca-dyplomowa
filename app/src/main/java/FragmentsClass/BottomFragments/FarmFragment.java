@@ -28,7 +28,7 @@ import java.util.Date;
 
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
-import OthersClass.DarkMode;
+import OthersClass.ToolClass;
 import OthersClass.InformationDialog;
 import OthersClass.ShowAttention;
 

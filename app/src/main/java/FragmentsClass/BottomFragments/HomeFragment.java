@@ -18,8 +18,9 @@ import com.example.pracadyplomowa.R;
 
 import FragmentsClass.MainModulesFragments.Calculators.CalculatorsFragment;
 import FragmentsClass.MainModulesFragments.IncomeDaily.IncomeDailyFragment;
-import OthersClass.DarkMode;
+import OthersClass.ToolClass;
 import OthersClass.InformationDialog;
+import OthersClass.ToolClass;
 
 public class HomeFragment extends Fragment {
 
@@ -113,8 +114,8 @@ public class HomeFragment extends Fragment {
         {
             case R.id.change_mode:
             {
-                DarkMode darkMode = new DarkMode();
-                darkMode.updateMode();
+                ToolClass toolClass = new ToolClass();
+                toolClass.updateMode();
             }break;
             case R.id.information:
             {

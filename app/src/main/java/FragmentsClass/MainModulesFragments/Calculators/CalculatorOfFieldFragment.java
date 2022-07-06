@@ -21,7 +21,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.pracadyplomowa.R;
 
-import OthersClass.DarkMode;
+import OthersClass.ToolClass;
 import OthersClass.InformationDialog;
 import OthersClass.ShowAttention;
 
