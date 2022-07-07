@@ -22,6 +22,7 @@ public class DataBaseNames {
         public static final String COLUMN_DESCRIBE_OF_OUTGOING = "describeOfOutgoing";
         public static final String COLUMN_PRICE_OF_OUTGOING = "priceOfOutgoing";
         public static final String COLUMN_DATE_OF_OUTGOING = "dateOfOutgoing";
+        public static final String COLUMN_IMAGE = "image";
         public static final String COLUMN_DATA_PASWORD = "dataPassword";
     }
 }

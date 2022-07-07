@@ -86,7 +86,7 @@ public  class ToolClass {
             case "blondyna":
                 return R.drawable.image_blond_pepper;
             default:
-                return R.drawable.image_red_pepper;
+                return 0;
         }
     }
 

@@ -313,7 +313,7 @@ public class TradeOfPepperFragment extends Fragment {
         calendar.setTime(d);
         calendar.get(Calendar.YEAR);
 
-        key= calendar.get(Calendar.DATE) +String.valueOf(calendar.get(Calendar.MONTH)+1)+ calendar.get(Calendar.YEAR) +
+        key= calendar.get(Calendar.DAY_OF_MONTH) +String.valueOf(calendar.get(Calendar.MONTH)+1)+ calendar.get(Calendar.YEAR) +
                 calendar.get(Calendar.HOUR-1) + calendar.get(Calendar.MINUTE) + calendar.get(Calendar.SECOND);
 
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);

@@ -1,5 +1,6 @@
 package FragmentsClass.MainModulesFragments.IncomeDaily;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,21 +21,21 @@ import androidx.fragment.app.Fragment;
 import com.example.pracadyplomowa.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import DataBase.DataBaseHelper;
-import OthersClass.InformationDialog;
-import OthersClass.ShowAttention;
 import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsViewsClasses.OutgoingsSpinnerAdapter;
 import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsViewsClasses.OutgoingsSpinnerItem;
+import OthersClass.InformationDialog;
+import OthersClass.ShowAttention;
+import OthersClass.ToolClass;
 
 public class AddOutgoingsFragment extends Fragment {
 
     //------------------------PRIMARY VIEWS--------------------------//
     private Context context;
     private Spinner howCategory;
-    private ArrayList<OutgoingsSpinnerItem> outGoingsSpinnerItems;
-    private OutgoingsSpinnerAdapter adapter;
 
     //----------------------ADD_OUTGOINGS VIEWS----------------------//
     private ImageView icon;
@@ -44,21 +45,33 @@ public class AddOutgoingsFragment extends Fragment {
     private TextView textViewRow;
 
     //------------------------EXTRA VARIABLES------------------------//
-    private int[] images =
+    private final int[] images =
             {
               R.drawable.image_highgrove, R.drawable.image_foil, R.drawable.image_water, R.drawable.image_pegs,
               R.drawable.image_seeds, R.drawable.image_plant, R.drawable.image_pesticides, R.drawable.image_fertilizer,
               R.drawable.image_machine, R.drawable.image_tools, R.drawable.icon_question
             };
+    private final String[] categories =
+            {
+                    "Konstrukcje tuneli", "Folie ogrodnicze", "Hydraulika w tunelach", "Paliki do tuneli",
+                    "Nasiona papryki", "Sadzonki papryki", "Pestycydy", "Nawozy", "Maszyny rolnicze",
+                    "Narzędzia ogrodnicze", "Inne"
+            };
     private String currentCategory;
+    private int currentImage;
+    private boolean isEditable=false;
+    private String password;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.layout_add_outgoings, container, false);
+        assert container != null;
         context=container.getContext();
         findViews(view);
         startSettings();
+        getData();
         createListeners();
         return view;
     }
@@ -70,16 +83,13 @@ public class AddOutgoingsFragment extends Fragment {
     }
 
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id=item.getItemId();
-        switch (id)
-        {
-            case R.id.information:
-            {
-                InformationDialog informationDialog = new InformationDialog();
-                informationDialog.openInformationDialog(context,getResources().getString(R.string.describes_income_daily));
-            }break;
+        if (id == R.id.information) {
+            InformationDialog informationDialog = new InformationDialog();
+            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_income_daily));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -95,41 +105,59 @@ public class AddOutgoingsFragment extends Fragment {
     }
 
     private void startSettings() {
-        outGoingsSpinnerItems = new ArrayList<>();
-        outGoingsSpinnerItems.add(new OutgoingsSpinnerItem("Konstrukcje tuneli",R.drawable.image_highgrove));
-        outGoingsSpinnerItems.add(new OutgoingsSpinnerItem("Folie ogrodnicze",R.drawable.image_foil));
-        outGoingsSpinnerItems.add(new OutgoingsSpinnerItem("Hydraulika w tunelach",R.drawable.image_water));
-        outGoingsSpinnerItems.add(new OutgoingsSpinnerItem("Paliki do tuneli",R.drawable.image_pegs));
-        outGoingsSpinnerItems.add(new OutgoingsSpinnerItem("Nasiona papryki",R.drawable.image_seeds));
-        outGoingsSpinnerItems.add(new OutgoingsSpinnerItem("Sadzonki papryki",R.drawable.image_plant));
-        outGoingsSpinnerItems.add(new OutgoingsSpinnerItem("Pestycydy",R.drawable.image_pesticides));
-        outGoingsSpinnerItems.add(new OutgoingsSpinnerItem("Nawozy",R.drawable.image_fertilizer));
-        outGoingsSpinnerItems.add(new OutgoingsSpinnerItem("Maszyny rolnicze",R.drawable.image_machine));
-        outGoingsSpinnerItems.add(new OutgoingsSpinnerItem("Narzędzia ogrodnicze",R.drawable.image_tools));
-        outGoingsSpinnerItems.add(new OutgoingsSpinnerItem("Inne",R.drawable.icon_question));
+        ArrayList<OutgoingsSpinnerItem> outGoingsSpinnerItems = new ArrayList<>();
+        for(int i=0; i<images.length;i++)
+            outGoingsSpinnerItems.add(new OutgoingsSpinnerItem(categories[i], images[i]));
 
 
-        adapter=new OutgoingsSpinnerAdapter(context, outGoingsSpinnerItems);
+        OutgoingsSpinnerAdapter adapter = new OutgoingsSpinnerAdapter(context, outGoingsSpinnerItems);
         howCategory.setAdapter(adapter);
-        currentCategory="Konstrukcje tuneli";
+        currentCategory=categories[0];
+    }
+
+    private void getData() {
+        Bundle bundle = this.getArguments();
+        String FLAG = "flag";
+        assert bundle != null;
+        isEditable = bundle.getBoolean(FLAG);
+        System.out.println(isEditable);
+        if(isEditable)
+            setData();
+    }
+
+    private void setData() {
+        Bundle bundle = this.getArguments();
+        assert bundle != null;
+        String PRICE = "price";
+        String DATE = "date";
+        String DESCRIBE = "describe";
+        String CATEGORY = "category";
+        String PASSSWORD_KEY = "passwordKey";
+        String category = bundle.getString(CATEGORY);
+        howPrice.setText(String.valueOf(bundle.getDouble(PRICE)));
+        howDate.setText(bundle.getString(DATE));
+        howDescribe.setText(bundle.getString(DESCRIBE));
+        password=bundle.getString(PASSSWORD_KEY);
+        int index=0;
+        for(int i=0;i<categories.length;i++)
+            if(category.compareTo(categories[i])==0)
+                index=i;
+        howCategory.setSelection(index);
     }
 
     private void createListeners() {
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int id = v.getId();
-                switch (id)
+        @SuppressLint("NonConstantResourceId") View.OnClickListener listener = v -> {
+            int id = v.getId();
+            switch (id)
+            {
+                case R.id.accept_button:
                 {
-                    case R.id.accept_button:
-                    {
-                        validateData();
-                    }break;
-                    case R.id.cancel_button:
-                    {
-                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new OutgoingsFragment()).commit();
-                    }break;
-                }
+                    validateData();
+                }break;
+                case R.id.cancel_button:
+                {
+                    requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new OutgoingsFragment()).commit();
+                }break;
             }
         };
         acceptButton.setOnClickListener(listener);
@@ -140,6 +168,7 @@ public class AddOutgoingsFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 textViewRow= view.findViewById(R.id.text_view_row);
                 icon.setImageResource(images[position]);
+                currentImage=images[position];
                 currentCategory=textViewRow.getText().toString();
             }
 
@@ -152,81 +181,23 @@ public class AddOutgoingsFragment extends Fragment {
 
     private void validateData() {
         ShowAttention showAttention = new ShowAttention();
-        boolean validateDescribe=false;
-        boolean validatePrice=false;
-
-        if(howDescribe.getText().toString().compareTo("")==0)
-            validateDescribe=false;
-        else
-            validateDescribe=true;
-        if(howPrice.getText().toString().compareTo("")==0)
-            validatePrice=false;
-        else
-            validatePrice=true;
-
-        if ((validateDescribe && validatePrice))
-            validateDate();
-        else
-            showAttention.showToast(R.layout.toast_layout,null,getActivity(),context,"Uzupełnij wszystkie dane!");
-    }
-
-    private void validateDate() {
-        ShowAttention showAttention = new ShowAttention();
-        boolean validateDay=false;
-        boolean validateMonth=false;
-        boolean validateDotts=false;
+        boolean validateDescribe, validatePrice;
         String date=howDate.getText().toString();
-
-        if(howDate.length()<10)
-            showAttention.showToast(R.layout.toast_layout,null,getActivity(),context,"Zły format daty!\n[dd.mm.rrrr]");
-        else {
-
-            char[] charDate = date.toCharArray();
-            String stringDay = Character.toString(charDate[0]) + Character.toString(charDate[1]);
-            String firstDots = Character.toString(charDate[2]);
-            String stringMonth = Character.toString(charDate[3]) + Character.toString(charDate[4]);
-            String secondDots = Character.toString(charDate[5]);
-            String stringYear = Character.toString(charDate[6]) + Character.toString(charDate[7]) +
-                    Character.toString(charDate[8]) + Character.toString(charDate[9]);
-
-            int day = Integer.parseInt(stringDay);
-            int month = Integer.parseInt(stringMonth);
-            int year = Integer.parseInt(stringYear);
-
-
-            if (day > 0 && day < 32)
-                validateDay = true;
+        validateDescribe= howDescribe.getText().toString().compareTo("") != 0;
+        validatePrice= howPrice.getText().toString().compareTo("") != 0;
+        if ((validateDescribe && validatePrice))
+            if(ToolClass.checkValidateData(date))
+                if(ToolClass.checkValidateYear(date))
+                    if(isEditable)
+                       updateItem();
+                    else
+                        addItemToDataBase();
+                else
+                    showAttention.showToast(R.layout.toast_layout,null, requireActivity(),context,"Podaj poprawny rok!\nMamy aktualnie "+ToolClass.getActualYear()+" rok!");
             else
-                validateDay = false;
-            if (month > 0 && month < 13)
-                validateMonth = true;
-            else
-                validateMonth = false;
-            if (firstDots.compareTo(".") == 0 && secondDots.compareTo(".") == 0)
-                validateDotts = true;
-            else
-                validateDotts = false;
-
-
-            if (validateDay && validateMonth && validateDotts) {
-                checkValidateYear(year);
-            }
-            else {
-                showAttention.showToast(R.layout.toast_layout, null, getActivity(), context, "Zły format daty!\n[dd.mm.rrrr]");
-            }
-        }
-    }
-
-    private void checkValidateYear(int year) {
-        Date date = new Date();
-        int actualYear=date.getYear()+1900;
-        if(year!=actualYear)
-        {
-            ShowAttention showAttention = new ShowAttention();
-            showAttention.showToast(R.layout.toast_layout,null,getActivity(),context,"Podaj poprawny rok!\nMamy aktualnie "+actualYear+" rok!");
-        }
+                showAttention.showToast(R.layout.toast_layout, null, requireActivity(), context, "Zły format daty!\n[dd.mm.rrrr]");
         else
-            addItemToDataBase();
+            showAttention.showToast(R.layout.toast_layout,null, requireActivity(),context,"Uzupełnij wszystkie dane!");
     }
 
     private void addItemToDataBase() {
@@ -234,15 +205,31 @@ public class AddOutgoingsFragment extends Fragment {
         double price=Double.parseDouble(howPrice.getText().toString());
         String date=howDate.getText().toString();
 
-        Date calendar = new Date();
-        String key=String.valueOf(calendar.getDate())+String.valueOf(calendar.getMonth()+1)+String.valueOf(calendar.getYear()+1900)+
-                String.valueOf(calendar.getHours()+2)+String.valueOf(calendar.getMinutes())+String.valueOf(calendar.getSeconds());
+        Date d = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(d);
+        calendar.get(Calendar.YEAR);
+
+        String key= calendar.get(Calendar.DAY_OF_MONTH) +String.valueOf(calendar.get(Calendar.MONTH)+1)+ calendar.get(Calendar.YEAR) +
+                calendar.get(Calendar.HOUR-1) + calendar.get(Calendar.MINUTE) + calendar.get(Calendar.SECOND);
 
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
-        dataBaseHelper.addOutgoing(currentCategory,describe,price,date,key);
+        dataBaseHelper.addOutgoing(currentCategory,describe,price,date,currentImage,key);
 
         Fragment fragment = new OutgoingsFragment();
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+    }
+
+    private void updateItem() {
+        String describe=howDescribe.getText().toString();
+        double price=Double.parseDouble(howPrice.getText().toString());
+        String date=howDate.getText().toString();
+
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+        dataBaseHelper.updateOutgoingItems(password,currentCategory,describe,price,currentImage,date);
+
+        Fragment fragment = new OutgoingsFragment();
+        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
     }
 
 }

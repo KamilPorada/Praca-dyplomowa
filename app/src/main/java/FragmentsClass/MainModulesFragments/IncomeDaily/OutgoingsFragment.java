@@ -1,7 +1,11 @@
 package FragmentsClass.MainModulesFragments.IncomeDaily;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -9,6 +13,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,26 +25,29 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pracadyplomowa.R;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
-import OthersClass.InformationDialog;
 import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsViewsClasses.OutgoingsAdapter;
 import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsViewsClasses.OutgoingsItem;
+import OthersClass.InformationDialog;
+import OthersClass.ToolClass;
 
 public class OutgoingsFragment extends Fragment {
     
     private Context context;
-    private ArrayList<OutgoingsItem> OutgoingsList = new ArrayList<>();
+    private final ArrayList<OutgoingsItem> OutgoingsList = new ArrayList<>();
     private RecyclerView recyclerView;
-    private OutgoingsAdapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
+
+    private Button canButton, delButton;
+
+    private final String FLAG = "flag";
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.layout_outgoings, container, false);
+        assert container != null;
         context=container.getContext();
         findViews(view);
         startSettings();
@@ -58,6 +67,7 @@ public class OutgoingsFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id=item.getItemId();
@@ -70,7 +80,11 @@ public class OutgoingsFragment extends Fragment {
             }break;
             case R.id.add_item:
             {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new AddOutgoingsFragment()).commit();
+                Bundle bundle = new Bundle();
+                bundle.putBoolean(FLAG, false);
+                AddOutgoingsFragment fragment = new AddOutgoingsFragment();
+                fragment.setArguments(bundle);
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
             }break;
         }
         return super.onOptionsItemSelected(item);
@@ -82,8 +96,8 @@ public class OutgoingsFragment extends Fragment {
 
     private void startSettings() {
         recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(context);
-        adapter = new OutgoingsAdapter(OutgoingsList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
+        OutgoingsAdapter adapter = new OutgoingsAdapter(OutgoingsList);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
@@ -94,25 +108,86 @@ public class OutgoingsFragment extends Fragment {
             }
 
             @Override
-            public void onDeleteClick(int position) {
-                deleteData(position);
+            public void onDeleteClick(int position) { openDialogQuestion(position);
             }
         });
     }
 
     private void sendData(int position) {
         Bundle bundle = new Bundle();
-        bundle.putString("category",OutgoingsList.get(position).getIOutgoingCategory());
-        bundle.putDouble("price",OutgoingsList.get(position).getIOutgoingPrice());
-        bundle.putString("date",OutgoingsList.get(position).getIOutgoingDate());
-        bundle.putString("describe",OutgoingsList.get(position).getIOutgoingDescribe());
-        bundle.putInt("position",position);
-        UpdateOutgoingsFragment fragment = new UpdateOutgoingsFragment();
+        String CATEGORY = "category";
+        String PRICE = "price";
+        String DATE = "date";
+        String DESCRIBE = "describe";
+        String PASSSWORD_KEY = "passwordKey";
+        bundle.putBoolean(FLAG, true);
+        bundle.putString(CATEGORY,OutgoingsList.get(position).getIOutgoingCategory());
+        bundle.putDouble(PRICE,OutgoingsList.get(position).getIOutgoingPrice());
+        bundle.putString(DATE,OutgoingsList.get(position).getIOutgoingDate());
+        bundle.putString(DESCRIBE,OutgoingsList.get(position).getIOutgoingDescribe());
+        bundle.putString(PASSSWORD_KEY,OutgoingsList.get(position).getIOutgoingPasswordKey());
+        AddOutgoingsFragment fragment = new AddOutgoingsFragment();
         fragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
     }
 
-    private void deleteData(int position) {
+    private void loadData() {
+        DataBaseHelper dbHelper = new DataBaseHelper(context);
+        Cursor k =dbHelper.getOutgoingItems();
+        int image;
+        String date, category, describe, passwordKey;
+        double price;
+        while(k.moveToNext()) {
+            date=k.getString(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_DATE_OF_OUTGOING));
+            category=k.getString(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_CATEGORY_OF_OUTGOING));
+            price = k.getDouble(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_PRICE_OF_OUTGOING));
+            describe = k.getString(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_DESCRIBE_OF_OUTGOING));
+            passwordKey = k.getString(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_DATA_PASWORD));
+            image = k.getInt(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_IMAGE));
+
+            if(ToolClass.getActualYear()==ToolClass.getYear(date))
+                OutgoingsList.add(new OutgoingsItem(image, category, describe, price, date, passwordKey));
+        }
+    }
+
+    // ------------------------DELETE ITEM WINDOW EVENTS---------------------------//
+
+    private void openDialogQuestion(int position) {
+        Dialog questionWindow = new Dialog(context);
+        questionWindow.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
+        questionWindow.setContentView(R.layout.dialog_question);
+        questionWindow.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        questionWindow.show();
+        findQuestionDialogViews(questionWindow);
+        createAndAddListener(questionWindow, position);
+    }
+
+    private void findQuestionDialogViews(Dialog questionWindow) {
+        canButton=questionWindow.findViewById(R.id.cancel_button);
+        delButton=questionWindow.findViewById(R.id.delete_button);
+    }
+
+    private void createAndAddListener(Dialog questionWindow, int position) {
+        @SuppressLint("NonConstantResourceId") View.OnClickListener listener = v -> {
+            int id=v.getId();
+            switch (id)
+            {
+                case R.id.cancel_button:
+                {
+                    questionWindow.dismiss();
+                }break;
+                case R.id.delete_button:
+                {
+                    deleteItem(position);
+                    questionWindow.dismiss();
+                }break;
+            }
+        };
+        canButton.setOnClickListener(listener);
+        delButton.setOnClickListener(listener);
+    }
+
+    private void deleteItem(int position) {
         DataBaseHelper db = new DataBaseHelper(context);
         Cursor cursor = db.getItemID(DataBaseNames.OutgoingsItem.TABLE_NAME,DataBaseNames.OutgoingsItem._ID,
                 DataBaseNames.OutgoingsItem.COLUMN_DATA_PASWORD,OutgoingsList.get(position).getIOutgoingPasswordKey());
@@ -123,83 +198,8 @@ public class OutgoingsFragment extends Fragment {
         }
         db.deleteItem(DataBaseNames.OutgoingsItem.TABLE_NAME,id);
         Fragment fragment = new OutgoingsFragment();
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
         loadData();
-    }
-
-    private void loadData() {
-        DataBaseHelper dbHelper = new DataBaseHelper(context);
-        Cursor k =dbHelper.getOutgoingItems();
-        Date calendar = new Date();
-        int currentYear=calendar.getYear()+1900;
-        int image=0;
-        String date, category, describe, passwordKey;
-        double price;
-        while(k.moveToNext()) {
-            date=k.getString(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_DATE_OF_OUTGOING));
-            category=k.getString(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_CATEGORY_OF_OUTGOING));
-            price = k.getDouble(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_PRICE_OF_OUTGOING));
-            describe = k.getString(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_DESCRIBE_OF_OUTGOING));
-            passwordKey = k.getString(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_DATA_PASWORD));
-            switch (category)
-            {
-                case "Konstrukcje tuneli":
-                {
-                    image=R.drawable.image_highgrove;
-                }break;
-                case "Folie ogrodnicze":
-                {
-                    image=R.drawable.image_foil;
-                }break;
-                case "Hydraulika w tunelach":
-                {
-                    image=R.drawable.image_water;
-                }break;
-                case "Paliki do tuneli":
-                {
-                    image=R.drawable.image_pegs;
-                }break;
-                case "Nasiona papryki":
-                {
-                    image=R.drawable.image_seeds;
-                }break;
-                case "Sadzonki papryki":
-                {
-                    image=R.drawable.image_plant;
-                }break;
-                case "Pestycydy":
-                {
-                    image=R.drawable.image_pesticides;
-                }break;
-                case "Nawozy":
-                {
-                    image=R.drawable.image_fertilizer;
-                }break;
-                case "Maszyny rolnicze":
-                {
-                    image=R.drawable.image_machine;
-                }break;
-                case "Narzędzia ogrodnicze":
-                {
-                    image=R.drawable.image_tools;
-                }break;
-                case "Inne":
-                {
-                    image=R.drawable.icon_question;
-                }break;
-            }
-            int year=getYear(date);
-            if(currentYear==year)
-                OutgoingsList.add(new OutgoingsItem(image, category, describe, price, date, passwordKey));
-        }
-    }
-
-    private int getYear(String date) {
-        char[] charDate = date.toCharArray();
-        String stringYear = Character.toString(charDate[6]) + Character.toString(charDate[7]) +
-                Character.toString(charDate[8]) + Character.toString(charDate[9]);
-        int year = Integer.parseInt(stringYear);
-        return year;
     }
 }
 
