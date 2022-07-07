@@ -27,9 +27,9 @@ import java.util.Date;
 import DataBase.DataBaseHelper;
 import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsViewsClasses.OutgoingsSpinnerAdapter;
 import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsViewsClasses.OutgoingsSpinnerItem;
-import OthersClass.InformationDialog;
-import OthersClass.ShowAttention;
-import OthersClass.ToolClass;
+import HelperClasses.InformationDialog;
+import HelperClasses.ShowAttention;
+import HelperClasses.ToolClass;
 
 public class AddOutgoingsFragment extends Fragment {
 

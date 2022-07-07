@@ -1,8 +1,8 @@
 package FragmentsClass.MainModulesFragments.IncomeDaily;
 
-import static OthersClass.ToolClass.checkValidateData;
-import static OthersClass.ToolClass.checkValidateYear;
-import static OthersClass.ToolClass.getActualYear;
+import static HelperClasses.ToolClass.checkValidateData;
+import static HelperClasses.ToolClass.checkValidateYear;
+import static HelperClasses.ToolClass.getActualYear;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -40,9 +40,9 @@ import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
 import FragmentsClass.MainModulesFragments.IncomeDaily.TradeOfPepperViewsClasses.TradePepperAdapter;
 import FragmentsClass.MainModulesFragments.IncomeDaily.TradeOfPepperViewsClasses.TradePepperItem;
-import OthersClass.InformationDialog;
-import OthersClass.ShowAttention;
-import OthersClass.ToolClass;
+import HelperClasses.InformationDialog;
+import HelperClasses.ShowAttention;
+import HelperClasses.ToolClass;
 
 
 public class TradeOfPepperFragment extends Fragment {

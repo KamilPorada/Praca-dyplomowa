@@ -28,8 +28,8 @@ import java.util.Date;
 
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
-import OthersClass.InformationDialog;
-import OthersClass.ShowAttention;
+import HelperClasses.InformationDialog;
+import HelperClasses.ShowAttention;
 
 public class FarmFragment extends Fragment {
 

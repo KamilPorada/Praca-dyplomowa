@@ -30,7 +30,7 @@ import java.util.Date;
 
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
-import OthersClass.InformationDialog;
+import HelperClasses.InformationDialog;
 
 public class MonthlyWeightFromPepperChartFragment extends Fragment {
 

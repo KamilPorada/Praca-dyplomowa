@@ -180,8 +180,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public Cursor getMoneyFromTrade(){
-        String[] columns={DataBaseNames.TradeOfPepperItem.COLUMN_VAT,DataBaseNames.TradeOfPepperItem.COLUMN_PRICE_OF_PEPPER,
-                DataBaseNames.TradeOfPepperItem.COLUMN_WEIGHT_OF_PEPPER, DataBaseNames.TradeOfPepperItem.COLUMN_DATE};
+        String[] columns={DataBaseNames.TradeOfPepperItem.COLUMN_TOTAL_SUM, DataBaseNames.TradeOfPepperItem.COLUMN_DATE};
         SQLiteDatabase db =getReadableDatabase();
         return db.query(DataBaseNames.TradeOfPepperItem.TABLE_NAME,columns, null,null,null,null,null);
     }

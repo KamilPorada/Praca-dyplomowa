@@ -18,9 +18,8 @@ import com.example.pracadyplomowa.R;
 
 import FragmentsClass.MainModulesFragments.Calculators.CalculatorsFragment;
 import FragmentsClass.MainModulesFragments.IncomeDaily.IncomeDailyFragment;
-import OthersClass.ToolClass;
-import OthersClass.InformationDialog;
-import OthersClass.ToolClass;
+import HelperClasses.ToolClass;
+import HelperClasses.InformationDialog;
 
 public class HomeFragment extends Fragment {
 

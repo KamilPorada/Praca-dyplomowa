@@ -30,8 +30,8 @@ import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
 import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsViewsClasses.OutgoingsAdapter;
 import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsViewsClasses.OutgoingsItem;
-import OthersClass.InformationDialog;
-import OthersClass.ToolClass;
+import HelperClasses.InformationDialog;
+import HelperClasses.ToolClass;
 
 public class OutgoingsFragment extends Fragment {
     

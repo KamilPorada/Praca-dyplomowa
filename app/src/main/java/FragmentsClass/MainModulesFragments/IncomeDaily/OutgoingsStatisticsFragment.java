@@ -1,5 +1,6 @@
 package FragmentsClass.MainModulesFragments.IncomeDaily;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -16,11 +17,11 @@ import androidx.fragment.app.Fragment;
 
 import com.example.pracadyplomowa.R;
 
-import java.util.Date;
-
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
-import OthersClass.InformationDialog;
+import HelperClasses.InformationDialog;
+import HelperClasses.StatisticsHelper;
+import HelperClasses.ToolClass;
 
 public class OutgoingsStatisticsFragment extends Fragment {
 
@@ -31,96 +32,36 @@ public class OutgoingsStatisticsFragment extends Fragment {
                      others, totalSum;
     private Button btnOutgoingInChart;
 
+    private final String [] categories = {
+            "Konstrukcje tuneli", "Folie ogrodnicze", "Hydraulika w tunelach",
+            "Paliki do tuneli", "Nasiona papryki", "Sadzonki papryki", "Pestycydy", "Nawozy",
+            "Maszyny rolnicze", "Narzędzia ogrodnicze", "Inne"
+    };
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.layout_statistics_of_outgoings, container, false);
+        assert container != null;
         context=container.getContext();
         findViews(view);
         loadData();
         createListeners();
         return view;
     }
-
-    private void loadData() {
-        highgroves.setText(calculateSpecificOutgoing("Konstrukcje tuneli") + "zł");
-        foils.setText(calculateSpecificOutgoing("Folie ogrodnicze") + "zł");
-        water.setText(calculateSpecificOutgoing("Hydraulika w tunelach") + "zł");
-        sticks.setText(calculateSpecificOutgoing("Paliki do tuneli") + "zł");
-        seeds.setText(calculateSpecificOutgoing("Nasiona papryki") + "zł");
-        plants.setText(calculateSpecificOutgoing("Sadzonki papryki") + "zł");
-        pesticides.setText(calculateSpecificOutgoing("Pestycydy") + "zł");
-        fertilizers.setText(calculateSpecificOutgoing("Nawozy") + "zł");
-        machines.setText(calculateSpecificOutgoing("Maszyny rolnicze") + "zł");
-        tools.setText(calculateSpecificOutgoing("Narzędzia ogrodnicze") + "zł");
-        others.setText(calculateSpecificOutgoing("Inne") + "zł");
-        totalSum.setText(calculateTotalSumFromOutgoings()+ "zł");
-    }
-
-    private String calculateTotalSumFromOutgoings() {
-        DataBaseHelper dbHelper = new DataBaseHelper(context);
-        Cursor k =dbHelper.getMoneyFromTrade();
-        Date calendar = new Date();
-        int currentYear=calendar.getYear()+1900;
-        int year=0;
-        String date="";
-        double moneyFromOutgoing=0;
-        k=dbHelper.getMoneyFromOutgoings();
-        while (k.moveToNext())
-        {
-            date=k.getString(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_DATE_OF_OUTGOING));
-            year=getYear(date);
-            if(currentYear==year)
-                moneyFromOutgoing=moneyFromOutgoing+k.getDouble(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_PRICE_OF_OUTGOING));
-        }
-        return String.format("%.2f", Math.round(moneyFromOutgoing * 100.0) / 100.0);
-    }
-
-    private String calculateSpecificOutgoing(String category) {
-        DataBaseHelper dbHelper = new DataBaseHelper(context);
-        Cursor k =dbHelper.getMoneyFromSpecificOutgoing(category);
-        Date calendar = new Date();
-        int currentYear=calendar.getYear()+1900;
-        int year=0;
-        double totalMoney=0;
-        String date="";
-        while (k.moveToNext())
-        {
-            date=k.getString(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_DATE_OF_OUTGOING));
-            year=getYear(date);
-            if(currentYear==year)
-                totalMoney=totalMoney+k.getDouble(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_PRICE_OF_OUTGOING));
-        }
-        String stringTotalMoneyFromOutgoing=String.format("%.2f", Math.round(totalMoney * 100.0) / 100.0);
-
-        return stringTotalMoneyFromOutgoing;
-    }
-
-    private int getYear(String date) {
-        char[] charDate = date.toCharArray();
-        String stringYear = Character.toString(charDate[6]) + Character.toString(charDate[7]) +
-                Character.toString(charDate[8]) + Character.toString(charDate[9]);
-        int year = Integer.parseInt(stringYear);
-        return year;
-    }
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id=item.getItemId();
-        switch (id)
-        {
-            case R.id.information:
-            {
-                InformationDialog informationDialog = new InformationDialog();
-                informationDialog.openInformationDialog(context,getResources().getString(R.string.describes_income_daily));
-            }break;
+        if (id == R.id.information) {
+            InformationDialog informationDialog = new InformationDialog();
+            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_income_daily));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -141,13 +82,26 @@ public class OutgoingsStatisticsFragment extends Fragment {
         btnOutgoingInChart=view.findViewById(R.id.btn_outgoings_in_chart);
     }
 
+    @SuppressLint("SetTextI18n")
+    private void loadData() {
+        highgroves.setText(StatisticsHelper.calculateSpecificOutgoing(context, categories[0]) + "zł");
+        foils.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[1]) + "zł");
+        water.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[2]) + "zł");
+        sticks.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[3]) + "zł");
+        seeds.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[4]) + "zł");
+        plants.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[5]) + "zł");
+        pesticides.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[6]) + "zł");
+        fertilizers.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[7]) + "zł");
+        machines.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[8]) + "zł");
+        tools.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[9]) + "zł");
+        others.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[10]) + "zł");
+        totalSum.setText(StatisticsHelper.getMoneyFromOutgoings(context,ToolClass.getActualYear()) + "zł");
+    }
+
     private void createListeners() {
-        btnOutgoingInChart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragment=new OutgoingsChartFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
-            }
+        btnOutgoingInChart.setOnClickListener(v -> {
+            fragment=new OutgoingsChartFragment();
+            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
         });
 
     }

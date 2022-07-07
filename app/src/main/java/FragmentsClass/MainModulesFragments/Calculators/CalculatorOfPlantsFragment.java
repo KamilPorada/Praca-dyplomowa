@@ -17,8 +17,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.pracadyplomowa.R;
 
-import OthersClass.InformationDialog;
-import OthersClass.ShowAttention;
+import HelperClasses.InformationDialog;
+import HelperClasses.ShowAttention;
 
 public class CalculatorOfPlantsFragment extends Fragment {
 

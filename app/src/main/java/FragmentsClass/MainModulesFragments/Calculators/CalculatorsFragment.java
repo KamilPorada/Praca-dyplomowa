@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.pracadyplomowa.R;
 
-import OthersClass.InformationDialog;
+import HelperClasses.InformationDialog;
 
 public class CalculatorsFragment extends Fragment {
 

@@ -1,5 +1,6 @@
 package FragmentsClass.MainModulesFragments.IncomeDaily;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,7 +15,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.pracadyplomowa.R;
 
-import OthersClass.InformationDialog;
+import java.util.Objects;
+
+import HelperClasses.InformationDialog;
 
 public class IncomeDailyFragment extends Fragment {
 
@@ -27,6 +30,7 @@ public class IncomeDailyFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.layout_income_daily_fragment, container, false);
+        assert container != null;
         context=container.getContext();
         findViews(view);
         createListeners();
@@ -34,27 +38,24 @@ public class IncomeDailyFragment extends Fragment {
     }
 
     private void createListeners() {
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int id=v.getId();
-                switch (id)
+        @SuppressLint("NonConstantResourceId") View.OnClickListener listener = v -> {
+            int id=v.getId();
+            switch (id)
+            {
+                case R.id.btn_trade_of_vegetables:
                 {
-                    case R.id.btn_trade_of_vegetables:
-                    {
-                        fragment = new TradeOfPepperFragment();
-                    }break;
-                    case R.id. btn_outgoings:
-                    {
-                        fragment = new OutgoingsFragment();
-                    }break;
-                    case R.id.btn_balance:
-                    {
-                        fragment = new BalanceFragment();
-                    }break;
-                }
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+                    fragment = new TradeOfPepperFragment();
+                }break;
+                case R.id. btn_outgoings:
+                {
+                    fragment = new OutgoingsFragment();
+                }break;
+                case R.id.btn_balance:
+                {
+                    fragment = new BalanceFragment();
+                }break;
             }
+            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
         };
         btnTradeOfVegetables.setOnClickListener(listener);
         btnOutgoings.setOnClickListener(listener);
@@ -77,13 +78,9 @@ public class IncomeDailyFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id=item.getItemId();
-        switch (id)
-        {
-            case R.id.information:
-            {
-                InformationDialog informationDialog = new InformationDialog();
-                informationDialog.openInformationDialog(context,getResources().getString(R.string.describes_income_daily));
-            }break;
+        if (id == R.id.information) {
+            InformationDialog informationDialog = new InformationDialog();
+            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_income_daily));
         }
         return super.onOptionsItemSelected(item);
     }
