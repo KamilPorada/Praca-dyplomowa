@@ -15,8 +15,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.pracadyplomowa.R;
 
-import java.util.Objects;
-
 import HelperClasses.InformationDialog;
 
 public class IncomeDailyFragment extends Fragment {

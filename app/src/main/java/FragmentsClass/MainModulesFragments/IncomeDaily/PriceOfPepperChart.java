@@ -1,5 +1,6 @@
 package FragmentsClass.MainModulesFragments.IncomeDaily;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.database.Cursor;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.pracadyplomowa.R;
@@ -34,16 +36,16 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
 import HelperClasses.InformationDialog;
+import HelperClasses.ToolClass;
 
 public class PriceOfPepperChart extends Fragment {
 
-    Context context;
-    Fragment fragment = null;
+    private Context context;
+    private Fragment fragment = null;
 
     private TextView title;
     private LineChart chart;
@@ -58,17 +60,68 @@ public class PriceOfPepperChart extends Fragment {
     private String describeColor="czerwonej", describeClas="1";
     private int lineColor=Color.rgb(255,58,42);
 
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        assert container != null;
         context=container.getContext();
         View view = inflater.inflate(R.layout.layout_price_of_pepper_chart, container, false);
         findViews(view);
         createListeners();
         createChart();
         return view;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id=item.getItemId();
+        if (id == R.id.information) {
+            InformationDialog informationDialog = new InformationDialog();
+            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_calculator_of_field));
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void findViews(View view) {
+        title=view.findViewById(R.id.title);
+        chart=view.findViewById(R.id.chart);
+        btnChangeProperties=view.findViewById(R.id.btn_change_properties);
+        btnTradeInNumbers=view.findViewById(R.id.btn_trade_in_numbers);
+        btnLeft=view.findViewById(R.id.btn_left);
+        btnRight=view.findViewById(R.id.btn_right);
+    }
+
+    private void createListeners() {
+        @SuppressLint("NonConstantResourceId") View.OnClickListener listener = v -> {
+            int id=v.getId();
+            switch (id)
+            {
+                case R.id.btn_trade_in_numbers:
+                {
+                    fragment = new TradeStatisticsFragment();
+                }break;
+                case R.id.btn_left:
+                {
+                    fragment = new MonthlyWeightFromPepperChartFragment();
+                }break;
+                case R.id.btn_right:
+                {
+                    fragment = new ColorOfPepperChartFragment();
+                }break;
+            }
+            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+        };
+        btnTradeInNumbers.setOnClickListener(listener);
+        btnLeft.setOnClickListener(listener);
+        btnRight.setOnClickListener(listener);
+
+        btnChangeProperties.setOnClickListener(v -> openChooseWindow());
     }
 
     private void openChooseWindow() {
@@ -84,146 +137,131 @@ public class PriceOfPepperChart extends Fragment {
         createAndAddListeners(chooseWindow);
     }
 
-    private void createAndAddListeners(Dialog chooseWindow) {
-        colorRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId)
-                {
-                    case R.id.red_color:
-                    {
-                        color="czerwona";
-                        describeColor="czerwonej";
-                        lineColor=Color.rgb(255,58,42);
-                    }break;
-                    case R.id.yellow_color:
-                    {
-                        color="żółta";
-                        describeColor="żółtej";
-                        lineColor=Color.rgb(255,204,0);
-                    }break;
-                    case R.id.green_color:
-                    {
-                        color="zielona";
-                        describeColor="zielonej";
-                        lineColor=Color.rgb(0,128,0);
-                    }break;
-                    case R.id.orange_color:
-                    {
-                        color="pomarańczowa";
-                        describeColor="pomarańczowej";
-                        lineColor=Color.rgb(253,121,19);
-                    }break;
-                    case R.id.blond_color:
-                    {
-                        color="blondyna";
-                        describeColor="blondyny";
-                        lineColor=Color.rgb(218,213,140);
-                    }break;
-                }
-            }
-        });
-
-        classRadiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId)
-                {
-                    case R.id.first_class:
-                    {
-                        clas="1";
-                        describeClas="1";
-                    }break;
-                    case R.id.second_class:
-                    {
-                        clas="2";
-                        describeClas="2";
-                    }break;
-                    case R.id.cutting_class:
-                    {
-                        clas="krojona";
-                        describeClas="krojonej";
-                    }break;
-                }
-            }
-        });
-
-        acceptButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chooseWindow.dismiss();
-                updateTitle();
-                createChart();
-            }
-        });
-
-    }
-
-    private void updateTitle() {
-        title.setText("Wykres przedstawiający kształtowanie się cen papryki " + describeColor + " klasy " + describeClas);
-    }
-
     private void findAddItemDialogViews(Dialog chooseWindow) {
         colorRadioGroup=chooseWindow.findViewById(R.id.color_radio_group);
         classRadiogroup=chooseWindow.findViewById(R.id.class_radio_group);
         acceptButton=chooseWindow.findViewById(R.id.accept_button);
     }
 
+    @SuppressLint("NonConstantResourceId")
+    private void createAndAddListeners(Dialog chooseWindow) {
+        colorRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId)
+            {
+                case R.id.red_color:
+                {
+                    color="czerwona";
+                    describeColor="czerwonej";
+                    lineColor=Color.rgb(255,58,42);
+                }break;
+                case R.id.yellow_color:
+                {
+                    color="żółta";
+                    describeColor="żółtej";
+                    lineColor=Color.rgb(255,204,0);
+                }break;
+                case R.id.green_color:
+                {
+                    color="zielona";
+                    describeColor="zielonej";
+                    lineColor=Color.rgb(0,128,0);
+                }break;
+                case R.id.orange_color:
+                {
+                    color="pomarańczowa";
+                    describeColor="pomarańczowej";
+                    lineColor=Color.rgb(253,121,19);
+                }break;
+                case R.id.blond_color:
+                {
+                    color="blondyna";
+                    describeColor="blondyny";
+                    lineColor=Color.rgb(218,213,140);
+                }break;
+            }
+        });
+
+        classRadiogroup.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId)
+            {
+                case R.id.first_class:
+                {
+                    clas="1";
+                    describeClas="1";
+                }break;
+                case R.id.second_class:
+                {
+                    clas="2";
+                    describeClas="2";
+                }break;
+                case R.id.cutting_class:
+                {
+                    clas="krojona";
+                    describeClas="krojonej";
+                }break;
+            }
+        });
+
+        acceptButton.setOnClickListener(v -> {
+            chooseWindow.dismiss();
+            updateTitle();
+            createChart();
+        });
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void updateTitle() {
+        title.setText("Wykres przedstawiający kształtowanie się cen papryki " + describeColor + " klasy " + describeClas);
+    }
+
     private void createChart() {
         ArrayList <Entry> prices = new ArrayList<>();
-        int[] d = new int[1000];
-        float[] p = new float[1000];
-        int pointer=0;
         double sumJune=0, sumJuly=0, sumAugust=0, sumSeptember=0, sumOctober=0, sumNovember=0;
         double weightJune=0, weightJuly=0, weightAugust=0, weightSeptember=0, weightOctober=0, weightNovember=0;
-        double answerJune=0, answerJuly=0, answerAugust=0, answerSeptember=0, answerOctober=0, answerNovember=0;
+        double answerJune, answerJuly, answerAugust, answerSeptember, answerOctober, answerNovember;
         double avgPrice=0;
+        int numb=0;
 
         DataBaseHelper db = new DataBaseHelper(context);
-        Date calendar = new Date();
         String date;
-        String stringVat;
-        int vat;
-        double price;
+        double money;
         double weight;
         Cursor cursor = db.getPriceWeightAndDateFromTrade(color,clas);
         while (cursor.moveToNext())
         {
             date=cursor.getString(cursor.getColumnIndexOrThrow(DataBaseNames.TradeOfPepperItem.COLUMN_DATE));
-            vat=cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseNames.TradeOfPepperItem.COLUMN_VAT));
-            price=cursor.getDouble(cursor.getColumnIndexOrThrow(DataBaseNames.TradeOfPepperItem.COLUMN_PRICE_OF_PEPPER));
+            money=cursor.getDouble(cursor.getColumnIndexOrThrow(DataBaseNames.TradeOfPepperItem.COLUMN_TOTAL_SUM));
             weight=cursor.getDouble(cursor.getColumnIndexOrThrow(DataBaseNames.TradeOfPepperItem.COLUMN_WEIGHT_OF_PEPPER));
-            stringVat="0.0"+vat;
-            if(getYear(date) == calendar.getYear()+1900)
+            if(ToolClass.getYear(date) == ToolClass.getActualYear())
             {
-                if(getMonth(date)==6)
+                if(ToolClass.getMonth(date)==6)
                 {
-                    sumJune = sumJune + (Double.parseDouble(stringVat)+1)*price*weight;
+                    sumJune = sumJune + money;
                     weightJune = weightJune + weight;
                 }
-                if(getMonth(date)==7)
+                else if(ToolClass.getMonth(date)==7)
                 {
-                    sumJuly = sumJuly + (Double.parseDouble(stringVat)+1)*price*weight;
+                    sumJuly = sumJuly + money;
                     weightJuly = weightJuly + weight;
                 }
-                if(getMonth(date)==8)
+                else if(ToolClass.getMonth(date)==8)
                 {
-                    sumAugust = sumAugust + (Double.parseDouble(stringVat)+1)*price*weight;
+                    sumAugust = sumAugust + money;
                     weightAugust = weightAugust + weight;
                 }
-                if(getMonth(date)==9)
+                else if(ToolClass.getMonth(date)==9)
                 {
-                    sumSeptember = sumSeptember + (Double.parseDouble(stringVat)+1)*price*weight;
+                    sumSeptember = sumSeptember + money;
                     weightSeptember = weightSeptember + weight;
                 }
-                if(getMonth(date)==10)
+                else if(ToolClass.getMonth(date)==10)
                 {
-                    sumOctober = sumOctober + (Double.parseDouble(stringVat)+1)*price*weight;
+                    sumOctober = sumOctober + money;
                     weightOctober = weightOctober + weight;
                 }
-                if(getMonth(date)==11)
+                else
                 {
-                    sumNovember = sumNovember + (Double.parseDouble(stringVat)+1)*price*weight;
+                    sumNovember = sumNovember + money;
                     weightNovember = weightNovember + weight;
                 }
             }
@@ -252,8 +290,6 @@ public class PriceOfPepperChart extends Fragment {
             answerNovember=sumNovember/weightNovember;
         else
             answerNovember=0;
-
-        int numb=0;
         
         if(answerJune>0) {
             avgPrice = avgPrice + answerJune;
@@ -282,46 +318,41 @@ public class PriceOfPepperChart extends Fragment {
 
         avgPrice=avgPrice/numb;
 
-        System.out.println(avgPrice);
-            
         prices.add(new Entry((float) 6, (float) (answerJune)));
         prices.add(new Entry(7, (float) (answerJuly)));
         prices.add(new Entry(8, (float) (answerAugust)));
         prices.add(new Entry(9, (float) (answerSeptember)));
         prices.add(new Entry(10, (float) (answerOctober)));
         prices.add(new Entry(11, (float) (answerNovember)));
-        System.out.println(prices);
-
-
-
 
         LineDataSet lineDataSet = new LineDataSet(prices,"");
         lineDataSet.setColors(lineColor);
-        lineDataSet.setValueTextColor(getResources().getColor(R.color.blackToWhite));
+        lineDataSet.setValueTextColor(ContextCompat.getColor(context, R.color.blackToWhite));
         lineDataSet.setValueTextSize(0f);
         lineDataSet.setLineWidth(3f);
         lineDataSet.setDrawCircles(false);
         lineDataSet.setDrawCircleHole(false);
 
-        Legend l = chart.getLegend();
-        l.setEnabled(false);
-
         ArrayList <ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(lineDataSet);
 
-        LimitLine averagePrice = new LimitLine((float) avgPrice, "Średnia cena: "+String.format("%.2f", Math.round(avgPrice * 100.0) / 100.0) + "zł");
+        LineData lineData = new LineData(dataSets);
+
+        @SuppressLint("DefaultLocale") LimitLine averagePrice = new LimitLine((float) avgPrice, "Średnia cena: "+String.format("%.2f", Math.round(avgPrice * 100.0) / 100.0) + "zł");
         averagePrice.setLineWidth(3f);
         averagePrice.enableDashedLine(10.0f,10.0f,0.0f);
         averagePrice.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
         averagePrice.setTextSize(15f);
-        averagePrice.setTextColor(getResources().getColor(R.color.blackToWhite));
+        averagePrice.setTextColor(ContextCompat.getColor(context, R.color.blackToWhite));
         averagePrice.setLineColor(lineColor);
 
+        Legend l = chart.getLegend();
+        l.setEnabled(false);
 
         XAxis xaxis =chart.getXAxis();
-        xaxis.setTextColor(getResources().getColor(R.color.blackToWhite));
-        xaxis.setGridColor(getResources().getColor(R.color.blackToWhite));
-        xaxis.setAxisLineColor(getResources().getColor(R.color.blackToWhite));
+        xaxis.setTextColor(ContextCompat.getColor(context, R.color.blackToWhite));
+        xaxis.setGridColor(ContextCompat.getColor(context, R.color.blackToWhite));
+        xaxis.setAxisLineColor(ContextCompat.getColor(context, R.color.blackToWhite));
         xaxis.setAxisLineWidth(2f);
         xaxis.setTextSize(15f);
         xaxis.setLabelRotationAngle(-45);
@@ -348,14 +379,15 @@ public class PriceOfPepperChart extends Fragment {
         });
 
         YAxis yAxisl = chart.getAxisLeft();
-        yAxisl.setTextColor(getResources().getColor(R.color.blackToWhite));
-        yAxisl.setGridColor(getResources().getColor(R.color.blackToWhite));
-        yAxisl.setAxisLineColor(getResources().getColor(R.color.blackToWhite));
+        yAxisl.setTextColor(ContextCompat.getColor(context, R.color.blackToWhite));
+        yAxisl.setGridColor(ContextCompat.getColor(context, R.color.blackToWhite));
+        yAxisl.setAxisLineColor(ContextCompat.getColor(context, R.color.blackToWhite));
         yAxisl.setAxisLineWidth(1f);
         yAxisl.setTextSize(12f);
         yAxisl.removeAllLimitLines();
         yAxisl.addLimitLine(averagePrice);
         yAxisl.setValueFormatter(new ValueFormatter() {
+            @SuppressLint("DefaultLocale")
             @Override
             public String getAxisLabel(float value, AxisBase axis) {
                 return String.format("%.2f", Math.round(value * 100.0) / 100.0) + "zł";
@@ -363,119 +395,23 @@ public class PriceOfPepperChart extends Fragment {
         });
 
         YAxis yAxisp = chart.getAxisRight();
-        yAxisp.setTextColor(getResources().getColor(R.color.blackToWhite));
-        yAxisp.setGridColor(getResources().getColor(R.color.blackToWhite));
-        yAxisp.setAxisLineColor(getResources().getColor(R.color.blackToWhite));
+        yAxisp.setTextColor(ContextCompat.getColor(context, R.color.blackToWhite));
+        yAxisp.setGridColor(ContextCompat.getColor(context, R.color.blackToWhite));
+        yAxisp.setAxisLineColor(ContextCompat.getColor(context, R.color.blackToWhite));
         yAxisp.setAxisLineWidth(2f);
         yAxisp.setTextSize(12f);
         yAxisp.setValueFormatter(new ValueFormatter() {
+            @SuppressLint("DefaultLocale")
             @Override
             public String getAxisLabel(float value, AxisBase axis) {
                 return String.format("%.2f", Math.round(value * 100.0) / 100.0) + "zł";
             }
         });
 
-        LineData lineData = new LineData(dataSets);
-
         chart.setData(lineData);
         chart.getDescription().setEnabled(false);
         chart.invalidate();
         chart.animateY(500);
-
-
-
-    }
-
-    private int getDayAndMonth(String date) {
-        char[] charDate = date.toCharArray();
-        String stringDay = Character.toString(charDate[0]) + Character.toString(charDate[1]);
-        String stringMonth = Character.toString(charDate[3]) + Character.toString(charDate[4]);
-        String answer;
-        stringMonth=stringMonth+"00";
-        answer=stringMonth+stringDay;
-        return Integer.parseInt(answer);
-    }
-
-    private int getYear(String date) {
-        char[] charDate = date.toCharArray();
-        String stringYear = Character.toString(charDate[6]) + Character.toString(charDate[7]) +
-                Character.toString(charDate[8]) + Character.toString(charDate[9]);
-        int year = Integer.parseInt(stringYear);
-        return year;
-    }
-
-    private int getMonth(String date) {
-        char[] charDate = date.toCharArray();
-        String stringMonth = Character.toString(charDate[3]) + Character.toString(charDate[4]);
-        int month = Integer.parseInt(stringMonth);
-        return month;
-    }
-
-    private void createListeners() {
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int id=v.getId();
-                switch (id)
-                {
-                    case R.id.btn_trade_in_numbers:
-                    {
-                        fragment = new TradeStatisticsFragment();
-                    }break;
-                    case R.id.btn_left:
-                    {
-                        fragment = new MonthlyWeightFromPepperChartFragment();
-                    }break;
-                    case R.id.btn_right:
-                    {
-                        fragment = new ColorOfPepperChartFragment();
-                    }break;
-                }
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
-            }
-        };
-        btnTradeInNumbers.setOnClickListener(listener);
-        btnLeft.setOnClickListener(listener);
-        btnRight.setOnClickListener(listener);
-
-        btnChangeProperties.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openChooseWindow();
-            }
-        });
-    }
-
-
-
-    private void findViews(View view) {
-    title=view.findViewById(R.id.title);
-    chart=view.findViewById(R.id.chart);
-    btnChangeProperties=view.findViewById(R.id.btn_change_properties);
-    btnTradeInNumbers=view.findViewById(R.id.btn_trade_in_numbers);
-    btnLeft=view.findViewById(R.id.btn_left);
-    btnRight=view.findViewById(R.id.btn_right);
-    }
-
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id=item.getItemId();
-        switch (id)
-        {
-            case R.id.information:
-            {
-                InformationDialog informationDialog = new InformationDialog();
-                informationDialog.openInformationDialog(context,getResources().getString(R.string.describes_calculator_of_field));
-            }break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }
 

@@ -1,5 +1,8 @@
 package HelperClasses;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import androidx.appcompat.app.AppCompatDelegate;
 
 
@@ -30,6 +33,12 @@ public  class ToolClass {
         String stringYear = charDate[6] + Character.toString(charDate[7]) +
                 charDate[8] + charDate[9];
         return Integer.parseInt(stringYear);
+    }
+
+    public static int getMonth(String date) {
+        char[] charDate = date.toCharArray();
+        String stringMonth = charDate[3] + Character.toString(charDate[4]);
+        return Integer.parseInt(stringMonth);
     }
 
     public static boolean checkValidateData(String date) {
@@ -88,6 +97,12 @@ public  class ToolClass {
             default:
                 return 0;
         }
+    }
+
+    public static double getHighgroves(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("FARM_DATA", Context.MODE_PRIVATE);
+        String highgroves = sharedPreferences.getString("HIGHGROVES","0");
+        return Double.parseDouble(highgroves);
     }
 
 }

@@ -190,8 +190,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return db.query(DataBaseNames.TradeOfPepperItem.TABLE_NAME,columns, null,null,null,null,null);
     }
     public Cursor getPriceWeightAndDateFromTrade(String color, String clas){
-        String[] columns={DataBaseNames.TradeOfPepperItem.COLUMN_DATE, DataBaseNames.TradeOfPepperItem.COLUMN_VAT,
-                          DataBaseNames.TradeOfPepperItem.COLUMN_PRICE_OF_PEPPER, DataBaseNames.TradeOfPepperItem.COLUMN_WEIGHT_OF_PEPPER};
+        String[] columns={DataBaseNames.TradeOfPepperItem.COLUMN_DATE, DataBaseNames.TradeOfPepperItem.COLUMN_TOTAL_SUM,
+                          DataBaseNames.TradeOfPepperItem.COLUMN_WEIGHT_OF_PEPPER};
         String selection = DataBaseNames.TradeOfPepperItem.COLUMN_COLOR_OF_PEPPER + " LIKE ? AND " +
                            DataBaseNames.TradeOfPepperItem.COLUMN_CLASS_OF_PEPPER + " LIKE ?";
         String[] selection_args= {color, clas};

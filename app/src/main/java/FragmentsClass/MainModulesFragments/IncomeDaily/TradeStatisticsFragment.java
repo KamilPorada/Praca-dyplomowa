@@ -2,8 +2,6 @@ package FragmentsClass.MainModulesFragments.IncomeDaily;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -18,11 +16,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.pracadyplomowa.R;
 
-import java.util.Date;
-
-import DataBase.DataBaseHelper;
-import DataBase.DataBaseNames;
 import HelperClasses.InformationDialog;
+import HelperClasses.StatisticsHelper;
+import HelperClasses.ToolClass;
 
 public class TradeStatisticsFragment extends Fragment {
 
@@ -35,135 +31,25 @@ public class TradeStatisticsFragment extends Fragment {
              totalSumOfWeight, totalSumOfIncome, averagePriceOfPepper;
     private Button btnTradeInCharts;
 
+    private final String[] colorsOfPepper = {
+      "czerwona", "żółta", "zielona", "pomarańczowa", "blondyna"
+    };
+    private final String[] classesOfPepper = {
+      "1", "2", "krojona"
+    };
+
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.layout_statistics_of_trade, container, false);
+        assert container != null;
         context=container.getContext();
         findViews(view);
         createListeners();
         loadData();
         return view;
-    }
-
-    @SuppressLint({"SetTextI18n", "DefaultLocale"})
-    private void loadData() {
-        weightOfRedPepper.setText(calculateWeightFromColorOfPepper("czerwona") + " kg");
-        weightOfYellowPepper.setText(calculateWeightFromColorOfPepper("żółta") + " kg");
-        weightOfGreenPepper.setText(calculateWeightFromColorOfPepper("zielona") + " kg");
-        weightOfOrangePepper.setText(calculateWeightFromColorOfPepper("pomarańczowa") + " kg");
-        weightOfBlondPepper.setText(calculateWeightFromColorOfPepper("blondyna") + " kg");
-        weightOfFirstClassPepper.setText(calculateWeightFromClassOfPepper("1") + " kg");
-        weightOfSecondClassPepper.setText(calculateWeightFromClassOfPepper("2") + " kg");
-        weightOfCuttingClassPepper.setText(calculateWeightFromClassOfPepper("krojona") + " kg");
-        weightFromHighgrove.setText(String.format("%.2f", Math.round(calculateWeightFromHighgrove(getHighgroves()) * 100.0) / 100.0) + " kg");
-        incomeFromHighgrove.setText(String.format("%.2f", Math.round(calculateIncomeFromHighgrove(getHighgroves()) * 100.0) / 100.0) + " zł");
-        totalSumOfWeight.setText(String.format("%.2f", Math.round(calculateWeightFromHighgrove(1) * 100.0) / 100.0) + " kg");
-        totalSumOfIncome.setText(String.format("%.2f", Math.round(calculateIncomeFromHighgrove(1) * 100.0) / 100.0) + " zł");
-        averagePriceOfPepper.setText(getaveragePriceOfPepper()+ " zł");
-
-    }
-
-    private String getaveragePriceOfPepper() {
-      double price = calculateIncomeFromHighgrove(1);
-      double weight = calculateWeightFromHighgrove(1);
-      String answer = String.format("%.2f", Math.round((price/weight) * 100.0) / 100.0);
-      return answer;
-    }
-
-    private double calculateIncomeFromHighgrove(double divider) {
-        DataBaseHelper dbHelper = new DataBaseHelper(context);
-        Cursor k =dbHelper.getMoneyFromTrade();
-        Date calendar = new Date();
-        int currentYear=calendar.getYear()+1900;
-        int year=0;
-        int vat=0;
-        double price=0;
-        double weight = 0;
-        double totalMoney=0;
-        String date="";
-        String stringVat="";
-        String stringTotalMoneyFromTrade="";
-        while (k.moveToNext())
-        {
-            vat=k.getInt(k.getColumnIndexOrThrow(DataBaseNames.TradeOfPepperItem.COLUMN_VAT));
-            price=k.getDouble(k.getColumnIndexOrThrow(DataBaseNames.TradeOfPepperItem.COLUMN_PRICE_OF_PEPPER));
-            weight=k.getDouble(k.getColumnIndexOrThrow(DataBaseNames.TradeOfPepperItem.COLUMN_WEIGHT_OF_PEPPER));
-            stringVat="0.0"+vat;
-            date=k.getString(k.getColumnIndexOrThrow(DataBaseNames.TradeOfPepperItem.COLUMN_DATE));
-            year=getYear(date);
-            if(currentYear==year)
-                totalMoney=totalMoney+(Double.parseDouble(stringVat)+1)*price*weight;
-        }
-        totalMoney=totalMoney/divider;
-        stringTotalMoneyFromTrade=String.format("%.2f", Math.round(totalMoney * 100.0) / 100.0);
-
-        return totalMoney;
-    }
-
-    private double calculateWeightFromHighgrove(double divider) {
-        DataBaseHelper db= new DataBaseHelper(context);
-        Date calendar = new Date();
-        String date;
-        double sum=0;
-        Cursor cursor = db.getWeightFromTrade();
-        while (cursor.moveToNext())
-        {
-            date=cursor.getString(cursor.getColumnIndexOrThrow(DataBaseNames.TradeOfPepperItem.COLUMN_DATE));
-            if(getYear(date) == calendar.getYear()+1900)
-                sum=sum+=cursor.getDouble(cursor.getColumnIndexOrThrow(DataBaseNames.TradeOfPepperItem.COLUMN_WEIGHT_OF_PEPPER));
-        }
-        sum=sum/divider;
-
-        return sum;
-    }
-
-    private double getHighgroves() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("FARM_DATA",Context.MODE_PRIVATE);
-        String highgroves = sharedPreferences.getString("HIGHGROVES","0");
-        return Double.parseDouble(highgroves);
-    }
-
-    private String calculateWeightFromClassOfPepper(String clas) {
-        DataBaseHelper db = new DataBaseHelper(context);
-        Date calendar = new Date();
-        String date;
-        String finalString;
-        double sum=0;
-        Cursor cursor = db.getWeightFromClass(clas);
-        while (cursor.moveToNext())
-        {
-            date=cursor.getString(cursor.getColumnIndexOrThrow(DataBaseNames.TradeOfPepperItem.COLUMN_DATE));
-            if(getYear(date) == calendar.getYear()+1900)
-                sum=sum+=cursor.getDouble(cursor.getColumnIndexOrThrow(DataBaseNames.TradeOfPepperItem.COLUMN_WEIGHT_OF_PEPPER));
-        }
-        finalString=String.valueOf(String.format("%.2f", Math.round(sum * 100.0) / 100.0));
-        return finalString;
-    }
-
-    private String calculateWeightFromColorOfPepper(String color) {
-        DataBaseHelper db = new DataBaseHelper(context);
-        Date calendar = new Date();
-        String date;
-        String finalString;
-        double sum=0;
-        Cursor cursor = db.getWeightFromColor(color);
-        while (cursor.moveToNext())
-        {
-            date=cursor.getString(cursor.getColumnIndexOrThrow(DataBaseNames.TradeOfPepperItem.COLUMN_DATE));
-            if(getYear(date) == calendar.getYear()+1900)
-                sum=sum+=cursor.getDouble(cursor.getColumnIndexOrThrow(DataBaseNames.TradeOfPepperItem.COLUMN_WEIGHT_OF_PEPPER));
-        }
-        finalString=String.valueOf(String.format("%.2f", Math.round(sum * 100.0) / 100.0));
-        return finalString;
-    }
-
-    private int getYear(String date) {
-        char[] charDate = date.toCharArray();
-        String stringYear = Character.toString(charDate[6]) + Character.toString(charDate[7]) +
-                Character.toString(charDate[8]) + Character.toString(charDate[9]);
-        int year = Integer.parseInt(stringYear);
-        return year;
     }
 
     @Override
@@ -175,13 +61,9 @@ public class TradeStatisticsFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id=item.getItemId();
-        switch (id)
-        {
-            case R.id.information:
-            {
-                InformationDialog informationDialog = new InformationDialog();
-                informationDialog.openInformationDialog(context,getResources().getString(R.string.describes_income_daily));
-            }break;
+        if (id == R.id.information) {
+            InformationDialog informationDialog = new InformationDialog();
+            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_income_daily));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -204,15 +86,28 @@ public class TradeStatisticsFragment extends Fragment {
     }
 
     private void createListeners() {
-        btnTradeInCharts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragment = new ColorOfPepperChartFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
-            }
+        btnTradeInCharts.setOnClickListener(v -> {
+            fragment = new ColorOfPepperChartFragment();
+            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
         });
     }
 
+    @SuppressLint({"SetTextI18n", "DefaultLocale"})
+    private void loadData() {
+        weightOfRedPepper.setText(StatisticsHelper.calculateWeightFromColorOfPepper(context, ToolClass.getActualYear(),colorsOfPepper[0]) + " kg");
+        weightOfYellowPepper.setText(StatisticsHelper.calculateWeightFromColorOfPepper(context, ToolClass.getActualYear(),colorsOfPepper[1]) + " kg");
+        weightOfGreenPepper.setText(StatisticsHelper.calculateWeightFromColorOfPepper(context, ToolClass.getActualYear(),colorsOfPepper[2]) + " kg");
+        weightOfOrangePepper.setText(StatisticsHelper.calculateWeightFromColorOfPepper(context, ToolClass.getActualYear(),colorsOfPepper[3]) + " kg");
+        weightOfBlondPepper.setText(StatisticsHelper.calculateWeightFromColorOfPepper(context, ToolClass.getActualYear(),colorsOfPepper[4]) + " kg");
+        weightOfFirstClassPepper.setText(StatisticsHelper.calculateWeightFromClassOfPepper(context, ToolClass.getActualYear(),classesOfPepper[0]) + " kg");
+        weightOfSecondClassPepper.setText(StatisticsHelper.calculateWeightFromClassOfPepper(context, ToolClass.getActualYear(),classesOfPepper[1]) + " kg");
+        weightOfCuttingClassPepper.setText(StatisticsHelper.calculateWeightFromClassOfPepper(context, ToolClass.getActualYear(),classesOfPepper[2]) + " kg");
+        weightFromHighgrove.setText(String.format("%.2f", Math.round(StatisticsHelper.calculateWeightFromHighgrove(context,ToolClass.getActualYear(),ToolClass.getHighgroves(context)) * 100.0) / 100.0) + " kg");
+        incomeFromHighgrove.setText(String.format("%.2f", Math.round(StatisticsHelper.calculateIncomeFromHighgrove(context,ToolClass.getActualYear(),ToolClass.getHighgroves(context)) * 100.0) / 100.0) + " zł");
+        totalSumOfWeight.setText(String.format("%.2f", Math.round(StatisticsHelper.calculateWeightFromHighgrove(context,ToolClass.getActualYear(),1) * 100.0) / 100.0) + " kg");
+        totalSumOfIncome.setText(String.format("%.2f", Math.round(StatisticsHelper.calculateIncomeFromHighgrove(context,ToolClass.getActualYear(),1) * 100.0) / 100.0) + " zł");
+        averagePriceOfPepper.setText(String.format("%.2f", Math.round((StatisticsHelper.getaveragePriceOfPepper(context)) * 100.0) / 100.0) + " zł");
+    }
 }
 
 
