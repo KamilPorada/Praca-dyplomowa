@@ -65,7 +65,7 @@ public class MonthlyWeightFromPepperChartFragment extends Fragment {
         int id=item.getItemId();
         if (id == R.id.information) {
             InformationDialog informationDialog = new InformationDialog();
-            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_calculator_of_field));
+            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_monthly_weight_from_pepper));
         }
         return super.onOptionsItemSelected(item);
     }

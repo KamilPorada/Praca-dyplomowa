@@ -104,7 +104,7 @@ public class TradeOfPepperFragment extends Fragment {
             case R.id.information:
             {
                 InformationDialog informationDialog = new InformationDialog();
-                informationDialog.openInformationDialog(context,getResources().getString(R.string.describes_about_application));
+                informationDialog.openInformationDialog(context,getResources().getString(R.string.describes_trade_of_pepper));
             }break;
             case R.id.add_item:
             {

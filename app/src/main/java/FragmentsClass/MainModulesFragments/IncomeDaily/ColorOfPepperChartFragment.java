@@ -70,7 +70,7 @@ public class ColorOfPepperChartFragment extends Fragment {
         int id=item.getItemId();
         if (id == R.id.information) {
             InformationDialog informationDialog = new InformationDialog();
-            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_calculator_of_field));
+            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_color_of_pepper));
         }
         return super.onOptionsItemSelected(item);
     }
