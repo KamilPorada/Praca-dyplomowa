@@ -29,11 +29,6 @@ public class InformationDialog {
 
     private void createAndAddListeners(Dialog informationDialog, TextView information, Button comeBackButton, String describes) {
         information.setText(describes);
-        comeBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                informationDialog.dismiss();
-            }
-        });
+        comeBackButton.setOnClickListener(v -> informationDialog.dismiss());
     }
 }

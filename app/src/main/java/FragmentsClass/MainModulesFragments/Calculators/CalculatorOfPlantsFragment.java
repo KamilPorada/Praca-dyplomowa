@@ -1,5 +1,6 @@
 package FragmentsClass.MainModulesFragments.Calculators;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,39 +23,64 @@ import HelperClasses.ShowAttention;
 
 public class CalculatorOfPlantsFragment extends Fragment {
 
-    Context context;
+    private Context context;
 
-    RadioButton standardHighgroves, biggerHighgroves;
-    SeekBar changeDistance;
-    TextView howDistance, description, finalAnswer;
-    Button calculatePlants, resetData;
+    private RadioButton standardHighgroves, biggerHighgroves;
+    private SeekBar changeDistance;
+    private TextView howDistance, description, finalAnswer;
+    private Button calculatePlants, resetData;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_calculator_of_plants_fragment, container, false);
+        assert container != null;
         context=container.getContext();
         findViews(view);
         createListeners();
         return view;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id=item.getItemId();
+        if (id == R.id.information) {
+            InformationDialog informationDialog = new InformationDialog();
+            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_calculator_of_plants));
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void findViews(View view) {
+        standardHighgroves=view.findViewById(R.id.standard_highgroves);
+        biggerHighgroves=view.findViewById(R.id.bigger_highgroves);
+        changeDistance=view.findViewById(R.id.change_distance);
+        howDistance=view.findViewById(R.id.how_distance);
+        description=view.findViewById(R.id.description);
+        finalAnswer=view.findViewById(R.id.final_answer);
+        calculatePlants=view.findViewById(R.id.calculate_plants);
+        resetData=view.findViewById(R.id.reset_data);
+    }
+
     private void createListeners() {
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int id=v.getId();
-                switch (id)
+        @SuppressLint("NonConstantResourceId") View.OnClickListener listener = v -> {
+            int id=v.getId();
+            switch (id)
+            {
+                case R.id.calculate_plants:
                 {
-                    case R.id.calculate_plants:
-                    {
-                        checkRadioButtons();
-                    }break;
-                    case R.id.reset_data:
-                    {
-                        reset();
-                    }break;
-                }
+                    checkRadioButtons();
+                }break;
+                case R.id.reset_data:
+                {
+                    reset();
+                }break;
             }
         };
 
@@ -62,6 +88,7 @@ public class CalculatorOfPlantsFragment extends Fragment {
         resetData.setOnClickListener(listener);
 
         changeDistance.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 howDistance.setText("Odległość sadzonki od sadzonki\n" + progress + "cm");
@@ -79,30 +106,20 @@ public class CalculatorOfPlantsFragment extends Fragment {
         });
     }
 
-    private void reset() {
-        standardHighgroves.setChecked(false);
-        biggerHighgroves.setChecked(false);
-        description.setText("Rozmiary tunelu foliowego: 0m x 0m\n" +
-                "Ilość redlanek w tunelu foliowym: 0\n" +
-                "Ilość sadzonek w każdej redlance: 0\n" +
-                "Ilość sadzonek w tunelu foliowym: 0");
-        finalAnswer.setText("0");
-        changeDistance.setProgress(30);
-    }
-
     private void checkRadioButtons() {
         ShowAttention showAttention = new ShowAttention();
         if (!standardHighgroves.isChecked() && !biggerHighgroves.isChecked())
-            showAttention.showToast(R.layout.toast_layout,null,getActivity(),context,"Wybierz rozmiar tunelu foliowego!");
+            showAttention.showToast(R.layout.toast_layout,null, requireActivity(),context,"Wybierz rozmiar tunelu foliowego!");
         else
             calculate();
     }
 
+    @SuppressLint("SetTextI18n")
     private void calculate() {
         double length=3000;
         int dredge=0;
-        double plantsPerDredge=0;
-        double plantsPerHighgrove=0;
+        double plantsPerDredge;
+        double plantsPerHighgrove;
         int distance=changeDistance.getProgress();
         String sizesHighgroves="";
         if(standardHighgroves.isChecked())
@@ -120,41 +137,22 @@ public class CalculatorOfPlantsFragment extends Fragment {
         plantsPerHighgrove=plantsPerDredge*dredge;
 
         description.setText("Rozmiary tunelu foliowego: " + sizesHighgroves +
-                "\nIlość redlanek w tunelu foliowym: " + String.valueOf(dredge) +
-                "\nIlość sadzonek w każdej redlance: " + String.valueOf((int)plantsPerDredge) +
-                "\nIlość sadzonek w tunelu foliowym: " + String.valueOf((int)plantsPerHighgrove));
+                "\nIlość redlanek w tunelu foliowym: " + dredge +
+                "\nIlość sadzonek w każdej redlance: " + (int) plantsPerDredge +
+                "\nIlość sadzonek w tunelu foliowym: " + (int) plantsPerHighgrove);
         finalAnswer.setText(String.valueOf((int)plantsPerHighgrove));
     }
 
-
-    private void findViews(View view) {
-        standardHighgroves=view.findViewById(R.id.standard_highgroves);
-        biggerHighgroves=view.findViewById(R.id.bigger_highgroves);
-        changeDistance=view.findViewById(R.id.change_distance);
-        howDistance=view.findViewById(R.id.how_distance);
-        description=view.findViewById(R.id.description);
-        finalAnswer=view.findViewById(R.id.final_answer);
-        calculatePlants=view.findViewById(R.id.calculate_plants);
-        resetData=view.findViewById(R.id.reset_data);
+    @SuppressLint("SetTextI18n")
+    private void reset() {
+        standardHighgroves.setChecked(false);
+        biggerHighgroves.setChecked(false);
+        description.setText("Rozmiary tunelu foliowego: 0m x 0m\n" +
+                "Ilość redlanek w tunelu foliowym: 0\n" +
+                "Ilość sadzonek w każdej redlance: 0\n" +
+                "Ilość sadzonek w tunelu foliowym: 0");
+        finalAnswer.setText("0");
+        changeDistance.setProgress(30);
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id=item.getItemId();
-        switch (id)
-        {
-            case R.id.information:
-            {
-                InformationDialog informationDialog = new InformationDialog();
-                informationDialog.openInformationDialog(context,getResources().getString(R.string.describes_calculator_of_plants));
-            }break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }

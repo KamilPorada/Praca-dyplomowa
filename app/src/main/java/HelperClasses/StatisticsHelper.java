@@ -3,8 +3,6 @@ package HelperClasses;
 import android.content.Context;
 import android.database.Cursor;
 
-import java.util.Date;
-
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
 
@@ -78,8 +76,6 @@ public class StatisticsHelper {
                 sum=sum+money;
         }
         sum=sum/divider;
-//        stringTotalMoneyFromTrade=String.format("%.2f", Math.round(totalMoney * 100.0) / 100.0);
-
         return sum;
     }
 
@@ -126,7 +122,7 @@ public class StatisticsHelper {
         return sum;
     }
 
-    public static double getaveragePriceOfPepper(Context context) {
+    public static double getAveragePriceOfPepper(Context context) {
         double price = calculateIncomeFromHighgrove(context,ToolClass.getActualYear(),1);
         double weight = calculateWeightFromHighgrove(context,ToolClass.getActualYear(),1);
         return price/weight;

@@ -106,7 +106,7 @@ public class TradeStatisticsFragment extends Fragment {
         incomeFromHighgrove.setText(String.format("%.2f", Math.round(StatisticsHelper.calculateIncomeFromHighgrove(context,ToolClass.getActualYear(),ToolClass.getHighgroves(context)) * 100.0) / 100.0) + " zł");
         totalSumOfWeight.setText(String.format("%.2f", Math.round(StatisticsHelper.calculateWeightFromHighgrove(context,ToolClass.getActualYear(),1) * 100.0) / 100.0) + " kg");
         totalSumOfIncome.setText(String.format("%.2f", Math.round(StatisticsHelper.calculateIncomeFromHighgrove(context,ToolClass.getActualYear(),1) * 100.0) / 100.0) + " zł");
-        averagePriceOfPepper.setText(String.format("%.2f", Math.round((StatisticsHelper.getaveragePriceOfPepper(context)) * 100.0) / 100.0) + " zł");
+        averagePriceOfPepper.setText(String.format("%.2f", Math.round((StatisticsHelper.getAveragePriceOfPepper(context)) * 100.0) / 100.0) + " zł");
     }
 }
 

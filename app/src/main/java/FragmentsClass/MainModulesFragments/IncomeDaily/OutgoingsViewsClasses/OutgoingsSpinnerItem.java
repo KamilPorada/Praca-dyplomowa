@@ -1,8 +1,8 @@
 package FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsViewsClasses;
 
 public class OutgoingsSpinnerItem {
-    private String mText;
-    private int mImage;
+    private final String mText;
+    private final int mImage;
 
     public OutgoingsSpinnerItem(String text, int image) {
         mText = text;

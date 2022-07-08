@@ -1,31 +1,30 @@
 package MainClass;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+
 import com.example.pracadyplomowa.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.Date;
 
 import FragmentsClass.BottomFragments.AboutApplicationFragment;
 import FragmentsClass.BottomFragments.FarmFragment;
 import FragmentsClass.BottomFragments.HomeFragment;
 import FragmentsClass.MainModulesFragments.Calculators.CalculatorsFragment;
 import FragmentsClass.MainModulesFragments.IncomeDaily.IncomeDailyFragment;
+import HelperClasses.ToolClass;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViews();
-        startSettings(savedInstanceState);
+        startSettings();
         createListeners();
     }
 
@@ -52,18 +51,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id=item.getItemId();
-        switch (id)
-        {
-            case R.id.information:
-            {
-
-            }break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     private void findViews() {
         drawerLayout=findViewById(R.id.drawer_layout);
@@ -74,7 +61,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    private void startSettings(Bundle savedInstanceState) {
+    @SuppressLint("SetTextI18n")
+    private void startSettings() {
         fragment=new HomeFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
         setSupportActionBar(toolbar);
@@ -84,21 +72,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
-        Date date = new Date();
-        toolSeason.setText(toolSeason.getText()+" "+String.valueOf(date.getYear()+1900));
+        toolSeason.setText(toolSeason.getText()+" "+ ToolClass.getActualYear());
 
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     private void createListeners() {
-        bottomNavigationView.setOnNavigationItemSelectedListener(listener);
-    }
-
-
-
-    private BottomNavigationView.OnNavigationItemSelectedListener listener =new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        bottomNavigationView.setOnItemSelectedListener(item -> {
             int id=item.getItemId();
             switch (id)
             {
@@ -117,9 +98,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
             return true;
-        }
-    };
+        });
+    }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id=item.getItemId();

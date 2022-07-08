@@ -12,7 +12,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public  class ToolClass {
-    public static void updateMode()
+    public static void updateDarkMode()
     {
         if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_NO)
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -45,7 +45,6 @@ public  class ToolClass {
         boolean validateDay;
         boolean validateMonth;
         boolean validateDotts;
-
 
         if(date.length()<10)
            return false;
@@ -80,6 +79,12 @@ public  class ToolClass {
         return year == getActualYear();
     }
 
+    public static double getHighgroves(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("FARM_DATA", Context.MODE_PRIVATE);
+        String highgroves = sharedPreferences.getString("HIGHGROVES","0");
+        return Double.parseDouble(highgroves);
+    }
+
     public static int getDrawable(String color)
     {
         switch (color)
@@ -98,11 +103,4 @@ public  class ToolClass {
                 return 0;
         }
     }
-
-    public static double getHighgroves(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("FARM_DATA", Context.MODE_PRIVATE);
-        String highgroves = sharedPreferences.getString("HIGHGROVES","0");
-        return Double.parseDouble(highgroves);
-    }
-
 }

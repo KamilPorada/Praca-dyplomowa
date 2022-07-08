@@ -1,11 +1,13 @@
 package FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsViewsClasses;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pracadyplomowa.R;
@@ -14,10 +16,10 @@ import java.util.List;
 
 
 public class OutgoingsAdapter extends RecyclerView.Adapter<OutgoingsAdapter.OutgoingsViewHolder> {
-    private List<OutgoingsItem> outgoingsItem;
+    private final List<OutgoingsItem> outgoingsItem;
     private OutgoingsAdapter.OnItemClickListener adapterListener;
 
-    public interface OnItemClickListener { ;
+    public interface OnItemClickListener {
         void onUpdateClick(int position);
         void onDeleteClick(int position);
     }
@@ -41,25 +43,19 @@ public class OutgoingsAdapter extends RecyclerView.Adapter<OutgoingsAdapter.Outg
             editItem=itemView.findViewById(R.id.edit_item);
             removeItem=itemView.findViewById(R.id.remove_item);
 
-            editItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onUpdateClick(position);
-                        }
+            editItem.setOnClickListener(v -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onUpdateClick(position);
                     }
                 }
             });
-            removeItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onDeleteClick(position);
-                        }
+            removeItem.setOnClickListener(v -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onDeleteClick(position);
                     }
                 }
             });
@@ -70,13 +66,14 @@ public class OutgoingsAdapter extends RecyclerView.Adapter<OutgoingsAdapter.Outg
         this.outgoingsItem = outgoingsItem;
     }
 
+    @NonNull
     @Override
     public OutgoingsAdapter.OutgoingsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_of_outgoing, parent, false);
-        OutgoingsAdapter.OutgoingsViewHolder ovh = new OutgoingsAdapter.OutgoingsViewHolder(v, adapterListener);
-        return ovh;
+        return new OutgoingsViewHolder(v, adapterListener);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(OutgoingsAdapter.OutgoingsViewHolder holder, int position) {
         OutgoingsItem currentItem = outgoingsItem.get(position);

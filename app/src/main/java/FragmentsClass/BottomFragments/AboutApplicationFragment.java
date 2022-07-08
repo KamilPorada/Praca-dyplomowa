@@ -17,11 +17,12 @@ import HelperClasses.InformationDialog;
 
 public class AboutApplicationFragment extends Fragment {
 
-    Context context;
+    private Context context;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        assert container != null;
         context=container.getContext();
         return inflater.inflate(R.layout.layout_about_application_fragment,container,false);
     }
@@ -34,13 +35,9 @@ public class AboutApplicationFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id=item.getItemId();
-        switch (id)
-        {
-            case R.id.information:
-            {
-                InformationDialog informationDialog = new InformationDialog();
-                informationDialog.openInformationDialog(context,getResources().getString(R.string.describes_about_application));
-            }break;
+        if (id == R.id.information) {
+            InformationDialog informationDialog = new InformationDialog();
+            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_about_application));
         }
         return super.onOptionsItemSelected(item);
     }

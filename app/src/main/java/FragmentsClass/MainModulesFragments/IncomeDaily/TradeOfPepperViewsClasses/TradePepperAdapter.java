@@ -1,12 +1,14 @@
 package FragmentsClass.MainModulesFragments.IncomeDaily.TradeOfPepperViewsClasses;
 
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pracadyplomowa.R;
@@ -15,10 +17,10 @@ import java.util.List;
 
 
 public class TradePepperAdapter extends RecyclerView.Adapter<TradePepperAdapter.TradePepperViewHolder> {
-    private List<TradePepperItem> tradePepperItems;
+    private final List<TradePepperItem> tradePepperItems;
     private OnItemClickListener adapterListener;
 
-    public interface OnItemClickListener { ;
+    public interface OnItemClickListener {
         void onUpdateClick(int position);
         void onDeleteClick(int position);
     }
@@ -44,25 +46,19 @@ public class TradePepperAdapter extends RecyclerView.Adapter<TradePepperAdapter.
             editItem=itemView.findViewById(R.id.edit_item);
             removeItem=itemView.findViewById(R.id.remove_item);
 
-            editItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onUpdateClick(position);
-                        }
+            editItem.setOnClickListener(v -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onUpdateClick(position);
                     }
                 }
             });
-            removeItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onDeleteClick(position);
-                        }
+            removeItem.setOnClickListener(v -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onDeleteClick(position);
                     }
                 }
             });
@@ -73,13 +69,14 @@ public class TradePepperAdapter extends RecyclerView.Adapter<TradePepperAdapter.
         this.tradePepperItems = tradePepperItems;
     }
 
+    @NonNull
     @Override
     public TradePepperViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_of_trade_of_pepper, parent, false);
-        TradePepperViewHolder tdvh = new TradePepperViewHolder(v, adapterListener);
-        return tdvh;
+        return new TradePepperViewHolder(v, adapterListener);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(TradePepperViewHolder holder, int position) {
         TradePepperItem currentItem = tradePepperItems.get(position);

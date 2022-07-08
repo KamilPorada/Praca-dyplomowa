@@ -94,7 +94,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String[] args ={passwordKey+""};
         db.update(DataBaseNames.TradeOfPepperItem.TABLE_NAME,values,"dataPassword=?",args);
     }
-
     public Cursor getTradeOfPepperItems(){
         String[] columns={DataBaseNames.TradeOfPepperItem._ID, DataBaseNames.TradeOfPepperItem.COLUMN_COLOR_OF_PEPPER,
                           DataBaseNames.TradeOfPepperItem.COLUMN_VAT, DataBaseNames.TradeOfPepperItem.COLUMN_CLASS_OF_PEPPER,
@@ -120,7 +119,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         db.insertOrThrow(DataBaseNames.OutgoingsItem.TABLE_NAME,null,values);
     }
-
     public void updateOutgoingItems(String passwordKey, String category,String describe, double price, int image, String date) {
         SQLiteDatabase db =getWritableDatabase();
         ContentValues values =new ContentValues();
@@ -133,30 +131,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String[] args ={passwordKey+""};
         db.update(DataBaseNames.OutgoingsItem.TABLE_NAME,values,"dataPassword=?",args);
     }
-
     public Cursor getOutgoingItems(){
         String[] columns={DataBaseNames.OutgoingsItem.COLUMN_DATE_OF_OUTGOING, DataBaseNames.OutgoingsItem.COLUMN_CATEGORY_OF_OUTGOING,
                 DataBaseNames.OutgoingsItem.COLUMN_PRICE_OF_OUTGOING, DataBaseNames.OutgoingsItem.COLUMN_DESCRIBE_OF_OUTGOING,
                 DataBaseNames.OutgoingsItem.COLUMN_IMAGE,DataBaseNames.OutgoingsItem.COLUMN_DATA_PASWORD};
         SQLiteDatabase db =getReadableDatabase();
         return db.query(DataBaseNames.OutgoingsItem.TABLE_NAME,columns, null,null,null,null,null);
-    }
-
-    //------------------------------UNIVERSAL SQLITE QUERIES---------------------------------//
-
-    public void deleteItem(String tableName, int id)
-    {
-        SQLiteDatabase db=getReadableDatabase();
-        String[] args ={id+""};
-        db.delete(tableName,"_id=?",args);
-    }
-
-    public Cursor getItemID(String tableName, String columnID, String columnDataPassword, String passwordKey){
-        String[] columns={columnID};
-        String selection = columnDataPassword+" LIKE ?";
-        String[] selection_args= {passwordKey};
-        SQLiteDatabase db =getReadableDatabase();
-        return db.query(tableName, columns, selection,selection_args,null,null,null);
     }
 
     //------------------------------STATISTICS SQLITE QUERIES---------------------------------//
@@ -169,7 +149,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db =getReadableDatabase();
         return db.query(DataBaseNames.TradeOfPepperItem.TABLE_NAME, columns, selection,selection_args,null,null,null);
     }
-
     public Cursor getWeightFromClass(String clas){
         String[] columns={DataBaseNames.TradeOfPepperItem.COLUMN_WEIGHT_OF_PEPPER,
                 DataBaseNames.TradeOfPepperItem.COLUMN_DATE};
@@ -178,7 +157,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db =getReadableDatabase();
         return db.query(DataBaseNames.TradeOfPepperItem.TABLE_NAME, columns, selection,selection_args,null,null,null);
     }
-
     public Cursor getMoneyFromTrade(){
         String[] columns={DataBaseNames.TradeOfPepperItem.COLUMN_TOTAL_SUM, DataBaseNames.TradeOfPepperItem.COLUMN_DATE};
         SQLiteDatabase db =getReadableDatabase();
@@ -198,8 +176,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db =getReadableDatabase();
         return db.query(DataBaseNames.TradeOfPepperItem.TABLE_NAME, columns, selection,selection_args,null,null,null);
     }
-
-
     public Cursor getMoneyFromSpecificOutgoing(String category){
         String[] columns={DataBaseNames.OutgoingsItem.COLUMN_PRICE_OF_OUTGOING, DataBaseNames.OutgoingsItem.COLUMN_DATE_OF_OUTGOING};
         String selection = DataBaseNames.OutgoingsItem.COLUMN_CATEGORY_OF_OUTGOING + " LIKE ?";
@@ -211,5 +187,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String[] columns={DataBaseNames.OutgoingsItem.COLUMN_PRICE_OF_OUTGOING, DataBaseNames.OutgoingsItem.COLUMN_DATE_OF_OUTGOING};
         SQLiteDatabase db =getReadableDatabase();
         return db.query(DataBaseNames.OutgoingsItem.TABLE_NAME,columns, null,null,null,null,null);
+    }
+
+    //------------------------------UNIVERSAL SQLITE QUERIES---------------------------------//
+
+    public void deleteItem(String tableName, int id)
+    {
+        SQLiteDatabase db=getReadableDatabase();
+        String[] args ={id+""};
+        db.delete(tableName,"_id=?",args);
+    }
+
+    public Cursor getItemID(String tableName, String columnID, String columnDataPassword, String passwordKey){
+        String[] columns={columnID};
+        String selection = columnDataPassword+" LIKE ?";
+        String[] selection_args= {passwordKey};
+        SQLiteDatabase db =getReadableDatabase();
+        return db.query(tableName, columns, selection,selection_args,null,null,null);
     }
 }

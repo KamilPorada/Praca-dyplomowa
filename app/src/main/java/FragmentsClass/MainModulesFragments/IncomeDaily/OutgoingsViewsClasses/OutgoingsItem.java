@@ -1,12 +1,12 @@
 package FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsViewsClasses;
 
 public class OutgoingsItem {
-    private int IOutgoingImage;
-    private String IOutgoingCategory;
-    private String IOutgoingDescribe;
-    private double IOutgoingPrice;
-    private String IOutgoingDate;
-    private String IOutgoingPasswordKey;
+    private final int IOutgoingImage;
+    private final String IOutgoingCategory;
+    private final String IOutgoingDescribe;
+    private final double IOutgoingPrice;
+    private final String IOutgoingDate;
+    private final String IOutgoingPasswordKey;
 
     public OutgoingsItem(int outgoingImage, String outgoingCategory, String outgoingDescribe,
                          double outgoingPrice, String outgoingDate, String outgoingPasswordKey)
