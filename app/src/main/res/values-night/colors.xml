@@ -11,7 +11,7 @@
     <color name="backgroundColor">#636363</color>
     <color name="turquise">#FF018786</color>
     <color name="blackToWhite">#FFFFFF</color>
-    <color name="whiteToDarkGrey">#424141</color>
+    <color name="whiteToDarkGrey">#535353</color>
     <color name="whiteToBlack">#000000</color>
     <color name="red">#8D0000</color>
 </resources>

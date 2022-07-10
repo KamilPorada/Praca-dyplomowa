@@ -19,6 +19,7 @@ import com.example.pracadyplomowa.R;
 
 import FragmentsClass.MainModulesFragments.Calculators.CalculatorsFragment;
 import FragmentsClass.MainModulesFragments.IncomeDaily.IncomeDailyFragment;
+import FragmentsClass.MainModulesFragments.Operations.OperationsFragment;
 import HelperClasses.InformationDialog;
 import HelperClasses.ToolClass;
 
@@ -98,7 +99,7 @@ public class HomeFragment extends Fragment {
                 }break;
                 case R.id.btn_operations:
                 {
-
+                    fragment = new OperationsFragment();
                 }break;
                 case R.id.btn_notes:
                 {

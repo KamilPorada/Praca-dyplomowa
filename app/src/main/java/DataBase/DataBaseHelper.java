@@ -46,7 +46,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_TABLE_TRADE_OF_PEPPER_ITEM);
         db.execSQL(CREATE_TABLE_OUTGOINGS);
-
     }
 
     @Override
@@ -197,7 +196,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String[] args ={id+""};
         db.delete(tableName,"_id=?",args);
     }
-
     public Cursor getItemID(String tableName, String columnID, String columnDataPassword, String passwordKey){
         String[] columns={columnID};
         String selection = columnDataPassword+" LIKE ?";
