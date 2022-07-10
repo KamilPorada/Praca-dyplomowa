@@ -67,7 +67,32 @@ public  class ToolClass {
 
             return validateDay && validateMonth && validateDotts;
         }
+    }
 
+    public static boolean checkValidateHour(String time) {
+        boolean validateHour;
+        boolean validateMinutes;
+        boolean validateColon;
+
+        if (time.length() < 5)
+            return false;
+        else {
+            char[] charTime = time.toCharArray();
+            String stringHour = charTime[0] + Character.toString(charTime[1]);
+            String firstDots = Character.toString(charTime[2]);
+            String stringMinutes = charTime[3] + Character.toString(charTime[4]);
+
+            int hour = Integer.parseInt(stringHour);
+            int minutes = Integer.parseInt(stringMinutes);
+
+
+            validateHour = hour > 0 && hour < 24;
+            validateMinutes = minutes > 0 && minutes < 60;
+            validateColon = firstDots.compareTo(":") == 0;
+
+
+            return validateHour && validateMinutes && validateColon;
+        }
     }
 
     public static boolean checkValidateYear(String data) {
@@ -103,4 +128,6 @@ public  class ToolClass {
                 return 0;
         }
     }
+
+
 }
