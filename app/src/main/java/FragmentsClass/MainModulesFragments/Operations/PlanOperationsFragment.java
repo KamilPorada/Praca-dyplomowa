@@ -3,17 +3,23 @@ package FragmentsClass.MainModulesFragments.Operations;
 import static HelperClasses.ToolClass.getActualYear;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -100,11 +106,11 @@ public class PlanOperationsFragment extends Fragment {
                 {
                     case R.id.edit_date_button:
                     {
-
+                        openEditDataDialog();
                     }break;
                     case R.id.edit_hour_button:
                     {
-
+                        openEditHourDialog();
                     }break;
                     case R.id.add_pesticide_button:
                     {
@@ -146,8 +152,120 @@ public class PlanOperationsFragment extends Fragment {
         });
 
         howHighgroves.setMax((int) ToolClass.getHighgroves(context));
+    }
 
-        
+    private void openEditHourDialog() {
+        Dialog editHourDialog = new Dialog(context);
+        editHourDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
+        editHourDialog.setContentView(R.layout.dialog_change_hour_of_operations);
+        editHourDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        editHourDialog.show();
+        createDialoggListeners(editHourDialog);
+    }
+
+    private void createDialoggListeners(Dialog editHourDialog) {
+        TimePicker clock;
+        Button btnAccept, btnCancel;
+
+        clock=editHourDialog.findViewById(R.id.clock);
+        btnAccept=editHourDialog.findViewById(R.id.btn_accept);
+        btnCancel=editHourDialog.findViewById(R.id.btn_cancel);
+
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int id=v.getId();
+                switch (id)
+                {
+                    case R.id.btn_accept:
+                    {
+                        howHour.setText(hour);
+                        editHourDialog.dismiss();
+                    }break;
+                    case R.id.btn_cancel:
+                    {
+                        editHourDialog.dismiss();
+                    }break;
+                }
+            }
+        };
+        btnAccept.setOnClickListener(listener);
+        btnCancel.setOnClickListener(listener);
+
+        clock.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                String clockHour="";
+                if(hourOfDay<10)
+                    clockHour=clockHour+"0"+hourOfDay+":";
+                else
+                    clockHour=clockHour+hourOfDay+":";
+                if(minute<10)
+                    clockHour=clockHour+"0"+minute;
+                else
+                    clockHour=clockHour+minute;
+
+                hour=clockHour;
+            }
+        });
+
+    }
+
+    private void openEditDataDialog() {
+        Dialog editDataDialog = new Dialog(context);
+        editDataDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
+        editDataDialog.setContentView(R.layout.dialog_change_date_of_operations);
+        editDataDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        editDataDialog.show();
+        createDialogListeners(editDataDialog);
+    }
+
+    private void createDialogListeners(Dialog editDataDialog) {
+        CalendarView calendar;
+        Button btnAccept, btnCancel;
+
+        calendar=editDataDialog.findViewById(R.id.calendar);
+        btnAccept=editDataDialog.findViewById(R.id.btn_accept);
+        btnCancel=editDataDialog.findViewById(R.id.btn_cancel);
+
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int id=v.getId();
+                switch (id)
+                {
+                    case R.id.btn_accept:
+                    {
+                        howDate.setText(date);
+                        editDataDialog.dismiss();
+                    }break;
+                    case R.id.btn_cancel:
+                    {
+                        editDataDialog.dismiss();
+                    }break;
+                }
+            }
+        };
+        btnAccept.setOnClickListener(listener);
+        btnCancel.setOnClickListener(listener);
+
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                String calendarDate="";
+                if(dayOfMonth<10)
+                    calendarDate=calendarDate+"0"+dayOfMonth+".";
+                else
+                    calendarDate=calendarDate+dayOfMonth+".";
+                if(month+1<10)
+                    calendarDate=calendarDate+"0"+(month+1)+".";
+                else
+                    calendarDate=calendarDate+(month+1)+".";
+                calendarDate=calendarDate+year;
+                date=calendarDate;
+            }
+        });
+
     }
 
     private void validateData() {
