@@ -11,10 +11,11 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/top_layout"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="260dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/shape_rectangle_with_top_line"
         >
 
         <TextView
@@ -24,7 +25,7 @@
             android:fontFamily="@font/crete_round"
             android:text="Katalog Pestycydów"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="30dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -46,7 +47,6 @@
                 android:id="@+id/image"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@drawable/image_worm"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -72,8 +72,8 @@
                 android:layout_marginRight="20dp"
                 android:background="@drawable/shape_radio_button"
                 android:button="@color/mainColor"
-                android:checked="true"
                 android:padding="8dp"
+                android:checked="true"
                 android:text="Insektycydy"
                 android:textAlignment="center"
                 android:textSize="17sp" />

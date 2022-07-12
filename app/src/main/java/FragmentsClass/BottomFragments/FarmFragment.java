@@ -91,7 +91,6 @@ public class FarmFragment extends Fragment {
     private void loadData() {
         SharedPreferences sharedPreferences = context.getSharedPreferences("FARM_DATA",Context.MODE_PRIVATE);
         String name = sharedPreferences.getString("NAME", "");
-
         String highgroves = sharedPreferences.getString("HIGHGROVES",howHighgroves.getText().toString());
         String field = sharedPreferences.getString("FIELD", howField.getText()+" ha");
 

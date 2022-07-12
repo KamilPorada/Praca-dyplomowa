@@ -41,9 +41,6 @@ public class AboutApplicationFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
-        int i=0;
-        System.out.println(createInsertQuery("ORTUS 05 SC", "Przędziorek szklarniowiec, szklarniowiec", 0,0.01,3,7,"Opryskiwać rośliny po zauważeniu szkodnika lub pierwszych objawów uszkodzeń. Jeżeli w poprzednich zesonach nie było problemu ze szkodnikiem, zabieg można ograniczyć do ogniska wystąpienia pierwszych osobników.", i++));
-        System.out.println(createInsertQuery("ORTUS 05 SC", "Przędziorek szklarniowiec, szklarniowiec", 0,0.01,3,7,"Opryskiwać rośliny po zauważeniu szkodnika lub pierwszych objawów uszkodzeń. Jeżeli w poprzednich zesonach nie było problemu ze szkodnikiem, zabieg można ograniczyć do ogniska wystąpienia pierwszych osobników.", i++));
     }
 
 
@@ -57,18 +54,4 @@ public class AboutApplicationFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private static String createInsertQuery(String name, String pest, int typeOfPesticide, double dose, int typeOfDose,
-                                            int grace, String notes, int passwordKey) {
-        return "INSERT INTO " + DataBaseNames.PesticidesItem.TABLE_NAME + "(" +
-                DataBaseNames.PesticidesItem.COLUMN_NAME_OF_PESTICIDES + ", " +
-                DataBaseNames.PesticidesItem.COLUMN_NAME_OF_PEST + ", " +
-                DataBaseNames.PesticidesItem.COLUMN_TYPE_OF_PESTICIDE + ", " +
-                DataBaseNames.PesticidesItem.COLUMN_DOSE + ", " +
-                DataBaseNames.PesticidesItem.COLUMN_TYPE_OF_DOSE + ", " +
-                DataBaseNames.PesticidesItem.COLUMN_OF_GRACE + ", " +
-                DataBaseNames.PesticidesItem.COLUMN_NOTES + ", " +
-                DataBaseNames.PesticidesItem.COLUMN_DATA_PASWORD + ") VALUES (" +
-                "'" + name + "'" + ", " + "'" + pest + "'" + ", " + "'" + typeOfPesticide + "'" + ", " + "'" + dose + "'" + ", " +
-                "'" + typeOfDose + "'" + ", " + "'" + grace + "'" + ", " + "'" + notes + "'" + ", " + "'" + passwordKey + "'" + ");";
-    }
 }

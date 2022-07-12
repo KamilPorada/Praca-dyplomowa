@@ -232,7 +232,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
     public Cursor getCatalogOfPesticidesNames(){
-        String[] columns={DataBaseNames.PesticidesItem._ID, DataBaseNames.PesticidesItem.COLUMN_NAME_OF_PESTICIDES};
+        String[] columns={DataBaseNames.PesticidesItem._ID, DataBaseNames.PesticidesItem.COLUMN_NAME_OF_PESTICIDES,
+                          DataBaseNames.PesticidesItem.COLUMN_TYPE_OF_PESTICIDE};
         SQLiteDatabase db =getReadableDatabase();
         return db.query(DataBaseNames.PesticidesItem.TABLE_NAME,columns, null,null,null,null,null);
     }
