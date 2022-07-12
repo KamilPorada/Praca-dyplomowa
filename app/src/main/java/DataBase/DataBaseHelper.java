@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import HelperClasses.ToolClass;
+
 public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "epaprykarz.db";
     public static final int DATABASE_VERSION = 1;
@@ -16,7 +18,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-
 
         final String CREATE_TABLE_TRADE_OF_PEPPER_ITEM = "CREATE TABLE " +
                 DataBaseNames.TradeOfPepperItem.TABLE_NAME + " (" +
@@ -44,14 +45,33 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 DataBaseNames.OutgoingsItem.COLUMN_DATA_PASWORD + " TEXT NOT NULL" +
                 ");";
 
+        final String CREATE_TABLE_CATALOG_OF_PESTICIDES = "CREATE TABLE " +
+                DataBaseNames.PesticidesItem.TABLE_NAME + " (" +
+                DataBaseNames.PesticidesItem._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                DataBaseNames.PesticidesItem.COLUMN_NAME_OF_PESTICIDES + " TEXT NOT NULL," +
+                DataBaseNames.PesticidesItem.COLUMN_NAME_OF_PEST + " TEXT NOT NULL," +
+                DataBaseNames.PesticidesItem.COLUMN_TYPE_OF_PESTICIDE + " INTEGER NOT NULL," +
+                DataBaseNames.PesticidesItem.COLUMN_DOSE + " REAL NOT NULL," +
+                DataBaseNames.PesticidesItem.COLUMN_TYPE_OF_DOSE + " INTEGER NOT NULL," +
+                DataBaseNames.PesticidesItem.COLUMN_OF_GRACE + " INTEGER NOT NULL," +
+                DataBaseNames.PesticidesItem.COLUMN_NOTES + " TEXT NOT NULL," +
+                DataBaseNames.PesticidesItem.COLUMN_DATA_PASWORD + " TEXT NOT NULL" +
+                ");";
+
         db.execSQL(CREATE_TABLE_TRADE_OF_PEPPER_ITEM);
         db.execSQL(CREATE_TABLE_OUTGOINGS);
+        db.execSQL(CREATE_TABLE_CATALOG_OF_PESTICIDES);
+
+        ToolClass.fillCatalogOfPesticides(db);
+
     }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + DataBaseNames.TradeOfPepperItem.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DataBaseNames.OutgoingsItem.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DataBaseNames.PesticidesItem.TABLE_NAME);
 
         onCreate(db);
     }
@@ -203,4 +223,18 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db =getReadableDatabase();
         return db.query(tableName, columns, selection,selection_args,null,null,null);
     }
+
+
+
+
+
+
+
+
+    public Cursor getCatalogOfPesticidesNames(){
+        String[] columns={DataBaseNames.PesticidesItem._ID, DataBaseNames.PesticidesItem.COLUMN_NAME_OF_PESTICIDES};
+        SQLiteDatabase db =getReadableDatabase();
+        return db.query(DataBaseNames.PesticidesItem.TABLE_NAME,columns, null,null,null,null,null);
+    }
+
 }

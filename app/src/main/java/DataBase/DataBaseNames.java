@@ -25,4 +25,15 @@ public class DataBaseNames {
         public static final String COLUMN_IMAGE = "image";
         public static final String COLUMN_DATA_PASWORD = "dataPassword";
     }
+    public static final class PesticidesItem implements BaseColumns{
+        public static final String TABLE_NAME = "pesticideItem";
+        public static final String COLUMN_NAME_OF_PESTICIDES = "nameOfPesticides";
+        public static final String COLUMN_NAME_OF_PEST = "nameOfPest";
+        public static final String COLUMN_TYPE_OF_PESTICIDE = "typeOfPesticides";
+        public static final String COLUMN_DOSE = "dose";
+        public static final String COLUMN_TYPE_OF_DOSE = "typeOfDose";
+        public static final String COLUMN_OF_GRACE = "grace";
+        public static final String COLUMN_NOTES = "notes";
+        public static final String COLUMN_DATA_PASWORD = "dataPassword";
+    }
 }

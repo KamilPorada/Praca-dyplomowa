@@ -17,6 +17,8 @@
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/right_main_tile_shape.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/right_solid_main_tile_shape.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/shape.xml" value="0.153125" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/shape_attention_pesticides_layout.xml" value="0.1585" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/shape_black_rectangle.xml" value="0.1585" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/shape_bottom_and_top_line.xml" value="0.159" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/shape_button.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/shape_button_2.xml" value="0.159" />
@@ -68,6 +70,7 @@
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/dialog_question.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/dialog_upadate_or_remove_trade_of_pepper.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/drawer_menu_header.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/item_of_catalog_of_pesticides.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/item_of_change_color_of_pepper.xml" value="0.2346014492753623" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/item_of_outgoing.xml" value="0.264" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/item_of_trade_of_pepper.xml" value="0.2940516273849607" />
@@ -77,6 +80,7 @@
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_calculator_of_field_fragment.xml" value="0.21467391304347827" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_calculator_of_plants_fragment.xml" value="0.21467391304347827" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_calculators_fragment.xml" value="0.21467391304347827" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_catalog_of_pesticides_fragment.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_class_of_pepper_chart.xml" value="0.12083333333333333" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_colors_class_of_pepper_chart_fragment.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_colors_of_pepper_chart.xml" value="0.176" />

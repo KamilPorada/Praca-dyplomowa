@@ -63,6 +63,7 @@
             android:textSize="17sp"
             android:padding="8dp"
             android:layout_marginRight="30dp"
+            android:checked="true"
             android:text="Insektycydy"
             android:textAlignment="center"
             android:background="@drawable/shape_radio_button"

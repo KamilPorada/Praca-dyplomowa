@@ -72,7 +72,7 @@ public class OperationsFragment extends Fragment {
                 }break;
                 case R.id.btn_catalog_of_pesticides:
                 {
-
+                    fragment = new CatalogOfPesticidesFragment();
                 }break;
             }
             requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();

@@ -32,6 +32,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import DataBase.DataBaseHelper;
 import HelperClasses.InformationDialog;
 import HelperClasses.ShowAttention;
 import HelperClasses.ToolClass;
