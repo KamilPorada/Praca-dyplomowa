@@ -15,7 +15,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/shape_rectangle_with_top_line"
+        android:background="@drawable/shape_rectangle_with_top_and_bottom_line"
         >
 
         <TextView

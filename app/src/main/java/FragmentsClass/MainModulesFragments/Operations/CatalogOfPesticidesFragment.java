@@ -29,6 +29,7 @@ import java.util.ArrayList;
 
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
+import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsFragment;
 import FragmentsClass.MainModulesFragments.IncomeDaily.TradeOfPepperViewsClasses.TradePepperAdapter;
 import FragmentsClass.MainModulesFragments.IncomeDaily.TradeOfPepperViewsClasses.TradePepperItem;
 import FragmentsClass.MainModulesFragments.Operations.CatalogPesticidesClasses.CatalogOfPesticideAdapter;
@@ -104,9 +105,21 @@ public class CatalogOfPesticidesFragment extends Fragment {
         adapter.setOnItemClickListener(new CatalogOfPesticideAdapter.OnItemClickListener() {
             @Override
             public void onShowInformation(int position) {
-
+                sendData(position);
             }
         });
+    }
+
+    private void sendData(int position) {
+        ShowAttention showAttention = new ShowAttention();
+        showAttention.showToast(R.layout.toast_layout, null, requireActivity(), context, catalogOfPesticideItems.get(position).getNameOfPesticide());
+        SharedPreferences sharedPreferences = context.getSharedPreferences("PESTICIDES_CHOSEN",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("CHOSEN", catalogOfPesticideItems.get(position).getNameOfPesticide());
+        editor.apply();
+        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new DetailsOfPesticideFragment()).commit();
+
+
     }
 
     @Override

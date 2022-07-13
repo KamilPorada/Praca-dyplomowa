@@ -55,7 +55,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 DataBaseNames.PesticidesItem.COLUMN_TYPE_OF_DOSE + " INTEGER NOT NULL," +
                 DataBaseNames.PesticidesItem.COLUMN_OF_GRACE + " INTEGER NOT NULL," +
                 DataBaseNames.PesticidesItem.COLUMN_NOTES + " TEXT NOT NULL," +
-                DataBaseNames.PesticidesItem.COLUMN_DATA_PASWORD + " TEXT NOT NULL" +
+                DataBaseNames.PesticidesItem.COLUMN_IMAGE + " INTEGER NOT NULL" +
                 ");";
 
         db.execSQL(CREATE_TABLE_TRADE_OF_PEPPER_ITEM);
@@ -223,7 +223,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db =getReadableDatabase();
         return db.query(tableName, columns, selection,selection_args,null,null,null);
     }
-
+    public Cursor getItemIDFromName(String tableName, String columnID, String nameFromDB, String nameFromRV){
+        String[] columns={columnID};
+        String selection = nameFromDB+" LIKE ?";
+        String[] selection_args= {nameFromRV};
+        SQLiteDatabase db =getReadableDatabase();
+        return db.query(tableName, columns, selection,selection_args,null,null,null);
+    }
 
 
 
@@ -236,6 +242,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                           DataBaseNames.PesticidesItem.COLUMN_TYPE_OF_PESTICIDE};
         SQLiteDatabase db =getReadableDatabase();
         return db.query(DataBaseNames.PesticidesItem.TABLE_NAME,columns, null,null,null,null,null);
+    }
+
+    public Cursor getSpecifyPesticideValues(String name) {
+        String[] columns={DataBaseNames.PesticidesItem.COLUMN_NAME_OF_PEST,
+                          DataBaseNames.PesticidesItem.COLUMN_TYPE_OF_PESTICIDE, DataBaseNames.PesticidesItem.COLUMN_DOSE,
+                          DataBaseNames.PesticidesItem.COLUMN_TYPE_OF_DOSE, DataBaseNames.PesticidesItem.COLUMN_OF_GRACE,
+                          DataBaseNames.PesticidesItem.COLUMN_NOTES, DataBaseNames.PesticidesItem.COLUMN_IMAGE};
+        String selection = DataBaseNames.PesticidesItem.COLUMN_NAME_OF_PESTICIDES+" LIKE ?";
+        String[] selection_args= {name};
+        SQLiteDatabase db =getReadableDatabase();
+        return db.query(DataBaseNames.PesticidesItem.TABLE_NAME, columns, selection,selection_args,null,null,null);
     }
 
 }

@@ -123,7 +123,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/image_layout"
             app:layout_constraintRight_toRightOf="parent"
-            android:background="@drawable/shape_rectangle_with_top_line">
+            android:background="@drawable/shape_rectangle_with_top_and_bottom_line">
 
             <TextView
                 android:id="@+id/how_describe"

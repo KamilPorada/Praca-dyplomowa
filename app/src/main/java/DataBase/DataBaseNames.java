@@ -34,6 +34,6 @@ public class DataBaseNames {
         public static final String COLUMN_TYPE_OF_DOSE = "typeOfDose";
         public static final String COLUMN_OF_GRACE = "grace";
         public static final String COLUMN_NOTES = "notes";
-        public static final String COLUMN_DATA_PASWORD = "dataPassword";
+        public static  final  String COLUMN_IMAGE = "image";
     }
 }
