@@ -54,6 +54,7 @@ public class CatalogOfPesticidesFragment extends Fragment {
             R.drawable.image_worm, R.drawable.image_mushrooms, R.drawable.image_weed
     };
     private int typeOfPesticides;
+    private int modeOfCatalogOfPesticide=0;
 
     @Nullable
     @Override
@@ -71,15 +72,41 @@ public class CatalogOfPesticidesFragment extends Fragment {
     private void loadData() {
         DataBaseHelper dbHelper = new DataBaseHelper(context);
         Cursor k =dbHelper.getCatalogOfPesticidesNames();
-        SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
-        typeOfPesticides = sharedPreferences.getInt("SELECTED_PESTICIDES_RADIO_BUTTON", 0);
 
-        if(typeOfPesticides==0)
-            insecticides.setChecked(true);
-        else if(typeOfPesticides==1)
-            fungicides.setChecked(true);
-        else if(typeOfPesticides==2)
-            herbicides.setChecked(true);
+        SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
+        modeOfCatalogOfPesticide = sharedPreferences.getInt("CATALOG_OF_PESTICIDE_OPEN_MODE", 0);
+        if(modeOfCatalogOfPesticide==0) {
+            sharedPreferences = context.getSharedPreferences("TEMPORARY_CURRENT_OPERATIONS", Context.MODE_PRIVATE);
+            typeOfPesticides = sharedPreferences.getInt("TYPE_OF_PESTICIDES", 0);
+            switch (typeOfPesticides)
+            {
+                case 0:
+                {
+                    insecticides.setChecked(true);
+                }break;
+                case 1:
+                {
+                    fungicides.setChecked(true);
+                }break;
+                case 2:
+                {
+                    herbicides.setChecked(true);
+                }break;
+            }
+            pesticideGroup.setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
+            typeOfPesticides = sharedPreferences.getInt("SELECTED_PESTICIDES_RADIO_BUTTON", 0);
+
+            if(typeOfPesticides==0)
+                insecticides.setChecked(true);
+            else if(typeOfPesticides==1)
+                fungicides.setChecked(true);
+            else if(typeOfPesticides==2)
+                herbicides.setChecked(true);
+        }
         image.setImageResource(images[typeOfPesticides]);
 
         while(k.moveToNext())
@@ -115,7 +142,15 @@ public class CatalogOfPesticidesFragment extends Fragment {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("CHOSEN_PESTICIDE", catalogOfPesticideItems.get(position).getNameOfPesticide());
         editor.apply();
-        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new DetailsOfPesticideFragment()).commit();
+        if(modeOfCatalogOfPesticide==0) {
+            sharedPreferences = context.getSharedPreferences("TEMPORARY_CURRENT_OPERATIONS",Context.MODE_PRIVATE);
+            editor = sharedPreferences.edit();
+            editor.putString("PESTICIDES", catalogOfPesticideItems.get(position).getNameOfPesticide());
+            editor.apply();
+            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PlanOperationsFragment()).commit();
+        }
+        else
+            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new DetailsOfPesticideFragment()).commit();
     }
 
     @Override

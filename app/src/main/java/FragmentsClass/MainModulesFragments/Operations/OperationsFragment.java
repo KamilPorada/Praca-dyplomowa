@@ -2,6 +2,7 @@ package FragmentsClass.MainModulesFragments.Operations;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.example.pracadyplomowa.R;
 
 import HelperClasses.InformationDialog;
+import HelperClasses.ToolClass;
 
 public class OperationsFragment extends Fragment {
 
@@ -64,6 +66,7 @@ public class OperationsFragment extends Fragment {
             {
                 case R.id.btn_plan_operations:
                 {
+                    ToolClass.clearTemporaryCurrentOperations(context);
                     fragment = new PlanOperationsFragment();
                 }break;
                 case R.id. btn_daily_operations:
@@ -72,6 +75,10 @@ public class OperationsFragment extends Fragment {
                 }break;
                 case R.id.btn_catalog_of_pesticides:
                 {
+                    SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt("CATALOG_OF_PESTICIDE_OPEN_MODE", 1);
+                    editor.apply();
                     fragment = new CatalogOfPesticidesFragment();
                 }break;
             }

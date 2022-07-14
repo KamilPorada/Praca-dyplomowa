@@ -31,6 +31,34 @@ public  class ToolClass {
         calendar.setTime(date);
         return calendar.get(Calendar.YEAR);
     }
+    public static int getActualMonth()
+    {
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.MONTH)+1;
+    }
+    public static int getActualDay()
+    {
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.DAY_OF_MONTH);
+    }
+    public static int getActualHour()
+    {
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.HOUR_OF_DAY);
+    }
+    public static int getActualMinute()
+    {
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.MINUTE);
+    }
 
     public static int getYear(String date) {
         char[] charDate = date.toCharArray();
@@ -43,6 +71,26 @@ public  class ToolClass {
         char[] charDate = date.toCharArray();
         String stringMonth = charDate[3] + Character.toString(charDate[4]);
         return Integer.parseInt(stringMonth);
+    }
+
+    public static boolean compareDateAndTimeWithCurrentDateAndTime(String date, String time)
+    {
+        char[] charDate = date.toCharArray();
+        char[] charTime = time.toCharArray();
+        String stringDay = charDate[0] + Character.toString(charDate[1]);
+        String stringMonth = charDate[3] + Character.toString(charDate[4]);
+        String stringYear = charDate[6] + Character.toString(charDate[7]) + charDate[8] + charDate[9];
+        String stringHour = Character.toString(charTime[0]) +charTime[1];
+        String stringMinute = Character.toString(charTime[3]) +charTime[4];
+
+        int day = Integer.parseInt(stringDay);
+        int month = Integer.parseInt(stringMonth);
+        int year = Integer.parseInt(stringYear);
+        int hour = Integer.parseInt(stringHour);
+        int minute = Integer.parseInt(stringMinute);
+
+        return year>=ToolClass.getActualYear() && month>=ToolClass.getActualMonth() && day>=ToolClass.getActualDay()
+                && hour>=ToolClass.getActualHour() && minute>=ToolClass.getActualMinute();
     }
 
     public static boolean checkValidateData(String date) {
@@ -91,7 +139,7 @@ public  class ToolClass {
 
 
             validateHour = hour > 0 && hour < 24;
-            validateMinutes = minutes > 0 && minutes < 60;
+            validateMinutes = minutes >= 0 && minutes < 60;
             validateColon = firstDots.compareTo(":") == 0;
 
 
@@ -216,6 +264,18 @@ public  class ToolClass {
             default:
                 return 0;
         }
+    }
+
+    public static void clearTemporaryCurrentOperations(Context context)
+    {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("TEMPORARY_CURRENT_OPERATIONS",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("TYPE_OF_PESTICIDES", 0);
+        editor.putString("DATA_OF_OPERATIONS", "");
+        editor.putString("HOUR_OF_OPERATIONS", "");
+        editor.putInt("AMOUNT_OF_HIGHGROVES", 0);
+        editor.putString("PESTICIDES", "");
+        editor.apply();
     }
 
 

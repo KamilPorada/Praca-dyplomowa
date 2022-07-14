@@ -5,6 +5,7 @@ import static HelperClasses.ToolClass.getActualYear;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -50,8 +51,8 @@ public class PlanOperationsFragment extends Fragment {
     private ImageButton editDateButton, editHourButton, addPesticideButton;
     private Button planOperationButton, cancelButton;
 
-    private String date, hour, pesticides, typeOfPesticides;
-    private int highgroves, days;
+    private String date, hour, pesticides;
+    private int highgroves, age=90, typeOfPesticides=0;
 
 
     @Nullable
@@ -61,8 +62,48 @@ public class PlanOperationsFragment extends Fragment {
         assert container != null;
         context=container.getContext();
         findViews(view);
+        loadData();
         createListeners();
         return view;
+    }
+
+    private void loadData() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("TEMPORARY_CURRENT_OPERATIONS",Context.MODE_PRIVATE);
+        int checkedRadio = sharedPreferences.getInt("TYPE_OF_PESTICIDES", 0);
+        howDate.setText(sharedPreferences.getString("DATA_OF_OPERATIONS",""));
+        howHour.setText(sharedPreferences.getString("HOUR_OF_OPERATIONS", ""));
+        howHighgroves.setProgress(sharedPreferences.getInt("AMOUNT_OF_HIGHGROVES",0));
+        titleHighgroves.setText("Ilość tuneli do opryskania: " + sharedPreferences.getInt("AMOUNT_OF_HIGHGROVES",0));
+        howPesticide.setText(sharedPreferences.getString("PESTICIDES", ""));
+        switch (checkedRadio)
+        {
+            case 0:
+            {
+                insecticidies.setChecked(true);
+            }break;
+            case 1:
+            {
+                fungicidies.setChecked(true);
+            }break;
+            case 2:
+            {
+                herbicidies.setChecked(true);
+            }break;
+        }
+        if(howPesticide.getText().toString().compareTo("")!=0)
+        {
+            addPesticideButton.setEnabled(false);
+            insecticidies.setEnabled(false);
+            fungicidies.setEnabled(false);
+            herbicidies.setEnabled(false);
+        }
+        else
+        {
+            addPesticideButton.setEnabled(true);
+            insecticidies.setEnabled(true);
+            fungicidies.setEnabled(true);
+            herbicidies.setEnabled(true);
+        }
     }
 
     @Override
@@ -115,7 +156,7 @@ public class PlanOperationsFragment extends Fragment {
                     }break;
                     case R.id.add_pesticide_button:
                     {
-
+                        openCatalogOfPesticide();
                     }break;
                     case R.id.button_plan_operations:
                     {
@@ -153,6 +194,29 @@ public class PlanOperationsFragment extends Fragment {
         });
 
         howHighgroves.setMax((int) ToolClass.getHighgroves(context));
+    }
+
+    private void openCatalogOfPesticide() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("CATALOG_OF_PESTICIDE_OPEN_MODE", 0);
+        editor.apply();
+        sharedPreferences = context.getSharedPreferences("TEMPORARY_CURRENT_OPERATIONS",Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        if(insecticidies.isChecked())
+            typeOfPesticides=0;
+        else if(fungicidies.isChecked())
+            typeOfPesticides=1;
+        else if(herbicidies.isChecked())
+            typeOfPesticides=2;
+        editor.putInt("TYPE_OF_PESTICIDES", typeOfPesticides);
+        editor.putString("DATA_OF_OPERATIONS", howDate.getText().toString());
+        editor.putString("HOUR_OF_OPERATIONS", howHour.getText().toString());
+        editor.putInt("AMOUNT_OF_HIGHGROVES", highgroves);
+        editor.putString("PESTICIDES", howPesticide.getText().toString());
+        editor.apply();
+        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CatalogOfPesticidesFragment()).commit();
+
     }
 
     private void openEditHourDialog() {
@@ -271,49 +335,48 @@ public class PlanOperationsFragment extends Fragment {
 
     private void validateData() {
         ShowAttention showAttention = new ShowAttention();
-        boolean checkRadaio = insecticidies.isChecked() || fungicidies.isChecked() || herbicidies.isChecked();
-        boolean checkDate;
-        boolean checkHour;
-        boolean checkPesticide;
+        boolean checkDate=false;
+        boolean checkHour=false;
 
-        date=howDate.getText().toString();
-        hour=howHour.getText().toString();
-        pesticides=howPesticide.getText().toString();
+        date = howDate.getText().toString();
+        hour = howHour.getText().toString();
+        pesticides = howPesticide.getText().toString();
 
-        if(!checkRadaio)
-            showAttention.showToast(R.layout.toast_layout,null, requireActivity(),context,"Wybierz rodzaj pestycydu!");
-
-        if(ToolClass.checkValidateData(howDate.getText().toString()))
-            if(ToolClass.checkValidateYear(howDate.getText().toString()))
-                checkDate=true;
+        if (date.compareTo("") == 0 || hour.compareTo("") == 0 || pesticides.compareTo("") == 0)
+            showAttention.showToast(R.layout.toast_layout, null, requireActivity(), context, "Uzupełnij wszystkie pola!");
+        else {
+            if (ToolClass.checkValidateData(howDate.getText().toString()))
+                if(ToolClass.compareDateAndTimeWithCurrentDateAndTime(howDate.getText().toString(), howHour.getText().toString()))
+                    if (ToolClass.checkValidateYear(howDate.getText().toString()))
+                        checkDate = true;
+                    else {
+                        showAttention.showToast(R.layout.toast_layout, null, requireActivity(), context, "Podaj poprawny rok!\nMamy aktualnie " + getActualYear() + " rok!");
+                        checkDate = false;
+                    }
+                else
+                {
+                    showAttention.showToast(R.layout.toast_layout, null, requireActivity(), context, "Podaj przyszłą datę!");
+                    checkDate = false;
+                }
             else {
-                showAttention.showToast(R.layout.toast_layout,null, requireActivity(),context,"Podaj poprawny rok!\nMamy aktualnie "+getActualYear()+" rok!");
+                showAttention.showToast(R.layout.toast_layout, null, requireActivity(), context, "Zły format daty!\n[dd.mm.rrrr]");
                 checkDate = false;
             }
-        else {
-            showAttention.showToast(R.layout.toast_layout, null, requireActivity(), context, "Zły format daty!\n[dd.mm.rrrr]");
-            checkDate = false;
+
+            if (ToolClass.checkValidateHour(hour))
+                checkHour = true;
+            else {
+                showAttention.showToast(R.layout.toast_layout, null, requireActivity(), context, "Zły format godziny!\n[gg:mm]");
+                checkHour = false;
+            }
         }
 
-        if(ToolClass.checkValidateHour(hour))
-            checkHour=true;
-        else{
-            showAttention.showToast(R.layout.toast_layout, null, requireActivity(), context, "Zły format godziny!\n[gg:mm]");
-            checkHour = false;
-        }
-
-        if(pesticides.compareTo("")==0){
-            checkPesticide=false;
-            showAttention.showToast(R.layout.toast_layout, null, requireActivity(), context, "Wybierz pestycyd!");
-        }
-        else
-            checkPesticide=true;
-
-        if(checkRadaio && checkDate && checkHour && checkPesticide)
+        if(checkDate && checkHour)
             addOperationsToDataBase();
     }
 
     private void addOperationsToDataBase() {
+        ToolClass.clearTemporaryCurrentOperations(context);
     }
 }
 

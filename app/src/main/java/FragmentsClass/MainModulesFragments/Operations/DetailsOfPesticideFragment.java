@@ -85,6 +85,10 @@ public class DetailsOfPesticideFragment extends Fragment {
 
         switch (typeOfD)
         {
+            case 0:
+            {
+                howDose.setText(doseOfP+" g/m2");
+            }
             case 1:
             {
                 howDose.setText(doseOfP+" kg/ha");

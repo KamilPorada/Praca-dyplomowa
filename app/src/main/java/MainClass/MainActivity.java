@@ -71,8 +71,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
-
         toolSeason.setText(toolSeason.getText()+" "+ ToolClass.getActualYear());
+        ToolClass.clearTemporaryCurrentOperations(this);
 
 
     }
