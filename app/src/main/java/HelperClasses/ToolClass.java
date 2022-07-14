@@ -98,7 +98,7 @@ public  class ToolClass {
             return validateHour && validateMinutes && validateColon;
         }
     }
-
+//kutkiewicz
     public static boolean checkValidateYear(String data) {
         char[] charDate = data.toCharArray();
         String stringYear = charDate[6] + Character.toString(charDate[7]) +
@@ -158,7 +158,7 @@ public  class ToolClass {
         sqLiteDatabase.execSQL(createInsertQuery("GEOXE 50 WG", "Szara pleśń",1,0.5,1,3,"Stosować do 2 razy w sezonie, od fazy widocznego pąka kwiatowego do fazy, gdy owoce osiągną pełną dojrzałość.",R.drawable.image_pesticide_geoxe));
         sqLiteDatabase.execSQL(createInsertQuery("GLOBAZTAR 250 SC", "Zgnilizna twardzikowa",1,0.1,3,3,"Kontrolować rośliny systematycznie, zwłaszcza na tych stanowiskach, na których choroba występowała w poprzednim sezonie. Opryskiwać rośliny po stwierdzeniu objawów. Zabieg wykonywać co 7-10 dni.",R.drawable.image_pesticide_globaztar));
         sqLiteDatabase.execSQL(createInsertQuery("JULIETTA", "Szara pleśń",1,2.5,1,0,"Środek stosować zapobiegawczo, max. 8 razy w sezonie, co 7-14 dni, w zależności od poziomu zagrożenia chorobą.",R.drawable.image_pesticide_julietta));
-        sqLiteDatabase.execSQL(createInsertQuery("LUNA SENSATION 500 SC", "Szara pleśń",1,0.6,2,3,"Stosować do 2 razy w cyklu uprawowym, od fazy gdy, widoczny jest 1 pąk kwiatowy do pełnej dojrzałości owoców.",R.drawable.image_pesticide_lunasensation));
+        sqLiteDatabase.execSQL(createInsertQuery("LUNA SENSATION", "Szara pleśń",1,0.6,2,3,"Stosować do 2 razy w cyklu uprawowym, od fazy gdy, widoczny jest 1 pąk kwiatowy do pełnej dojrzałości owoców.",R.drawable.image_pesticide_lunasensation));
         sqLiteDatabase.execSQL(createInsertQuery("MIRADOR 250 SC", "Zgnilizna twardzikowa",1,0.1,3,3,"Kontrolować rośliny systematycznie, zwłaszcza na tych stanowiskach, na których choroba występowała w poprzednim sezonie. Opryskiwać rośliny po stwierdzeniu objawów. Zabieg wykonywać co 7-10 dni.",R.drawable.image_pesticide_mirodor));
         sqLiteDatabase.execSQL(createInsertQuery("NORDOX 75 WG", "Antraknoza ,fytoftoroza",1,1.33,1,10,"Opryskiwać do 3 razy w sezonie, od fazy rozwinietych liści właściwych do  początku dojrzewania owoców..",R.drawable.image_pesticide_nordox));
         sqLiteDatabase.execSQL(createInsertQuery("ORTIVA TOP 235 SC", "Alternarioza",1,1,2,3,"Opryskiwać do 2 razy w sezonie, od fazy gdy widoczny jest 1 kwiatostan do pełnej dojrzałości.",R.drawable.image_pesticide_ortiva));

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,8 +35,9 @@ public class DetailsOfPesticideFragment extends Fragment {
     private Fragment fragment = null;
     private Context context;
 
-    private TextView typeOfPesticide, nameOfPesticide;
+    private TextView typeOfPesticide, nameOfPesticide, howPest, howDose, howGrace, howNotes;
     private ImageView imageOfPesticide;
+    private Button buttonComeBack;
 
     private String sentName;
 
@@ -57,9 +59,9 @@ public class DetailsOfPesticideFragment extends Fragment {
 
         DataBaseHelper dbHelper = new DataBaseHelper(context);
         Cursor k =dbHelper.getSpecifyPesticideValues(sentName);
-        String nameOfP, notesOfP;
-        int typeOfP=0, typeOfD, graceOfP, imageOfP = 0;
-        double doseOfP;
+        String nameOfP = "", notesOfP="";
+        int typeOfP=0, typeOfD=0, graceOfP=0, imageOfP = 0;
+        double doseOfP=0;
         while(k.moveToNext())
         {
             nameOfP = k.getString(k.getColumnIndexOrThrow(DataBaseNames.PesticidesItem.COLUMN_NAME_OF_PEST));
@@ -70,6 +72,8 @@ public class DetailsOfPesticideFragment extends Fragment {
             notesOfP = k.getString(k.getColumnIndexOrThrow(DataBaseNames.PesticidesItem.COLUMN_NOTES));
             imageOfP = k.getInt(k.getColumnIndexOrThrow(DataBaseNames.PesticidesItem.COLUMN_IMAGE));
         }
+
+        System.out.println(String.valueOf(typeOfD) + "  :  " +  String.valueOf(doseOfP));
         
         if(typeOfP==0)
             typeOfPesticide.setText("INSEKTYCYD");
@@ -80,9 +84,34 @@ public class DetailsOfPesticideFragment extends Fragment {
 
         nameOfPesticide.setText(sentName);
         imageOfPesticide.setImageResource(imageOfP);
-        System.out.println(imageOfP);
-            
-        
+        howPest.setText(nameOfP);
+
+        switch (typeOfD)
+        {
+            case 1:
+            {
+                howDose.setText(doseOfP+" kg/ha");
+            }break;
+            case 2:
+            {
+                howDose.setText(doseOfP+" l/ha");
+            }break;
+            case 3:
+            {
+                howDose.setText(doseOfP+" %");
+            }break;
+            default:
+            {
+                howDose.setText("Błąd odczytu!");
+            }break;
+        }
+
+        if(graceOfP==1)
+            howGrace.setText(graceOfP + " dzień");
+        else
+            howGrace.setText(graceOfP + " dni");
+
+        howNotes.setText(notesOfP);
     }
 
     @Override
@@ -105,10 +134,20 @@ public class DetailsOfPesticideFragment extends Fragment {
         typeOfPesticide=view.findViewById(R.id.type_of_pesticide);
         nameOfPesticide=view.findViewById(R.id.name_of_pesticide);
         imageOfPesticide=view.findViewById(R.id.image_of_pesticide);
+        howPest=view.findViewById(R.id.how_pest);
+        howDose=view.findViewById(R.id.how_dose);
+        howGrace=view.findViewById(R.id.how_grace);
+        howNotes=view.findViewById(R.id.how_notes);
+        buttonComeBack=view.findViewById(R.id.button_come_back);
     }
 
     private void createListeners() {
-
+        buttonComeBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CatalogOfPesticidesFragment()).commit();
+            }
+        });
     }
 }
 
