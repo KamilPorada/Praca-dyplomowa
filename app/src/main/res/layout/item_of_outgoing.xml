@@ -81,7 +81,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@id/image_layout"
         app:layout_constraintRight_toRightOf="parent"
-        android:background="@drawable/shape_with_top_right_radius"
+        android:background="@drawable/shape_background_color_rectangle_with_main_color_stroke"
         >
 
         <TextView
@@ -123,7 +123,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/image_layout"
             app:layout_constraintRight_toRightOf="parent"
-            android:background="@drawable/shape_rectangle_with_top_and_bottom_line">
+            android:background="@drawable/shape_background_color_rectangle_with_main_color_stroke">
 
             <TextView
                 android:id="@+id/how_describe"

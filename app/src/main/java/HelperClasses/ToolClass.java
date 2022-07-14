@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.pracadyplomowa.R;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -77,6 +78,7 @@ public  class ToolClass {
     {
         char[] charDate = date.toCharArray();
         char[] charTime = time.toCharArray();
+
         String stringDay = charDate[0] + Character.toString(charDate[1]);
         String stringMonth = charDate[3] + Character.toString(charDate[4]);
         String stringYear = charDate[6] + Character.toString(charDate[7]) + charDate[8] + charDate[9];
@@ -89,8 +91,11 @@ public  class ToolClass {
         int hour = Integer.parseInt(stringHour);
         int minute = Integer.parseInt(stringMinute);
 
-        return year>=ToolClass.getActualYear() && month>=ToolClass.getActualMonth() && day>=ToolClass.getActualDay()
-                && hour>=ToolClass.getActualHour() && minute>=ToolClass.getActualMinute();
+        int actualSum = 1000000 * ToolClass.getActualYear() + 100000 * ToolClass.getActualMonth() + 10000 * ToolClass.getActualDay() +
+                        10 * ToolClass.getActualHour() + ToolClass.getActualMinute();
+        int operationSum = 1000000 * year + 100000 * month + 10000 * day + 10 * hour +  minute;
+
+        return operationSum>actualSum;
     }
 
     public static boolean checkValidateData(String date) {
@@ -138,7 +143,7 @@ public  class ToolClass {
             int minutes = Integer.parseInt(stringMinutes);
 
 
-            validateHour = hour > 0 && hour < 24;
+            validateHour = hour >= 0 && hour < 24;
             validateMinutes = minutes >= 0 && minutes < 60;
             validateColon = firstDots.compareTo(":") == 0;
 
