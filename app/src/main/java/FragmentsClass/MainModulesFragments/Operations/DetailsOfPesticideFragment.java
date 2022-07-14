@@ -54,8 +54,8 @@ public class DetailsOfPesticideFragment extends Fragment {
     }
 
     private void loadData() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("PESTICIDES_CHOSEN",Context.MODE_PRIVATE);
-        sentName = sharedPreferences.getString("CHOSEN", "ABAMAX 018 EC");
+        SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
+        sentName = sharedPreferences.getString("CHOSEN_PESTICIDE", "ABAMAX 018 EC");
 
         DataBaseHelper dbHelper = new DataBaseHelper(context);
         Cursor k =dbHelper.getSpecifyPesticideValues(sentName);
@@ -72,9 +72,6 @@ public class DetailsOfPesticideFragment extends Fragment {
             notesOfP = k.getString(k.getColumnIndexOrThrow(DataBaseNames.PesticidesItem.COLUMN_NOTES));
             imageOfP = k.getInt(k.getColumnIndexOrThrow(DataBaseNames.PesticidesItem.COLUMN_IMAGE));
         }
-
-        System.out.println(String.valueOf(typeOfD) + "  :  " +  String.valueOf(doseOfP));
-        
         if(typeOfP==0)
             typeOfPesticide.setText("INSEKTYCYD");
         else if(typeOfP==1)

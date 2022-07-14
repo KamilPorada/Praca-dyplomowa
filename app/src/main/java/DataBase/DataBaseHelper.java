@@ -63,7 +63,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_CATALOG_OF_PESTICIDES);
 
         ToolClass.fillCatalogOfPesticides(db);
-
     }
 
 
