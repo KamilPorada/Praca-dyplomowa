@@ -151,7 +151,7 @@ public  class ToolClass {
             return validateHour && validateMinutes && validateColon;
         }
     }
-//kutkiewicz
+
     public static boolean checkValidateYear(String data) {
         char[] charDate = data.toCharArray();
         String stringYear = charDate[6] + Character.toString(charDate[7]) +
@@ -280,6 +280,7 @@ public  class ToolClass {
         editor.putString("HOUR_OF_OPERATIONS", "");
         editor.putInt("AMOUNT_OF_HIGHGROVES", 0);
         editor.putString("PESTICIDES", "");
+        editor.putInt("ID_OF_PESTICIDES", 0);
         editor.apply();
     }
 

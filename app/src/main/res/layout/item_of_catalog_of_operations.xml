@@ -21,7 +21,6 @@
             android:background="@drawable/shape_image_item_trade_of_pepper"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/main_container"
             app:layout_constraintLeft_toLeftOf="parent"
             >
             <TextView
@@ -34,25 +33,24 @@
                 app:layout_constraintBottom_toTopOf="@id/image"
                 android:fontFamily="@font/crete_round"
                 android:textColor="@color/white"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:textAlignment="center"
-                android:text="Zabieg\ninsektycydowy"/>
+                android:text="Zabieg\ngrzybobójczy"/>
             <ImageView
                 android:id="@+id/image"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:src="@drawable/image_weed"
+                android:src="@drawable/image_mushrooms"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title"
-                android:layout_marginBottom="5dp"/>
 
-
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main_container"
-            android:layout_width="140dp"
+            android:layout_width="160dp"
             android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -61,83 +59,142 @@
             android:background="@drawable/shape_background_color_rectangle_with_main_color_stroke"
             >
             <TextView
-                android:id="@+id/how_class"
+                android:id="@+id/title_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/how_price"
+                app:layout_constraintBottom_toTopOf="@id/title_hour"
                 android:layout_marginLeft="5dp"
-                android:text="Pestycyd "
+                android:text="Data: "
                 android:textColor="@color/blackToWhite"
                 android:fontFamily="@font/crete_round"
                 android:textSize="18dp"
                 />
             <TextView
-                android:id="@+id/how_price"
+                android:id="@+id/how_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/how_class"
-                app:layout_constraintBottom_toTopOf="@id/how_weight"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/title_date"
+                app:layout_constraintBottom_toTopOf="@id/title_hour"
+                android:textColor="@color/blackToWhite"
+                android:fontFamily="@font/rajdhani"
+                android:textSize="18dp"
+                />
+            <TextView
+                android:id="@+id/title_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/title_date"
+                app:layout_constraintBottom_toTopOf="@id/title_grace"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginLeft="5dp"
-                android:text="Godzina"
+                android:text="Godzina: "
                 android:textColor="@color/blackToWhite"
                 android:fontFamily="@font/crete_round"
                 android:textSize="18dp"
                 />
             <TextView
-                android:id="@+id/how_weight"
+                android:id="@+id/how_hour"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/how_price"
+                app:layout_constraintTop_toBottomOf="@id/title_date"
+                app:layout_constraintBottom_toTopOf="@id/title_grace"
+                app:layout_constraintLeft_toRightOf="@id/title_hour"
+                android:textColor="@color/blackToWhite"
+                android:fontFamily="@font/rajdhani"
+                android:textSize="18dp"
+                />
+            <TextView
+                android:id="@+id/title_grace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/title_hour"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="5dp"
+                android:text="Karencja: "
+                android:textColor="@color/blackToWhite"
+                android:fontFamily="@font/crete_round"
+                android:textSize="18dp"
+                />
+            <TextView
+                android:id="@+id/how_grace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/title_hour"
+                app:layout_constraintLeft_toRightOf="@id/title_grace"
+                android:textColor="@color/blackToWhite"
+                android:fontFamily="@font/rajdhani"
+                android:textSize="18dp"
+                />
+
+            <TextView
+                android:id="@+id/title_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/title_grace"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="5dp"
+                android:text="Status: "
+                android:textColor="@color/blackToWhite"
+                android:fontFamily="@font/crete_round"
+                android:textSize="18dp"
+                />
+            <TextView
+                android:id="@+id/how_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/title_status"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginLeft="5dp"
-                android:text="Waga: "
                 android:textColor="@color/blackToWhite"
-                android:fontFamily="@font/crete_round"
+                android:fontFamily="@font/rajdhani"
                 android:textSize="18dp"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <TextView
-            android:id="@+id/how_total_sum"
+            android:id="@+id/title_pesticide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/how_places_container"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toRightOf="@id/main_container"
+            app:layout_constraintRight_toRightOf="parent"
             android:textAlignment="center"
-            android:text="Status"
+            android:layout_marginTop="5dp"
+            android:text="Pestycyd:"
             android:textColor="@color/blackToWhite"
             android:fontFamily="@font/crete_round"
-            android:textSize="20dp"
+            android:textSize="18dp"
             />
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/how_places_container"
-            android:layout_width="155dp"
+        <TextView
+            android:id="@+id/how_pesticide"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/how_total_sum"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_pesticide"
             app:layout_constraintLeft_toRightOf="@id/main_container"
-            >
-            <TextView
-                android:id="@+id/how_places"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:textSize="17dp"
-                android:fontFamily="@font/crete_round"
-                android:textColor="@color/blackToWhite"
-                android:textAlignment="center"
-                android:text="Karencja"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintRight_toRightOf="parent"
+            android:textAlignment="center"
+            android:text=""
+            android:textColor="@color/blackToWhite"
+            android:fontFamily="@font/rajdhani"
+            android:textSize="18dp"
+            />
 
+        <Button
+            android:id="@+id/button_details_of_operation"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/main_container"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:text="Szczegóły"
+            android:background="@drawable/shape_button"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

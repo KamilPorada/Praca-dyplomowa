@@ -71,7 +71,7 @@ public class CatalogOfPesticidesFragment extends Fragment {
 
     private void loadData() {
         DataBaseHelper dbHelper = new DataBaseHelper(context);
-        Cursor k =dbHelper.getCatalogOfPesticidesNames();
+        Cursor k =dbHelper.getPesticideCatalogData();
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
         modeOfCatalogOfPesticide = sharedPreferences.getInt("CATALOG_OF_PESTICIDE_OPEN_MODE", 0);
@@ -113,12 +113,14 @@ public class CatalogOfPesticidesFragment extends Fragment {
         {
             String name=k.getString(k.getColumnIndexOrThrow(DataBaseNames.PesticidesItem.COLUMN_NAME_OF_PESTICIDES));
             int type=k.getInt(k.getColumnIndexOrThrow(DataBaseNames.PesticidesItem.COLUMN_TYPE_OF_PESTICIDE));
+            int id = k.getInt(k.getColumnIndexOrThrow(DataBaseNames.PesticidesItem._ID));
+            int grace = k.getInt(k.getColumnIndexOrThrow(DataBaseNames.PesticidesItem.COLUMN_OF_GRACE));
             if(type==0 && typeOfPesticides==0)
-                catalogOfPesticideItems.add(new CatalogOfPesticideItem(name));
+                catalogOfPesticideItems.add(new CatalogOfPesticideItem(id, name, grace));
             else if(type==1 && typeOfPesticides==1)
-                catalogOfPesticideItems.add(new CatalogOfPesticideItem(name));
+                catalogOfPesticideItems.add(new CatalogOfPesticideItem(id, name, grace));
             else if(type==2 && typeOfPesticides==2)
-                catalogOfPesticideItems.add(new CatalogOfPesticideItem(name));
+                catalogOfPesticideItems.add(new CatalogOfPesticideItem(id, name, grace));
         }
     }
 
@@ -146,6 +148,8 @@ public class CatalogOfPesticidesFragment extends Fragment {
             sharedPreferences = context.getSharedPreferences("TEMPORARY_CURRENT_OPERATIONS",Context.MODE_PRIVATE);
             editor = sharedPreferences.edit();
             editor.putString("PESTICIDES", catalogOfPesticideItems.get(position).getNameOfPesticide());
+            editor.putInt("ID_OF_PESTICIDES", catalogOfPesticideItems.get(position).getId());
+            editor.putInt("GRACE", catalogOfPesticideItems.get(position).getGrace());
             editor.apply();
             requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PlanOperationsFragment()).commit();
         }

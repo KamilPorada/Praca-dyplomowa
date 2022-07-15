@@ -58,9 +58,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 DataBaseNames.PesticidesItem.COLUMN_IMAGE + " INTEGER NOT NULL" +
                 ");";
 
+        final String CREATE_TABLE_OPERATIONS= "CREATE TABLE " +
+                DataBaseNames.OperationsItem.TABLE_NAME + " (" +
+                DataBaseNames.OperationsItem._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                DataBaseNames.OperationsItem.COLUMN_ID_PESTICIDE + " INTEGER NOT NULL," +
+                DataBaseNames.OperationsItem.COLUMN_DATE + " TEXT NOT NULL," +
+                DataBaseNames.OperationsItem.COLUMN_TIME + " TEXT NOT NULL," +
+                DataBaseNames.OperationsItem.COLUMN_DATE_END_OF_GRACE + " TEXT NOT NULL," +
+                DataBaseNames.OperationsItem.COLUMN_AGE_OF_PEPPER + " INTEGER NOT NULL," +
+                DataBaseNames.OperationsItem.COLUMN_HIGHGROVES + " INTEGER NOT NULL," +
+                DataBaseNames.OperationsItem.COLUMN_STATUS + " INTEGER NOT NULL" +
+                ");";
+
         db.execSQL(CREATE_TABLE_TRADE_OF_PEPPER_ITEM);
         db.execSQL(CREATE_TABLE_OUTGOINGS);
         db.execSQL(CREATE_TABLE_CATALOG_OF_PESTICIDES);
+        db.execSQL(CREATE_TABLE_OPERATIONS);
 
         ToolClass.fillCatalogOfPesticides(db);
     }
@@ -70,6 +83,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + DataBaseNames.TradeOfPepperItem.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DataBaseNames.OutgoingsItem.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DataBaseNames.PesticidesItem.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DataBaseNames.PesticidesItem.TABLE_NAME);
 
         onCreate(db);
@@ -235,16 +249,18 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
 
-
-    public Cursor getCatalogOfPesticidesNames(){
+    public Cursor getPesticideCatalogData(){
         String[] columns={DataBaseNames.PesticidesItem._ID, DataBaseNames.PesticidesItem.COLUMN_NAME_OF_PESTICIDES,
-                          DataBaseNames.PesticidesItem.COLUMN_TYPE_OF_PESTICIDE};
+                          DataBaseNames.PesticidesItem.COLUMN_NAME_OF_PEST, DataBaseNames.PesticidesItem.COLUMN_TYPE_OF_PESTICIDE,
+                          DataBaseNames.PesticidesItem.COLUMN_TYPE_OF_DOSE, DataBaseNames.PesticidesItem.COLUMN_TYPE_OF_DOSE,
+                          DataBaseNames.PesticidesItem.COLUMN_OF_GRACE, DataBaseNames.PesticidesItem.COLUMN_NOTES,
+                          DataBaseNames.PesticidesItem.COLUMN_IMAGE};
         SQLiteDatabase db =getReadableDatabase();
         return db.query(DataBaseNames.PesticidesItem.TABLE_NAME,columns, null,null,null,null,null);
     }
 
     public Cursor getSpecifyPesticideValues(String name) {
-        String[] columns={DataBaseNames.PesticidesItem.COLUMN_NAME_OF_PEST,
+        String[] columns={DataBaseNames.PesticidesItem._ID, DataBaseNames.PesticidesItem.COLUMN_NAME_OF_PEST,
                           DataBaseNames.PesticidesItem.COLUMN_TYPE_OF_PESTICIDE, DataBaseNames.PesticidesItem.COLUMN_DOSE,
                           DataBaseNames.PesticidesItem.COLUMN_TYPE_OF_DOSE, DataBaseNames.PesticidesItem.COLUMN_OF_GRACE,
                           DataBaseNames.PesticidesItem.COLUMN_NOTES, DataBaseNames.PesticidesItem.COLUMN_IMAGE};
@@ -254,4 +270,50 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return db.query(DataBaseNames.PesticidesItem.TABLE_NAME, columns, selection,selection_args,null,null,null);
     }
 
+    public Cursor getSpecifyPesticideValues(int id) {
+        String[] columns={DataBaseNames.PesticidesItem._ID, DataBaseNames.PesticidesItem.COLUMN_NAME_OF_PESTICIDES, DataBaseNames.PesticidesItem.COLUMN_NAME_OF_PEST,
+                DataBaseNames.PesticidesItem.COLUMN_TYPE_OF_PESTICIDE, DataBaseNames.PesticidesItem.COLUMN_DOSE,
+                DataBaseNames.PesticidesItem.COLUMN_TYPE_OF_DOSE, DataBaseNames.PesticidesItem.COLUMN_OF_GRACE,
+                DataBaseNames.PesticidesItem.COLUMN_NOTES, DataBaseNames.PesticidesItem.COLUMN_IMAGE};
+        String selection = DataBaseNames.PesticidesItem.COLUMN_NAME_OF_PESTICIDES+" LIKE ?";
+        SQLiteDatabase db =getReadableDatabase();
+        return db.query(DataBaseNames.PesticidesItem.TABLE_NAME, columns, DataBaseNames.PesticidesItem._ID + " LIKE " + id,null,null,null,null);
+    }
+
+
+
+
+    public void addOperation(int idPesticide, String date, String time, String dateOfEndGrace, int ageOfPepper, int highgroves, String status) {
+        SQLiteDatabase db=getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(DataBaseNames.OperationsItem.COLUMN_ID_PESTICIDE,idPesticide);
+        values.put(DataBaseNames.OperationsItem.COLUMN_DATE,date);
+        values.put(DataBaseNames.OperationsItem.COLUMN_TIME,time);
+        values.put(DataBaseNames.OperationsItem.COLUMN_DATE_END_OF_GRACE,dateOfEndGrace);
+        values.put(DataBaseNames.OperationsItem.COLUMN_AGE_OF_PEPPER,ageOfPepper);
+        values.put(DataBaseNames.OperationsItem.COLUMN_HIGHGROVES,highgroves);
+        values.put(DataBaseNames.OperationsItem.COLUMN_STATUS, status);
+
+        db.insertOrThrow(DataBaseNames.OperationsItem.TABLE_NAME,null,values);
+    }
+
+    public Cursor getSpecifyOperationsValues(int id) {
+        String[] columns={DataBaseNames.OperationsItem.COLUMN_DATE, DataBaseNames.OperationsItem.COLUMN_TIME,
+                          DataBaseNames.OperationsItem.COLUMN_DATE_END_OF_GRACE, DataBaseNames.OperationsItem.COLUMN_AGE_OF_PEPPER,
+                          DataBaseNames.OperationsItem.COLUMN_HIGHGROVES, DataBaseNames.OperationsItem.COLUMN_STATUS};
+        String selection = DataBaseNames.OperationsItem._ID+" LIKE ?";
+        int[] selection_args= {id};
+        SQLiteDatabase db =getReadableDatabase();
+        return db.query(DataBaseNames.PesticidesItem.TABLE_NAME, columns, DataBaseNames.OperationsItem._ID + " LIKE " + id,null,null,null,null);
+    }
+
+    public Cursor getOperationCatalogData(){
+        String[] columns={DataBaseNames.OperationsItem._ID, DataBaseNames.OperationsItem.COLUMN_DATE,
+                DataBaseNames.OperationsItem.COLUMN_ID_PESTICIDE, DataBaseNames.OperationsItem.COLUMN_TIME,
+                DataBaseNames.OperationsItem.COLUMN_DATE_END_OF_GRACE, DataBaseNames.OperationsItem.COLUMN_AGE_OF_PEPPER,
+                DataBaseNames.OperationsItem.COLUMN_HIGHGROVES, DataBaseNames.OperationsItem.COLUMN_STATUS};
+        SQLiteDatabase db =getReadableDatabase();
+        return db.query(DataBaseNames.OperationsItem.TABLE_NAME,columns, null,null,null,null,null);
+    }
 }
+

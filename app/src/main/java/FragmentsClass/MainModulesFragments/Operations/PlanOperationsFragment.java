@@ -30,6 +30,7 @@ import androidx.fragment.app.Fragment;
 import com.example.pracadyplomowa.R;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -214,6 +215,8 @@ public class PlanOperationsFragment extends Fragment {
         editor.putString("HOUR_OF_OPERATIONS", howHour.getText().toString());
         editor.putInt("AMOUNT_OF_HIGHGROVES", highgroves);
         editor.putString("PESTICIDES", howPesticide.getText().toString());
+        editor.putInt("ID_OF_PESTICIDES", 0);
+        editor.putInt("GRACE", 0);
         editor.apply();
         requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CatalogOfPesticidesFragment()).commit();
 
@@ -376,7 +379,26 @@ public class PlanOperationsFragment extends Fragment {
     }
 
     private void addOperationsToDataBase() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("TEMPORARY_CURRENT_OPERATIONS",Context.MODE_PRIVATE);
+        int grace = sharedPreferences.getInt("GRACE", 0);
+        int id = sharedPreferences.getInt("ID_OF_PESTICIDES", 0);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH,ToolClass.getActualDay());
+        calendar.set(Calendar.MONTH,ToolClass.getActualMonth()-1);
+        calendar.set(Calendar.YEAR,ToolClass.getActualYear());
+
+        calendar.add(Calendar.DAY_OF_MONTH,grace);
+
+        String dateEndOfGrace = calendar.get(Calendar.DAY_OF_MONTH) + "." + (calendar.get(Calendar.MONTH)+1) + "." + calendar.get(Calendar.YEAR);
+
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+        dataBaseHelper.addOperation(id,date, hour, dateEndOfGrace, age, highgroves, "Zaplanowano");
+
         ToolClass.clearTemporaryCurrentOperations(context);
+        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OperationsFragment()).commit();
+
+
     }
 }
 

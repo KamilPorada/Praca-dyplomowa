@@ -71,7 +71,7 @@ public class OperationsFragment extends Fragment {
                 }break;
                 case R.id. btn_daily_operations:
                 {
-
+                    fragment = new CatalogOfOperationsFragment();
                 }break;
                 case R.id.btn_catalog_of_pesticides:
                 {
