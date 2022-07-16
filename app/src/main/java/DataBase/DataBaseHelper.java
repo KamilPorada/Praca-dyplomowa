@@ -67,6 +67,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 DataBaseNames.OperationsItem.COLUMN_DATE_END_OF_GRACE + " TEXT NOT NULL," +
                 DataBaseNames.OperationsItem.COLUMN_AGE_OF_PEPPER + " INTEGER NOT NULL," +
                 DataBaseNames.OperationsItem.COLUMN_HIGHGROVES + " INTEGER NOT NULL," +
+                DataBaseNames.OperationsItem.COLUMN_FLUID + " INTEGER NOT NULL," +
                 DataBaseNames.OperationsItem.COLUMN_STATUS + " INTEGER NOT NULL" +
                 ");";
 
@@ -283,7 +284,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
 
-    public void addOperation(int idPesticide, String date, String time, String dateOfEndGrace, int ageOfPepper, int highgroves, String status) {
+    public void addOperation(int idPesticide, String date, String time, String dateOfEndGrace, int ageOfPepper, int highgroves, int fluid, int status) {
         SQLiteDatabase db=getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(DataBaseNames.OperationsItem.COLUMN_ID_PESTICIDE,idPesticide);
@@ -292,28 +293,37 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(DataBaseNames.OperationsItem.COLUMN_DATE_END_OF_GRACE,dateOfEndGrace);
         values.put(DataBaseNames.OperationsItem.COLUMN_AGE_OF_PEPPER,ageOfPepper);
         values.put(DataBaseNames.OperationsItem.COLUMN_HIGHGROVES,highgroves);
+        values.put(DataBaseNames.OperationsItem.COLUMN_FLUID,fluid);
         values.put(DataBaseNames.OperationsItem.COLUMN_STATUS, status);
 
         db.insertOrThrow(DataBaseNames.OperationsItem.TABLE_NAME,null,values);
     }
 
     public Cursor getSpecifyOperationsValues(int id) {
-        String[] columns={DataBaseNames.OperationsItem.COLUMN_DATE, DataBaseNames.OperationsItem.COLUMN_TIME,
+        String[] columns={DataBaseNames.OperationsItem.COLUMN_ID_PESTICIDE, DataBaseNames.OperationsItem.COLUMN_DATE, DataBaseNames.OperationsItem.COLUMN_TIME,
                           DataBaseNames.OperationsItem.COLUMN_DATE_END_OF_GRACE, DataBaseNames.OperationsItem.COLUMN_AGE_OF_PEPPER,
-                          DataBaseNames.OperationsItem.COLUMN_HIGHGROVES, DataBaseNames.OperationsItem.COLUMN_STATUS};
-        String selection = DataBaseNames.OperationsItem._ID+" LIKE ?";
-        int[] selection_args= {id};
+                          DataBaseNames.OperationsItem.COLUMN_HIGHGROVES, DataBaseNames.OperationsItem.COLUMN_FLUID,
+                          DataBaseNames.OperationsItem.COLUMN_STATUS};
         SQLiteDatabase db =getReadableDatabase();
-        return db.query(DataBaseNames.PesticidesItem.TABLE_NAME, columns, DataBaseNames.OperationsItem._ID + " LIKE " + id,null,null,null,null);
+        return db.query(DataBaseNames.OperationsItem.TABLE_NAME, columns, DataBaseNames.OperationsItem._ID + " LIKE " + id,null,null,null,null);
     }
 
     public Cursor getOperationCatalogData(){
         String[] columns={DataBaseNames.OperationsItem._ID, DataBaseNames.OperationsItem.COLUMN_DATE,
                 DataBaseNames.OperationsItem.COLUMN_ID_PESTICIDE, DataBaseNames.OperationsItem.COLUMN_TIME,
                 DataBaseNames.OperationsItem.COLUMN_DATE_END_OF_GRACE, DataBaseNames.OperationsItem.COLUMN_AGE_OF_PEPPER,
-                DataBaseNames.OperationsItem.COLUMN_HIGHGROVES, DataBaseNames.OperationsItem.COLUMN_STATUS};
+                DataBaseNames.OperationsItem.COLUMN_HIGHGROVES, DataBaseNames.OperationsItem.COLUMN_FLUID,
+                DataBaseNames.OperationsItem.COLUMN_STATUS};
         SQLiteDatabase db =getReadableDatabase();
         return db.query(DataBaseNames.OperationsItem.TABLE_NAME,columns, null,null,null,null,null);
+    }
+
+    public void updateOperationStatus(int id, int status) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(DataBaseNames.OperationsItem.COLUMN_STATUS,status);
+
+        db.update(DataBaseNames.OperationsItem.TABLE_NAME,values,DataBaseNames.OperationsItem._ID + " LIKE " + id,null);
     }
 }
 

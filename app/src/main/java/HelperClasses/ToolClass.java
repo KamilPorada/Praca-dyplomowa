@@ -74,6 +74,12 @@ public  class ToolClass {
         return Integer.parseInt(stringMonth);
     }
 
+    public static int getDay(String date) {
+        char[] charDate = date.toCharArray();
+        String stringMonth = charDate[0] + Character.toString(charDate[1]);
+        return Integer.parseInt(stringMonth);
+    }
+
     public static boolean compareDateAndTimeWithCurrentDateAndTime(String date, String time)
     {
         char[] charDate = date.toCharArray();

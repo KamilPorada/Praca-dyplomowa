@@ -44,6 +44,7 @@ public class DataBaseNames {
         public static final String COLUMN_DATE_END_OF_GRACE = "operationDateEndOfGRace";
         public static final String COLUMN_AGE_OF_PEPPER = "ageOfPepper";
         public static final String COLUMN_HIGHGROVES = "highgroves";
+        public static final String COLUMN_FLUID = "fluid";
         public static final String COLUMN_STATUS = "status";
     }
 }

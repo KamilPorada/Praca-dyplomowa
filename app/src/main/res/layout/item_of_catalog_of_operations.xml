@@ -160,6 +160,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/how_pesticide"
             app:layout_constraintLeft_toRightOf="@id/main_container"
             app:layout_constraintRight_toRightOf="parent"
             android:textAlignment="center"
@@ -188,13 +189,42 @@
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/attention_of_grace"
             app:layout_constraintLeft_toRightOf="@id/main_container"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginBottom="5dp"
             android:textColor="@color/white"
-            android:textSize="12sp"
+            android:textSize="11sp"
             android:text="Szczegóły"
-            android:background="@drawable/shape_button"/>
+            />
+
+        <ImageView
+            android:id="@+id/image_skull"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:layout_constraintLeft_toRightOf="@id/main_container"
+            app:layout_constraintRight_toLeftOf="@id/attention_of_grace"
+            app:layout_constraintTop_toBottomOf="@id/how_pesticide"
+            app:layout_constraintBottom_toTopOf="@id/button_details_of_operation"
+            android:src="@drawable/image_skull"
+            app:tint="#FF0000"/>
+
+        <TextView
+            android:id="@+id/attention_of_grace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/how_pesticide"
+            app:layout_constraintBottom_toTopOf="@id/button_details_of_operation"
+            app:layout_constraintLeft_toRightOf="@id/image_skull"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textAlignment="center"
+            android:textSize="13sp"
+            android:textColor="#FF0000"
+            android:fontFamily="@font/crete_round"
+            android:text="OKRES KARENCJI"/>
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

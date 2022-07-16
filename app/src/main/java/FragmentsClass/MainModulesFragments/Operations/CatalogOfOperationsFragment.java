@@ -79,7 +79,11 @@ public class CatalogOfOperationsFragment extends Fragment {
         adapter.setOnItemClickListener(new CatalogOfOperationAdapter.OnItemClickListener() {
             @Override
             public void onShowInformation(int position) {
-
+                SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("POSITION_OF_OPERATION_RV", catalogOfOperationItems.get(position).getId());
+                editor.apply();
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new DetailsOfOperationFragment()).commit();
             }
         });
     }
@@ -87,12 +91,12 @@ public class CatalogOfOperationsFragment extends Fragment {
         DataBaseHelper dbHelper = new DataBaseHelper(context);
         Cursor k1 = dbHelper.getOperationCatalogData();
         Cursor k2;
-        String date="", time="", status="", pesticide="", graceString="", describe="";
-        int grace = 0, idOfPesticide = 0, idOfOperation=0, typeOfPesticides=0, image=0;
+        String date="", time="", stringStatus="", pesticide="", graceString="", describe="";
+        int grace = 0, idOfPesticide = 0, idOfOperation=0, typeOfPesticides=0, image=0, status=0;
         while(k1.moveToNext()) {
             date = k1.getString(k1.getColumnIndexOrThrow(DataBaseNames.OperationsItem.COLUMN_DATE));
             time = k1.getString(k1.getColumnIndexOrThrow(DataBaseNames.OperationsItem.COLUMN_TIME));
-            status = k1.getString(k1.getColumnIndexOrThrow(DataBaseNames.OperationsItem.COLUMN_STATUS));
+            status = k1.getInt(k1.getColumnIndexOrThrow(DataBaseNames.OperationsItem.COLUMN_STATUS));
             idOfPesticide = k1.getInt(k1.getColumnIndexOrThrow(DataBaseNames.OperationsItem.COLUMN_ID_PESTICIDE));
             idOfOperation = k1.getInt(k1.getColumnIndexOrThrow(DataBaseNames.OperationsItem._ID));
 
@@ -122,8 +126,12 @@ public class CatalogOfOperationsFragment extends Fragment {
                     describe = "Zabieg chwastobójczy";
                     image = R.drawable.image_weed;
                 }
+                if(status==0)
+                    stringStatus="Zaplanowano";
+                else
+                    stringStatus="Wykonano";
             }
-            catalogOfOperationItems.add(new CatalogOfOperationItem(idOfOperation, date, time, status, graceString, pesticide, image, describe));
+            catalogOfOperationItems.add(new CatalogOfOperationItem(idOfOperation, date, time, stringStatus, graceString, pesticide, image, describe));
         }
     }
 

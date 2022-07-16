@@ -384,16 +384,45 @@ public class PlanOperationsFragment extends Fragment {
         int id = sharedPreferences.getInt("ID_OF_PESTICIDES", 0);
 
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_MONTH,ToolClass.getActualDay());
-        calendar.set(Calendar.MONTH,ToolClass.getActualMonth()-1);
-        calendar.set(Calendar.YEAR,ToolClass.getActualYear());
+        calendar.set(Calendar.DAY_OF_MONTH,ToolClass.getDay(date));
+        calendar.set(Calendar.MONTH,ToolClass.getMonth(date));
+        calendar.set(Calendar.YEAR,ToolClass.getYear(date));
 
         calendar.add(Calendar.DAY_OF_MONTH,grace);
+        String dateEndOfGrace="";
 
-        String dateEndOfGrace = calendar.get(Calendar.DAY_OF_MONTH) + "." + (calendar.get(Calendar.MONTH)+1) + "." + calendar.get(Calendar.YEAR);
+        if(calendar.get(Calendar.DAY_OF_MONTH)<10)
+            dateEndOfGrace=dateEndOfGrace+"0"+calendar.get(Calendar.DAY_OF_MONTH)+".";
+        else
+            dateEndOfGrace=dateEndOfGrace+calendar.get(Calendar.DAY_OF_MONTH)+".";
+        if(calendar.get(Calendar.MONTH)<10)
+            dateEndOfGrace=dateEndOfGrace+"0"+(calendar.get(Calendar.MONTH))+".";
+        else
+            dateEndOfGrace=dateEndOfGrace+(calendar.get(Calendar.MONTH))+".";
+        dateEndOfGrace=dateEndOfGrace+calendar.get(Calendar.YEAR);
+
+        int fluid=0;
+        if(insecticidies.isChecked())
+            typeOfPesticides=0;
+        else if(fungicidies.isChecked())
+            typeOfPesticides=1;
+        else if(herbicidies.isChecked())
+            typeOfPesticides=2;
+        if(typeOfPesticides==2)
+            fluid=highgroves*5;
+        else {
+            if (age < 25)
+                fluid = highgroves * 5;
+            else if (age < 50)
+                fluid = highgroves * 10;
+            else if (age < 75)
+                fluid = highgroves * 15;
+            else
+                fluid = highgroves * 20;
+        }
 
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
-        dataBaseHelper.addOperation(id,date, hour, dateEndOfGrace, age, highgroves, "Zaplanowano");
+        dataBaseHelper.addOperation(id,date, hour, dateEndOfGrace, age, highgroves, fluid,0);
 
         ToolClass.clearTemporaryCurrentOperations(context);
         requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OperationsFragment()).commit();
