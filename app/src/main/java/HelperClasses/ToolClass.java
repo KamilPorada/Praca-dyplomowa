@@ -173,6 +173,16 @@ public  class ToolClass {
         return Double.parseDouble(highgroves);
     }
 
+    public static int getAreaOfPlantation(int highgroves)
+    {
+        return 32*8*highgroves;
+    }
+
+    public static int getHerbicideAreaOfPlantation(int highgroves)
+    {
+        return (32*2+8*2)*highgroves;
+    }
+
     public static void fillCatalogOfPesticides(SQLiteDatabase sqLiteDatabase)
     {
         int i=0;
@@ -226,7 +236,6 @@ public  class ToolClass {
         sqLiteDatabase.execSQL(createInsertQuery("SCORPION 325 SC", "Brunatna plamistość",1,1,2,3,"Opryskiwać do 2 razy w sezonie, od widocznego 1 będu bocznego na pędzie głównym do stadium, gdy 70 % owoców uzyskuję typową barwę.",R.drawable.image_pesticide_scorpion));
         sqLiteDatabase.execSQL(createInsertQuery("SERENADE ASO", "Bakteryjna cętkowatość",1,8,2,0,"Bacillus subtilis zawarta w tym środku jest bakterią zakłócającą rozwój grzybni i wytwarzającą substancję, które zaburzają funkcjonowanie błon komórkowych.",R.drawable.image_pesticide_serenade));
         sqLiteDatabase.execSQL(createInsertQuery("SERIFEL", "Szara pleśń",1,0.5,1,0,"Stosować do 6 razy w sezonie do pełnej dojrzałości owoców.",R.drawable.image_pesticide_serifel));
-        sqLiteDatabase.execSQL(createInsertQuery("SIARKA", "Szkodniki bytujące w konstrukcjach",1,15,0,0,"Przed zabiegiem uszczelnić obiekt, a po zakończeniu wywietrzyć. Gazować przez 12-24 godziny utrzymując temperaturę 15 - 30 stopni Celsjusza. Po zakończonym zabiegu konstrukcje spłukać wodą od zewnątrz.",R.drawable.image_pesticide_siarka));
         sqLiteDatabase.execSQL(createInsertQuery("SIGNUM 33 WG", "Zgnilizna twardzikowa",1,1.5,1,3,"Kontrolować rośliny systematycznie, zwłaszcza na tych stanowiskach, na których choroba występowała w poprzednim sezonie. Opryskiwać rośliny po stwierdzeniu objawów. Zabieg wykonywać co 7-10 dni.",R.drawable.image_pesticide_signum));
         sqLiteDatabase.execSQL(createInsertQuery("SWITCH 62,5 WG", "Zgnilizna twardzikowa",1,1,1,3,"Kontrolować rośliny systematycznie, zwłaszcza na tych stanowiskach, na których choroba występowała w poprzednim sezonie. Opryskiwać rośliny po stwierdzeniu objawów. Zabieg wykonywać co 7-10 dni.",R.drawable.image_pesticide_switch));
         sqLiteDatabase.execSQL(createInsertQuery("TAEGRO", "Mączniak prawdziwy",1,0.3,2,0,"Środek stosować zapobiegawczo, od końca fazy rozwoju liści - co najmniej 9 rozwiniętych liści na pędzie głównym do końca fazy dojrzewania. Stosować do 12 razy w sezonie w odstępach 3 dni od zabiegu.",R.drawable.image_pesticide_taegro));

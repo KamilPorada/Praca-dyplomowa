@@ -56,21 +56,21 @@
 
         <TextView
             android:id="@+id/first_sentence"
-            android:layout_width="300dp"
+            android:layout_width="330dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:textColor="@color/blackToWhite"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:fontFamily="@font/crete_round"
             android:text="1.Wlej do opryskiwacza 300 litrów wody."
             />
 
         <ImageView
             android:id="@+id/first_pictogram"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -92,21 +92,21 @@
 
         <TextView
             android:id="@+id/second_sentence"
-            android:layout_width="300dp"
+            android:layout_width="330dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:textColor="@color/blackToWhite"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:fontFamily="@font/crete_round"
             android:text="2.Przygotuj czyste wiaderko do sporządzenia roztworu."
             />
 
         <ImageView
             android:id="@+id/second_pictogram"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -128,21 +128,21 @@
 
         <TextView
             android:id="@+id/third_sentence"
-            android:layout_width="300dp"
+            android:layout_width="330dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:textColor="@color/blackToWhite"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:fontFamily="@font/crete_round"
             android:text="3.Wlej 2 litry wody do przygotowanego wiaderka."
             />
 
         <ImageView
             android:id="@+id/third_pictogram"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -164,21 +164,21 @@
 
         <TextView
             android:id="@+id/fourth_sentence"
-            android:layout_width="300dp"
+            android:layout_width="330dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:textColor="@color/blackToWhite"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:fontFamily="@font/crete_round"
-            android:text="4.Dodaj do wiaderka z wodą 2l pestycydu ACARAMIK"
+            android:text="4.Wlej do wiaderka z wodą 2l pestycydu ACARAMIK."
             />
 
         <ImageView
             android:id="@+id/fourth_pictogram"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -200,21 +200,21 @@
 
         <TextView
             android:id="@+id/fiveth_sentence"
-            android:layout_width="300dp"
+            android:layout_width="330dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:textColor="@color/blackToWhite"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:fontFamily="@font/crete_round"
             android:text="5.Wymieszaj przygotowany roztwór."
             />
 
         <ImageView
             android:id="@+id/fiveth_pictogram"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -236,21 +236,21 @@
 
         <TextView
             android:id="@+id/sixth_sentence"
-            android:layout_width="300dp"
+            android:layout_width="330dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:textColor="@color/blackToWhite"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:fontFamily="@font/crete_round"
             android:text="6.Wlej wymieszany roztwór do opryskiwacza."
             />
 
         <ImageView
             android:id="@+id/sixth_pictogram"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -272,21 +272,21 @@
 
         <TextView
             android:id="@+id/seventh_sentence"
-            android:layout_width="300dp"
+            android:layout_width="330dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:textColor="@color/blackToWhite"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:fontFamily="@font/crete_round"
             android:text="7.Dolej kolejne 300 litrów wody do opryskiwacza."
             />
 
         <ImageView
             android:id="@+id/seventh_pictogram"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -295,11 +295,48 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/eigth_block"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/seventh_block"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/shape_bottom_line">
+
+        <TextView
+            android:id="@+id/eigth_sentence"
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:textColor="@color/blackToWhite"
+            android:textSize="17sp"
+            android:fontFamily="@font/crete_round"
+            android:text="8.Włącz mieszadło opryskiwacza."
+            />
+
+        <ImageView
+            android:id="@+id/eigth_pictogram"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/image_lever"
+            app:tint="@color/mainColor" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <Button
-        android:id="@+id/come_back_button"
+        android:id="@+id/button_come_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/seventh_block"
+        app:layout_constraintTop_toBottomOf="@id/eigth_block"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
