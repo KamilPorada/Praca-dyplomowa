@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -100,7 +101,7 @@ public class DetailsOfOperationFragment extends Fragment {
                     }break;
                     case R.id.button_instructions:
                     {
-
+                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new InstructionOfOperationFragment()).commit();
                     }break;
                     case R.id.button_come_back:
                     {
@@ -117,8 +118,10 @@ public class DetailsOfOperationFragment extends Fragment {
     private void updateOperationStatus() {
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
         dataBaseHelper.updateOperationStatus(id,1);
+        imageOfPest.animate().setDuration(2000).scaleYBy(0.15f).scaleXBy(0.15f);
+        imageOfPest.animate().rotationYBy(360).setDuration(1000);
         buttonChangeStatus.setVisibility(View.INVISIBLE);
-        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new DetailsOfOperationFragment()).commit();
+        howStatus.setText("Wykonano");
     }
 
     private void loadData() {
