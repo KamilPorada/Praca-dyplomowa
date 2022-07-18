@@ -15,7 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pracadyplomowa.R;
 
+import java.util.Calendar;
 import java.util.List;
+
+import HelperClasses.ToolClass;
 
 
 public class CatalogOfOperationAdapter extends RecyclerView.Adapter<CatalogOfOperationAdapter.CatalogOfOperationViewHolder> {
@@ -32,18 +35,20 @@ public class CatalogOfOperationAdapter extends RecyclerView.Adapter<CatalogOfOpe
     }
 
     public static class CatalogOfOperationViewHolder extends RecyclerView.ViewHolder {
-        public ImageView image;
-        public TextView title, howDate, howHour, howGrace, howStatus, howPesticide;
+        public ImageView image, imageSkull;
+        public TextView title, howDate, howHour, howGrace, howStatus, howPesticide, attentionOfGrace;
         public Button buttonDetailsOfOperation;
         public CatalogOfOperationViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
             image=itemView.findViewById(R.id.image);
+            imageSkull=itemView.findViewById(R.id.image_skull);
             title=itemView.findViewById(R.id.title);
             howDate=itemView.findViewById(R.id.how_date);
             howHour=itemView.findViewById(R.id.how_hour);
             howGrace=itemView.findViewById(R.id.how_grace);
             howStatus=itemView.findViewById(R.id.how_status);
             howPesticide=itemView.findViewById(R.id.how_pesticide);
+            attentionOfGrace=itemView.findViewById(R.id.attention_of_grace);
             buttonDetailsOfOperation=itemView.findViewById(R.id.button_details_of_operation);
 
             buttonDetailsOfOperation.setOnClickListener(v -> {
@@ -78,6 +83,28 @@ public class CatalogOfOperationAdapter extends RecyclerView.Adapter<CatalogOfOpe
         holder.howStatus.setText(currentItem.getStatus());
         holder.howGrace.setText(currentItem.getGrace());
         holder.howPesticide.setText(currentItem.getPesticide());
+        if(!checkGrace(currentItem.getEndOfGrace(), currentItem.getStatus()))
+        {
+            holder.attentionOfGrace.setVisibility(View.INVISIBLE);
+            holder.imageSkull.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private boolean checkGrace(String endOfGrace, String status) {
+        Calendar grace = Calendar.getInstance();
+        grace.set(Calendar.DAY_OF_MONTH, ToolClass.getDay(endOfGrace));
+        grace.set(Calendar.MONTH,ToolClass.getMonth(endOfGrace));
+        grace.set(Calendar.YEAR,ToolClass.getYear(endOfGrace));
+
+        Calendar today = Calendar.getInstance();
+        today.set(Calendar.DAY_OF_MONTH, ToolClass.getActualDay());
+        today.set(Calendar.MONTH,ToolClass.getActualMonth());
+        today.set(Calendar.YEAR,ToolClass.getActualYear());
+
+        if(grace.after(today) && status.compareTo("Wykonano")==0)
+            return true;
+        else
+            return false;
     }
 
     @Override

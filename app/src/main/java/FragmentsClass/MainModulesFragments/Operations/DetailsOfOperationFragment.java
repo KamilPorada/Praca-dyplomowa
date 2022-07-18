@@ -23,6 +23,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.pracadyplomowa.R;
 
+import java.util.Calendar;
+
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
 import HelperClasses.InformationDialog;
@@ -127,7 +129,7 @@ public class DetailsOfOperationFragment extends Fragment {
     private void loadData() {
         SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
         id = sharedPreferences.getInt("POSITION_OF_OPERATION_RV", 0);
-
+        int status = 0;
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
         Cursor k1=dataBaseHelper.getSpecifyOperationsValues(id);
         while (k1.moveToNext())
@@ -138,7 +140,7 @@ public class DetailsOfOperationFragment extends Fragment {
             howHighgroves.setText(String.valueOf(k1.getInt(k1.getColumnIndexOrThrow(DataBaseNames.OperationsItem.COLUMN_HIGHGROVES))));
             howFluid.setText(k1.getInt(k1.getColumnIndexOrThrow(DataBaseNames.OperationsItem.COLUMN_FLUID))+" litrów");
             int age = k1.getInt(k1.getColumnIndexOrThrow(DataBaseNames.OperationsItem.COLUMN_AGE_OF_PEPPER));
-            int status = k1.getInt(k1.getColumnIndexOrThrow(DataBaseNames.OperationsItem.COLUMN_STATUS));
+            status = k1.getInt(k1.getColumnIndexOrThrow(DataBaseNames.OperationsItem.COLUMN_STATUS));
             int idOfPesticide = k1.getInt(k1.getColumnIndexOrThrow(DataBaseNames.OperationsItem.COLUMN_ID_PESTICIDE));
             if (status==0)
                 howStatus.setText("Zaplanowano");
@@ -182,8 +184,15 @@ public class DetailsOfOperationFragment extends Fragment {
                     howGrace.setText(grace+" dni");
             }
         }
-//        ShowAttention showAttention = new ShowAttention();
-//        showAttention.showToast(R.layout.toast_layout,null, requireActivity(),context,date);
+
+
+        Calendar operationDate = ToolClass.generateCalendarDate(howDate.getText().toString());
+        Calendar todayDate = ToolClass.generateCurrentCalendarDate();
+
+        if(operationDate.equals(todayDate) && status==0)
+            buttonChangeStatus.setVisibility(View.VISIBLE);
+        else
+            buttonChangeStatus.setVisibility(View.INVISIBLE);
 
     }
 }

@@ -7,16 +7,18 @@ public class CatalogOfOperationItem {
     private final String status;
     private final String grace;
     private final String pesticide;
+    private final String endOfGrace;
     private final int image;
     private final String describe;
 
-    public CatalogOfOperationItem(int id, String date, String time, String status, String grace, String pesticide, int image, String describe) {
+    public CatalogOfOperationItem(int id, String date, String time, String status, String grace, String pesticide, String endOfGrace, int image, String describe) {
         this.id = id;
         this.date = date;
         this.time = time;
         this.status = status;
         this.grace = grace;
         this.pesticide = pesticide;
+        this.endOfGrace=endOfGrace;
         this.image = image;
         this. describe = describe;
     }
@@ -33,15 +35,15 @@ public class CatalogOfOperationItem {
         return time;
     }
 
-    public String getStatus() {
-        return status;
-    }
+    public String getStatus() { return status; }
 
     public String getGrace() { return grace; }
 
     public String getPesticide() {
         return pesticide;
     }
+
+    public String getEndOfGrace() { return endOfGrace; }
 
     public int getImage() {
         return image;

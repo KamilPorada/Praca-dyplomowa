@@ -9,11 +9,9 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.pracadyplomowa.R;
 
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
-import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
 
 public  class ToolClass {
@@ -80,28 +78,99 @@ public  class ToolClass {
         return Integer.parseInt(stringMonth);
     }
 
+    public static int getHour(String time) {
+        char[] charTime = time.toCharArray();
+        String stringHour = charTime[0] + Character.toString(charTime[1]);
+        return Integer.parseInt(stringHour);
+    }
+
+    public static int getMinute(String time) {
+        char[] charTime = time.toCharArray();
+        String stringMinute = charTime[3] + Character.toString(charTime[4]);
+        return Integer.parseInt(stringMinute);
+    }
+
+    public static Calendar generateCalendarDate(String date)
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, ToolClass.getDay(date));
+        calendar.set(Calendar.MONTH,ToolClass.getMonth(date));
+        calendar.set(Calendar.YEAR,ToolClass.getYear(date));
+
+        return calendar;
+    }
+
+    public static Calendar generateCalendarDate(String date,String time)
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, ToolClass.getDay(date));
+        calendar.set(Calendar.MONTH,ToolClass.getMonth(date));
+        calendar.set(Calendar.YEAR,ToolClass.getYear(date));
+        calendar.set(Calendar.HOUR_OF_DAY, ToolClass.getHour(time));
+        calendar.set(Calendar.MINUTE,ToolClass.getMinute(time));
+
+        return calendar;
+    }
+
+    public static Calendar generateCurrentCalendarDate()
+    {
+        int day = ToolClass.getActualDay();
+        int month = ToolClass.getActualMonth();
+        int year = ToolClass.getActualYear();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        calendar.set(Calendar.MONTH,month);
+        calendar.set(Calendar.YEAR,year);
+        calendar.set(Calendar.HOUR_OF_DAY, ToolClass.getActualHour());
+        calendar.set(Calendar.MINUTE,ToolClass.getActualMinute());
+
+        return calendar;
+    }
+
+    public static String generateStringDate(Calendar calendar)
+    {
+        String date="";
+
+        if(calendar.get(Calendar.DAY_OF_MONTH)<10)
+            date=date+"0"+calendar.get(Calendar.DAY_OF_MONTH)+".";
+        else
+            date=date+calendar.get(Calendar.DAY_OF_MONTH)+".";
+        if(calendar.get(Calendar.MONTH)<10)
+            date=date+"0"+(calendar.get(Calendar.MONTH))+".";
+        else
+            date=date+(calendar.get(Calendar.MONTH))+".";
+        date=date+calendar.get(Calendar.YEAR);
+
+        return date;
+    }
+
+    public static String generateCurrentStringDate()
+    {
+        String date="";
+        int day = ToolClass.getActualDay();
+        int month = ToolClass.getActualMonth();
+        int year = ToolClass.getActualYear();
+
+        if(day<10)
+            date=date+"0"+day+".";
+        else
+            date=date+day+".";
+        if(month<10)
+            date=date+"0"+month+".";
+        else
+            date=date+month+".";
+        date=date+year;
+
+        return date;
+    }
+
     public static boolean compareDateAndTimeWithCurrentDateAndTime(String date, String time)
     {
-        char[] charDate = date.toCharArray();
-        char[] charTime = time.toCharArray();
+        Calendar anyDate = ToolClass.generateCalendarDate(date, time);
+        Calendar todayDate = ToolClass.generateCurrentCalendarDate();
 
-        String stringDay = charDate[0] + Character.toString(charDate[1]);
-        String stringMonth = charDate[3] + Character.toString(charDate[4]);
-        String stringYear = charDate[6] + Character.toString(charDate[7]) + charDate[8] + charDate[9];
-        String stringHour = Character.toString(charTime[0]) +charTime[1];
-        String stringMinute = Character.toString(charTime[3]) +charTime[4];
-
-        int day = Integer.parseInt(stringDay);
-        int month = Integer.parseInt(stringMonth);
-        int year = Integer.parseInt(stringYear);
-        int hour = Integer.parseInt(stringHour);
-        int minute = Integer.parseInt(stringMinute);
-
-        int actualSum = 1000000 * ToolClass.getActualYear() + 100000 * ToolClass.getActualMonth() + 10000 * ToolClass.getActualDay() +
-                        10 * ToolClass.getActualHour() + ToolClass.getActualMinute();
-        int operationSum = 1000000 * year + 100000 * month + 10000 * day + 10 * hour +  minute;
-
-        return operationSum>actualSum;
+        return anyDate.after(todayDate);
     }
 
     public static boolean checkValidateData(String date) {
@@ -180,7 +249,7 @@ public  class ToolClass {
 
     public static int getHerbicideAreaOfPlantation(int highgroves)
     {
-        return (32*2+8*2)*highgroves;
+        return (32*2+8*1)*highgroves;
     }
 
     public static void fillCatalogOfPesticides(SQLiteDatabase sqLiteDatabase)

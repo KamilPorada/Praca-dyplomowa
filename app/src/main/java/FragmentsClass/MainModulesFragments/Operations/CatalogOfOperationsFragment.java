@@ -91,12 +91,13 @@ public class CatalogOfOperationsFragment extends Fragment {
         DataBaseHelper dbHelper = new DataBaseHelper(context);
         Cursor k1 = dbHelper.getOperationCatalogData();
         Cursor k2;
-        String date="", time="", stringStatus="", pesticide="", graceString="", describe="";
+        String date="", time="", stringStatus="", pesticide="", graceString="", describe="", endOgGrace="";
         int grace = 0, idOfPesticide = 0, idOfOperation=0, typeOfPesticides=0, image=0, status=0;
         while(k1.moveToNext()) {
             date = k1.getString(k1.getColumnIndexOrThrow(DataBaseNames.OperationsItem.COLUMN_DATE));
             time = k1.getString(k1.getColumnIndexOrThrow(DataBaseNames.OperationsItem.COLUMN_TIME));
             status = k1.getInt(k1.getColumnIndexOrThrow(DataBaseNames.OperationsItem.COLUMN_STATUS));
+            endOgGrace=k1.getString(k1.getColumnIndexOrThrow(DataBaseNames.OperationsItem.COLUMN_DATE_END_OF_GRACE));
             idOfPesticide = k1.getInt(k1.getColumnIndexOrThrow(DataBaseNames.OperationsItem.COLUMN_ID_PESTICIDE));
             idOfOperation = k1.getInt(k1.getColumnIndexOrThrow(DataBaseNames.OperationsItem._ID));
 
@@ -131,7 +132,7 @@ public class CatalogOfOperationsFragment extends Fragment {
                 else
                     stringStatus="Wykonano";
             }
-            catalogOfOperationItems.add(new CatalogOfOperationItem(idOfOperation, date, time, stringStatus, graceString, pesticide, image, describe));
+            catalogOfOperationItems.add(new CatalogOfOperationItem(idOfOperation, date, time, stringStatus, graceString, pesticide, endOgGrace, image, describe));
         }
     }
 
