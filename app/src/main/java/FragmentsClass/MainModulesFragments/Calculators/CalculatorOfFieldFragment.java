@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -25,9 +26,10 @@ public class CalculatorOfFieldFragment extends Fragment {
 
     private Context context;
 
+    private ImageView buttonComeBack;
     private EditText length, width;
     private RadioButton ares, hektares, quadraticMeters, quadraticKilometers;
-    private Button calculateField, resetData;
+    private Button buttonCalculateField;
     private TextView answer;
 
     @Nullable
@@ -58,67 +60,48 @@ public class CalculatorOfFieldFragment extends Fragment {
     }
 
     private void findViews(View view) {
+        buttonComeBack=view.findViewById(R.id.button_come_back);
         length=view.findViewById(R.id.length);
         width=view.findViewById(R.id.width);
         ares=view.findViewById(R.id.ares);
         hektares=view.findViewById(R.id.hektares);
         quadraticMeters=view.findViewById(R.id.quadratic_meters);
         quadraticKilometers=view.findViewById(R.id.quadratic_kilometers);
-        calculateField=view.findViewById(R.id.calculate_field);
-        resetData=view.findViewById(R.id.reset_data);
+        buttonCalculateField=view.findViewById(R.id.calculate_field);
         answer=view.findViewById(R.id.answer);
     }
 
     private void createListeners() {
 
-        @SuppressLint("NonConstantResourceId") View.OnClickListener listener = v -> {
-            int id=v.getId();
-            switch (id)
-            {
-                case R.id.calculate_field:
-                {
-                    validateData();
-                }break;
-                case R.id.reset_data:
-                {
-                    resetValues();
-                }break;
+        buttonCalculateField.setOnClickListener(v -> validateData());
+
+        buttonComeBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new CalculatorsFragment()).commit();
             }
-        };
-        calculateField.setOnClickListener(listener);
-        resetData.setOnClickListener(listener);
+        });
     }
 
     private void validateData() {
         ShowToast showToast = new ShowToast();
         boolean validateLength;
         boolean validateWidth;
-        boolean validateRadioButtons;
         if (String.valueOf(length.getText()).compareTo("")==0)
         {
-            showToast.showErrorToast(context,"Uzupełnij pole długość działki!", R.drawable.icon_information);
+            showToast.showErrorToast(context,"BŁĄD DANYCH\n"+"  Uzupełnij pole długość działki!", R.drawable.icon_information);
             validateLength=false;
         }
         else validateLength=true;
         if (String.valueOf(width.getText()).compareTo("")==0)
         {
-            showToast.showErrorToast(context,"Uzupełnij pole szerokość działki!", R.drawable.icon_information);
+            showToast.showErrorToast(context,"BŁĄD DANYCH\n"+"  Uzupełnij pole szerokość działki!", R.drawable.icon_information);
             validateWidth=false;
         }
         else validateWidth=true;
-        if (!ares.isChecked() && !hektares.isChecked() &&
-                !quadraticMeters.isChecked() && !quadraticKilometers.isChecked())
-        {
-            showToast.showErrorToast(context,"Wybierz jednostkę wyniku!", R.drawable.icon_information);
-            validateRadioButtons=false;
-        }
-        else validateRadioButtons=true;
 
-        if(validateLength && validateWidth && validateRadioButtons)
-        {
+        if(validateLength && validateWidth)
             calculateAnswer();
-        }
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -172,16 +155,6 @@ public class CalculatorOfFieldFragment extends Fragment {
             else
                 return String.format("%.2f", Math.round(an * 100.0) / 100.0);
         }
-    }
-
-    private void resetValues() {
-        length.setText("");
-        width.setText("");
-        ares.setChecked(false);
-        hektares.setChecked(false);
-        quadraticMeters.setChecked(false);
-        quadraticKilometers.setChecked(false);
-        answer.setText("");
     }
 }
 
