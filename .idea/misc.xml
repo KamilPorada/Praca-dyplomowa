@@ -89,6 +89,7 @@
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_calculator_of_field_fragment.xml" value="0.21467391304347827" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_calculator_of_plants_fragment.xml" value="0.21467391304347827" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_calculators_fragment.xml" value="0.21467391304347827" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_catalog_of_operations.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_catalog_of_pesticides_fragment.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_class_of_pepper_chart.xml" value="0.12083333333333333" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_colors_class_of_pepper_chart_fragment.xml" value="0.25416666666666665" />
@@ -119,6 +120,7 @@
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/menu/bottom_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/menu/drawer_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/menu/tollbar_menu_add_item.xml" value="0.13020833333333334" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/menu/tollbar_menu_come_back.xml" value="0.12239583333333333" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/menu/tollbar_menu_default.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/menu/tollbar_menu_farm.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/menu/tollbar_menu_home.xml" value="0.25416666666666665" />

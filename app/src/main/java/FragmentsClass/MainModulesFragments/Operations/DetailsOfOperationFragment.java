@@ -1,12 +1,8 @@
 package FragmentsClass.MainModulesFragments.Operations;
 
-import static HelperClasses.ToolClass.getActualYear;
-
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Matrix;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -18,7 +14,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.pracadyplomowa.R;
@@ -28,7 +23,6 @@ import java.util.Calendar;
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
 import HelperClasses.InformationDialog;
-import HelperClasses.ShowAttention;
 import HelperClasses.ToolClass;
 
 public class DetailsOfOperationFragment extends Fragment {

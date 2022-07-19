@@ -2,6 +2,7 @@ package HelperClasses;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +13,9 @@ import androidx.annotation.LayoutRes;
 
 import com.example.pracadyplomowa.R;
 
-public class ShowAttention {
+public class ShowToast {
 
-    public void showToast(@LayoutRes int resource, ViewGroup root, Activity activity, Context context, String attention)
+    public void showInformationToast(@LayoutRes int resource, ViewGroup root, Activity activity, Context context, String attention)
     {
         LayoutInflater layoutInflater = activity.getLayoutInflater();
         View view = layoutInflater.inflate(resource, root);
@@ -23,7 +24,8 @@ public class ShowAttention {
         toastText.setText(attention);
 
         Toast toast = new Toast(context);
-        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM,0, 200);
         toast.setView(view);
         toast.show();
     }

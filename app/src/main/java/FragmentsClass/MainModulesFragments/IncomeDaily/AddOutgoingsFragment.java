@@ -28,7 +28,7 @@ import DataBase.DataBaseHelper;
 import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsViewsClasses.OutgoingsSpinnerAdapter;
 import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsViewsClasses.OutgoingsSpinnerItem;
 import HelperClasses.InformationDialog;
-import HelperClasses.ShowAttention;
+import HelperClasses.ShowToast;
 import HelperClasses.ToolClass;
 
 public class AddOutgoingsFragment extends Fragment {
@@ -180,7 +180,7 @@ public class AddOutgoingsFragment extends Fragment {
     }
 
     private void validateData() {
-        ShowAttention showAttention = new ShowAttention();
+        ShowToast showToast = new ShowToast();
         boolean validateDescribe, validatePrice;
         String date=howDate.getText().toString();
         validateDescribe= howDescribe.getText().toString().compareTo("") != 0;
@@ -193,11 +193,11 @@ public class AddOutgoingsFragment extends Fragment {
                     else
                         addItemToDataBase();
                 else
-                    showAttention.showToast(R.layout.toast_layout,null, requireActivity(),context,"Podaj poprawny rok!\nMamy aktualnie "+ToolClass.getActualYear()+" rok!");
+                    showToast.showInformationToast(R.layout.toast_layout,null, requireActivity(),context,"Podaj poprawny rok!\nMamy aktualnie "+ToolClass.getActualYear()+" rok!");
             else
-                showAttention.showToast(R.layout.toast_layout, null, requireActivity(), context, "Zły format daty!\n[dd.mm.rrrr]");
+                showToast.showInformationToast(R.layout.toast_layout, null, requireActivity(), context, "Zły format daty!\n[dd.mm.rrrr]");
         else
-            showAttention.showToast(R.layout.toast_layout,null, requireActivity(),context,"Uzupełnij wszystkie dane!");
+            showToast.showInformationToast(R.layout.toast_layout,null, requireActivity(),context,"Uzupełnij wszystkie dane!");
     }
 
     private void addItemToDataBase() {

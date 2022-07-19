@@ -31,6 +31,16 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/button_come_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/icon_come_back"
+            app:tint="@color/white"
+            android:tag="Powrót"/>
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/circle_layout"

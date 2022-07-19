@@ -41,7 +41,7 @@ import DataBase.DataBaseNames;
 import FragmentsClass.MainModulesFragments.IncomeDaily.TradeOfPepperViewsClasses.TradePepperAdapter;
 import FragmentsClass.MainModulesFragments.IncomeDaily.TradeOfPepperViewsClasses.TradePepperItem;
 import HelperClasses.InformationDialog;
-import HelperClasses.ShowAttention;
+import HelperClasses.ShowToast;
 import HelperClasses.ToolClass;
 
 
@@ -261,7 +261,7 @@ public class TradeOfPepperFragment extends Fragment {
         boolean validateWeight;
         boolean validateDate;
         boolean validatePlace;
-        ShowAttention showAttention = new ShowAttention();
+        ShowToast showToast = new ShowToast();
 
         validateColor= redColor.isChecked() || yellowColor.isChecked() || greenColor.isChecked() ||
                 orangeColor.isChecked() || blondColor.isChecked();
@@ -282,12 +282,12 @@ public class TradeOfPepperFragment extends Fragment {
                     else
                         addItemToDataBase();
                 else
-                    showAttention.showToast(R.layout.toast_layout,null, requireActivity(),context,"Podaj poprawny rok!\nMamy aktualnie "+getActualYear()+" rok!");
+                    showToast.showInformationToast(R.layout.toast_layout,null, requireActivity(),context,"Podaj poprawny rok!\nMamy aktualnie "+getActualYear()+" rok!");
             else
-                showAttention.showToast(R.layout.toast_layout, null, requireActivity(), context, "Zły format daty!\n[dd.mm.rrrr]");
+                showToast.showInformationToast(R.layout.toast_layout, null, requireActivity(), context, "Zły format daty!\n[dd.mm.rrrr]");
         }
         else
-            showAttention.showToast(R.layout.toast_layout,null, requireActivity(),context,"Uzupełnij wszystkie pola!");
+            showToast.showInformationToast(R.layout.toast_layout,null, requireActivity(),context,"Uzupełnij wszystkie pola!");
     }
 
 

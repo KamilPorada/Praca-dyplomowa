@@ -2,9 +2,11 @@ package FragmentsClass.MainModulesFragments.Operations;
 
 import static HelperClasses.ToolClass.getActualYear;
 
-import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -24,19 +26,17 @@ import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.pracadyplomowa.R;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Calendar;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import DataBase.DataBaseHelper;
+import HelperClasses.AlarmReceiver;
 import HelperClasses.InformationDialog;
-import HelperClasses.ShowAttention;
+import HelperClasses.ShowToast;
 import HelperClasses.ToolClass;
 
 public class PlanOperationsFragment extends Fragment {
@@ -337,7 +337,7 @@ public class PlanOperationsFragment extends Fragment {
     }
 
     private void validateData() {
-        ShowAttention showAttention = new ShowAttention();
+        ShowToast showToast = new ShowToast();
         boolean checkDate=false;
         boolean checkHour=false;
 
@@ -346,30 +346,30 @@ public class PlanOperationsFragment extends Fragment {
         pesticides = howPesticide.getText().toString();
 
         if (date.compareTo("") == 0 || hour.compareTo("") == 0 || pesticides.compareTo("") == 0)
-            showAttention.showToast(R.layout.toast_layout, null, requireActivity(), context, "Uzupełnij wszystkie pola!");
+            showToast.showInformationToast(R.layout.toast_layout, null, requireActivity(), context, "Uzupełnij wszystkie pola!");
         else {
             if (ToolClass.checkValidateData(howDate.getText().toString()))
                 if(ToolClass.compareDateAndTimeWithCurrentDateAndTime(howDate.getText().toString(), howHour.getText().toString()))
                     if (ToolClass.checkValidateYear(howDate.getText().toString()))
                         checkDate = true;
                     else {
-                        showAttention.showToast(R.layout.toast_layout, null, requireActivity(), context, "Podaj poprawny rok!\nMamy aktualnie " + getActualYear() + " rok!");
+                        showToast.showInformationToast(R.layout.toast_layout, null, requireActivity(), context, "Podaj poprawny rok!\nMamy aktualnie " + getActualYear() + " rok!");
                         checkDate = false;
                     }
                 else
                 {
-                    showAttention.showToast(R.layout.toast_layout, null, requireActivity(), context, "Podaj przyszłą datę!");
+                    showToast.showInformationToast(R.layout.toast_layout, null, requireActivity(), context, "Podaj przyszłą datę!");
                     checkDate = false;
                 }
             else {
-                showAttention.showToast(R.layout.toast_layout, null, requireActivity(), context, "Zły format daty!\n[dd.mm.rrrr]");
+                showToast.showInformationToast(R.layout.toast_layout, null, requireActivity(), context, "Zły format daty!\n[dd.mm.rrrr]");
                 checkDate = false;
             }
 
             if (ToolClass.checkValidateHour(hour))
                 checkHour = true;
             else {
-                showAttention.showToast(R.layout.toast_layout, null, requireActivity(), context, "Zły format godziny!\n[gg:mm]");
+                showToast.showInformationToast(R.layout.toast_layout, null, requireActivity(), context, "Zły format godziny!\n[gg:mm]");
                 checkHour = false;
             }
         }
@@ -421,6 +421,7 @@ public class PlanOperationsFragment extends Fragment {
                 fluid = highgroves * 20;
         }
 
+        setNotification(date, hour);
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
         dataBaseHelper.addOperation(id,date, hour, dateEndOfGrace, age, highgroves, fluid,0);
 
@@ -429,6 +430,30 @@ public class PlanOperationsFragment extends Fragment {
 
 
     }
-}
+
+    private void setNotification(String date, String hour) {
+        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1, intent, PendingIntent.FLAG_MUTABLE);
+
+        Calendar c = ToolClass.generateCalendarDate(date, hour);
+
+        int h = c.get(Calendar.HOUR_OF_DAY);
+        h--;
+
+        c.set(Calendar.HOUR_OF_DAY,h);
+
+        System.out.println(c.get(Calendar.DAY_OF_MONTH)+"."+c.get(Calendar.MONTH)+"."+c.get(Calendar.YEAR)+" "+
+                           c.get(Calendar.HOUR_OF_DAY)+":"+c.get(Calendar.MINUTE));
+
+        if (c.before(Calendar.getInstance())) {
+            c.add(Calendar.DATE, 1);
+        }
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+
+    }
+
+    }
 
 

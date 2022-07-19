@@ -1,8 +1,5 @@
 package FragmentsClass.MainModulesFragments.Operations;
 
-import static HelperClasses.ToolClass.getActualYear;
-
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -11,14 +8,12 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,14 +24,9 @@ import java.util.ArrayList;
 
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
-import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsFragment;
-import FragmentsClass.MainModulesFragments.IncomeDaily.TradeOfPepperViewsClasses.TradePepperAdapter;
-import FragmentsClass.MainModulesFragments.IncomeDaily.TradeOfPepperViewsClasses.TradePepperItem;
 import FragmentsClass.MainModulesFragments.Operations.CatalogPesticidesClasses.CatalogOfPesticideAdapter;
 import FragmentsClass.MainModulesFragments.Operations.CatalogPesticidesClasses.CatalogOfPesticideItem;
 import HelperClasses.InformationDialog;
-import HelperClasses.ShowAttention;
-import HelperClasses.ToolClass;
 
 public class CatalogOfPesticidesFragment extends Fragment {
 
@@ -45,7 +35,7 @@ public class CatalogOfPesticidesFragment extends Fragment {
     private Context context;
     private final ArrayList<CatalogOfPesticideItem> catalogOfPesticideItems = new ArrayList<>();
 
-    private ImageView image;
+    private ImageView image, buttonComeBack;
     private RadioGroup pesticideGroup;
     private RadioButton insecticides, fungicides, herbicides;
     private RecyclerView recyclerView;
@@ -180,6 +170,7 @@ public class CatalogOfPesticidesFragment extends Fragment {
         herbicides=view.findViewById(R.id.herbicidies);
         recyclerView=view.findViewById(R.id.recycler_view);
         image=view.findViewById(R.id.image);
+        buttonComeBack=view.findViewById(R.id.button_come_back);
     }
 
     private void createListeners() {
@@ -216,6 +207,13 @@ public class CatalogOfPesticidesFragment extends Fragment {
                         requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CatalogOfPesticidesFragment()).commit();
                     }break;
                 }
+            }
+        });
+
+        buttonComeBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OperationsFragment()).commit();
             }
         });
     }

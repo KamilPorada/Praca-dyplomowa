@@ -94,7 +94,7 @@ public  class ToolClass {
     {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_MONTH, ToolClass.getDay(date));
-        calendar.set(Calendar.MONTH,ToolClass.getMonth(date));
+        calendar.set(Calendar.MONTH,ToolClass.getMonth(date)-1);
         calendar.set(Calendar.YEAR,ToolClass.getYear(date));
 
         return calendar;
@@ -104,7 +104,7 @@ public  class ToolClass {
     {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_MONTH, ToolClass.getDay(date));
-        calendar.set(Calendar.MONTH,ToolClass.getMonth(date));
+        calendar.set(Calendar.MONTH,ToolClass.getMonth(date)-1);
         calendar.set(Calendar.YEAR,ToolClass.getYear(date));
         calendar.set(Calendar.HOUR_OF_DAY, ToolClass.getHour(time));
         calendar.set(Calendar.MINUTE,ToolClass.getMinute(time));
@@ -120,7 +120,7 @@ public  class ToolClass {
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_MONTH, day);
-        calendar.set(Calendar.MONTH,month);
+        calendar.set(Calendar.MONTH,month-1);
         calendar.set(Calendar.YEAR,year);
         calendar.set(Calendar.HOUR_OF_DAY, ToolClass.getActualHour());
         calendar.set(Calendar.MINUTE,ToolClass.getActualMinute());

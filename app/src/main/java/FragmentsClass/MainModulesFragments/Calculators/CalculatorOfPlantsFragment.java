@@ -19,7 +19,7 @@ import androidx.fragment.app.Fragment;
 import com.example.pracadyplomowa.R;
 
 import HelperClasses.InformationDialog;
-import HelperClasses.ShowAttention;
+import HelperClasses.ShowToast;
 
 public class CalculatorOfPlantsFragment extends Fragment {
 
@@ -107,9 +107,9 @@ public class CalculatorOfPlantsFragment extends Fragment {
     }
 
     private void checkRadioButtons() {
-        ShowAttention showAttention = new ShowAttention();
+        ShowToast showToast = new ShowToast();
         if (!standardHighgroves.isChecked() && !biggerHighgroves.isChecked())
-            showAttention.showToast(R.layout.toast_layout,null, requireActivity(),context,"Wybierz rozmiar tunelu foliowego!");
+            showToast.showInformationToast(R.layout.toast_layout,null, requireActivity(),context,"Wybierz rozmiar tunelu foliowego!");
         else
             calculate();
     }

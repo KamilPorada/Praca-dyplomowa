@@ -1,6 +1,5 @@
 package FragmentsClass.MainModulesFragments.Operations;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.pracadyplomowa.R;
@@ -22,8 +20,6 @@ import com.example.pracadyplomowa.R;
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
 import HelperClasses.InformationDialog;
-import HelperClasses.ShowAttention;
-import HelperClasses.StatisticsHelper;
 import HelperClasses.ToolClass;
 
 public class InstructionOfOperationFragment extends Fragment {

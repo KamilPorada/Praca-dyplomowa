@@ -19,7 +19,7 @@ import androidx.fragment.app.Fragment;
 import com.example.pracadyplomowa.R;
 
 import HelperClasses.InformationDialog;
-import HelperClasses.ShowAttention;
+import HelperClasses.ShowToast;
 
 public class CalculatorOfFieldFragment extends Fragment {
 
@@ -90,26 +90,26 @@ public class CalculatorOfFieldFragment extends Fragment {
     }
 
     private void validateData() {
-        ShowAttention showAttention = new ShowAttention();
+        ShowToast showToast = new ShowToast();
         boolean validateLength;
         boolean validateWidth;
         boolean validateRadioButtons;
         if (String.valueOf(length.getText()).compareTo("")==0)
         {
-            showAttention.showToast(R.layout.toast_layout,null, requireActivity(),context,"Uzupełnij pole długość działki!");
+            showToast.showInformationToast(R.layout.toast_layout,null, requireActivity(),context,"Uzupełnij pole długość działki!");
             validateLength=false;
         }
         else validateLength=true;
         if (String.valueOf(width.getText()).compareTo("")==0)
         {
-            showAttention.showToast(R.layout.toast_layout,null, requireActivity(),context,"Uzupełnij pole szerokość działki!");
+            showToast.showInformationToast(R.layout.toast_layout,null, requireActivity(),context,"Uzupełnij pole szerokość działki!");
             validateWidth=false;
         }
         else validateWidth=true;
         if (!ares.isChecked() && !hektares.isChecked() &&
                 !quadraticMeters.isChecked() && !quadraticKilometers.isChecked())
         {
-            showAttention.showToast(R.layout.toast_layout,null, requireActivity(),context,"Wybierz jednostkę wyniku!");
+            showToast.showInformationToast(R.layout.toast_layout,null, requireActivity(),context,"Wybierz jednostkę wyniku!");
             validateRadioButtons=false;
         }
         else validateRadioButtons=true;

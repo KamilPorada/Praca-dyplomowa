@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         findViews();
         startSettings();
         createListeners();
-      createNotification();
-        test();
+//      createNotification();
+//        test();
 
     }
 

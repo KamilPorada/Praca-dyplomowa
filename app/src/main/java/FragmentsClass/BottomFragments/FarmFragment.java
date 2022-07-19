@@ -25,7 +25,7 @@ import androidx.fragment.app.Fragment;
 import com.example.pracadyplomowa.R;
 
 import HelperClasses.InformationDialog;
-import HelperClasses.ShowAttention;
+import HelperClasses.ShowToast;
 import HelperClasses.StatisticsHelper;
 import HelperClasses.ToolClass;
 
@@ -139,11 +139,11 @@ public class FarmFragment extends Fragment {
     }
 
     private void validateData() {
-        ShowAttention showAttention = new ShowAttention();
+        ShowToast showToast = new ShowToast();
         if (String.valueOf(editName.getText()).compareTo("")==0 ||
             String.valueOf(editHighgroves.getText()).compareTo("")==0 ||
             String.valueOf(editField.getText()).compareTo("")==0)
-                showAttention.showToast(R.layout.toast_layout,null, requireActivity(),context,"BŁĄD EDYCJI!\nUzupełnij wszystkie pola!");
+                showToast.showInformationToast(R.layout.toast_layout,null, requireActivity(),context,"BŁĄD EDYCJI!\nUzupełnij wszystkie pola!");
         else
             editDataFarm();
     }

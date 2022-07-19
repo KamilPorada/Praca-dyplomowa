@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,6 +39,7 @@ public class CatalogOfOperationsFragment extends Fragment {
 
     private final ArrayList<CatalogOfOperationItem> catalogOfOperationItems = new ArrayList<>();
     private RecyclerView recyclerView;
+    private ImageView buttonComeBack;
 
     @Nullable
     @Override
@@ -46,6 +49,7 @@ public class CatalogOfOperationsFragment extends Fragment {
         context=container.getContext();
         findViews(view);
         startSettings();
+        createListener();
         loadData();
         return view;
     }
@@ -68,6 +72,7 @@ public class CatalogOfOperationsFragment extends Fragment {
 
     private void findViews(View view) {
         recyclerView=view.findViewById(R.id.recycler_view);
+        buttonComeBack=view.findViewById(R.id.button_come_back);
     }
     private void startSettings() {
         recyclerView.setHasFixedSize(true);
@@ -87,6 +92,16 @@ public class CatalogOfOperationsFragment extends Fragment {
             }
         });
     }
+
+    private void createListener() {
+        buttonComeBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OperationsFragment()).commit();
+            }
+        });
+    }
+
     private void loadData() {
         DataBaseHelper dbHelper = new DataBaseHelper(context);
         Cursor k1 = dbHelper.getOperationCatalogData();
