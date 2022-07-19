@@ -181,23 +181,26 @@ public  class ToolClass {
         if(date.length()<10)
            return false;
         else {
+            try {
+                char[] charDate = date.toCharArray();
+                String stringDay = charDate[0] + Character.toString(charDate[1]);
+                String firstDots = Character.toString(charDate[2]);
+                String stringMonth = charDate[3] + Character.toString(charDate[4]);
+                String secondDots = Character.toString(charDate[5]);
 
-            char[] charDate = date.toCharArray();
-            String stringDay = charDate[0] + Character.toString(charDate[1]);
-            String firstDots = Character.toString(charDate[2]);
-            String stringMonth = charDate[3] + Character.toString(charDate[4]);
-            String secondDots = Character.toString(charDate[5]);
-
-            int day = Integer.parseInt(stringDay);
-            int month = Integer.parseInt(stringMonth);
-
-
-            validateDay = day > 0 && day < 32;
-            validateMonth = month > 0 && month < 13;
-            validateDotts = firstDots.compareTo(".") == 0 && secondDots.compareTo(".") == 0;
+                int day = Integer.parseInt(stringDay);
+                int month = Integer.parseInt(stringMonth);
 
 
-            return validateDay && validateMonth && validateDotts;
+                validateDay = day > 0 && day < 32;
+                validateMonth = month > 0 && month < 13;
+                validateDotts = firstDots.compareTo(".") == 0 && secondDots.compareTo(".") == 0;
+
+                return validateDay && validateMonth && validateDotts;
+            }catch (Exception e)
+            {
+                return false;
+            }
         }
     }
 
@@ -209,21 +212,25 @@ public  class ToolClass {
         if (time.length() < 5)
             return false;
         else {
-            char[] charTime = time.toCharArray();
-            String stringHour = charTime[0] + Character.toString(charTime[1]);
-            String firstDots = Character.toString(charTime[2]);
-            String stringMinutes = charTime[3] + Character.toString(charTime[4]);
+            try {
+                char[] charTime = time.toCharArray();
+                String stringHour = charTime[0] + Character.toString(charTime[1]);
+                String firstDots = Character.toString(charTime[2]);
+                String stringMinutes = charTime[3] + Character.toString(charTime[4]);
 
-            int hour = Integer.parseInt(stringHour);
-            int minutes = Integer.parseInt(stringMinutes);
-
-
-            validateHour = hour >= 0 && hour < 24;
-            validateMinutes = minutes >= 0 && minutes < 60;
-            validateColon = firstDots.compareTo(":") == 0;
+                int hour = Integer.parseInt(stringHour);
+                int minutes = Integer.parseInt(stringMinutes);
 
 
-            return validateHour && validateMinutes && validateColon;
+                validateHour = hour >= 0 && hour < 24;
+                validateMinutes = minutes >= 0 && minutes < 60;
+                validateColon = firstDots.compareTo(":") == 0;
+
+                return validateHour && validateMinutes && validateColon;
+            }catch (Exception e)
+            {
+                return false;
+            }
         }
     }
 

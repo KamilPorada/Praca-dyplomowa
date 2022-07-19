@@ -282,12 +282,12 @@ public class TradeOfPepperFragment extends Fragment {
                     else
                         addItemToDataBase();
                 else
-                    showToast.showInformationToast(R.layout.toast_layout,null, requireActivity(),context,"Podaj poprawny rok!\nMamy aktualnie "+getActualYear()+" rok!");
+                    showToast.showErrorToast(context,"Podaj poprawny rok!\nMamy aktualnie "+getActualYear()+" rok!", R.drawable.icon_information);
             else
-                showToast.showInformationToast(R.layout.toast_layout, null, requireActivity(), context, "Zły format daty!\n[dd.mm.rrrr]");
+                showToast.showErrorToast(context, "Zły format daty!\n[dd.mm.rrrr]", R.drawable.icon_information);
         }
         else
-            showToast.showInformationToast(R.layout.toast_layout,null, requireActivity(),context,"Uzupełnij wszystkie pola!");
+            showToast.showErrorToast(context,"Uzupełnij wszystkie pola!", R.drawable.icon_information);
     }
 
 

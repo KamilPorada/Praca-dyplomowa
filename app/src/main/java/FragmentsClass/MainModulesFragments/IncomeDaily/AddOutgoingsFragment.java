@@ -193,11 +193,11 @@ public class AddOutgoingsFragment extends Fragment {
                     else
                         addItemToDataBase();
                 else
-                    showToast.showInformationToast(R.layout.toast_layout,null, requireActivity(),context,"Podaj poprawny rok!\nMamy aktualnie "+ToolClass.getActualYear()+" rok!");
+                    showToast.showErrorToast(context,"Podaj poprawny rok!\nMamy aktualnie "+ToolClass.getActualYear()+" rok!", R.drawable.icon_information);
             else
-                showToast.showInformationToast(R.layout.toast_layout, null, requireActivity(), context, "Zły format daty!\n[dd.mm.rrrr]");
+                showToast.showErrorToast(context, "Zły format daty!\n[dd.mm.rrrr]", R.drawable.icon_information);
         else
-            showToast.showInformationToast(R.layout.toast_layout,null, requireActivity(),context,"Uzupełnij wszystkie dane!");
+            showToast.showErrorToast(context,"Uzupełnij wszystkie dane!", R.drawable.icon_information);
     }
 
     private void addItemToDataBase() {

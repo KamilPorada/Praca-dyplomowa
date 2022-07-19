@@ -346,30 +346,30 @@ public class PlanOperationsFragment extends Fragment {
         pesticides = howPesticide.getText().toString();
 
         if (date.compareTo("") == 0 || hour.compareTo("") == 0 || pesticides.compareTo("") == 0)
-            showToast.showInformationToast(R.layout.toast_layout, null, requireActivity(), context, "Uzupełnij wszystkie pola!");
+            showToast.showErrorToast(context, "BŁĄD DANYCH!\n" + "  Uzupełnij wszystkie pola!", R.drawable.icon_information);
         else {
             if (ToolClass.checkValidateData(howDate.getText().toString()))
                 if(ToolClass.compareDateAndTimeWithCurrentDateAndTime(howDate.getText().toString(), howHour.getText().toString()))
                     if (ToolClass.checkValidateYear(howDate.getText().toString()))
                         checkDate = true;
                     else {
-                        showToast.showInformationToast(R.layout.toast_layout, null, requireActivity(), context, "Podaj poprawny rok!\nMamy aktualnie " + getActualYear() + " rok!");
+                        showToast.showErrorToast(context, "Podaj poprawny rok!\n" + "  Mamy aktualnie " + getActualYear() + " rok!", R.drawable.icon_calendar);
                         checkDate = false;
                     }
                 else
                 {
-                    showToast.showInformationToast(R.layout.toast_layout, null, requireActivity(), context, "Podaj przyszłą datę!");
+                    showToast.showErrorToast(context, "Błędny rok!\n" + "  Podaj przyszłą datę!", R.drawable.icon_calendar);
                     checkDate = false;
                 }
             else {
-                showToast.showInformationToast(R.layout.toast_layout, null, requireActivity(), context, "Zły format daty!\n[dd.mm.rrrr]");
+                showToast.showErrorToast(context, "Zły format daty!\n" + "  [dd.mm.rrrr]", R.drawable.icon_calendar);
                 checkDate = false;
             }
 
             if (ToolClass.checkValidateHour(hour))
                 checkHour = true;
             else {
-                showToast.showInformationToast(R.layout.toast_layout, null, requireActivity(), context, "Zły format godziny!\n[gg:mm]");
+                showToast.showErrorToast(context, "Zły format godziny!\n" + "  [gg:mm]", R.drawable.icon_clock);
                 checkHour = false;
             }
         }
@@ -426,6 +426,10 @@ public class PlanOperationsFragment extends Fragment {
         dataBaseHelper.addOperation(id,date, hour, dateEndOfGrace, age, highgroves, fluid,0);
 
         ToolClass.clearTemporaryCurrentOperations(context);
+        ShowToast toast = new ShowToast();
+        toast.showSuccessfulToast(context, "SUKCES\n" + "  Pomyślnie zaplanowałeś zabieg!");
+
+
         requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OperationsFragment()).commit();
 
 

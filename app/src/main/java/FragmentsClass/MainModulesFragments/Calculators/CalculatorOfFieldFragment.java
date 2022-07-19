@@ -96,20 +96,20 @@ public class CalculatorOfFieldFragment extends Fragment {
         boolean validateRadioButtons;
         if (String.valueOf(length.getText()).compareTo("")==0)
         {
-            showToast.showInformationToast(R.layout.toast_layout,null, requireActivity(),context,"Uzupełnij pole długość działki!");
+            showToast.showErrorToast(context,"Uzupełnij pole długość działki!", R.drawable.icon_information);
             validateLength=false;
         }
         else validateLength=true;
         if (String.valueOf(width.getText()).compareTo("")==0)
         {
-            showToast.showInformationToast(R.layout.toast_layout,null, requireActivity(),context,"Uzupełnij pole szerokość działki!");
+            showToast.showErrorToast(context,"Uzupełnij pole szerokość działki!", R.drawable.icon_information);
             validateWidth=false;
         }
         else validateWidth=true;
         if (!ares.isChecked() && !hektares.isChecked() &&
                 !quadraticMeters.isChecked() && !quadraticKilometers.isChecked())
         {
-            showToast.showInformationToast(R.layout.toast_layout,null, requireActivity(),context,"Wybierz jednostkę wyniku!");
+            showToast.showErrorToast(context,"Wybierz jednostkę wyniku!", R.drawable.icon_information);
             validateRadioButtons=false;
         }
         else validateRadioButtons=true;

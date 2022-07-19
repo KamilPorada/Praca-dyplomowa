@@ -1,33 +1,40 @@
 package HelperClasses;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.LayoutRes;
 
 import com.example.pracadyplomowa.R;
+import com.github.johnpersano.supertoasts.library.Style;
+import com.github.johnpersano.supertoasts.library.SuperActivityToast;
+import com.github.johnpersano.supertoasts.library.utils.PaletteUtils;
 
 public class ShowToast {
 
-    public void showInformationToast(@LayoutRes int resource, ViewGroup root, Activity activity, Context context, String attention)
+    public void showErrorToast(Context context, String attention, int icon)
     {
-        LayoutInflater layoutInflater = activity.getLayoutInflater();
-        View view = layoutInflater.inflate(resource, root);
 
-        TextView toastText=view.findViewById(R.id.toast_text);
-        toastText.setText(attention);
+        SuperActivityToast.create(context, new Style(), Style.TYPE_STANDARD)
+                .setIconResource(Style.ICONPOSITION_LEFT, icon)
+                .setGravity(Gravity.BOTTOM,0, 0)
+                .setText("  "+attention)
+                .setTextSize(Style.TEXTSIZE_MEDIUM)
+                .setDuration(Style.DURATION_SHORT)
+                .setFrame(Style.FRAME_LOLLIPOP)
+                .setColor(PaletteUtils.getSolidColor(PaletteUtils.MATERIAL_RED))
+                .setAnimations(Style.ANIMATIONS_FLY).show();
+    }
 
-        Toast toast = new Toast(context);
-        toast.setDuration(Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.BOTTOM,0, 200);
-        toast.setView(view);
-        toast.show();
+    public void showSuccessfulToast(Context context, String attention)
+    {
+
+        SuperActivityToast.create(context, new Style(), Style.TYPE_STANDARD)
+                .setIconResource(Style.ICONPOSITION_LEFT, R.drawable.icon_done)
+                .setGravity(Gravity.BOTTOM,0, 0)
+                .setText("  "+attention)
+                .setDuration(Style.DURATION_SHORT)
+                .setFrame(Style.FRAME_LOLLIPOP)
+                .setColor(PaletteUtils.getSolidColor(PaletteUtils.MATERIAL_GREEN))
+                .setAnimations(Style.ANIMATIONS_FLY).show();
     }
 
 }

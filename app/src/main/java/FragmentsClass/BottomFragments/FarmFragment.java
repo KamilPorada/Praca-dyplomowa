@@ -143,7 +143,7 @@ public class FarmFragment extends Fragment {
         if (String.valueOf(editName.getText()).compareTo("")==0 ||
             String.valueOf(editHighgroves.getText()).compareTo("")==0 ||
             String.valueOf(editField.getText()).compareTo("")==0)
-                showToast.showInformationToast(R.layout.toast_layout,null, requireActivity(),context,"BŁĄD EDYCJI!\nUzupełnij wszystkie pola!");
+                showToast.showErrorToast(context,"BŁĄD EDYCJI!\nUzupełnij wszystkie pola!", R.drawable.icon_information);
         else
             editDataFarm();
     }

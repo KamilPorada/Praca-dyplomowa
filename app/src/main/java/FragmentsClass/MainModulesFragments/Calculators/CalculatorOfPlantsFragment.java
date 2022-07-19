@@ -109,7 +109,7 @@ public class CalculatorOfPlantsFragment extends Fragment {
     private void checkRadioButtons() {
         ShowToast showToast = new ShowToast();
         if (!standardHighgroves.isChecked() && !biggerHighgroves.isChecked())
-            showToast.showInformationToast(R.layout.toast_layout,null, requireActivity(),context,"Wybierz rozmiar tunelu foliowego!");
+            showToast.showErrorToast(context,"Wybierz rozmiar tunelu foliowego!", R.drawable.icon_information);
         else
             calculate();
     }
