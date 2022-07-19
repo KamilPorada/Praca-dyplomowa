@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,8 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pracadyplomowa.R;
 
 import java.util.List;
-
-import FragmentsClass.MainModulesFragments.Operations.CatalogPesticidesClasses.CatalogOfPesticideItem;
 
 
 public class CatalogOfPesticideAdapter extends RecyclerView.Adapter<CatalogOfPesticideAdapter.CatalogOfPesticideViewHolder> {
@@ -38,6 +35,7 @@ public class CatalogOfPesticideAdapter extends RecyclerView.Adapter<CatalogOfPes
     public static class CatalogOfPesticideViewHolder extends RecyclerView.ViewHolder {
         public TextView howPesticides;
         public Button informationButton;
+        @SuppressLint("SetTextI18n")
         public CatalogOfPesticideViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
             howPesticides=itemView.findViewById(R.id.how_pesticides);

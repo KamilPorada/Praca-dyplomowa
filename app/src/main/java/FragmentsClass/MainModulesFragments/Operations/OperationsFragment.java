@@ -22,7 +22,6 @@ import HelperClasses.ToolClass;
 public class OperationsFragment extends Fragment {
 
     private ConstraintLayout btnPlanOperations, btnDailyOperations, btnCatalogOfPesticides;
-
     private Fragment fragment = null;
     private Context context;
 

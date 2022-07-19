@@ -2,7 +2,6 @@ package FragmentsClass.MainModulesFragments.Operations.CatalogPesticidesClasses;
 
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,10 +100,7 @@ public class CatalogOfOperationAdapter extends RecyclerView.Adapter<CatalogOfOpe
         today.set(Calendar.MONTH,ToolClass.getActualMonth());
         today.set(Calendar.YEAR,ToolClass.getActualYear());
 
-        if(grace.after(today) && status.compareTo("Wykonano")==0)
-            return true;
-        else
-            return false;
+        return grace.after(today) && status.compareTo("Wykonano") == 0;
     }
 
     @Override

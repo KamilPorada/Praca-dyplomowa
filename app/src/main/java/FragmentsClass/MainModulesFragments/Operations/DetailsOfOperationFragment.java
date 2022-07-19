@@ -1,5 +1,6 @@
 package FragmentsClass.MainModulesFragments.Operations;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -23,14 +24,13 @@ import java.util.Calendar;
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
 import HelperClasses.InformationDialog;
+import HelperClasses.ShowToast;
 import HelperClasses.ToolClass;
 
 public class DetailsOfOperationFragment extends Fragment {
 
 
-    private Fragment fragment = null;
     private Context context;
-
     private ImageView imageOfPest;
     private TextView titleOfOperation, howDate, howTime, howGrace, howDateOfEndOfGrace,
                      howAge, howHighgroves, howPesticide, howFluid, howStatus;
@@ -83,43 +83,7 @@ public class DetailsOfOperationFragment extends Fragment {
         buttonComeBack=view.findViewById(R.id.button_come_back);
     }
 
-
-    private void createListeners() {
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int id=v.getId();
-                switch (id)
-                {
-                    case R.id.button_change_status:
-                    {
-                        updateOperationStatus();
-                    }break;
-                    case R.id.button_instructions:
-                    {
-                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new InstructionOfOperationFragment()).commit();
-                    }break;
-                    case R.id.button_come_back:
-                    {
-                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CatalogOfOperationsFragment()).commit();
-                    }break;
-                }
-            }
-        };
-        buttonChangeStatus.setOnClickListener(listener);
-        buttonInstructions.setOnClickListener(listener);
-        buttonComeBack.setOnClickListener(listener);
-    }
-
-    private void updateOperationStatus() {
-        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
-        dataBaseHelper.updateOperationStatus(id,1);
-        imageOfPest.animate().setDuration(2000).scaleYBy(0.15f).scaleXBy(0.15f);
-        imageOfPest.animate().rotationYBy(360).setDuration(1000);
-        buttonChangeStatus.setVisibility(View.INVISIBLE);
-        howStatus.setText("Wykonano");
-    }
-
+    @SuppressLint("SetTextI18n")
     private void loadData() {
         SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
         id = sharedPreferences.getInt("POSITION_OF_OPERATION_RV", 0);
@@ -179,7 +143,8 @@ public class DetailsOfOperationFragment extends Fragment {
             }
         }
 
-
+        //jeżeli data zabiegu jest taka sama jak dzisiejsza oraz zabieg jest nie wykonany
+        // to odblokuj przycisk wykonania zabiegu
         Calendar operationDate = ToolClass.generateCalendarDate(howDate.getText().toString());
         Calendar todayDate = ToolClass.generateCurrentCalendarDate();
 
@@ -187,8 +152,46 @@ public class DetailsOfOperationFragment extends Fragment {
             buttonChangeStatus.setVisibility(View.VISIBLE);
         else
             buttonChangeStatus.setVisibility(View.INVISIBLE);
+    }
+
+
+    private void createListeners() {
+        @SuppressLint("NonConstantResourceId") View.OnClickListener listener = v -> {
+            int id=v.getId();
+            switch (id)
+            {
+                case R.id.button_change_status:
+                {
+                    updateOperationStatus();
+                }break;
+                case R.id.button_instructions:
+                {
+                    requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new InstructionOfOperationFragment()).commit();
+                }break;
+                case R.id.button_come_back:
+                {
+                    requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CatalogOfOperationsFragment()).commit();
+                }break;
+            }
+        };
+        buttonChangeStatus.setOnClickListener(listener);
+        buttonInstructions.setOnClickListener(listener);
+        buttonComeBack.setOnClickListener(listener);
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void updateOperationStatus() {
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+        dataBaseHelper.updateOperationStatus(id,1);
+        imageOfPest.animate().rotationYBy(360).setDuration(2000);
+        buttonChangeStatus.setVisibility(View.INVISIBLE);
+        howStatus.setText("Wykonano");
+        ShowToast toast = new ShowToast();
+        toast.showSuccessfulToast(context, "SUKCES\n" + "  Zabieg został wykonany!");
 
     }
+
+
 }
 
 

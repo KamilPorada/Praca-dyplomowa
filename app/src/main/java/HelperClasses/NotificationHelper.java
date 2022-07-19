@@ -3,11 +3,8 @@ package HelperClasses;
 import android.annotation.TargetApi;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -18,10 +15,6 @@ import com.example.pracadyplomowa.R;
 
 import java.util.Calendar;
 
-import DataBase.DataBaseHelper;
-import DataBase.DataBaseNames;
-import MainClass.MainActivity;
-
 public class NotificationHelper extends ContextWrapper {
     public static final String ID_OF_CHANNEL= "id";
     public static final String NAME_OF_CHANNEL = "name";
@@ -30,9 +23,7 @@ public class NotificationHelper extends ContextWrapper {
 
     public NotificationHelper(Context base) {
         super(base);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createChannel();
-        }
+        createChannel();
     }
 
     @TargetApi(Build.VERSION_CODES.O)
@@ -51,12 +42,12 @@ public class NotificationHelper extends ContextWrapper {
     }
 
     public NotificationCompat.Builder getChannelNotification() {
-        Bitmap icon=BitmapFactory.decodeResource(getResources(), R.drawable.image_skull);;
+        Bitmap icon=BitmapFactory.decodeResource(getResources(), R.drawable.image_skull);
         String title="Zabieg pielęgnacyjny";
         Calendar c= Calendar.getInstance();
         int hour = c.get(Calendar.HOUR_OF_DAY);
         int minute = c.get(Calendar.MINUTE);
-        String stringMinute="";
+        String stringMinute;
         if(minute<10)
             stringMinute="0"+minute;
         else

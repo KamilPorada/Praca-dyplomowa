@@ -1,5 +1,6 @@
 package FragmentsClass.MainModulesFragments.Operations;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -24,9 +25,7 @@ import HelperClasses.ToolClass;
 
 public class InstructionOfOperationFragment extends Fragment {
 
-    private Fragment fragment = null;
     private Context context;
-
     private TextView firstSentence, fourthSentence, seventhSentence;
     private Button buttonComeBack;
 
@@ -68,14 +67,10 @@ public class InstructionOfOperationFragment extends Fragment {
     }
 
     private void createListeners() {
-        buttonComeBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new DetailsOfOperationFragment()).commit();
-            }
-        });
+        buttonComeBack.setOnClickListener(v -> requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new DetailsOfOperationFragment()).commit());
     }
 
+    @SuppressLint({"SetTextI18n", "DefaultLocale"})
     private void loadData() {
         SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
         id = sharedPreferences.getInt("POSITION_OF_OPERATION_RV", 0);
@@ -100,25 +95,25 @@ public class InstructionOfOperationFragment extends Fragment {
             dose=k.getDouble(k.getColumnIndexOrThrow(DataBaseNames.PesticidesItem.COLUMN_DOSE));
             pesticide=k.getString(k.getColumnIndexOrThrow(DataBaseNames.PesticidesItem.COLUMN_NAME_OF_PESTICIDES));
         }
-        double amountOfPesticide=0;
+        double amountOfPesticide;
 
-        firstSentence.setText("1.Wlej do opryskiwacza " + Math.round(fluid/2) +  " litrów wody.");
-        seventhSentence.setText("7.Dolej kolejne " +  Math.round(fluid/2) + " litrów wody do opryskiwacza.");
+        firstSentence.setText("1.Wlej do opryskiwacza " + Math.round((double) fluid/2) +  " litrów wody.");
+        seventhSentence.setText("7.Dolej kolejne " +  Math.round((double) fluid/2) + " litrów wody do opryskiwacza.");
 
         if(typeOfPesticide==0){
-            double doseOfWater = (10000 * fluid) / ToolClass.getHerbicideAreaOfPlantation(highgroves);
+            double doseOfWater = (double) (10000 * fluid) / ToolClass.getHerbicideAreaOfPlantation(highgroves);
             double concentration = dose / (doseOfWater + dose);
             amountOfPesticide = concentration * fluid;
             fourthSentence.setText("4.Wlej do wiaderka z wodą " + String.format("%.2f", Math.round((amountOfPesticide) * 100.0) / 100.0) + "l pestycydu " + pesticide + ".");
         }
         else {
             if (typeOfDose == 1) {
-                double doseOfWater = (10000 * fluid) / ToolClass.getAreaOfPlantation(highgroves);
+                double doseOfWater = (double) (10000 * fluid) / ToolClass.getAreaOfPlantation(highgroves);
                 double concentration = dose / (doseOfWater + dose);
                 amountOfPesticide = concentration * fluid;
                 fourthSentence.setText("4.Wsyp do wiaderka z wodą " + String.format("%.2f", Math.round((amountOfPesticide) * 100.0) / 100.0) + "kg pestycydu " + pesticide + ".");
             } else if (typeOfDose == 2) {
-                double doseOfWater = (10000 * fluid) / ToolClass.getAreaOfPlantation(highgroves);
+                double doseOfWater = (double) (10000 * fluid) / ToolClass.getAreaOfPlantation(highgroves);
                 double concentration = dose / (doseOfWater + dose);
                 amountOfPesticide = concentration * fluid;
                 fourthSentence.setText("4.Wlej do wiaderka z wodą " + String.format("%.2f", Math.round((amountOfPesticide) * 100.0) / 100.0) + "l pestycydu " + pesticide + ".");
@@ -127,8 +122,6 @@ public class InstructionOfOperationFragment extends Fragment {
                 fourthSentence.setText("4.Wlej do wiaderka z wodą " + String.format("%.2f", Math.round((amountOfPesticide) * 100.0) / 100.0) + "l pestycydu " + pesticide + ".");
             }
         }
-
-
     }
 }
 

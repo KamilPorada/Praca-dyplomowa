@@ -1,5 +1,6 @@
 package FragmentsClass.MainModulesFragments.Operations;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -31,7 +32,6 @@ import HelperClasses.InformationDialog;
 public class CatalogOfPesticidesFragment extends Fragment {
 
 
-    private Fragment fragment = null;
     private Context context;
     private final ArrayList<CatalogOfPesticideItem> catalogOfPesticideItems = new ArrayList<>();
 
@@ -40,7 +40,7 @@ public class CatalogOfPesticidesFragment extends Fragment {
     private RadioButton insecticides, fungicides, herbicides;
     private RecyclerView recyclerView;
 
-    private int [] images = {
+    private final int [] images = {
             R.drawable.image_worm, R.drawable.image_mushrooms, R.drawable.image_weed
     };
     private int typeOfPesticides;
@@ -57,6 +57,32 @@ public class CatalogOfPesticidesFragment extends Fragment {
         createListeners();
         startSettings();
         return view;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id=item.getItemId();
+        if (id == R.id.information) {
+            InformationDialog informationDialog = new InformationDialog();
+            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_calculators));
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void findViews(View view) {
+        pesticideGroup=view.findViewById(R.id.pesticides_group);
+        insecticides=view.findViewById(R.id.insecticidies);
+        fungicides=view.findViewById(R.id.fungicidies);
+        herbicides=view.findViewById(R.id.herbicidies);
+        recyclerView=view.findViewById(R.id.recycler_view);
+        image=view.findViewById(R.id.image);
+        buttonComeBack=view.findViewById(R.id.button_come_back);
     }
 
     private void loadData() {
@@ -114,6 +140,44 @@ public class CatalogOfPesticidesFragment extends Fragment {
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
+    private void createListeners() {
+        pesticideGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            switch (checkedId) {
+                case R.id.insecticidies: {
+                    typeOfPesticides = 0;
+                    image.setImageResource(images[typeOfPesticides]);
+                    editor.putInt("SELECTED_PESTICIDES_RADIO_BUTTON", 0);
+                    editor.apply();
+                    insecticides.setChecked(true);
+                    requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CatalogOfPesticidesFragment()).commit();
+                }
+                break;
+                case R.id.fungicidies: {
+                    typeOfPesticides = 1;
+                    image.setImageResource(images[typeOfPesticides]);
+                    editor.putInt("SELECTED_PESTICIDES_RADIO_BUTTON", 1);
+                    editor.apply();
+                    fungicides.setChecked(true);
+                    requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CatalogOfPesticidesFragment()).commit();
+                }
+                break;
+                case R.id.herbicidies: {
+                    typeOfPesticides = 2;
+                    image.setImageResource(images[typeOfPesticides]);
+                    editor.putInt("SELECTED_PESTICIDES_RADIO_BUTTON", typeOfPesticides);
+                    editor.apply();
+                    herbicides.setChecked(true);
+                    requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CatalogOfPesticidesFragment()).commit();
+                }break;
+            }
+        });
+
+        buttonComeBack.setOnClickListener(v -> requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OperationsFragment()).commit());
+    }
+
     private void startSettings() {
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
@@ -121,12 +185,7 @@ public class CatalogOfPesticidesFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new CatalogOfPesticideAdapter.OnItemClickListener() {
-            @Override
-            public void onShowInformation(int position) {
-                sendData(position);
-            }
-        });
+        adapter.setOnItemClickListener(this::sendData);
     }
 
     private void sendData(int position) {
@@ -145,77 +204,6 @@ public class CatalogOfPesticidesFragment extends Fragment {
         }
         else
             requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new DetailsOfPesticideFragment()).commit();
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id=item.getItemId();
-        if (id == R.id.information) {
-            InformationDialog informationDialog = new InformationDialog();
-            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_calculators));
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void findViews(View view) {
-        pesticideGroup=view.findViewById(R.id.pesticides_group);
-        insecticides=view.findViewById(R.id.insecticidies);
-        fungicides=view.findViewById(R.id.fungicidies);
-        herbicides=view.findViewById(R.id.herbicidies);
-        recyclerView=view.findViewById(R.id.recycler_view);
-        image=view.findViewById(R.id.image);
-        buttonComeBack=view.findViewById(R.id.button_come_back);
-    }
-
-    private void createListeners() {
-        pesticideGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                switch (checkedId) {
-                    case R.id.insecticidies: {
-                        typeOfPesticides = 0;
-                        image.setImageResource(images[typeOfPesticides]);
-                        editor.putInt("SELECTED_PESTICIDES_RADIO_BUTTON", 0);
-                        editor.apply();
-                        insecticides.setChecked(true);
-                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CatalogOfPesticidesFragment()).commit();
-                    }
-                    break;
-                    case R.id.fungicidies: {
-                        typeOfPesticides = 1;
-                        image.setImageResource(images[typeOfPesticides]);
-                        editor.putInt("SELECTED_PESTICIDES_RADIO_BUTTON", 1);
-                        editor.apply();
-                        fungicides.setChecked(true);
-                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CatalogOfPesticidesFragment()).commit();
-                    }
-                    break;
-                    case R.id.herbicidies: {
-                        typeOfPesticides = 2;
-                        image.setImageResource(images[typeOfPesticides]);
-                        editor.putInt("SELECTED_PESTICIDES_RADIO_BUTTON", typeOfPesticides);
-                        editor.apply();
-                        herbicides.setChecked(true);
-                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CatalogOfPesticidesFragment()).commit();
-                    }break;
-                }
-            }
-        });
-
-        buttonComeBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OperationsFragment()).commit();
-            }
-        });
     }
 }
 

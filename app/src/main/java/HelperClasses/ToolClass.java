@@ -256,12 +256,11 @@ public  class ToolClass {
 
     public static int getHerbicideAreaOfPlantation(int highgroves)
     {
-        return (32*2+8*1)*highgroves;
+        return (32*2+ 8)*highgroves;
     }
 
     public static void fillCatalogOfPesticides(SQLiteDatabase sqLiteDatabase)
     {
-        int i=0;
         sqLiteDatabase.execSQL(createInsertQuery("ABAMAX 018 EC", "Przędziorek chmielowiec, szklarniowiec",0,0.05,3,3,"Opryskiwać rośliny po zauważeniu szkodnika lub pierwszych objawów uszkodzeń. Jeżeli w poprzednich zesonach nie było problemu ze szkodnikiem, zabieg można ograniczyć do ogniska wystąpienia pierwszych osobników.",R.drawable.image_pesticide_abamax));
         sqLiteDatabase.execSQL(createInsertQuery("ACARAMIK 018 EC", "Przędziorek chmielowiec, szklarniowiec",0,0.05,3,3,"Opryskiwać rośliny po zauważeniu szkodnika lub pierwszych objawów uszkodzeń. Jeżeli w poprzednich zesonach nie było problemu ze szkodnikiem, zabieg można ograniczyć do ogniska wystąpienia pierwszych osobników.",R.drawable.image_pesticide_acaramik));
         sqLiteDatabase.execSQL(createInsertQuery("ACEPTIR 200 SE", "Mszyce ",0,0.3,2,3,"Po posadzeniu roślin, w celu monitorowania obecności i liczebności tych owadów wywieszać żółte tablice lepowe.",R.drawable.image_pesticide_aceptir));

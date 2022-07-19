@@ -1,7 +1,5 @@
 package FragmentsClass.MainModulesFragments.Operations;
 
-import static HelperClasses.ToolClass.getActualYear;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,29 +10,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.pracadyplomowa.R;
 
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
-import FragmentsClass.MainModulesFragments.IncomeDaily.TradeOfPepperViewsClasses.TradePepperItem;
 import HelperClasses.InformationDialog;
-import HelperClasses.ToolClass;
 
 public class DetailsOfPesticideFragment extends Fragment {
 
-
-    private Fragment fragment = null;
     private Context context;
-
     private TextView typeOfPesticide, nameOfPesticide, howPest, howDose, howGrace, howNotes;
     private ImageView imageOfPesticide;
     private Button buttonComeBack;
@@ -53,6 +44,38 @@ public class DetailsOfPesticideFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id=item.getItemId();
+        if (id == R.id.information) {
+            InformationDialog informationDialog = new InformationDialog();
+            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_calculators));
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void findViews(View view) {
+        typeOfPesticide=view.findViewById(R.id.type_of_pesticide);
+        nameOfPesticide=view.findViewById(R.id.name_of_pesticide);
+        imageOfPesticide=view.findViewById(R.id.image_of_pesticide);
+        howPest=view.findViewById(R.id.how_pest);
+        howDose=view.findViewById(R.id.how_dose);
+        howGrace=view.findViewById(R.id.how_grace);
+        howNotes=view.findViewById(R.id.how_notes);
+        buttonComeBack=view.findViewById(R.id.button_come_back);
+    }
+
+    private void createListeners() {
+        buttonComeBack.setOnClickListener(v -> requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CatalogOfPesticidesFragment()).commit());
+    }
+
+    @SuppressLint("SetTextI18n")
     private void loadData() {
         SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
         sentName = sharedPreferences.getString("CHOSEN_PESTICIDE", "ABAMAX 018 EC");
@@ -113,42 +136,6 @@ public class DetailsOfPesticideFragment extends Fragment {
             howGrace.setText(graceOfP + " dni");
 
         howNotes.setText(notesOfP);
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id=item.getItemId();
-        if (id == R.id.information) {
-            InformationDialog informationDialog = new InformationDialog();
-            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_calculators));
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void findViews(View view) {
-        typeOfPesticide=view.findViewById(R.id.type_of_pesticide);
-        nameOfPesticide=view.findViewById(R.id.name_of_pesticide);
-        imageOfPesticide=view.findViewById(R.id.image_of_pesticide);
-        howPest=view.findViewById(R.id.how_pest);
-        howDose=view.findViewById(R.id.how_dose);
-        howGrace=view.findViewById(R.id.how_grace);
-        howNotes=view.findViewById(R.id.how_notes);
-        buttonComeBack=view.findViewById(R.id.button_come_back);
-    }
-
-    private void createListeners() {
-        buttonComeBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CatalogOfPesticidesFragment()).commit();
-            }
-        });
     }
 }
 

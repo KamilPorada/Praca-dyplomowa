@@ -57,51 +57,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         findViews();
         startSettings();
         createListeners();
-//      createNotification();
-//        test();
-
-    }
-
-    private void test() {
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        Bitmap picture = BitmapFactory.decodeResource(getResources(), R.drawable.image_weed);
-        Notification notification = new NotificationCompat.Builder(this, NotificationHelper.ID_OF_CHANNEL)
-                .setColor(Color.BLUE)
-                .setColorized(false)
-                .setSmallIcon(R.drawable.image_attention)
-                .setContentTitle("Zabieg chwastobójczy")
-                .setContentText("O godzinie 16:00 zaplanowałeś zabieg chwastobójczy. Czas najwyższy rozpocząć przygotowania!")
-                .setLargeIcon(picture)
-                .setAutoCancel(true)
-                .build();
-
-
-
-        notificationManager.notify(1, notification);
-    }
-
-    private void createNotification() {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_MUTABLE);
-
-        Calendar c = Calendar.getInstance();
-
-        c.set(Calendar.YEAR,2022);
-        c.set(Calendar.MONTH,6);
-        c.set(Calendar.DAY_OF_MONTH,18);
-        c.set(Calendar.HOUR_OF_DAY,15);
-        c.set(Calendar.MINUTE,4);
-
-        System.out.println(c.get(Calendar.DAY_OF_MONTH)+"."+c.get(Calendar.MONTH)+"."+c.get(Calendar.YEAR));
-
-
-        if (c.before(Calendar.getInstance())) {
-            c.add(Calendar.DATE, 1);
-        }
-
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
-
     }
 
     @Override
