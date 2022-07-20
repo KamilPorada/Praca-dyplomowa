@@ -129,7 +129,7 @@
             android:textSize="20sp"
             android:layout_marginLeft="-2dp"
             android:fontFamily="@font/crete_round"
-            android:text="Ilość tuneli do opryskania: 45"
+            android:text="Ilość tuneli do opryskania: 1"
             />
 
         <SeekBar
@@ -174,10 +174,10 @@
             android:id="@+id/how_dose"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:hint="[l/ha]"
             app:startIconDrawable="@drawable/icon_dose"
             app:startIconTint="@color/mainColor"
             app:endIconMode="clear_text"
+            android:hint="[l/ha]"
             app:layout_constraintTop_toBottomOf="@id/title_of_dose"
             app:layout_constraintLeft_toLeftOf="parent"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -239,7 +239,7 @@
 
     <Button
         android:id="@+id/button_calculate"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/third_block"
         app:layout_constraintBottom_toTopOf="@id/result_layout"
