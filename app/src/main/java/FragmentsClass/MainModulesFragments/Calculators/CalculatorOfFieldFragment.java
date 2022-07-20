@@ -74,13 +74,7 @@ public class CalculatorOfFieldFragment extends Fragment {
     private void createListeners() {
 
         buttonCalculateField.setOnClickListener(v -> validateData());
-
-        buttonComeBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new CalculatorsFragment()).commit();
-            }
-        });
+        buttonComeBack.setOnClickListener(v -> requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new CalculatorsFragment()).commit());
     }
 
     private void validateData() {
