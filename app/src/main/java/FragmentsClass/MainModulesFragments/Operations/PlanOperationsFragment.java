@@ -227,7 +227,6 @@ public class PlanOperationsFragment extends Fragment {
                 }
             }
         });
-
     }
 
     private void openEditDataDialog() {

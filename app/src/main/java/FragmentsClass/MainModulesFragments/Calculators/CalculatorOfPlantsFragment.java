@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -19,7 +20,6 @@ import androidx.fragment.app.Fragment;
 import com.example.pracadyplomowa.R;
 
 import HelperClasses.InformationDialog;
-import HelperClasses.ShowToast;
 
 public class CalculatorOfPlantsFragment extends Fragment {
 
@@ -28,7 +28,8 @@ public class CalculatorOfPlantsFragment extends Fragment {
     private RadioButton standardHighgroves, biggerHighgroves;
     private SeekBar changeDistance;
     private TextView howDistance, description, finalAnswer;
-    private Button calculatePlants, resetData;
+    private Button calculatePlants;
+    private ImageView buttonComeBack;
 
     @Nullable
     @Override
@@ -65,33 +66,18 @@ public class CalculatorOfPlantsFragment extends Fragment {
         description=view.findViewById(R.id.description);
         finalAnswer=view.findViewById(R.id.final_answer);
         calculatePlants=view.findViewById(R.id.calculate_plants);
-        resetData=view.findViewById(R.id.reset_data);
+        buttonComeBack=view.findViewById(R.id.button_come_back);
     }
 
     private void createListeners() {
-        @SuppressLint("NonConstantResourceId") View.OnClickListener listener = v -> {
-            int id=v.getId();
-            switch (id)
-            {
-                case R.id.calculate_plants:
-                {
-                    checkRadioButtons();
-                }break;
-                case R.id.reset_data:
-                {
-                    reset();
-                }break;
-            }
-        };
-
-        calculatePlants.setOnClickListener(listener);
-        resetData.setOnClickListener(listener);
+        calculatePlants.setOnClickListener(v -> calculate());
+        buttonComeBack.setOnClickListener(v -> requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new CalculatorsFragment()).commit());
 
         changeDistance.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                howDistance.setText("Odległość sadzonki od sadzonki\n" + progress + "cm");
+                howDistance.setText(progress + "cm");
             }
 
             @Override
@@ -104,14 +90,6 @@ public class CalculatorOfPlantsFragment extends Fragment {
 
             }
         });
-    }
-
-    private void checkRadioButtons() {
-        ShowToast showToast = new ShowToast();
-        if (!standardHighgroves.isChecked() && !biggerHighgroves.isChecked())
-            showToast.showErrorToast(context,"Wybierz rozmiar tunelu foliowego!", R.drawable.icon_information);
-        else
-            calculate();
     }
 
     @SuppressLint("SetTextI18n")
@@ -142,17 +120,4 @@ public class CalculatorOfPlantsFragment extends Fragment {
                 "\nIlość sadzonek w tunelu foliowym: " + (int) plantsPerHighgrove);
         finalAnswer.setText(String.valueOf((int)plantsPerHighgrove));
     }
-
-    @SuppressLint("SetTextI18n")
-    private void reset() {
-        standardHighgroves.setChecked(false);
-        biggerHighgroves.setChecked(false);
-        description.setText("Rozmiary tunelu foliowego: 0m x 0m\n" +
-                "Ilość redlanek w tunelu foliowym: 0\n" +
-                "Ilość sadzonek w każdej redlance: 0\n" +
-                "Ilość sadzonek w tunelu foliowym: 0");
-        finalAnswer.setText("0");
-        changeDistance.setProgress(30);
-    }
-
 }
