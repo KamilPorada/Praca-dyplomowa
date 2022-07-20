@@ -21,7 +21,9 @@
     <string name="describes_price_of_pepper">Ukazany wykres przedstawia zależność kształtowania się cen na przełomie kolejnych miesięcy bieżącego sezonu. Kliknij na przycisk: zmień parametry wykresu, aby wykres uzależnić od innych parametrów takich jak kolor czy klasa. Przerywaną linią narysowana jest średnia cena papryki obliczona dla zaznaczonych parametrów w bieżącym sezonie.</string>
     <string name="describes_outgoings_statistics">Ukazana tabela przedstawia zestawienie wydatków w bieżącym sezonie. W kolejnych wierszach zsumowane są wydatki dla każdej z poszczególnych kategorii.</string>
     <string name="describes_outgoings_chart">Ukazany wykres przedstawia zestawienie wydatków w bieżącym sezonie.</string>
-    <string name="opis_finalnych_zalecen">Rozmiary tunelu foliowego: 0m x 0m\nIlość redlanek w tunelu foliowym: 0\nIlość sadzonek w każdej redlance: 0\nIlość sadzonek w tunelu foliowym: 0</string>
+    <string name="opis_finalnych_zalecen_kalkulator_sadzonek">Rozmiary tunelu foliowego: 0m x 0m\nIlość redlanek w tunelu foliowym: 0\nIlość sadzonek w każdej redlance: 0\nIlość sadzonek w tunelu foliowym: 0</string>
+    <string name="opis_finalnych_zalecen_kalkulator_cieczy_roboczej">Wiek papryki : 0 dni\nIlość tuneli: 0\nIlość wody: 0l\nIlość pestycydu: 0l</string>
+
     <string-array name="colors">
         <item>Czerwona</item>
         <item>Żółta</item>

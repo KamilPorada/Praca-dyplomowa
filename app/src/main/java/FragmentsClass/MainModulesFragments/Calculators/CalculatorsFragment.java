@@ -66,13 +66,13 @@ public class CalculatorsFragment extends Fragment {
                 {
                     fragment = new CalculatorOfFieldFragment();
                 }break;
-                case R.id. btn_calculator_of_concentration:
-                {
-
-                }break;
                 case R.id.btn_calculator_of_plants:
                 {
                     fragment=new CalculatorOfPlantsFragment();
+                }break;
+                case R.id. btn_calculator_of_concentration:
+                {
+                    fragment=new CalculatorOfConcetrationFragment();
                 }break;
             }
             requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
