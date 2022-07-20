@@ -1,5 +1,6 @@
 package FragmentsClass.MainModulesFragments.Operations;
 
+import static HelperClasses.ToolClass.generateStringDate;
 import static HelperClasses.ToolClass.getActualYear;
 
 import android.annotation.SuppressLint;
@@ -22,6 +23,7 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -47,6 +49,7 @@ public class PlanOperationsFragment extends Fragment {
 
     private Context context;
     private RadioButton insecticidies, fungicidies, herbicidies;
+    private RadioGroup pesticidesGroup;
     private TextInputEditText howDate, howHour;
     private TextView howAge, howPesticide, titleHighgroves;
     private SeekBar howHighgroves;
@@ -90,6 +93,7 @@ public class PlanOperationsFragment extends Fragment {
         insecticidies=view.findViewById(R.id.insecticidies);
         fungicidies=view.findViewById(R.id.fungicidies);
         herbicidies=view.findViewById(R.id.herbicidies);
+        pesticidesGroup=view.findViewById(R.id.pesticides_group);
         howDate=view.findViewById(R.id.date);
         howHour=view.findViewById(R.id.hour);
         howAge=view.findViewById(R.id.how_age);
@@ -102,8 +106,6 @@ public class PlanOperationsFragment extends Fragment {
         planOperationButton=view.findViewById(R.id.button_plan_operations);
         cancelButton=view.findViewById(R.id.button_cancel);
     }
-
-
 
     @SuppressLint("SetTextI18n")
     private void loadData() {
@@ -201,6 +203,31 @@ public class PlanOperationsFragment extends Fragment {
         });
 
         howHighgroves.setMax((int) ToolClass.getHighgroves(context));
+
+        pesticidesGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId)
+                {
+                    case R.id.insecticidies:
+                    {
+                        typeOfPesticides=0;
+                        howAge.setText("Wiek papryki: " + age + " dni");
+                    }break;
+                    case R.id.fungicidies:
+                    {
+                        typeOfPesticides=1;
+                        howAge.setText("Wiek papryki: " + age + " dni");
+                    }break;
+                    case R.id.herbicidies:
+                    {
+                        typeOfPesticides=2;
+                        howAge.setText("Wiek papryki: -");
+                    }break;
+                }
+            }
+        });
+
     }
 
     private void openEditDataDialog() {
@@ -239,17 +266,7 @@ public class PlanOperationsFragment extends Fragment {
         btnCancel.setOnClickListener(listener);
 
         calendar.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
-            String calendarDate="";
-            if(dayOfMonth<10)
-                calendarDate=calendarDate+"0"+dayOfMonth+".";
-            else
-                calendarDate=calendarDate+dayOfMonth+".";
-            if(month+1<10)
-                calendarDate=calendarDate+"0"+(month+1)+".";
-            else
-                calendarDate=calendarDate+(month+1)+".";
-            calendarDate=calendarDate+year;
-            date=calendarDate;
+            date=generateStringDate(dayOfMonth,month,year);
         });
     }
 
@@ -289,17 +306,7 @@ public class PlanOperationsFragment extends Fragment {
         btnCancel.setOnClickListener(listener);
 
         clock.setOnTimeChangedListener((view, hourOfDay, minute) -> {
-            String clockHour="";
-            if(hourOfDay<10)
-                clockHour=clockHour+"0"+hourOfDay+":";
-            else
-                clockHour=clockHour+hourOfDay+":";
-            if(minute<10)
-                clockHour=clockHour+"0"+minute;
-            else
-                clockHour=clockHour+minute;
-
-            hour=clockHour;
+            hour=ToolClass.generateStringTime(hourOfDay,minute);
         });
     }
 
@@ -350,17 +357,17 @@ public class PlanOperationsFragment extends Fragment {
                     }
                 else
                 {
-                    showToast.showErrorToast(context, "Błędny rok!\n" + "  Podaj przyszłą datę!", R.drawable.icon_calendar);
+                    showToast.showErrorToast(context, "Błędna data!\n" + "  Podaj przyszłą datę!", R.drawable.icon_calendar);
                     checkDate = false;
                 }
             else {
-                showToast.showErrorToast(context, "Zły format daty!\n" + "  [dd.mm.rrrr]", R.drawable.icon_calendar);
+                showToast.showErrorToast(context, "Błędny format daty!\n" + "  [dd.mm.rrrr]", R.drawable.icon_calendar);
                 checkDate = false;
             }
             if (ToolClass.checkValidateHour(hour))
                 checkHour = true;
             else {
-                showToast.showErrorToast(context, "Zły format godziny!\n" + "  [gg:mm]", R.drawable.icon_clock);
+                showToast.showErrorToast(context, "Błędny format godziny!\n" + "  [gg:mm]", R.drawable.icon_clock);
                 checkHour = false;
             }
         }
@@ -380,17 +387,7 @@ public class PlanOperationsFragment extends Fragment {
         calendar.set(Calendar.YEAR,ToolClass.getYear(date));
 
         calendar.add(Calendar.DAY_OF_MONTH,grace);
-        String dateEndOfGrace="";
-
-        if(calendar.get(Calendar.DAY_OF_MONTH)<10)
-            dateEndOfGrace=dateEndOfGrace+"0"+calendar.get(Calendar.DAY_OF_MONTH)+".";
-        else
-            dateEndOfGrace=dateEndOfGrace+calendar.get(Calendar.DAY_OF_MONTH)+".";
-        if(calendar.get(Calendar.MONTH)<10)
-            dateEndOfGrace=dateEndOfGrace+"0"+(calendar.get(Calendar.MONTH))+".";
-        else
-            dateEndOfGrace=dateEndOfGrace+(calendar.get(Calendar.MONTH))+".";
-        dateEndOfGrace=dateEndOfGrace+calendar.get(Calendar.YEAR);
+        String dateEndOfGrace=generateStringDate(calendar);
 
         int fluid;
         if(insecticidies.isChecked())

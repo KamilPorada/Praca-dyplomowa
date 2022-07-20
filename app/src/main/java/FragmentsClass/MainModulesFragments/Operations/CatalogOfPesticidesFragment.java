@@ -175,7 +175,15 @@ public class CatalogOfPesticidesFragment extends Fragment {
             }
         });
 
-        buttonComeBack.setOnClickListener(v -> requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OperationsFragment()).commit());
+        buttonComeBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(modeOfCatalogOfPesticide==0)
+                    requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PlanOperationsFragment()).commit();
+                else
+                    requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OperationsFragment()).commit();
+            }
+        });
     }
 
     private void startSettings() {

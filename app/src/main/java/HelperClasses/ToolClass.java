@@ -145,6 +145,22 @@ public  class ToolClass {
         return date;
     }
 
+    public static String generateStringDate(int day, int month, int year)
+    {
+        String calendarDate="";
+        if(day<10)
+            calendarDate=calendarDate+"0"+day+".";
+        else
+            calendarDate=calendarDate+day+".";
+        if(month+1<10)
+            calendarDate=calendarDate+"0"+(month+1)+".";
+        else
+            calendarDate=calendarDate+(month+1)+".";
+        calendarDate=calendarDate+year;
+
+        return calendarDate;
+    }
+
     public static String generateCurrentStringDate()
     {
         String date="";
@@ -163,6 +179,21 @@ public  class ToolClass {
         date=date+year;
 
         return date;
+    }
+
+    public static  String generateStringTime(int hour, int minute)
+    {
+        String clockTime="";
+        if(hour<10)
+            clockTime=clockTime+"0"+hour+":";
+        else
+            clockTime=clockTime+hour+":";
+        if(minute<10)
+            clockTime=clockTime+"0"+minute;
+        else
+            clockTime=clockTime+minute;
+
+        return clockTime;
     }
 
     public static boolean compareDateAndTimeWithCurrentDateAndTime(String date, String time)

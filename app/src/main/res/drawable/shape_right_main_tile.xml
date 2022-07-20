@@ -9,7 +9,7 @@
         android:bottomLeftRadius="50dp"/>
     <stroke
         android:color="@color/mainColor"
-        android:width="3dp"/>
+        android:width="1dp"/>
 
 
 
