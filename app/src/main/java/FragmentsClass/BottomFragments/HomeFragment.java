@@ -28,7 +28,7 @@ public class HomeFragment extends Fragment {
     private Context context;
 
     private ConstraintLayout btnCalculator, btnIncomeDaily, btnOperations,
-            btnNotes, btnImportantPlaces, btnClock;
+            btnNotes, btnImportantPlaces, btnControlOfWater;
 
     private Fragment fragment = null;
 
@@ -81,7 +81,7 @@ public class HomeFragment extends Fragment {
         btnOperations=view.findViewById(R.id.btn_operations);
         btnNotes=view.findViewById(R.id.btn_notes);
         btnImportantPlaces=view.findViewById(R.id.btn_important_places);
-        btnClock=view.findViewById(R.id.btn_clock);
+        btnControlOfWater=view.findViewById(R.id.btn_control_of_water);
     }
 
     private void createListeners() {
@@ -109,7 +109,7 @@ public class HomeFragment extends Fragment {
                 {
 
                 }break;
-                case R.id.btn_clock:
+                case R.id.btn_control_of_water:
                 {
 
                 }break;
@@ -121,7 +121,7 @@ public class HomeFragment extends Fragment {
         btnOperations.setOnClickListener(listener);
         btnNotes.setOnClickListener(listener);
         btnImportantPlaces.setOnClickListener(listener);
-        btnClock.setOnClickListener(listener);
+        btnControlOfWater.setOnClickListener(listener);
     }
 }
 

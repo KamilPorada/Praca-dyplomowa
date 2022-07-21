@@ -3,18 +3,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/layout_home_fragment"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="55dp"
+    android:layout_marginBottom="70dp">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/btn_important_places"
+        android:id="@+id/title_block"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/shape_rectangle_with_top_and_bottom_line">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <ImageView
+                android:id="@+id/title_image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/title"
+                android:src="@drawable/image_red_pepper" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="@font/aclonica"
+                android:text="E-Paprykarz"
+                android:textAlignment="textStart"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/title_image"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btn_calculator"
         android:layout_width="170dp"
         android:layout_height="170dp"
-        app:layout_constraintTop_toBottomOf="@id/btn_operations"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_block"
+        app:layout_constraintBottom_toTopOf="@id/btn_operations"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btn_clock"
-        android:layout_marginBottom="70dp"
-        android:layout_marginLeft="10dp"
+        app:layout_constraintRight_toLeftOf="@id/btn_notes"
         android:background="@drawable/shape_left_main_tile"
         android:clickable="true">
 
@@ -24,12 +67,12 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/bottom_important_places"
-            android:src="@drawable/image_map"
+            app:layout_constraintBottom_toTopOf="@id/bottom_calculator"
+            android:src="@drawable/image_calculator"
             app:tint="@color/blackToWhite" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/bottom_important_places"
+            android:id="@+id/bottom_calculator"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -38,7 +81,6 @@
             android:background="@drawable/shape_left_bottom_tile">
 
             <TextView
-                android:id="@+id/tekst"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -46,39 +88,38 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:textAlignment="center"
-                android:text="Zapisane\nlokalizacje"
+                android:text="Kalkulatory\nogrodnicze"
                 android:textColor="@color/white"
-                android:textSize="20dp"/>
+                android:textSize="18dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/btn_clock"
+        android:id="@+id/btn_notes"
         android:layout_width="170dp"
         android:layout_height="170dp"
-        app:layout_constraintTop_toBottomOf="@id/btn_notes"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_block"
+        app:layout_constraintBottom_toTopOf="@id/btn_control_of_water"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/btn_important_places"
-        android:layout_marginBottom="70dp"
-        android:layout_marginRight="10dp"
+        app:layout_constraintLeft_toRightOf="@id/btn_calculator"
         android:background="@drawable/shape_right_main_tile"
         android:clickable="true">
 
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_marginRight="10dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/bottom_clock"
-            android:src="@drawable/image_clock"
+            app:layout_constraintBottom_toTopOf="@id/bottom_notes"
+            android:src="@drawable/image_note"
             app:tint="@color/blackToWhite" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/bottom_clock"
+            android:id="@+id/bottom_notes"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -94,9 +135,9 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:textAlignment="center"
-                android:text="Budzik\nfarmera"
+                android:text="Notatki\ngospodarstwa"
                 android:textColor="@color/white"
-                android:textSize="20dp"/>
+                android:textSize="18dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -107,10 +148,9 @@
         android:layout_width="170dp"
         android:layout_height="170dp"
         app:layout_constraintTop_toBottomOf="@id/btn_calculator"
-        app:layout_constraintBottom_toTopOf="@id/btn_important_places"
+        app:layout_constraintBottom_toTopOf="@id/btn_income_daily"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btn_notes"
-        android:layout_marginLeft="10dp"
+        app:layout_constraintRight_toLeftOf="@id/btn_control_of_water"
         android:background="@drawable/shape_left_main_tile"
         android:clickable="true">
 
@@ -152,30 +192,28 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/btn_notes"
+        android:id="@+id/btn_control_of_water"
         android:layout_width="170dp"
         android:layout_height="170dp"
-        app:layout_constraintTop_toBottomOf="@id/btn_income_daily"
-        app:layout_constraintBottom_toTopOf="@id/btn_clock"
+        app:layout_constraintTop_toBottomOf="@id/btn_notes"
+        app:layout_constraintBottom_toTopOf="@id/btn_important_places"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@id/btn_operations"
-        android:layout_marginRight="10dp"
         android:background="@drawable/shape_right_main_tile"
         android:clickable="true">
 
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginRight="10dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/bottom_notes"
-            android:src="@drawable/image_notes"
+            app:layout_constraintBottom_toTopOf="@id/bottom_water"
+            android:src="@drawable/image_control_of_water"
             app:tint="@color/blackToWhite" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/bottom_notes"
+            android:id="@+id/bottom_water"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -191,57 +229,9 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:textAlignment="center"
-                android:text="Notatki\nfarmera"
+                android:text="Kontrola\nnawadniania"
                 android:textColor="@color/white"
-                android:textSize="18dp"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/btn_calculator"
-        android:layout_width="170dp"
-        android:layout_height="170dp"
-        android:layout_marginTop="55dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btn_operations"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btn_income_daily"
-        android:layout_marginLeft="10dp"
-        android:background="@drawable/shape_left_main_tile"
-        android:clickable="true">
-
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/bottom_calculator"
-            android:src="@drawable/image_calculator"
-            app:tint="@color/blackToWhite" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/bottom_calculator"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:background="@drawable/shape_left_bottom_tile">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:textAlignment="center"
-                android:text="Kalkulatory\nogrodnicze"
-                android:textColor="@color/white"
-                android:textSize="18dp"/>
+                android:textSize="20dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -251,23 +241,21 @@
         android:id="@+id/btn_income_daily"
         android:layout_width="170dp"
         android:layout_height="170dp"
-        android:layout_marginTop="55dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btn_notes"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/btn_calculator"
-        android:layout_marginRight="10dp"
+        app:layout_constraintTop_toBottomOf="@id/btn_operations"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/btn_important_places"
         android:background="@drawable/shape_right_main_tile"
         android:clickable="true">
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toTopOf="@id/bottom_income_daily"
-            android:src="@drawable/image_money"
+            android:src="@drawable/image_daily_of_income"
             app:tint="@color/blackToWhite" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -294,5 +282,54 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btn_important_places"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        app:layout_constraintTop_toBottomOf="@id/btn_control_of_water"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/btn_income_daily"
+        android:background="@drawable/shape_left_main_tile"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/bottom_important_places"
+            android:src="@drawable/image_map"
+            app:tint="@color/blackToWhite" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bottom_important_places"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:background="@drawable/shape_left_bottom_tile">
+
+            <TextView
+                android:id="@+id/tekst"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textAlignment="center"
+                android:text="Zapisane\nlokalizacje"
+                android:textColor="@color/white"
+                android:textSize="20dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
