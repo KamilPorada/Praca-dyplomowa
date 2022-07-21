@@ -61,7 +61,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/first_block"
-        android:layout_width="wrap_content"
+        android:layout_width="395dp"
         android:layout_height="wrap_content"
         android:paddingTop="5dp"
         android:paddingBottom="10dp"
@@ -88,7 +88,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             app:layout_constraintTop_toBottomOf="@id/title_of_radio_group"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:gravity="center"
@@ -96,26 +99,26 @@
 
             <RadioButton
                 android:id="@+id/standard_highgroves"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@drawable/image_standard_highgroves"
-                android:buttonTint="@color/blackToWhite"
-                android:background="@drawable/shape_radio_button_leaf"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="10dp"
+                android:layout_width="100dp"
+                android:layout_height="45dp"
+                android:text="32mx8m"
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:padding="5dp"
                 android:checked="true"
-                />
+                android:background="@drawable/shape_radio_button_leaf"
+                android:button="@color/mainColor"/>
             <RadioButton
                 android:id="@+id/bigger_highgroves"
-                android:layout_width="210dp"
-                android:layout_height="wrap_content"
-                android:button="@drawable/image_bigger_highgroves"
-                android:buttonTint="@color/blackToWhite"
+                android:layout_width="100dp"
+                android:layout_height="45dp"
+                android:text="32mx12m"
+                android:textSize="19dp"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:layout_marginLeft="50dp"
                 android:background="@drawable/shape_radio_button_leaf"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                />
+                android:button="@color/mainColor"/>
 
         </RadioGroup>
 
@@ -233,7 +236,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/crete_round"
-                android:text="0"
+                android:text="0 sadzonek"
                 android:textAlignment="center"
                 android:textColor="@color/blackToWhite"
                 android:textSize="28dp"

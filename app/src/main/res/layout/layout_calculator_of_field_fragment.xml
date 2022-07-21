@@ -211,7 +211,8 @@
                 android:textAlignment="center"
                 android:padding="5dp"
                 android:layout_marginLeft="50dp"
-                android:background="@drawable/shape_radio_button_leaf"                android:button="@color/mainColor"/>
+                android:background="@drawable/shape_radio_button_leaf"
+                android:button="@color/mainColor"/>
             <RadioButton
                 android:id="@+id/quadratic_meters"
                 android:layout_width="45dp"

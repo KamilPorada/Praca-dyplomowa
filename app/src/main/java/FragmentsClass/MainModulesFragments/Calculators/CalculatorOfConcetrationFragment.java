@@ -157,7 +157,7 @@ public class CalculatorOfConcetrationFragment extends Fragment {
             doseOfWater = (double) (10000 * w) / ToolClass.getAreaOfPlantation(h);
             concentration = d / (doseOfWater + d);
             amountOfPesticide = concentration * w;
-            finalAnswer.setText(String.format("%.2f", Math.round((amountOfPesticide) * 100.0) / 100.0)+"l");
+            finalAnswer.setText(String.format("%.2f", Math.round((amountOfPesticide) * 100.0) / 100.0)+"L");
         }
         else if (typeOfDose == 1) {
             doseOfWater = (double) (10000 * w) / ToolClass.getAreaOfPlantation(h);
@@ -168,7 +168,7 @@ public class CalculatorOfConcetrationFragment extends Fragment {
         else if (typeOfDose==2)
         {
             amountOfPesticide = d * w;
-            finalAnswer.setText(String.format("%.2f", Math.round((amountOfPesticide) * 100.0) / 100.0)+"l");
+            finalAnswer.setText(String.format("%.2f", Math.round((amountOfPesticide) * 100.0) / 100.0)+"L");
         }
 
         setData(a,h,w,amountOfPesticide);

@@ -118,6 +118,6 @@ public class CalculatorOfPlantsFragment extends Fragment {
                 "\nIlość redlanek w tunelu foliowym: " + dredge +
                 "\nIlość sadzonek w każdej redlance: " + (int) plantsPerDredge +
                 "\nIlość sadzonek w tunelu foliowym: " + (int) plantsPerHighgrove);
-        finalAnswer.setText(String.valueOf((int)plantsPerHighgrove));
+        finalAnswer.setText(String.valueOf((int)plantsPerHighgrove) + " sadzonek");
     }
 }
