@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -24,10 +25,18 @@ import androidx.fragment.app.Fragment;
 
 import com.example.pracadyplomowa.R;
 
+import DataBase.DataBaseHelper;
+import DataBase.DataBaseNames;
 import HelperClasses.InformationDialog;
 import HelperClasses.ShowToast;
 import HelperClasses.StatisticsHelper;
 import HelperClasses.ToolClass;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
 public class FarmFragment extends Fragment {
 

@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -38,6 +39,7 @@ import java.util.Date;
 
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
+import FragmentsClass.MainModulesFragments.Calculators.CalculatorsFragment;
 import FragmentsClass.MainModulesFragments.IncomeDaily.TradeOfPepperViewsClasses.TradePepperAdapter;
 import FragmentsClass.MainModulesFragments.IncomeDaily.TradeOfPepperViewsClasses.TradePepperItem;
 import HelperClasses.InformationDialog;
@@ -53,6 +55,7 @@ public class TradeOfPepperFragment extends Fragment {
     private RecyclerView recyclerView;
 
     //----------------------ADD ITEM WINDOWS VIEWS----------------------------//
+    private ImageView buttonComeBack;
     private TextView title;
     private RadioGroup colorRadioGroup, vatRadioGroup, classRadioGroup;
     private RadioButton redColor, yellowColor, greenColor, orangeColor, blondColor,
@@ -78,6 +81,7 @@ public class TradeOfPepperFragment extends Fragment {
         View view = inflater.inflate(R.layout.layout_trade_of_pepper,container,false);
         findViews(view);
         startSettings();
+        createListener();
         loadData();
         return view;
     }
@@ -116,6 +120,11 @@ public class TradeOfPepperFragment extends Fragment {
 
     private void findViews(View view) {
         recyclerView=view.findViewById(R.id.recycler_view);
+        buttonComeBack=view.findViewById(R.id.button_come_back);
+    }
+
+    private void createListener() {
+        buttonComeBack.setOnClickListener( v -> requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new IncomeDailyFragment()).commit());
     }
 
     private void startSettings() {

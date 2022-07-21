@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/plan_operations_layout"
+    android:layout_marginTop="55dp"
+    android:layout_marginBottom="70dp"
+    android:background="@color/backgroundColor">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/shape_rectangle_with_top_and_bottom_line"
+        >
+
+        <ImageView
+            android:id="@+id/button_come_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/icon_come_back"
+            app:tint="@color/white"
+            android:tag="Powrót"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/crete_round"
+                android:text="Nowa sprzedaż"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="28dp"
+                android:layout_marginLeft="20dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/circle_layout" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/circle_layout"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/shape_image_farm_layout"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/title">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/image_red_pepper"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/first_block"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/title_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/shape_bottom_line">
+
+        <TextView
+            android:id="@+id/title_of_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:textColor="@color/blackToWhite"
+            android:textSize="20sp"
+            android:layout_marginLeft="-2dp"
+            android:fontFamily="@font/crete_round"
+            android:text="Kolor papryki:"
+            />
+
+        <RadioGroup
+            android:id="@+id/color_radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/title_of_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/red_color"
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:checked="true"
+                android:background="@drawable/image_red_pepper"
+                android:button="@color/mainColor"/>
+            <RadioButton
+                android:id="@+id/yellow_color"
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:layout_marginLeft="40dp"
+                android:background="@drawable/image_yellow_pepper"
+                android:button="@color/mainColor"/>
+            <RadioButton
+                android:id="@+id/green_color"
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:layout_marginLeft="40dp"
+                android:background="@drawable/image_green_pepper"
+                android:button="@color/mainColor"/>
+            <RadioButton
+                android:id="@+id/orange_color"
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:layout_marginLeft="40dp"
+                android:background="@drawable/image_orange_pepper"
+                android:button="@color/mainColor"/>
+            <RadioButton
+                android:id="@+id/blond_color"
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:layout_marginLeft="40dp"
+                android:background="@drawable/image_blond_pepper"
+                android:button="@color/mainColor"/>
+        </RadioGroup>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/second_block"
+        android:layout_width="388dp"
+        android:layout_height="67dp"
+        android:background="@drawable/shape_bottom_line"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/first_block">
+
+        <TextView
+            android:id="@+id/title_of_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="-2dp"
+            android:fontFamily="@font/crete_round"
+            android:text="Klasa papryki:"
+            android:textColor="@color/blackToWhite"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/class_radio_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_of_class">
+
+            <RadioButton
+                android:id="@+id/first_class"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:buttonTint="@color/mainColor"
+                android:text="1"
+                android:textColor="@color/blackToWhite"
+                android:textSize="18dp" />
+
+            <RadioButton
+                android:id="@+id/second_class"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:buttonTint="@color/mainColor"
+                android:text="2"
+                android:textColor="@color/blackToWhite"
+                android:textSize="18dp" />
+
+            <RadioButton
+                android:id="@+id/cutting_class"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:buttonTint="@color/mainColor"
+                android:text="krojona"
+                android:textColor="@color/blackToWhite"
+                android:textSize="18dp" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/title_of_vat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:fontFamily="@font/crete_round"
+            android:text="Stawka VAT:"
+            android:textColor="@color/blackToWhite"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toRightOf="@id/class_radio_group"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/vat_radio_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toRightOf="@id/class_radio_group"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_of_vat">
+
+            <RadioButton
+                android:id="@+id/zero_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:buttonTint="@color/mainColor"
+                android:text="0%"
+                android:textColor="@color/blackToWhite"
+                android:textSize="18dp" />
+
+            <RadioButton
+                android:id="@+id/seven_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:buttonTint="@color/mainColor"
+                android:text="7%"
+                android:textColor="@color/blackToWhite"
+                android:textSize="18dp" />
+        </RadioGroup>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/third_block"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/second_block"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/shape_bottom_line">
+
+        <TextView
+            android:id="@+id/title_of_weight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:textColor="@color/blackToWhite"
+            android:textSize="20sp"
+            android:layout_marginLeft="-2dp"
+            android:fontFamily="@font/crete_round"
+            android:text="Waga:"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/how_weightt"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:hint="[kg]"
+            app:startIconDrawable="@drawable/icon_weight"
+            app:startIconTint="@color/mainColor"
+            app:endIconMode="clear_text"
+            app:layout_constraintTop_toBottomOf="@id/title_of_weight"
+            app:layout_constraintLeft_toLeftOf="parent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/how_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="7"
+                android:inputType="numberDecimal"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/title_of_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/how_weightt"
+            android:textColor="@color/blackToWhite"
+            android:textSize="20sp"
+            android:layout_marginLeft="50dp"
+            android:fontFamily="@font/crete_round"
+            android:text="Cena:"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/how_pricee"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:hint="[zł]"
+            app:startIconDrawable="@drawable/icon_money"
+            app:startIconTint="@color/mainColor"
+            app:endIconMode="clear_text"
+            app:layout_constraintTop_toBottomOf="@id/title_of_price"
+            app:layout_constraintLeft_toLeftOf="@id/title_of_price"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/how_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="4"
+                android:inputType="numberDecimal"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fourth_block"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/third_block"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/shape_bottom_line">
+
+        <TextView
+            android:id="@+id/title_of_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:textColor="@color/blackToWhite"
+            android:textSize="20sp"
+            android:layout_marginLeft="-2dp"
+            android:fontFamily="@font/crete_round"
+            android:text="Data sprzedaży:"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/how_datee"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="[dd.mm.rrrr]"
+            app:startIconDrawable="@drawable/icon_calendar"
+            app:startIconTint="@color/mainColor"
+            app:endIconMode="clear_text"
+            app:layout_constraintTop_toBottomOf="@id/title_of_date"
+            app:layout_constraintLeft_toLeftOf="parent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/how_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="10"
+                android:inputType="text"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageButton
+            android:id="@+id/edit_date_button"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/title_of_date"
+            app:layout_constraintLeft_toRightOf="@id/how_datee"
+            app:layout_constraintRight_toRightOf="parent"
+            android:backgroundTint="@color/mainColor"
+            android:src="@drawable/icon_edit_calendar"
+            android:background="@drawable/shape_button_2"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fiveth_block"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/fourth_block"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/shape_bottom_line">
+
+        <TextView
+            android:id="@+id/title_of_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:textColor="@color/blackToWhite"
+            android:textSize="20sp"
+            android:layout_marginLeft="-2dp"
+            android:fontFamily="@font/crete_round"
+            android:text="Miejsce sprzedaży:"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/how_placee"
+            android:layout_width="370dp"
+            android:layout_height="wrap_content"
+            app:startIconDrawable="@drawable/icon_place"
+            app:startIconTint="@color/mainColor"
+            app:endIconMode="clear_text"
+            app:layout_constraintTop_toBottomOf="@id/title_of_place"
+            app:layout_constraintLeft_toLeftOf="parent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/how_place"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="45"
+                android:inputType="text"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/cancel_button"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/accept_button"
+        app:layout_constraintTop_toBottomOf="@id/fiveth_block"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="15dp"
+        android:text="ANULUJ"
+        android:textColor="@color/white"
+        android:background="@drawable/shape_button"/>
+    <Button
+        android:id="@+id/accept_button"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/cancel_button"
+        app:layout_constraintTop_toBottomOf="@id/fiveth_block"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="15dp"
+        android:text="ZATWIERDŹ"
+        android:textColor="@color/white"
+        android:background="@drawable/shape_button"/>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

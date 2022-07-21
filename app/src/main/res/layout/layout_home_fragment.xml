@@ -231,7 +231,7 @@
                 android:textAlignment="center"
                 android:text="Kontrola\nnawadniania"
                 android:textColor="@color/white"
-                android:textSize="20dp"/>
+                android:textSize="18dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -324,7 +324,7 @@
                 android:textAlignment="center"
                 android:text="Zapisane\nlokalizacje"
                 android:textColor="@color/white"
-                android:textSize="20dp"/>
+                android:textSize="18dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
