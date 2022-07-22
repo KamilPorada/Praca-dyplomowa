@@ -80,8 +80,8 @@ public class OutgoingsAdapter extends RecyclerView.Adapter<OutgoingsAdapter.Outg
 
         holder.image.setImageResource(currentItem.getIOutgoingImage());
         holder.howDate.setText(currentItem.getIOutgoingDate());
-        holder.howCategory.setText(holder.howCategory.getText()+currentItem.getIOutgoingCategory());
-        holder.howPrice.setText(holder.howPrice.getText()+String.valueOf(currentItem.getIOutgoingPrice()+" zł"));
+        holder.howCategory.setText(currentItem.getIOutgoingCategory());
+        holder.howPrice.setText(String.valueOf(currentItem.getIOutgoingPrice()+" zł"));
         holder.howDescribe.setText(currentItem.getIOutgoingDescribe());
 
     }

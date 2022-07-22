@@ -8,10 +8,8 @@
                     <solid android:color="@color/mainColor"/>
                     <padding android:right="10dp"
                         android:left="10dp"/>
-                    <corners android:bottomLeftRadius="20dp"
-                            android:bottomRightRadius="20dp"/>
-                    <stroke android:width="3dp"
-                        android:color="@color/white"/>
+                    <stroke android:width="0.5dp"
+                        android:color="@color/blackToWhite"/>
                 </shape>
             </item>
             <item

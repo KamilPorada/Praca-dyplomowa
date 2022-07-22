@@ -69,10 +69,11 @@ public class AddOutgoingsFragment extends Fragment {
         View view =inflater.inflate(R.layout.layout_add_outgoings, container, false);
         assert container != null;
         context=container.getContext();
-        findViews(view);
+        howCategory=view.findViewById(R.id.how_category);
+//        findViews(view);
         startSettings();
-        getData();
-        createListeners();
+//        getData();
+//        createListeners();
         return view;
     }
 
@@ -94,16 +95,16 @@ public class AddOutgoingsFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void findViews(View view) {
-        howCategory=view.findViewById(R.id.how_category);
-        icon=view.findViewById(R.id.icon);
-        howDescribe=view.findViewById(R.id.how_describe);
-        howPrice=view.findViewById(R.id.how_price);
-        howDate=view.findViewById(R.id.how_date);
-        cancelButton=view.findViewById(R.id.cancel_button);
-        acceptButton=view.findViewById(R.id.accept_button);
-    }
-
+//    private void findViews(View view) {
+//        howCategory=view.findViewById(R.id.how_category);
+//        icon=view.findViewById(R.id.icon);
+//        howDescribe=view.findViewById(R.id.how_describe);
+//        howPrice=view.findViewById(R.id.how_price);
+//        howDate=view.findViewById(R.id.how_date);
+//        cancelButton=view.findViewById(R.id.cancel_button);
+//        acceptButton=view.findViewById(R.id.accept_button);
+//    }
+//
     private void startSettings() {
         ArrayList<OutgoingsSpinnerItem> outGoingsSpinnerItems = new ArrayList<>();
         for(int i=0; i<images.length;i++)
@@ -114,123 +115,123 @@ public class AddOutgoingsFragment extends Fragment {
         howCategory.setAdapter(adapter);
         currentCategory=categories[0];
     }
-
-    private void getData() {
-        Bundle bundle = this.getArguments();
-        String FLAG = "flag";
-        assert bundle != null;
-        isEditable = bundle.getBoolean(FLAG);
-        System.out.println(isEditable);
-        if(isEditable)
-            setData();
-    }
-
-    private void setData() {
-        Bundle bundle = this.getArguments();
-        assert bundle != null;
-        String PRICE = "price";
-        String DATE = "date";
-        String DESCRIBE = "describe";
-        String CATEGORY = "category";
-        String PASSSWORD_KEY = "passwordKey";
-        String category = bundle.getString(CATEGORY);
-        howPrice.setText(String.valueOf(bundle.getDouble(PRICE)));
-        howDate.setText(bundle.getString(DATE));
-        howDescribe.setText(bundle.getString(DESCRIBE));
-        password=bundle.getString(PASSSWORD_KEY);
-        int index=0;
-        for(int i=0;i<categories.length;i++)
-            if(category.compareTo(categories[i])==0)
-                index=i;
-        howCategory.setSelection(index);
-    }
-
-    private void createListeners() {
-        @SuppressLint("NonConstantResourceId") View.OnClickListener listener = v -> {
-            int id = v.getId();
-            switch (id)
-            {
-                case R.id.accept_button:
-                {
-                    validateData();
-                }break;
-                case R.id.cancel_button:
-                {
-                    requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new OutgoingsFragment()).commit();
-                }break;
-            }
-        };
-        acceptButton.setOnClickListener(listener);
-        cancelButton.setOnClickListener(listener);
-
-        howCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                textViewRow= view.findViewById(R.id.text_view_row);
-                icon.setImageResource(images[position]);
-                currentImage=images[position];
-                currentCategory=textViewRow.getText().toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-    }
-
-    private void validateData() {
-        ShowToast showToast = new ShowToast();
-        boolean validateDescribe, validatePrice;
-        String date=howDate.getText().toString();
-        validateDescribe= howDescribe.getText().toString().compareTo("") != 0;
-        validatePrice= howPrice.getText().toString().compareTo("") != 0;
-        if ((validateDescribe && validatePrice))
-            if(ToolClass.checkValidateData(date))
-                if(ToolClass.checkValidateYear(date))
-                    if(isEditable)
-                       updateItem();
-                    else
-                        addItemToDataBase();
-                else
-                    showToast.showErrorToast(context,"Podaj poprawny rok!\nMamy aktualnie "+ToolClass.getActualYear()+" rok!", R.drawable.icon_information);
-            else
-                showToast.showErrorToast(context, "Zły format daty!\n[dd.mm.rrrr]", R.drawable.icon_information);
-        else
-            showToast.showErrorToast(context,"Uzupełnij wszystkie dane!", R.drawable.icon_information);
-    }
-
-    private void addItemToDataBase() {
-        String describe=howDescribe.getText().toString();
-        double price=Double.parseDouble(howPrice.getText().toString());
-        String date=howDate.getText().toString();
-
-        Date d = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(d);
-        calendar.get(Calendar.YEAR);
-
-        String key= calendar.get(Calendar.DAY_OF_MONTH) +String.valueOf(calendar.get(Calendar.MONTH)+1)+ calendar.get(Calendar.YEAR) +
-                calendar.get(Calendar.HOUR-1) + calendar.get(Calendar.MINUTE) + calendar.get(Calendar.SECOND);
-
-        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
-        dataBaseHelper.addOutgoing(currentCategory,describe,price,date,currentImage,key);
-
-        Fragment fragment = new OutgoingsFragment();
-        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
-    }
-
-    private void updateItem() {
-        String describe=howDescribe.getText().toString();
-        double price=Double.parseDouble(howPrice.getText().toString());
-        String date=howDate.getText().toString();
-
-        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
-        dataBaseHelper.updateOutgoingItems(password,currentCategory,describe,price,currentImage,date);
-
-        Fragment fragment = new OutgoingsFragment();
-        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
-    }
+//
+//    private void getData() {
+//        Bundle bundle = this.getArguments();
+//        String FLAG = "flag";
+//        assert bundle != null;
+//        isEditable = bundle.getBoolean(FLAG);
+//        System.out.println(isEditable);
+//        if(isEditable)
+//            setData();
+//    }
+//
+//    private void setData() {
+//        Bundle bundle = this.getArguments();
+//        assert bundle != null;
+//        String PRICE = "price";
+//        String DATE = "date";
+//        String DESCRIBE = "describe";
+//        String CATEGORY = "category";
+//        String PASSSWORD_KEY = "passwordKey";
+//        String category = bundle.getString(CATEGORY);
+//        howPrice.setText(String.valueOf(bundle.getDouble(PRICE)));
+//        howDate.setText(bundle.getString(DATE));
+//        howDescribe.setText(bundle.getString(DESCRIBE));
+//        password=bundle.getString(PASSSWORD_KEY);
+//        int index=0;
+//        for(int i=0;i<categories.length;i++)
+//            if(category.compareTo(categories[i])==0)
+//                index=i;
+//        howCategory.setSelection(index);
+//    }
+//
+//    private void createListeners() {
+//        @SuppressLint("NonConstantResourceId") View.OnClickListener listener = v -> {
+//            int id = v.getId();
+//            switch (id)
+//            {
+//                case R.id.accept_button:
+//                {
+//                    validateData();
+//                }break;
+//                case R.id.cancel_button:
+//                {
+//                    requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new OutgoingsFragment()).commit();
+//                }break;
+//            }
+//        };
+//        acceptButton.setOnClickListener(listener);
+//        cancelButton.setOnClickListener(listener);
+//
+//        howCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                textViewRow= view.findViewById(R.id.text_view_row);
+//                icon.setImageResource(images[position]);
+//                currentImage=images[position];
+//                currentCategory=textViewRow.getText().toString();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+//    }
+//
+//    private void validateData() {
+//        ShowToast showToast = new ShowToast();
+//        boolean validateDescribe, validatePrice;
+//        String date=howDate.getText().toString();
+//        validateDescribe= howDescribe.getText().toString().compareTo("") != 0;
+//        validatePrice= howPrice.getText().toString().compareTo("") != 0;
+//        if ((validateDescribe && validatePrice))
+//            if(ToolClass.checkValidateData(date))
+//                if(ToolClass.checkValidateYear(date))
+//                    if(isEditable)
+//                       updateItem();
+//                    else
+//                        addItemToDataBase();
+//                else
+//                    showToast.showErrorToast(context,"Podaj poprawny rok!\nMamy aktualnie "+ToolClass.getActualYear()+" rok!", R.drawable.icon_information);
+//            else
+//                showToast.showErrorToast(context, "Zły format daty!\n[dd.mm.rrrr]", R.drawable.icon_information);
+//        else
+//            showToast.showErrorToast(context,"Uzupełnij wszystkie dane!", R.drawable.icon_information);
+//    }
+//
+//    private void addItemToDataBase() {
+//        String describe=howDescribe.getText().toString();
+//        double price=Double.parseDouble(howPrice.getText().toString());
+//        String date=howDate.getText().toString();
+//
+//        Date d = new Date();
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(d);
+//        calendar.get(Calendar.YEAR);
+//
+//        String key= calendar.get(Calendar.DAY_OF_MONTH) +String.valueOf(calendar.get(Calendar.MONTH)+1)+ calendar.get(Calendar.YEAR) +
+//                calendar.get(Calendar.HOUR-1) + calendar.get(Calendar.MINUTE) + calendar.get(Calendar.SECOND);
+//
+//        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+//        dataBaseHelper.addOutgoing(currentCategory,describe,price,date,currentImage,key);
+//
+//        Fragment fragment = new OutgoingsFragment();
+//        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+//    }
+//
+//    private void updateItem() {
+//        String describe=howDescribe.getText().toString();
+//        double price=Double.parseDouble(howPrice.getText().toString());
+//        String date=howDate.getText().toString();
+//
+//        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+//        dataBaseHelper.updateOutgoingItems(password,currentCategory,describe,price,currentImage,date);
+//
+//        Fragment fragment = new OutgoingsFragment();
+//        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+//    }
 
 }
 
