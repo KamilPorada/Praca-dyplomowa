@@ -15,6 +15,8 @@ import com.example.pracadyplomowa.R;
 
 import java.util.List;
 
+import HelperClasses.ToolClass;
+
 
 public class TradePepperAdapter extends RecyclerView.Adapter<TradePepperAdapter.TradePepperViewHolder> {
     private final List<TradePepperItem> tradePepperItems;
@@ -80,13 +82,28 @@ public class TradePepperAdapter extends RecyclerView.Adapter<TradePepperAdapter.
     @Override
     public void onBindViewHolder(TradePepperViewHolder holder, int position) {
         TradePepperItem currentItem = tradePepperItems.get(position);
-        holder.image.setImageResource(currentItem.getIPepperImage());
+        holder.image.setImageResource(ToolClass.getDrawable(currentItem.getIColor()));
         holder.date.setText(currentItem.getIDate());
-        holder.clas.setText(holder.clas.getText()+currentItem.getIPepperClass());
-        holder.price.setText(holder.price.getText()+String.valueOf(currentItem.getIPrice())+"zł");
-        holder.weight.setText(holder.weight.getText()+String.valueOf(currentItem.getIweight())+"kg");
-        holder.total_sum.setText(holder.total_sum.getText()+currentItem.getITotalSum()+"zł");
+        holder.price.setText(String.valueOf(currentItem.getIPrice())+"zł");
+        holder.weight.setText(String.valueOf(currentItem.getIweight())+"kg");
+        holder.total_sum.setText(String.valueOf(currentItem.getITotalSum())+"zł");
         holder.place.setText(currentItem.getIPlace());
+
+        switch (currentItem.getIPepperClass())
+        {
+            case 1:
+            {
+                holder.clas.setText("1");
+            }break;
+            case 2:
+            {
+                holder.clas.setText("2");
+            }break;
+            case 3:
+            {
+                holder.clas.setText("krojona");
+            }break;
+        }
     }
 
     @Override

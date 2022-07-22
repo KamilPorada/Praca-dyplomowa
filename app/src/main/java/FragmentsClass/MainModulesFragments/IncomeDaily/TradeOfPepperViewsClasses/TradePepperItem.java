@@ -1,34 +1,34 @@
 package FragmentsClass.MainModulesFragments.IncomeDaily.TradeOfPepperViewsClasses;
 
 public class TradePepperItem {
-    private final int IPepperImage;
+    private int IId;
+    private final int IColor;
     private final String IDate;
-    private final String IPepperClass;
+    private final int IPepperClass;
     private final double IPrice;
     private final double IWeight;
     private final String ITotalSum;
     private final String IPlace;
-    private final String IDataPassword;
 
-    public TradePepperItem(int pepperImage, String date, String pepperClass, double price,
-                           double weight, String totalSum, String place, String dataPassword)
+    public TradePepperItem(int id, int color, String date, int pepperClass, double price,
+                           double weight, String totalSum, String place)
     {
-        IPepperImage=pepperImage;
+        IId=id;
+        IColor=color;
         IDate=date;
         IPepperClass=pepperClass;
         IPrice=price;
         IWeight=weight;
         ITotalSum=totalSum;
         IPlace=place;
-        IDataPassword=dataPassword;
     }
 
-    public int getIPepperImage()
+    public int getIColor()
     {
-        return IPepperImage;
+        return IColor;
     }
     public String getIDate(){ return IDate; }
-    public String getIPepperClass()
+    public int getIPepperClass()
     {
         return IPepperClass;
     }
@@ -45,9 +45,5 @@ public class TradePepperItem {
     {
         return IPlace;
     }
-    public String getIDataPassword()
-    {
-        return IDataPassword;
-    }
-
+    public int getIId() { return IId; }
 }

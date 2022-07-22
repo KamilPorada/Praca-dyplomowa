@@ -17,11 +17,20 @@
 
         <ImageView
             android:id="@+id/button_come_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:src="@drawable/icon_come_back"
+            app:tint="@color/white" />
+
+        <ImageView
+            android:id="@+id/button_add_item"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/icon_plus"
             app:tint="@color/white" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -78,5 +87,6 @@
         android:background="@color/backgroundColor"/>
 
     </androidx.core.widget.NestedScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

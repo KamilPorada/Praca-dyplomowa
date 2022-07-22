@@ -22,16 +22,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         final String CREATE_TABLE_TRADE_OF_PEPPER_ITEM = "CREATE TABLE " +
                 DataBaseNames.TradeOfPepperItem.TABLE_NAME + " (" +
                 DataBaseNames.TradeOfPepperItem._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                DataBaseNames.TradeOfPepperItem.COLUMN_COLOR_OF_PEPPER + " TEXT NOT NULL," +
+                DataBaseNames.TradeOfPepperItem.COLUMN_COLOR_OF_PEPPER + " INTEGER NOT NULL," +
                 DataBaseNames.TradeOfPepperItem.COLUMN_VAT + " INTEGER NOT NULL," +
-                DataBaseNames.TradeOfPepperItem.COLUMN_CLASS_OF_PEPPER + " TEXT NOT NULL," +
+                DataBaseNames.TradeOfPepperItem.COLUMN_CLASS_OF_PEPPER + " INTEGER NOT NULL," +
                 DataBaseNames.TradeOfPepperItem.COLUMN_PRICE_OF_PEPPER + " REAL NOT NULL," +
                 DataBaseNames.TradeOfPepperItem.COLUMN_WEIGHT_OF_PEPPER + " REAL NOT NULL," +
                 DataBaseNames.TradeOfPepperItem.COLUMN_TOTAL_SUM + " REAL NOT NULL," +
                 DataBaseNames.TradeOfPepperItem.COLUMN_DATE + " TEXT NOT NULL," +
-                DataBaseNames.TradeOfPepperItem.COLUMN_PLACE + " TEXT NOT NULL," +
-                DataBaseNames.TradeOfPepperItem.COLUMN_IMAGE + " INTEGER NOT NULL," +
-                DataBaseNames.TradeOfPepperItem.COLUMN_DATA_PASWORD + " TEXT NOT NULL" +
+                DataBaseNames.TradeOfPepperItem.COLUMN_PLACE + " TEXT NOT NULL" +
                 ");";
 
         final String CREATE_TABLE_OUTGOINGS = "CREATE TABLE " +
@@ -92,8 +90,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     //----------------------------TRADE_OF_PEPPER SQLITE QUERIES-------------------------------//
 
-    public void addTradeOfPepperItem(String color, int vat, String clas, double price, double weight, double sum,
-                                     String date, String place, int image, String dataPassword) {
+    public void addTradeOfPepperItem(int color, int vat, int clas, double price, double weight, double sum,
+                                     String date, String place) {
         SQLiteDatabase db=getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(DataBaseNames.TradeOfPepperItem.COLUMN_COLOR_OF_PEPPER, color);
@@ -104,14 +102,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(DataBaseNames.TradeOfPepperItem.COLUMN_TOTAL_SUM, sum);
         values.put(DataBaseNames.TradeOfPepperItem.COLUMN_DATE, date);
         values.put(DataBaseNames.TradeOfPepperItem.COLUMN_PLACE, place);
-        values.put(DataBaseNames.TradeOfPepperItem.COLUMN_IMAGE, image);
-        values.put(DataBaseNames.TradeOfPepperItem.COLUMN_DATA_PASWORD, dataPassword);
 
         db.insertOrThrow(DataBaseNames.TradeOfPepperItem.TABLE_NAME,null,values);
     }
-    public void updateTradeOfTradeOfPepperItems(String passwordKey, String color, int vat,
-                                                String clas, double price, double weight, double sum,
-                                                String date, int image, String place) {
+    public void updateTradeOfTradeOfPepperItems(int id, int color, int vat,
+                                                int clas, double price, double weight, double sum,
+                                                String date, String place) {
         SQLiteDatabase db =getWritableDatabase();
         ContentValues values =new ContentValues();
         values.put(DataBaseNames.TradeOfPepperItem.COLUMN_COLOR_OF_PEPPER,color);
@@ -121,22 +117,31 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(DataBaseNames.TradeOfPepperItem.COLUMN_WEIGHT_OF_PEPPER,weight);
         values.put(DataBaseNames.TradeOfPepperItem.COLUMN_TOTAL_SUM,sum);
         values.put(DataBaseNames.TradeOfPepperItem.COLUMN_DATE,date);
-        values.put(DataBaseNames.TradeOfPepperItem.COLUMN_IMAGE,image);
         values.put(DataBaseNames.TradeOfPepperItem.COLUMN_PLACE,place);
 
-        String[] args ={passwordKey+""};
-        db.update(DataBaseNames.TradeOfPepperItem.TABLE_NAME,values,"dataPassword=?",args);
+        db.update(DataBaseNames.TradeOfPepperItem.TABLE_NAME,values,DataBaseNames.TradeOfPepperItem._ID + " LIKE " + id,null);
     }
     public Cursor getTradeOfPepperItems(){
         String[] columns={DataBaseNames.TradeOfPepperItem._ID, DataBaseNames.TradeOfPepperItem.COLUMN_COLOR_OF_PEPPER,
                           DataBaseNames.TradeOfPepperItem.COLUMN_VAT, DataBaseNames.TradeOfPepperItem.COLUMN_CLASS_OF_PEPPER,
                           DataBaseNames.TradeOfPepperItem.COLUMN_PRICE_OF_PEPPER, DataBaseNames.TradeOfPepperItem.COLUMN_WEIGHT_OF_PEPPER,
                           DataBaseNames.TradeOfPepperItem.COLUMN_TOTAL_SUM,DataBaseNames.TradeOfPepperItem.COLUMN_DATE,
-                          DataBaseNames.TradeOfPepperItem.COLUMN_PLACE,DataBaseNames.TradeOfPepperItem.COLUMN_IMAGE,
-                          DataBaseNames.TradeOfPepperItem.COLUMN_DATA_PASWORD};
+                          DataBaseNames.TradeOfPepperItem.COLUMN_PLACE};
         SQLiteDatabase db =getReadableDatabase();
         return db.query(DataBaseNames.TradeOfPepperItem.TABLE_NAME,columns, null,null,null,null,null);
     }
+
+    public Cursor getSpecifyTradeOfPepperValues(int id) {
+        String[] columns={DataBaseNames.TradeOfPepperItem.COLUMN_COLOR_OF_PEPPER,
+                DataBaseNames.TradeOfPepperItem.COLUMN_VAT, DataBaseNames.TradeOfPepperItem.COLUMN_CLASS_OF_PEPPER,
+                DataBaseNames.TradeOfPepperItem.COLUMN_PRICE_OF_PEPPER, DataBaseNames.TradeOfPepperItem.COLUMN_WEIGHT_OF_PEPPER,
+                DataBaseNames.TradeOfPepperItem.COLUMN_TOTAL_SUM,DataBaseNames.TradeOfPepperItem.COLUMN_DATE,
+                DataBaseNames.TradeOfPepperItem.COLUMN_PLACE};
+        SQLiteDatabase db =getReadableDatabase();
+        return db.query(DataBaseNames.TradeOfPepperItem.TABLE_NAME, columns, DataBaseNames.TradeOfPepperItem._ID + " LIKE " + id,null,null,null,null);
+    }
+
+
 
     //-----------------------------OUTGOINGS SQLITE QUERIES---------------------------------//
 

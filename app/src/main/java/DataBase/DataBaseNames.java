@@ -13,8 +13,6 @@ public class DataBaseNames {
         public static final String COLUMN_TOTAL_SUM = "totalSum";
         public static final String COLUMN_DATE = "date";
         public static final String COLUMN_PLACE = "place";
-        public static final String COLUMN_IMAGE = "image";
-        public static final String COLUMN_DATA_PASWORD = "dataPassword";
     }
     public static final class OutgoingsItem implements BaseColumns{
         public static final String TABLE_NAME = "outgoingsItem";

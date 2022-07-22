@@ -373,19 +373,19 @@ public  class ToolClass {
                 "'" + typeOfDose + "'" + ", " + "'" + grace + "'" + ", " + "'" + notes + "'" + ", " + "'" + image + "'" + ");";
     }
 
-    public static int getDrawable(String color)
+    public static int getDrawable(int color)
     {
         switch (color)
         {
-            case "czerwona":
+            case 0:
                 return R.drawable.image_red_pepper;
-            case "żółta":
+            case 1:
                 return R.drawable.image_yellow_pepper;
-            case "zielona":
+            case 2:
                 return R.drawable.image_green_pepper;
-            case "pomarańczowa":
+            case 3:
                 return R.drawable.image_orange_pepper;
-            case "blondyna":
+            case 4:
                 return R.drawable.image_blond_pepper;
             default:
                 return 0;

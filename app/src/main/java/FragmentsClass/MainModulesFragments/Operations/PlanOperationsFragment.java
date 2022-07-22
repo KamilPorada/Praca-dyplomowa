@@ -232,7 +232,7 @@ public class PlanOperationsFragment extends Fragment {
     private void openEditDataDialog() {
         Dialog editDataDialog = new Dialog(context);
         editDataDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
-        editDataDialog.setContentView(R.layout.dialog_change_date_of_operations);
+        editDataDialog.setContentView(R.layout.dialog_change_date);
         editDataDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         editDataDialog.show();
         createDialogListeners(editDataDialog);
