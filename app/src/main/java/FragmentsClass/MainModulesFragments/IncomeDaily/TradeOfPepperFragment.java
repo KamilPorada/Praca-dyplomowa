@@ -38,6 +38,7 @@ import DataBase.DataBaseNames;
 import FragmentsClass.MainModulesFragments.IncomeDaily.TradeOfPepperViewsClasses.TradePepperAdapter;
 import FragmentsClass.MainModulesFragments.IncomeDaily.TradeOfPepperViewsClasses.TradePepperItem;
 import HelperClasses.InformationDialog;
+import HelperClasses.ShowToast;
 import HelperClasses.ToolClass;
 
 
@@ -179,6 +180,8 @@ public class TradeOfPepperFragment extends Fragment {
     private void deleteItem(int position) {
         DataBaseHelper db = new DataBaseHelper(context);
         db.deleteItem(DataBaseNames.TradeOfPepperItem.TABLE_NAME,TradePepperList.get(position).getIId());
+        ShowToast toast = new ShowToast();
+        toast.showSuccessfulToast(context, "SUKCES\n" + "  Pomyślnie usunąłeś transakcję!");
         Fragment fragment = new TradeOfPepperFragment();
         requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
         loadData();

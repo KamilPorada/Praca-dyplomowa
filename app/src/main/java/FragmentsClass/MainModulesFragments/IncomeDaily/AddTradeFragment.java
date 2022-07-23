@@ -161,6 +161,12 @@ public class AddTradeFragment extends Fragment {
             {
                 case R.id.cancel_button:
                 {
+                    ShowToast toast = new ShowToast();
+                    if(tradeOfPepperOpenMode==0)
+                        toast.showErrorToast(context, "UWAGA!\n" + "  Przerwałeś proces edycji transakcji!", R.drawable.icon_edit);
+                    else if(tradeOfPepperOpenMode==1)
+                        toast.showErrorToast(context, "UWAGA!\n" + "  Przerwałeś proces dodawania transakcji!", R.drawable.icon_plus);
+
                     requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TradeOfPepperFragment()).commit();
                 }break;
                 case R.id.accept_button:
@@ -267,14 +273,17 @@ public class AddTradeFragment extends Fragment {
         String place = Objects.requireNonNull(howPlace.getText()).toString();
 
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+        ShowToast toast = new ShowToast();
         switch (tradeOfPepperOpenMode)
         {
             case 0:
             {
+                toast.showSuccessfulToast(context, "SUKCES\n" + "  Pomyślnie edytowałeś transakcję!");
                 dataBaseHelper.updateTradeOfTradeOfPepperItems(id, color,vat,clas,price,weight,totalSum,date,place);
             }break;
             case 1:
             {
+                toast.showSuccessfulToast(context, "SUKCES\n" + "  Pomyślnie dodałeś transakcję!");
                 dataBaseHelper.addTradeOfPepperItem(color,vat,clas,price,weight,totalSum,date,place);
             }break;
         }

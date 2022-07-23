@@ -9,8 +9,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +31,7 @@ import DataBase.DataBaseNames;
 import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsViewsClasses.OutgoingsAdapter;
 import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsViewsClasses.OutgoingsItem;
 import HelperClasses.InformationDialog;
+import HelperClasses.ShowToast;
 import HelperClasses.ToolClass;
 
 public class OutgoingsFragment extends Fragment {
@@ -182,6 +181,8 @@ public class OutgoingsFragment extends Fragment {
     private void deleteItem(int position) {
         DataBaseHelper db = new DataBaseHelper(context);
         db.deleteItem(DataBaseNames.OutgoingsItem.TABLE_NAME,OutgoingsList.get(position).getIId());
+        ShowToast toast = new ShowToast();
+        toast.showSuccessfulToast(context, "SUKCES\n" + "  Pomyślnie usunąłeś wydatek!");
         Fragment fragment = new OutgoingsFragment();
         requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
         loadData();
