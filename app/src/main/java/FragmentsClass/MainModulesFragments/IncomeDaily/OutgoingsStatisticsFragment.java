@@ -84,17 +84,17 @@ public class OutgoingsStatisticsFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void loadData() {
-        highgroves.setText(StatisticsHelper.calculateSpecificOutgoing(context, categories[0]) + "zł");
-        foils.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[1]) + "zł");
-        water.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[2]) + "zł");
-        sticks.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[3]) + "zł");
-        seeds.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[4]) + "zł");
-        plants.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[5]) + "zł");
-        pesticides.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[6]) + "zł");
-        fertilizers.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[7]) + "zł");
-        machines.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[8]) + "zł");
-        tools.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[9]) + "zł");
-        others.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[10]) + "zł");
+//        highgroves.setText(StatisticsHelper.calculateSpecificOutgoing(context, categories[0]) + "zł");
+//        foils.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[1]) + "zł");
+//        water.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[2]) + "zł");
+//        sticks.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[3]) + "zł");
+//        seeds.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[4]) + "zł");
+//        plants.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[5]) + "zł");
+//        pesticides.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[6]) + "zł");
+//        fertilizers.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[7]) + "zł");
+//        machines.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[8]) + "zł");
+//        tools.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[9]) + "zł");
+//        others.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[10]) + "zł");
         totalSum.setText(StatisticsHelper.getMoneyFromOutgoings(context,ToolClass.getActualYear()) + "zł");
     }
 

@@ -105,84 +105,84 @@ public class OutgoingsChartFragment extends Fragment {
                 "Maszyny rolnicze", "Narzędzia ogrodnicze", "Inne"
         };
 
-        ArrayList<BarEntry> category1 = new ArrayList<>();
-        category1.add(new BarEntry(1, StatisticsHelper.calculateSpecificOutgoing(context,categories[0])));
-        ArrayList<BarEntry> category2 = new ArrayList<>();
-        category2.add(new BarEntry(2,  StatisticsHelper.calculateSpecificOutgoing(context,categories[1])));
-        ArrayList<BarEntry> category3 = new ArrayList<>();
-        category3.add(new BarEntry(3,  StatisticsHelper.calculateSpecificOutgoing(context,categories[2])));
-        ArrayList<BarEntry> category4 = new ArrayList<>();
-        category4.add(new BarEntry(4,  StatisticsHelper.calculateSpecificOutgoing(context,categories[3])));
-        ArrayList<BarEntry> category5 = new ArrayList<>();
-        category5.add(new BarEntry(5,  StatisticsHelper.calculateSpecificOutgoing(context,categories[4])));
-        ArrayList<BarEntry> category6 = new ArrayList<>();
-        category6.add(new BarEntry(6,  StatisticsHelper.calculateSpecificOutgoing(context,categories[5])));
-        ArrayList<BarEntry> category7 = new ArrayList<>();
-        category7.add(new BarEntry(7, StatisticsHelper.calculateSpecificOutgoing(context,categories[6])));
-        ArrayList<BarEntry> category8 = new ArrayList<>();
-        category8.add(new BarEntry(8,  StatisticsHelper.calculateSpecificOutgoing(context,categories[7])));
-        ArrayList<BarEntry> category9 = new ArrayList<>();
-        category9.add(new BarEntry(9, StatisticsHelper.calculateSpecificOutgoing(context,categories[8])));
-        ArrayList<BarEntry> category10 = new ArrayList<>();
-        category10.add(new BarEntry(10,  StatisticsHelper.calculateSpecificOutgoing(context,categories[9])));
-        ArrayList<BarEntry> category11 = new ArrayList<>();
-        category11.add(new BarEntry(11,  StatisticsHelper.calculateSpecificOutgoing(context,categories[10])));
-
-        BarDataSet [] dataSet = {
-                new BarDataSet(category1, categories[0]),
-                new BarDataSet(category2, categories[1]),
-                new BarDataSet(category3, categories[2]),
-                new BarDataSet(category4, categories[3]),
-                new BarDataSet(category5, categories[4]),
-                new BarDataSet(category6, categories[5]),
-                new BarDataSet(category7, categories[6]),
-                new BarDataSet(category8, categories[7]),
-                new BarDataSet(category9, categories[8]),
-                new BarDataSet(category10, categories[9]),
-                new BarDataSet(category11, categories[10])
-        };
-
-        for(int i=0;i<dataSet.length;i++)
-        {
-            dataSet[i].setColors(colors[i]);
-            dataSet[i].setValueTextColor(ContextCompat.getColor(context, R.color.blackToWhite));
-            dataSet[i].setBarBorderColor(ContextCompat.getColor(context, R.color.blackToWhite));
-            dataSet[i].setValueTextSize(15f);
-        }
-
-        BarData barData =  new BarData();
-        for (BarDataSet barDataSet : dataSet) barData.addDataSet(barDataSet);
-        barData.setValueTextSize(0f);
-
-        XAxis xAxis = chart.getXAxis();
-        xAxis.setEnabled(false);
-        YAxis yAxisl = chart.getAxisLeft();
-        yAxisl.setAxisLineWidth(2f);
-        yAxisl.setGridLineWidth(2f);
-        yAxisl.setTextColor(ContextCompat.getColor(context, R.color.blackToWhite));
-        yAxisl.setValueFormatter(new ValueFormatter() {
-            @Override
-            public String getAxisLabel(float value, AxisBase axis) {
-                value = value/1000;
-                return Math.round(value) + " tyś. zł";
-            }
-        });
-
-        YAxis yAxisp = chart.getAxisRight();
-        yAxisp.setEnabled(false);
-
-        Legend l = chart.getLegend();
-        l.setEnabled(true);
-        l.setForm(Legend.LegendForm.CIRCLE);
-        l.setWordWrapEnabled(true);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
-        l.setTextColor(ContextCompat.getColor(context, R.color.blackToWhite));
-        l.setTextSize(10f);
-
-        chart.setFitBars(true);
-        chart.setData(barData);
-        chart.getDescription().setEnabled(false);
-        chart.animateY(1000);
+//        ArrayList<BarEntry> category1 = new ArrayList<>();
+//        category1.add(new BarEntry(1, StatisticsHelper.calculateSpecificOutgoing(context,categories[0])));
+//        ArrayList<BarEntry> category2 = new ArrayList<>();
+//        category2.add(new BarEntry(2,  StatisticsHelper.calculateSpecificOutgoing(context,categories[1])));
+//        ArrayList<BarEntry> category3 = new ArrayList<>();
+//        category3.add(new BarEntry(3,  StatisticsHelper.calculateSpecificOutgoing(context,categories[2])));
+//        ArrayList<BarEntry> category4 = new ArrayList<>();
+//        category4.add(new BarEntry(4,  StatisticsHelper.calculateSpecificOutgoing(context,categories[3])));
+//        ArrayList<BarEntry> category5 = new ArrayList<>();
+//        category5.add(new BarEntry(5,  StatisticsHelper.calculateSpecificOutgoing(context,categories[4])));
+//        ArrayList<BarEntry> category6 = new ArrayList<>();
+//        category6.add(new BarEntry(6,  StatisticsHelper.calculateSpecificOutgoing(context,categories[5])));
+//        ArrayList<BarEntry> category7 = new ArrayList<>();
+//        category7.add(new BarEntry(7, StatisticsHelper.calculateSpecificOutgoing(context,categories[6])));
+//        ArrayList<BarEntry> category8 = new ArrayList<>();
+//        category8.add(new BarEntry(8,  StatisticsHelper.calculateSpecificOutgoing(context,categories[7])));
+//        ArrayList<BarEntry> category9 = new ArrayList<>();
+//        category9.add(new BarEntry(9, StatisticsHelper.calculateSpecificOutgoing(context,categories[8])));
+//        ArrayList<BarEntry> category10 = new ArrayList<>();
+//        category10.add(new BarEntry(10,  StatisticsHelper.calculateSpecificOutgoing(context,categories[9])));
+//        ArrayList<BarEntry> category11 = new ArrayList<>();
+//        category11.add(new BarEntry(11,  StatisticsHelper.calculateSpecificOutgoing(context,categories[10])));
+//
+//        BarDataSet [] dataSet = {
+//                new BarDataSet(category1, categories[0]),
+//                new BarDataSet(category2, categories[1]),
+//                new BarDataSet(category3, categories[2]),
+//                new BarDataSet(category4, categories[3]),
+//                new BarDataSet(category5, categories[4]),
+//                new BarDataSet(category6, categories[5]),
+//                new BarDataSet(category7, categories[6]),
+//                new BarDataSet(category8, categories[7]),
+//                new BarDataSet(category9, categories[8]),
+//                new BarDataSet(category10, categories[9]),
+//                new BarDataSet(category11, categories[10])
+//        };
+//
+//        for(int i=0;i<dataSet.length;i++)
+//        {
+//            dataSet[i].setColors(colors[i]);
+//            dataSet[i].setValueTextColor(ContextCompat.getColor(context, R.color.blackToWhite));
+//            dataSet[i].setBarBorderColor(ContextCompat.getColor(context, R.color.blackToWhite));
+//            dataSet[i].setValueTextSize(15f);
+//        }
+//
+//        BarData barData =  new BarData();
+//        for (BarDataSet barDataSet : dataSet) barData.addDataSet(barDataSet);
+//        barData.setValueTextSize(0f);
+//
+//        XAxis xAxis = chart.getXAxis();
+//        xAxis.setEnabled(false);
+//        YAxis yAxisl = chart.getAxisLeft();
+//        yAxisl.setAxisLineWidth(2f);
+//        yAxisl.setGridLineWidth(2f);
+//        yAxisl.setTextColor(ContextCompat.getColor(context, R.color.blackToWhite));
+//        yAxisl.setValueFormatter(new ValueFormatter() {
+//            @Override
+//            public String getAxisLabel(float value, AxisBase axis) {
+//                value = value/1000;
+//                return Math.round(value) + " tyś. zł";
+//            }
+//        });
+//
+//        YAxis yAxisp = chart.getAxisRight();
+//        yAxisp.setEnabled(false);
+//
+//        Legend l = chart.getLegend();
+//        l.setEnabled(true);
+//        l.setForm(Legend.LegendForm.CIRCLE);
+//        l.setWordWrapEnabled(true);
+//        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+//        l.setTextColor(ContextCompat.getColor(context, R.color.blackToWhite));
+//        l.setTextSize(10f);
+//
+//        chart.setFitBars(true);
+//        chart.setData(barData);
+//        chart.getDescription().setEnabled(false);
+//        chart.animateY(1000);
     }
 }
 

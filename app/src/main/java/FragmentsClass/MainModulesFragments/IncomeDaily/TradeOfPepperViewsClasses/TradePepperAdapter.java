@@ -82,7 +82,7 @@ public class TradePepperAdapter extends RecyclerView.Adapter<TradePepperAdapter.
     @Override
     public void onBindViewHolder(TradePepperViewHolder holder, int position) {
         TradePepperItem currentItem = tradePepperItems.get(position);
-        holder.image.setImageResource(ToolClass.getDrawable(currentItem.getIColor()));
+        holder.image.setImageResource(ToolClass.getPepperDrawable(currentItem.getIColor()));
         holder.date.setText(currentItem.getIDate());
         holder.price.setText(String.valueOf(currentItem.getIPrice())+"zł");
         holder.weight.setText(String.valueOf(currentItem.getIweight())+"kg");

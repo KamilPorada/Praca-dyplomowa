@@ -39,13 +39,11 @@ public class OutgoingsSpinnerAdapter extends ArrayAdapter<OutgoingsSpinnerItem> 
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.spinner_outgoings_row, parent, false);
         }
 
-        ImageView image = convertView.findViewById(R.id.image_row);
         TextView text = convertView.findViewById(R.id.text_view_row);
 
         OutgoingsSpinnerItem currentItem = getItem(position);
 
         if (currentItem != null) {
-            image.setImageResource(currentItem.getImage());
             text.setText(currentItem.getText());
         }
 

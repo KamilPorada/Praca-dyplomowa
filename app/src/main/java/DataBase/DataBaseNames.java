@@ -14,14 +14,15 @@ public class DataBaseNames {
         public static final String COLUMN_DATE = "date";
         public static final String COLUMN_PLACE = "place";
     }
+
     public static final class OutgoingsItem implements BaseColumns{
         public static final String TABLE_NAME = "outgoingsItem";
-        public static final String COLUMN_CATEGORY_OF_OUTGOING = "categoryOfOutgoing";
+        public static final String COLUMN_ID_OF_CATEGORY = "idOfCategory";
+        public static final String COLUMN_NAME = "nameOfOutgoing";
         public static final String COLUMN_DESCRIBE_OF_OUTGOING = "describeOfOutgoing";
         public static final String COLUMN_PRICE_OF_OUTGOING = "priceOfOutgoing";
         public static final String COLUMN_DATE_OF_OUTGOING = "dateOfOutgoing";
-        public static final String COLUMN_IMAGE = "image";
-        public static final String COLUMN_DATA_PASWORD = "dataPassword";
+
     }
     public static final class PesticidesItem implements BaseColumns{
         public static final String TABLE_NAME = "pesticideItem";

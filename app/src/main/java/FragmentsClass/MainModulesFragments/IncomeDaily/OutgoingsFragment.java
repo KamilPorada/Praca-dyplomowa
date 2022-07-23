@@ -3,6 +3,7 @@ package FragmentsClass.MainModulesFragments.IncomeDaily;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,10 +40,7 @@ public class OutgoingsFragment extends Fragment {
     private Context context;
     private final ArrayList<OutgoingsItem> OutgoingsList = new ArrayList<>();
     private RecyclerView recyclerView;
-
-    private Button canButton, delButton;
-
-    private final String FLAG = "flag";
+    private ImageView buttonComeBack, buttonAddItem;
 
     @Nullable
     @Override
@@ -50,6 +49,7 @@ public class OutgoingsFragment extends Fragment {
         assert container != null;
         context=container.getContext();
         findViews(view);
+        createListener();
         startSettings();
         loadData();
         return view;
@@ -62,36 +62,42 @@ public class OutgoingsFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.tollbar_menu_add_item, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @SuppressLint("NonConstantResourceId")
-    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id=item.getItemId();
-        switch (id)
-        {
-            case R.id.information:
-            {
-                InformationDialog informationDialog = new InformationDialog();
-                informationDialog.openInformationDialog(context,getResources().getString(R.string.describes_outgoings));
-            }break;
-            case R.id.add_item:
-            {
-                Bundle bundle = new Bundle();
-                bundle.putBoolean(FLAG, false);
-                AddOutgoingsFragment fragment = new AddOutgoingsFragment();
-                fragment.setArguments(bundle);
-                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
-            }break;
+        if (id == R.id.information) {
+            InformationDialog informationDialog = new InformationDialog();
+            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_outgoings));
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void findViews(View view) {
         recyclerView=view.findViewById(R.id.recycler_view);
+        buttonComeBack=view.findViewById(R.id.button_come_back);
+        buttonAddItem=view.findViewById(R.id.button_add_item);
+    }
+
+    private void createListener() {
+        @SuppressLint("NonConstantResourceId") View.OnClickListener listener = v -> {
+            int id=v.getId();
+            switch (id)
+            {
+                case R.id.button_add_item:
+                {
+                    SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt("OUTGOING_OPEN_MODE", 1);
+                    editor.apply();
+                    requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddOutgoingsFragment()).commit();
+                }break;
+                case R.id.button_come_back:
+                {
+                    requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new IncomeDailyFragment()).commit();
+                }break;
+            }
+        };
+        buttonAddItem.setOnClickListener(listener);
+        buttonComeBack.setOnClickListener(listener);
     }
 
     private void startSettings() {
@@ -104,49 +110,37 @@ public class OutgoingsFragment extends Fragment {
         adapter.setOnItemClickListener(new OutgoingsAdapter.OnItemClickListener() {
             @Override
             public void onUpdateClick(int position) {
-                sendData(position);
+                SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("OUTGOING_OPEN_MODE", 0);
+                editor.putInt("POSITION_OF_OUTGOING_RV", OutgoingsList.get(position).getIId());
+                editor.apply();
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddOutgoingsFragment()).commit();
             }
 
             @Override
-            public void onDeleteClick(int position) { openDialogQuestion(position);
+            public void onDeleteClick(int position) {
+                openDialogQuestion(position);
             }
         });
     }
 
-    private void sendData(int position) {
-        Bundle bundle = new Bundle();
-        String CATEGORY = "category";
-        String PRICE = "price";
-        String DATE = "date";
-        String DESCRIBE = "describe";
-        String PASSSWORD_KEY = "passwordKey";
-        bundle.putBoolean(FLAG, true);
-        bundle.putString(CATEGORY,OutgoingsList.get(position).getIOutgoingCategory());
-        bundle.putDouble(PRICE,OutgoingsList.get(position).getIOutgoingPrice());
-        bundle.putString(DATE,OutgoingsList.get(position).getIOutgoingDate());
-        bundle.putString(DESCRIBE,OutgoingsList.get(position).getIOutgoingDescribe());
-        bundle.putString(PASSSWORD_KEY,OutgoingsList.get(position).getIOutgoingPasswordKey());
-        AddOutgoingsFragment fragment = new AddOutgoingsFragment();
-        fragment.setArguments(bundle);
-        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
-    }
 
     private void loadData() {
         DataBaseHelper dbHelper = new DataBaseHelper(context);
         Cursor k =dbHelper.getOutgoingItems();
-        int image;
-        String date, category, describe, passwordKey;
+        String date, category, describe;
+        int idOfCategory, id;
         double price;
         while(k.moveToNext()) {
             date=k.getString(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_DATE_OF_OUTGOING));
-            category=k.getString(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_CATEGORY_OF_OUTGOING));
+            category=k.getString(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_NAME));
             price = k.getDouble(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_PRICE_OF_OUTGOING));
             describe = k.getString(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_DESCRIBE_OF_OUTGOING));
-            passwordKey = k.getString(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_DATA_PASWORD));
-            image = k.getInt(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_IMAGE));
-
+            idOfCategory = k.getInt(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_ID_OF_CATEGORY));
+            id = k.getInt(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem._ID));
             if(ToolClass.getActualYear()==ToolClass.getYear(date))
-                OutgoingsList.add(new OutgoingsItem(image, category, describe, price, date, passwordKey));
+                OutgoingsList.add(new OutgoingsItem(id,ToolClass.getOutgoingsDrawable(idOfCategory), category, describe, price, date));
         }
     }
 
@@ -157,17 +151,15 @@ public class OutgoingsFragment extends Fragment {
         questionWindow.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
         questionWindow.setContentView(R.layout.dialog_question);
         questionWindow.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        questionWindow.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         questionWindow.show();
-        findQuestionDialogViews(questionWindow);
         createAndAddListener(questionWindow, position);
     }
 
-    private void findQuestionDialogViews(Dialog questionWindow) {
-        canButton=questionWindow.findViewById(R.id.cancel_button);
-        delButton=questionWindow.findViewById(R.id.delete_button);
-    }
 
     private void createAndAddListener(Dialog questionWindow, int position) {
+        Button cancelButton = questionWindow.findViewById(R.id.cancel_button);
+        Button deleteButton = questionWindow.findViewById(R.id.delete_button);
         @SuppressLint("NonConstantResourceId") View.OnClickListener listener = v -> {
             int id=v.getId();
             switch (id)
@@ -183,20 +175,13 @@ public class OutgoingsFragment extends Fragment {
                 }break;
             }
         };
-        canButton.setOnClickListener(listener);
-        delButton.setOnClickListener(listener);
+        cancelButton.setOnClickListener(listener);
+        deleteButton.setOnClickListener(listener);
     }
 
     private void deleteItem(int position) {
         DataBaseHelper db = new DataBaseHelper(context);
-        Cursor cursor = db.getItemID(DataBaseNames.OutgoingsItem.TABLE_NAME,DataBaseNames.OutgoingsItem._ID,
-                DataBaseNames.OutgoingsItem.COLUMN_DATA_PASWORD,OutgoingsList.get(position).getIOutgoingPasswordKey());
-        int id=0;
-        while (cursor.moveToNext())
-        {
-            id=cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem._ID));
-        }
-        db.deleteItem(DataBaseNames.OutgoingsItem.TABLE_NAME,id);
+        db.deleteItem(DataBaseNames.OutgoingsItem.TABLE_NAME,OutgoingsList.get(position).getIId());
         Fragment fragment = new OutgoingsFragment();
         requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
         loadData();

@@ -130,7 +130,7 @@ public class AddTradeFragment extends Fragment {
                 ePlace = k.getString(k.getColumnIndexOrThrow(DataBaseNames.TradeOfPepperItem.COLUMN_PLACE));
             }
 
-            image.setImageResource(ToolClass.getDrawable(eColor));
+            image.setImageResource(ToolClass.getPepperDrawable(eColor));
             color=eColor;
             clas=eClas;
             vat=eVat;
@@ -201,7 +201,7 @@ public class AddTradeFragment extends Fragment {
                     color=4;
                 }break;
             }
-            image.setImageResource(ToolClass.getDrawable(color));
+            image.setImageResource(ToolClass.getPepperDrawable(color));
         };
         redColor.setOnClickListener(colorListener);
         yellowColor.setOnClickListener(colorListener);
@@ -301,7 +301,6 @@ public class AddTradeFragment extends Fragment {
     private void createDialogListeners(Dialog editDataDialog) {
         CalendarView calendar;
         Button btnAccept, btnCancel;
-
 
         calendar=editDataDialog.findViewById(R.id.calendar);
         btnAccept=editDataDialog.findViewById(R.id.btn_accept);

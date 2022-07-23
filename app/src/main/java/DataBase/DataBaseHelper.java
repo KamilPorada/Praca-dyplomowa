@@ -35,12 +35,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         final String CREATE_TABLE_OUTGOINGS = "CREATE TABLE " +
                 DataBaseNames.OutgoingsItem.TABLE_NAME + " (" +
                 DataBaseNames.OutgoingsItem._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                DataBaseNames.OutgoingsItem.COLUMN_CATEGORY_OF_OUTGOING + " TEXT NOT NULL," +
+                DataBaseNames.OutgoingsItem.COLUMN_NAME + " TEXT NOT NULL," +
+                DataBaseNames.OutgoingsItem.COLUMN_ID_OF_CATEGORY + " INTEGER NOT NULL," +
                 DataBaseNames.OutgoingsItem.COLUMN_DESCRIBE_OF_OUTGOING + " TEXT NOT NULL," +
                 DataBaseNames.OutgoingsItem.COLUMN_PRICE_OF_OUTGOING + " REAL NOT NULL," +
-                DataBaseNames.OutgoingsItem.COLUMN_DATE_OF_OUTGOING + " TEXT NOT NULL," +
-                DataBaseNames.OutgoingsItem.COLUMN_IMAGE + " INTEGER NOT NULL," +
-                DataBaseNames.OutgoingsItem.COLUMN_DATA_PASWORD + " TEXT NOT NULL" +
+                DataBaseNames.OutgoingsItem.COLUMN_DATE_OF_OUTGOING + " TEXT NOT NULL" +
                 ");";
 
         final String CREATE_TABLE_CATALOG_OF_PESTICIDES = "CREATE TABLE " +
@@ -141,40 +140,43 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return db.query(DataBaseNames.TradeOfPepperItem.TABLE_NAME, columns, DataBaseNames.TradeOfPepperItem._ID + " LIKE " + id,null,null,null,null);
     }
 
-
-
     //-----------------------------OUTGOINGS SQLITE QUERIES---------------------------------//
 
-    public void addOutgoing(String category,String describe, double price, String date, int image, String passwordKey) {
+    public void addOutgoing(String category, int idOfCategory, String describe, double price, String date) {
         SQLiteDatabase db=getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(DataBaseNames.OutgoingsItem.COLUMN_CATEGORY_OF_OUTGOING,category);
+        values.put(DataBaseNames.OutgoingsItem.COLUMN_NAME,category);
+        values.put(DataBaseNames.OutgoingsItem.COLUMN_ID_OF_CATEGORY,idOfCategory);
         values.put(DataBaseNames.OutgoingsItem.COLUMN_DESCRIBE_OF_OUTGOING,describe);
         values.put(DataBaseNames.OutgoingsItem.COLUMN_PRICE_OF_OUTGOING,price);
         values.put(DataBaseNames.OutgoingsItem.COLUMN_DATE_OF_OUTGOING,date);
-        values.put(DataBaseNames.OutgoingsItem.COLUMN_IMAGE,image);
-        values.put(DataBaseNames.OutgoingsItem.COLUMN_DATA_PASWORD,passwordKey);
 
         db.insertOrThrow(DataBaseNames.OutgoingsItem.TABLE_NAME,null,values);
     }
-    public void updateOutgoingItems(String passwordKey, String category,String describe, double price, int image, String date) {
+    public void updateOutgoingItems(int id, String category, int idOfCategory, String describe, double price, String date) {
         SQLiteDatabase db =getWritableDatabase();
         ContentValues values =new ContentValues();
-        values.put(DataBaseNames.OutgoingsItem.COLUMN_CATEGORY_OF_OUTGOING,category);
+        values.put(DataBaseNames.OutgoingsItem.COLUMN_NAME,category);
+        values.put(DataBaseNames.OutgoingsItem.COLUMN_ID_OF_CATEGORY,idOfCategory);
         values.put(DataBaseNames.OutgoingsItem.COLUMN_DESCRIBE_OF_OUTGOING,describe);
         values.put(DataBaseNames.OutgoingsItem.COLUMN_PRICE_OF_OUTGOING,price);
-        values.put(DataBaseNames.OutgoingsItem.COLUMN_IMAGE,image);
         values.put(DataBaseNames.OutgoingsItem.COLUMN_DATE_OF_OUTGOING,date);
 
-        String[] args ={passwordKey+""};
-        db.update(DataBaseNames.OutgoingsItem.TABLE_NAME,values,"dataPassword=?",args);
+        db.update(DataBaseNames.OutgoingsItem.TABLE_NAME,values,DataBaseNames.OutgoingsItem._ID + " LIKE " + id,null);
     }
     public Cursor getOutgoingItems(){
-        String[] columns={DataBaseNames.OutgoingsItem.COLUMN_DATE_OF_OUTGOING, DataBaseNames.OutgoingsItem.COLUMN_CATEGORY_OF_OUTGOING,
-                DataBaseNames.OutgoingsItem.COLUMN_PRICE_OF_OUTGOING, DataBaseNames.OutgoingsItem.COLUMN_DESCRIBE_OF_OUTGOING,
-                DataBaseNames.OutgoingsItem.COLUMN_IMAGE,DataBaseNames.OutgoingsItem.COLUMN_DATA_PASWORD};
+        String[] columns={DataBaseNames.OutgoingsItem._ID, DataBaseNames.OutgoingsItem.COLUMN_DATE_OF_OUTGOING,
+                DataBaseNames.OutgoingsItem.COLUMN_ID_OF_CATEGORY, DataBaseNames.OutgoingsItem.COLUMN_NAME,
+                DataBaseNames.OutgoingsItem.COLUMN_PRICE_OF_OUTGOING, DataBaseNames.OutgoingsItem.COLUMN_DESCRIBE_OF_OUTGOING,};
         SQLiteDatabase db =getReadableDatabase();
         return db.query(DataBaseNames.OutgoingsItem.TABLE_NAME,columns, null,null,null,null,null);
+    }
+
+    public Cursor getSpecifyOutgoingValues(int id) {
+        String[] columns={DataBaseNames.OutgoingsItem.COLUMN_NAME, DataBaseNames.OutgoingsItem.COLUMN_ID_OF_CATEGORY,  DataBaseNames.OutgoingsItem.COLUMN_DATE_OF_OUTGOING,
+                          DataBaseNames.OutgoingsItem.COLUMN_PRICE_OF_OUTGOING, DataBaseNames.OutgoingsItem.COLUMN_DESCRIBE_OF_OUTGOING};
+        SQLiteDatabase db =getReadableDatabase();
+        return db.query(DataBaseNames.OutgoingsItem.TABLE_NAME, columns, DataBaseNames.OutgoingsItem._ID + " LIKE " + id,null,null,null,null);
     }
 
     //------------------------------STATISTICS SQLITE QUERIES---------------------------------//
@@ -216,7 +218,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
     public Cursor getMoneyFromSpecificOutgoing(String category){
         String[] columns={DataBaseNames.OutgoingsItem.COLUMN_PRICE_OF_OUTGOING, DataBaseNames.OutgoingsItem.COLUMN_DATE_OF_OUTGOING};
-        String selection = DataBaseNames.OutgoingsItem.COLUMN_CATEGORY_OF_OUTGOING + " LIKE ?";
+        String selection = DataBaseNames.OutgoingsItem.COLUMN_NAME + " LIKE ?";
         String[] selection_args= {category};
         SQLiteDatabase db =getReadableDatabase();
         return db.query(DataBaseNames.OutgoingsItem.TABLE_NAME, columns, selection,selection_args,null,null,null);

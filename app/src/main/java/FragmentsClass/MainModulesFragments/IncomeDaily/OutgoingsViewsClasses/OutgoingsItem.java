@@ -1,24 +1,25 @@
 package FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsViewsClasses;
 
 public class OutgoingsItem {
+    private final int IId;
     private final int IOutgoingImage;
     private final String IOutgoingCategory;
     private final String IOutgoingDescribe;
     private final double IOutgoingPrice;
     private final String IOutgoingDate;
-    private final String IOutgoingPasswordKey;
 
-    public OutgoingsItem(int outgoingImage, String outgoingCategory, String outgoingDescribe,
-                         double outgoingPrice, String outgoingDate, String outgoingPasswordKey)
+    public OutgoingsItem(int id, int outgoingImage, String outgoingCategory, String outgoingDescribe,
+                         double outgoingPrice, String outgoingDate)
     {
+        IId=id;
         IOutgoingImage=outgoingImage;
         IOutgoingCategory=outgoingCategory;
         IOutgoingDescribe=outgoingDescribe;
         IOutgoingPrice=outgoingPrice;
         IOutgoingDate=outgoingDate;
-        IOutgoingPasswordKey=outgoingPasswordKey;
     }
 
+    public int getIId() { return IId; }
     public int getIOutgoingImage()
     {
         return IOutgoingImage;
@@ -33,6 +34,4 @@ public class OutgoingsItem {
         return IOutgoingPrice;
     }
     public String getIOutgoingDate(){return IOutgoingDate;}
-    public String getIOutgoingPasswordKey(){return IOutgoingPasswordKey;}
-
 }
