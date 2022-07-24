@@ -427,7 +427,7 @@ public  class ToolClass {
             case 7:
                 return R.drawable.image_fertilizer;
             case 8:
-                return R.drawable.image_machine;
+                return R.drawable.icon_machine;
             case 9:
                 return R.drawable.image_tools;
             case 10:

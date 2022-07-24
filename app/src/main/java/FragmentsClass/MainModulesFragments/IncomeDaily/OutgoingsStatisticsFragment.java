@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,7 @@ public class OutgoingsStatisticsFragment extends Fragment {
     private TextView highgroves, foils, water, sticks, seeds, plants, pesticides, fertilizers, machines, tools,
                      others, totalSum;
     private Button btnOutgoingInChart;
+    private ImageView buttonComeBack;
 
     private final String [] categories = {
             "Konstrukcje tuneli", "Folie ogrodnicze", "Hydraulika w tunelach",
@@ -80,21 +82,22 @@ public class OutgoingsStatisticsFragment extends Fragment {
         others=view.findViewById(R.id.others);
         totalSum=view.findViewById(R.id.total_sum);
         btnOutgoingInChart=view.findViewById(R.id.btn_outgoings_in_chart);
+        buttonComeBack=view.findViewById(R.id.button_come_back);
     }
 
     @SuppressLint("SetTextI18n")
     private void loadData() {
-//        highgroves.setText(StatisticsHelper.calculateSpecificOutgoing(context, categories[0]) + "zł");
-//        foils.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[1]) + "zł");
-//        water.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[2]) + "zł");
-//        sticks.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[3]) + "zł");
-//        seeds.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[4]) + "zł");
-//        plants.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[5]) + "zł");
-//        pesticides.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[6]) + "zł");
-//        fertilizers.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[7]) + "zł");
-//        machines.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[8]) + "zł");
-//        tools.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[9]) + "zł");
-//        others.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[10]) + "zł");
+        highgroves.setText(StatisticsHelper.calculateSpecificOutgoing(context, categories[0]) + "zł");
+        foils.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[1]) + "zł");
+        water.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[2]) + "zł");
+        sticks.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[3]) + "zł");
+        seeds.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[4]) + "zł");
+        plants.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[5]) + "zł");
+        pesticides.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[6]) + "zł");
+        fertilizers.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[7]) + "zł");
+        machines.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[8]) + "zł");
+        tools.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[9]) + "zł");
+        others.setText(StatisticsHelper.calculateSpecificOutgoing(context,categories[10]) + "zł");
         totalSum.setText(StatisticsHelper.getMoneyFromOutgoings(context,ToolClass.getActualYear()) + "zł");
     }
 
@@ -103,6 +106,8 @@ public class OutgoingsStatisticsFragment extends Fragment {
             fragment=new OutgoingsChartFragment();
             requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
         });
+
+        buttonComeBack.setOnClickListener(v -> requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new BalanceFragment()).commit());
 
     }
 

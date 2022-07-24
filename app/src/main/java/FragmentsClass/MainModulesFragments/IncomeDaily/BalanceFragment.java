@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,6 +36,7 @@ public class BalanceFragment extends Fragment {
     private Fragment fragment = null;
     private Context context;
 
+    private ImageView buttonComeBack;
     private PieChart chart;
     private Button outgoingsButton, tradeButton;
 
@@ -70,6 +72,7 @@ public class BalanceFragment extends Fragment {
     }
 
     private void findViews(View view) {
+        buttonComeBack=view.findViewById(R.id.button_come_back);
         outgoingsButton=view.findViewById(R.id.btn_outgoings);
         tradeButton=view.findViewById(R.id.btn_trade);
         chart=view.findViewById(R.id.chart);
@@ -93,6 +96,8 @@ public class BalanceFragment extends Fragment {
         };
         tradeButton.setOnClickListener(listener);
         outgoingsButton.setOnClickListener(listener);
+
+        buttonComeBack.setOnClickListener(v -> requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new IncomeDailyFragment()).commit());
     }
 
     private void calculateMoney() {

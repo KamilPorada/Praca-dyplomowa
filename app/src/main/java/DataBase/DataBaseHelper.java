@@ -181,21 +181,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     //------------------------------STATISTICS SQLITE QUERIES---------------------------------//
 
-    public Cursor getWeightFromColor(String color){
+    public Cursor getWeightFromColor(int color){
         String[] columns={DataBaseNames.TradeOfPepperItem.COLUMN_WEIGHT_OF_PEPPER,
                           DataBaseNames.TradeOfPepperItem.COLUMN_DATE};
-        String selection = DataBaseNames.TradeOfPepperItem.COLUMN_COLOR_OF_PEPPER+" LIKE ?";
-        String[] selection_args= {color};
         SQLiteDatabase db =getReadableDatabase();
-        return db.query(DataBaseNames.TradeOfPepperItem.TABLE_NAME, columns, selection,selection_args,null,null,null);
+        return db.query(DataBaseNames.TradeOfPepperItem.TABLE_NAME, columns, DataBaseNames.TradeOfPepperItem.COLUMN_COLOR_OF_PEPPER + " LIKE " + color, null,null,null,null);
     }
-    public Cursor getWeightFromClass(String clas){
+    public Cursor getWeightFromClass(int clas){
         String[] columns={DataBaseNames.TradeOfPepperItem.COLUMN_WEIGHT_OF_PEPPER,
                 DataBaseNames.TradeOfPepperItem.COLUMN_DATE};
-        String selection = DataBaseNames.TradeOfPepperItem.COLUMN_CLASS_OF_PEPPER+" LIKE ?";
-        String[] selection_args= {clas};
         SQLiteDatabase db =getReadableDatabase();
-        return db.query(DataBaseNames.TradeOfPepperItem.TABLE_NAME, columns, selection,selection_args,null,null,null);
+        return db.query(DataBaseNames.TradeOfPepperItem.TABLE_NAME, columns, DataBaseNames.TradeOfPepperItem.COLUMN_CLASS_OF_PEPPER + " LIKE " + clas, null,null,null,null);
     }
     public Cursor getMoneyFromTrade(){
         String[] columns={DataBaseNames.TradeOfPepperItem.COLUMN_TOTAL_SUM, DataBaseNames.TradeOfPepperItem.COLUMN_DATE};
@@ -207,14 +203,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db =getReadableDatabase();
         return db.query(DataBaseNames.TradeOfPepperItem.TABLE_NAME,columns, null,null,null,null,null);
     }
-    public Cursor getPriceWeightAndDateFromTrade(String color, String clas){
+    public Cursor getPriceWeightAndDateFromTrade(int color, int clas){
         String[] columns={DataBaseNames.TradeOfPepperItem.COLUMN_DATE, DataBaseNames.TradeOfPepperItem.COLUMN_TOTAL_SUM,
                           DataBaseNames.TradeOfPepperItem.COLUMN_WEIGHT_OF_PEPPER};
-        String selection = DataBaseNames.TradeOfPepperItem.COLUMN_COLOR_OF_PEPPER + " LIKE ? AND " +
-                           DataBaseNames.TradeOfPepperItem.COLUMN_CLASS_OF_PEPPER + " LIKE ?";
-        String[] selection_args= {color, clas};
         SQLiteDatabase db =getReadableDatabase();
-        return db.query(DataBaseNames.TradeOfPepperItem.TABLE_NAME, columns, selection,selection_args,null,null,null);
+        return db.query(DataBaseNames.TradeOfPepperItem.TABLE_NAME, columns, DataBaseNames.TradeOfPepperItem.COLUMN_COLOR_OF_PEPPER + " LIKE " + color + " AND " + DataBaseNames.TradeOfPepperItem.COLUMN_CLASS_OF_PEPPER + " LIKE " + clas,null,null,null,null);
     }
     public Cursor getMoneyFromSpecificOutgoing(String category){
         String[] columns={DataBaseNames.OutgoingsItem.COLUMN_PRICE_OF_OUTGOING, DataBaseNames.OutgoingsItem.COLUMN_DATE_OF_OUTGOING};

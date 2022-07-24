@@ -246,6 +246,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:drawableTint="@color/white"
+        android:textColor="@color/white"
         android:text="OBLICZ"
         android:layout_marginTop="20dp"
         android:textSize="20sp"

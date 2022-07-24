@@ -46,22 +46,22 @@ public class StatisticsHelper {
         return sum;
     }
 
-//    public static float calculateSpecificOutgoing(Context context, String category) {
-//        DataBaseHelper dbHelper = new DataBaseHelper(context);
-//        Cursor k =dbHelper.getMoneyFromSpecificOutgoing(category);
-//        int currentYear= ToolClass.getActualYear();
-//        int year;
-//        float totalMoney=0;
-//        String date;
-//        while (k.moveToNext())
-//        {
-//            date=k.getString(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_DATE_OF_OUTGOING));
-//            year=ToolClass.getYear(date);
-//            if(currentYear==year)
-//                totalMoney= (float) (totalMoney+k.getDouble(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_PRICE_OF_OUTGOING)));
-//        }
-//        return totalMoney;
-//    }
+    public static float calculateSpecificOutgoing(Context context, String category) {
+        DataBaseHelper dbHelper = new DataBaseHelper(context);
+        Cursor k =dbHelper.getMoneyFromSpecificOutgoing(category);
+        int currentYear= ToolClass.getActualYear();
+        int year;
+        float totalMoney=0;
+        String date;
+        while (k.moveToNext())
+        {
+            date=k.getString(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_DATE_OF_OUTGOING));
+            year=ToolClass.getYear(date);
+            if(currentYear==year)
+                totalMoney= (float) (totalMoney+k.getDouble(k.getColumnIndexOrThrow(DataBaseNames.OutgoingsItem.COLUMN_PRICE_OF_OUTGOING)));
+        }
+        return totalMoney;
+    }
 
     public static double calculateIncomeFromHighgrove(Context context, int year, double divider) {
         DataBaseHelper dbHelper = new DataBaseHelper(context);
@@ -94,7 +94,7 @@ public class StatisticsHelper {
         return sum;
     }
 
-    public static double calculateWeightFromColorOfPepper(Context context, int year, String color) {
+    public static double calculateWeightFromColorOfPepper(Context context, int year, int color) {
         DataBaseHelper db = new DataBaseHelper(context);
         String date;
         double sum=0;
@@ -108,7 +108,7 @@ public class StatisticsHelper {
         return sum;
     }
 
-    public static double calculateWeightFromClassOfPepper(Context context, int year, String clas) {
+    public static double calculateWeightFromClassOfPepper(Context context, int year, int clas) {
         DataBaseHelper db = new DataBaseHelper(context);
         String date;
         double sum=0;

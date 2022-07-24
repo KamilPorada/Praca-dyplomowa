@@ -43,17 +43,13 @@ public class ClassOfPepperChartFragment extends Fragment {
     private Button btnTradeInNumbers;
     private ImageView btnLeft, btnRight;
 
-    private final String[] classesOfPepper = {
-     "1", "2", "krojona"
-    };
-
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         assert container != null;
         context=container.getContext();
-        View view = inflater.inflate(R.layout.layout_summary_colors_class_of_pepper_chart_fragment, container, false);
+        View view = inflater.inflate(R.layout.layout_colors_class_of_pepper_chart_fragment, container, false);
         findViews(view);
         createListeners();
         createChart();
@@ -83,7 +79,7 @@ public class ClassOfPepperChartFragment extends Fragment {
         btnTradeInNumbers=view.findViewById(R.id.btn_trade_in_numbers);
         btnLeft=view.findViewById(R.id.btn_left);
         btnRight=view.findViewById(R.id.btn_right);
-        title.setText("Wykres przedstawiający procentową ilość sprzedaży w zależności od klasy papryki");
+        title.setText("Wykres przedstawiający\nprocentową ilość sprzedaży\nw zależności od klasy papryki");
     }
 
     private void createListeners() {
@@ -113,9 +109,9 @@ public class ClassOfPepperChartFragment extends Fragment {
 
     private void createChart() {
         ArrayList<PieEntry> colors = new ArrayList<>();
-        colors.add(new PieEntry((float) StatisticsHelper.calculateWeightFromClassOfPepper(context, ToolClass.getActualYear(),classesOfPepper[0]),"Klasa 1"));
-        colors.add(new PieEntry((float) StatisticsHelper.calculateWeightFromClassOfPepper(context, ToolClass.getActualYear(),classesOfPepper[1]),"Klasa 2"));
-        colors.add(new PieEntry((float) StatisticsHelper.calculateWeightFromClassOfPepper(context, ToolClass.getActualYear(),classesOfPepper[2]),"Klasa krojona"));
+        colors.add(new PieEntry((float) StatisticsHelper.calculateWeightFromClassOfPepper(context, ToolClass.getActualYear(),1),"Klasa 1"));
+        colors.add(new PieEntry((float) StatisticsHelper.calculateWeightFromClassOfPepper(context, ToolClass.getActualYear(),2),"Klasa 2"));
+        colors.add(new PieEntry((float) StatisticsHelper.calculateWeightFromClassOfPepper(context, ToolClass.getActualYear(),3),"Klasa krojona"));
 
 
         PieDataSet pieDataSet = new PieDataSet(colors,"");

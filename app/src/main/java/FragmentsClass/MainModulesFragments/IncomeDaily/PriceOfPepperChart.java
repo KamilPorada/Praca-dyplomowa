@@ -56,7 +56,7 @@ public class PriceOfPepperChart extends Fragment {
 
     private RadioGroup colorRadioGroup, classRadiogroup;
     private Button acceptButton;
-    private String color="czerwona", clas="1";
+    private int color=0, clas=1;
     private String describeColor="czerwonej", describeClas="1";
     private int lineColor=Color.rgb(255,58,42);
 
@@ -129,9 +129,10 @@ public class PriceOfPepperChart extends Fragment {
         chooseWindow.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
         chooseWindow.setContentView(R.layout.dialog_choose);
         chooseWindow.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        chooseWindow.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         chooseWindow.show();
-        color="czerwona";
-        clas="1";
+        color=0;
+        clas=1;
         lineColor=Color.rgb(255,58,42);
         findAddItemDialogViews(chooseWindow);
         createAndAddListeners(chooseWindow);
@@ -150,31 +151,31 @@ public class PriceOfPepperChart extends Fragment {
             {
                 case R.id.red_color:
                 {
-                    color="czerwona";
+                    color=0;
                     describeColor="czerwonej";
                     lineColor=Color.rgb(255,58,42);
                 }break;
                 case R.id.yellow_color:
                 {
-                    color="żółta";
+                    color=1;
                     describeColor="żółtej";
                     lineColor=Color.rgb(255,204,0);
                 }break;
                 case R.id.green_color:
                 {
-                    color="zielona";
+                    color=2;
                     describeColor="zielonej";
                     lineColor=Color.rgb(0,128,0);
                 }break;
                 case R.id.orange_color:
                 {
-                    color="pomarańczowa";
+                    color=3;
                     describeColor="pomarańczowej";
                     lineColor=Color.rgb(253,121,19);
                 }break;
                 case R.id.blond_color:
                 {
-                    color="blondyna";
+                    color=4;
                     describeColor="blondyny";
                     lineColor=Color.rgb(218,213,140);
                 }break;
@@ -186,17 +187,17 @@ public class PriceOfPepperChart extends Fragment {
             {
                 case R.id.first_class:
                 {
-                    clas="1";
+                    clas=1;
                     describeClas="1";
                 }break;
                 case R.id.second_class:
                 {
-                    clas="2";
+                    clas=2;
                     describeClas="2";
                 }break;
                 case R.id.cutting_class:
                 {
-                    clas="krojona";
+                    clas=3;
                     describeClas="krojonej";
                 }break;
             }
@@ -211,7 +212,7 @@ public class PriceOfPepperChart extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void updateTitle() {
-        title.setText("Wykres przedstawiający kształtowanie się cen papryki " + describeColor + " klasy " + describeClas);
+        title.setText("Wykres przedstawiający\nkształtowanie się cen\npapryki " + describeColor + "\nklasy " + describeClas);
     }
 
     private void createChart() {

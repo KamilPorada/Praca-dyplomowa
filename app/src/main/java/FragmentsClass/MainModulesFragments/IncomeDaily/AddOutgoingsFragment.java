@@ -54,8 +54,8 @@ public class AddOutgoingsFragment extends Fragment {
     private final int[] images =
             {
               R.drawable.image_highgrove, R.drawable.image_foil, R.drawable.image_water, R.drawable.image_pegs,
-              R.drawable.image_seeds, R.drawable.image_plant, R.drawable.image_pesticides, R.drawable.image_fertilizer,
-              R.drawable.image_machine, R.drawable.image_tools, R.drawable.icon_question
+              R.drawable.image_seeds, R.drawable.image_plant, R.drawable.image_bottle_of_pesticides, R.drawable.image_fertilizer,
+              R.drawable.icon_machine, R.drawable.image_tools, R.drawable.icon_question
             };
     private final String[] categories =
             {

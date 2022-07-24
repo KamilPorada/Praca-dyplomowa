@@ -6,25 +6,62 @@
     android:layout_marginTop="55dp"
     android:layout_marginBottom="70dp">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/title_block"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:textAlignment="center"
-        android:layout_marginTop="10dp"
-        android:textSize="35dp"
-        android:fontFamily="@font/crete_round"
-        android:textColor="@color/blackToWhite"
-        android:text="Sprzedaż papryki w liczbach"
-        />
+        android:background="@drawable/shape_rectangle_with_top_and_bottom_line">
+
+        <ImageView
+            android:id="@+id/button_come_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/icon_come_back"
+            app:tint="@color/white" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <ImageView
+                android:id="@+id/title_image"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/title"
+                android:src="@drawable/icon_numbers"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/title_image"
+                android:layout_marginLeft="10dp"
+                android:textSize="28sp"
+                android:textColor="@color/white"
+                android:textAlignment="textStart"
+                android:fontFamily="@font/crete_round"
+                android:text="Sprzedaż papryki\nw liczbach"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <TableLayout
         android:id="@+id/data_frame"
-        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/title_block"
         app:layout_constraintBottom_toTopOf="@id/btn_trade_in_charts"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -365,7 +402,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:background="@drawable/shape_button"
-        android:text="Sprzedaż papryki na wykresach"
+        android:text="Sprzedaż papryki na wykresie"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="13sp"

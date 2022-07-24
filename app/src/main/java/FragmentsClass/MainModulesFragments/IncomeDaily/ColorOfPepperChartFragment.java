@@ -42,17 +42,12 @@ public class ColorOfPepperChartFragment extends Fragment {
     private Button btnTradeInNumbers;
     private ImageView btnLeft, btnRight;
 
-    private final String[] colorsOfPepper = {
-      "czerwona", "żółta", "zielona", "pomarańczowa", "blondyna"
-    };
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         assert container != null;
         context=container.getContext();
-        View view = inflater.inflate(R.layout.layout_summary_colors_class_of_pepper_chart_fragment, container, false);
+        View view = inflater.inflate(R.layout.layout_colors_class_of_pepper_chart_fragment, container, false);
         findViews(view);
         createListeners();
         createChart();
@@ -82,7 +77,7 @@ public class ColorOfPepperChartFragment extends Fragment {
         btnTradeInNumbers=view.findViewById(R.id.btn_trade_in_numbers);
         btnLeft=view.findViewById(R.id.btn_left);
         btnRight=view.findViewById(R.id.btn_right);
-        title.setText("Wykres przedstawiający procentową ilość sprzedaży w zależności od koloru papryki");
+        title.setText("Wykres przedstawiający\nprocentową ilość sprzedaży\nw zależności od koloru papryki");
     }
 
     private void createListeners() {
@@ -112,11 +107,11 @@ public class ColorOfPepperChartFragment extends Fragment {
 
     private void createChart() {
         ArrayList<PieEntry> colors = new ArrayList<>();
-        colors.add(new PieEntry((float) StatisticsHelper.calculateWeightFromColorOfPepper(context, ToolClass.getActualYear(),colorsOfPepper[0]),"czerwona"));
-        colors.add(new PieEntry((float) StatisticsHelper.calculateWeightFromColorOfPepper(context, ToolClass.getActualYear(),colorsOfPepper[1]),"żółta"));
-        colors.add(new PieEntry((float) StatisticsHelper.calculateWeightFromColorOfPepper(context, ToolClass.getActualYear(),colorsOfPepper[2]),"zielona"));
-        colors.add(new PieEntry((float) StatisticsHelper.calculateWeightFromColorOfPepper(context, ToolClass.getActualYear(),colorsOfPepper[3]),"pomarańczowa"));
-        colors.add(new PieEntry((float) StatisticsHelper.calculateWeightFromColorOfPepper(context, ToolClass.getActualYear(),colorsOfPepper[4]),"blondyna"));
+        colors.add(new PieEntry((float) StatisticsHelper.calculateWeightFromColorOfPepper(context, ToolClass.getActualYear(),0),"czerwona"));
+        colors.add(new PieEntry((float) StatisticsHelper.calculateWeightFromColorOfPepper(context, ToolClass.getActualYear(),1),"żółta"));
+        colors.add(new PieEntry((float) StatisticsHelper.calculateWeightFromColorOfPepper(context, ToolClass.getActualYear(),2),"zielona"));
+        colors.add(new PieEntry((float) StatisticsHelper.calculateWeightFromColorOfPepper(context, ToolClass.getActualYear(),3),"pomarańczowa"));
+        colors.add(new PieEntry((float) StatisticsHelper.calculateWeightFromColorOfPepper(context, ToolClass.getActualYear(),4),"blondyna"));
 
         final int [] ColorOfPepper = {
                 Color.rgb(255,58,42), Color.rgb(255,204,0),

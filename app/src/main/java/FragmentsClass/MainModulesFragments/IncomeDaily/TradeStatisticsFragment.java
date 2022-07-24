@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,14 +31,7 @@ public class TradeStatisticsFragment extends Fragment {
              weightOfCuttingClassPepper, weightFromHighgrove, incomeFromHighgrove,
              totalSumOfWeight, totalSumOfIncome, averagePriceOfPepper;
     private Button btnTradeInCharts;
-
-    private final String[] colorsOfPepper = {
-      "czerwona", "żółta", "zielona", "pomarańczowa", "blondyna"
-    };
-    private final String[] classesOfPepper = {
-      "1", "2", "krojona"
-    };
-
+    private ImageView buttonComeBack;
 
 
     @Nullable
@@ -83,6 +77,7 @@ public class TradeStatisticsFragment extends Fragment {
         totalSumOfWeight=view.findViewById(R.id.total_sum_of_weight);
         averagePriceOfPepper=view.findViewById(R.id.average_price_of_pepper);
         btnTradeInCharts=view.findViewById(R.id.btn_trade_in_charts);
+        buttonComeBack=view.findViewById(R.id.button_come_back);
     }
 
     private void createListeners() {
@@ -90,18 +85,20 @@ public class TradeStatisticsFragment extends Fragment {
             fragment = new ColorOfPepperChartFragment();
             requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
         });
+        buttonComeBack.setOnClickListener(v -> requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new BalanceFragment()).commit());
+
     }
 
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
     private void loadData() {
-        weightOfRedPepper.setText(StatisticsHelper.calculateWeightFromColorOfPepper(context, ToolClass.getActualYear(),colorsOfPepper[0]) + " kg");
-        weightOfYellowPepper.setText(StatisticsHelper.calculateWeightFromColorOfPepper(context, ToolClass.getActualYear(),colorsOfPepper[1]) + " kg");
-        weightOfGreenPepper.setText(StatisticsHelper.calculateWeightFromColorOfPepper(context, ToolClass.getActualYear(),colorsOfPepper[2]) + " kg");
-        weightOfOrangePepper.setText(StatisticsHelper.calculateWeightFromColorOfPepper(context, ToolClass.getActualYear(),colorsOfPepper[3]) + " kg");
-        weightOfBlondPepper.setText(StatisticsHelper.calculateWeightFromColorOfPepper(context, ToolClass.getActualYear(),colorsOfPepper[4]) + " kg");
-        weightOfFirstClassPepper.setText(StatisticsHelper.calculateWeightFromClassOfPepper(context, ToolClass.getActualYear(),classesOfPepper[0]) + " kg");
-        weightOfSecondClassPepper.setText(StatisticsHelper.calculateWeightFromClassOfPepper(context, ToolClass.getActualYear(),classesOfPepper[1]) + " kg");
-        weightOfCuttingClassPepper.setText(StatisticsHelper.calculateWeightFromClassOfPepper(context, ToolClass.getActualYear(),classesOfPepper[2]) + " kg");
+        weightOfRedPepper.setText(StatisticsHelper.calculateWeightFromColorOfPepper(context, ToolClass.getActualYear(),0) + " kg");
+        weightOfYellowPepper.setText(StatisticsHelper.calculateWeightFromColorOfPepper(context, ToolClass.getActualYear(),1) + " kg");
+        weightOfGreenPepper.setText(StatisticsHelper.calculateWeightFromColorOfPepper(context, ToolClass.getActualYear(),2) + " kg");
+        weightOfOrangePepper.setText(StatisticsHelper.calculateWeightFromColorOfPepper(context, ToolClass.getActualYear(),3) + " kg");
+        weightOfBlondPepper.setText(StatisticsHelper.calculateWeightFromColorOfPepper(context, ToolClass.getActualYear(),4) + " kg");
+        weightOfFirstClassPepper.setText(StatisticsHelper.calculateWeightFromClassOfPepper(context, ToolClass.getActualYear(),1) + " kg");
+        weightOfSecondClassPepper.setText(StatisticsHelper.calculateWeightFromClassOfPepper(context, ToolClass.getActualYear(),2) + " kg");
+        weightOfCuttingClassPepper.setText(StatisticsHelper.calculateWeightFromClassOfPepper(context, ToolClass.getActualYear(),3) + " kg");
         weightFromHighgrove.setText(String.format("%.2f", Math.round(StatisticsHelper.calculateWeightFromHighgrove(context,ToolClass.getActualYear(),ToolClass.getHighgroves(context)) * 100.0) / 100.0) + " kg");
         incomeFromHighgrove.setText(String.format("%.2f", Math.round(StatisticsHelper.calculateIncomeFromHighgrove(context,ToolClass.getActualYear(),ToolClass.getHighgroves(context)) * 100.0) / 100.0) + " zł");
         totalSumOfWeight.setText(String.format("%.2f", Math.round(StatisticsHelper.calculateWeightFromHighgrove(context,ToolClass.getActualYear(),1) * 100.0) / 100.0) + " kg");
