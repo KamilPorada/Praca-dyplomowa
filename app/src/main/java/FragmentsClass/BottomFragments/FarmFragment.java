@@ -90,13 +90,16 @@ public class FarmFragment extends Fragment {
         String owner = sharedPreferences.getString("NAME", "");
         String highgroves = sharedPreferences.getString("HIGHGROVES","");
         String field = sharedPreferences.getString("FIELD", "") + " ha";
-        @SuppressLint("DefaultLocale") String money = String.format("%.2f", Math.round(StatisticsHelper.calculateIncomeFromHighgrove(context,ToolClass.getActualYear(),1) * 100.0) / 100.0) + " zł";
-        String outgoing = StatisticsHelper.getMoneyFromOutgoings(context,ToolClass.getActualYear()) + "zł";
+        @SuppressLint("DefaultLocale") String money = String.format("%.2f", Math.round(StatisticsHelper.getMoneyFromTrade(context,ToolClass.getActualYear()) * 100.0) / 100.0) + " zł";
+        String outgoing = String.format("%.2f", Math.round(StatisticsHelper.getMoneyFromOutgoings(context,ToolClass.getActualYear()) * 100.0) / 100.0) + " zł";
         howOwner.setText(owner);
         howHighgroves.setText(highgroves);
         howField.setText(field);
         howMoney.setText(money);
         howOutgoing.setText(outgoing);
+        editOwnerButton.animate().rotationY(360).setDuration(2000);
+        editFieldButton.animate().rotationY(360).setDuration(2000);
+        editHighgrovesButton.animate().rotationY(360).setDuration(2000);
     }
 
     private void openChangeFarmDataDialog(int id) {
