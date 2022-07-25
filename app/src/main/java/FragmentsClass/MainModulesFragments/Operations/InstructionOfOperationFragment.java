@@ -20,6 +20,7 @@ import com.example.pracadyplomowa.R;
 
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
+import DataBase.SharedPreferencesNames;
 import HelperClasses.InformationDialog;
 import HelperClasses.ToolClass;
 
@@ -72,8 +73,8 @@ public class InstructionOfOperationFragment extends Fragment {
 
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
     private void loadData() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
-        id = sharedPreferences.getInt("POSITION_OF_OPERATION_RV", 0);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
+        id = sharedPreferences.getInt(SharedPreferencesNames.ToolSharedPreferences.POSITION_OF_OPERATION_RV, 0);
 
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
         Cursor k = dataBaseHelper.getSpecifyOperationsValues(id);

@@ -21,6 +21,7 @@ import com.example.pracadyplomowa.R;
 
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
+import DataBase.SharedPreferencesNames;
 import HelperClasses.InformationDialog;
 
 public class DetailsOfPesticideFragment extends Fragment {
@@ -77,8 +78,8 @@ public class DetailsOfPesticideFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void loadData() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
-        sentName = sharedPreferences.getString("CHOSEN_PESTICIDE", "ABAMAX 018 EC");
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
+        sentName = sharedPreferences.getString(SharedPreferencesNames.ToolSharedPreferences.CHOSEN_PESTICIDE, "ABAMAX 018 EC");
 
         DataBaseHelper dbHelper = new DataBaseHelper(context);
         Cursor k =dbHelper.getSpecifyPesticideValues(sentName);

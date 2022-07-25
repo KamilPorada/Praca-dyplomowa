@@ -25,6 +25,7 @@ import java.util.ArrayList;
 
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
+import DataBase.SharedPreferencesNames;
 import FragmentsClass.MainModulesFragments.Operations.CatalogPesticidesClasses.CatalogOfPesticideAdapter;
 import FragmentsClass.MainModulesFragments.Operations.CatalogPesticidesClasses.CatalogOfPesticideItem;
 import HelperClasses.InformationDialog;
@@ -89,11 +90,11 @@ public class CatalogOfPesticidesFragment extends Fragment {
         DataBaseHelper dbHelper = new DataBaseHelper(context);
         Cursor k =dbHelper.getPesticideCatalogData();
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
-        modeOfCatalogOfPesticide = sharedPreferences.getInt("CATALOG_OF_PESTICIDE_OPEN_MODE", 0);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
+        modeOfCatalogOfPesticide = sharedPreferences.getInt(SharedPreferencesNames.ToolSharedPreferences.CATALOG_OF_PESTICIDE_OPEN_MODE, 0);
         if(modeOfCatalogOfPesticide==0) {
-            sharedPreferences = context.getSharedPreferences("TEMPORARY_CURRENT_OPERATIONS", Context.MODE_PRIVATE);
-            typeOfPesticides = sharedPreferences.getInt("TYPE_OF_PESTICIDES", 0);
+            sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.TemporaryCurrentOperations.NAME, Context.MODE_PRIVATE);
+            typeOfPesticides = sharedPreferences.getInt(SharedPreferencesNames.TemporaryCurrentOperations.TYPE_OF_PESTICIDES, 0);
             switch (typeOfPesticides)
             {
                 case 0:
@@ -113,8 +114,8 @@ public class CatalogOfPesticidesFragment extends Fragment {
         }
         else
         {
-            sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
-            typeOfPesticides = sharedPreferences.getInt("SELECTED_PESTICIDES_RADIO_BUTTON", 0);
+            sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
+            typeOfPesticides = sharedPreferences.getInt(SharedPreferencesNames.ToolSharedPreferences.SELECTED_PESTICIDES_RADIO_BUTTON, 0);
 
             if(typeOfPesticides==0)
                 insecticides.setChecked(true);
@@ -143,13 +144,13 @@ public class CatalogOfPesticidesFragment extends Fragment {
     @SuppressLint("NonConstantResourceId")
     private void createListeners() {
         pesticideGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
+            SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             switch (checkedId) {
                 case R.id.insecticidies: {
                     typeOfPesticides = 0;
                     image.setImageResource(images[typeOfPesticides]);
-                    editor.putInt("SELECTED_PESTICIDES_RADIO_BUTTON", 0);
+                    editor.putInt(SharedPreferencesNames.ToolSharedPreferences.SELECTED_PESTICIDES_RADIO_BUTTON, 0);
                     editor.apply();
                     insecticides.setChecked(true);
                     requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CatalogOfPesticidesFragment()).commit();
@@ -158,7 +159,7 @@ public class CatalogOfPesticidesFragment extends Fragment {
                 case R.id.fungicidies: {
                     typeOfPesticides = 1;
                     image.setImageResource(images[typeOfPesticides]);
-                    editor.putInt("SELECTED_PESTICIDES_RADIO_BUTTON", 1);
+                    editor.putInt(SharedPreferencesNames.ToolSharedPreferences.SELECTED_PESTICIDES_RADIO_BUTTON, 1);
                     editor.apply();
                     fungicides.setChecked(true);
                     requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CatalogOfPesticidesFragment()).commit();
@@ -167,7 +168,7 @@ public class CatalogOfPesticidesFragment extends Fragment {
                 case R.id.herbicidies: {
                     typeOfPesticides = 2;
                     image.setImageResource(images[typeOfPesticides]);
-                    editor.putInt("SELECTED_PESTICIDES_RADIO_BUTTON", typeOfPesticides);
+                    editor.putInt(SharedPreferencesNames.ToolSharedPreferences.SELECTED_PESTICIDES_RADIO_BUTTON, typeOfPesticides);
                     editor.apply();
                     herbicides.setChecked(true);
                     requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CatalogOfPesticidesFragment()).commit();
@@ -197,16 +198,16 @@ public class CatalogOfPesticidesFragment extends Fragment {
     }
 
     private void sendData(int position) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("CHOSEN_PESTICIDE", catalogOfPesticideItems.get(position).getNameOfPesticide());
+        editor.putString(SharedPreferencesNames.ToolSharedPreferences.CHOSEN_PESTICIDE, catalogOfPesticideItems.get(position).getNameOfPesticide());
         editor.apply();
         if(modeOfCatalogOfPesticide==0) {
-            sharedPreferences = context.getSharedPreferences("TEMPORARY_CURRENT_OPERATIONS",Context.MODE_PRIVATE);
+            sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.TemporaryCurrentOperations.NAME,Context.MODE_PRIVATE);
             editor = sharedPreferences.edit();
-            editor.putString("PESTICIDES", catalogOfPesticideItems.get(position).getNameOfPesticide());
-            editor.putInt("ID_OF_PESTICIDES", catalogOfPesticideItems.get(position).getId());
-            editor.putInt("GRACE", catalogOfPesticideItems.get(position).getGrace());
+            editor.putString(SharedPreferencesNames.TemporaryCurrentOperations.PESTICIDES, catalogOfPesticideItems.get(position).getNameOfPesticide());
+            editor.putInt(SharedPreferencesNames.TemporaryCurrentOperations.ID_OF_PESTICIDES, catalogOfPesticideItems.get(position).getId());
+            editor.putInt(SharedPreferencesNames.TemporaryCurrentOperations.GRACE, catalogOfPesticideItems.get(position).getGrace());
             editor.apply();
             requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PlanOperationsFragment()).commit();
         }

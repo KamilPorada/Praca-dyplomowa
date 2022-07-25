@@ -130,7 +130,7 @@
             android:textSize="20sp"
             android:layout_marginLeft="-2dp"
             android:fontFamily="@font/crete_round"
-            android:text="Data wykonania zabiegu:"
+            android:text="Data:"
             />
 
         <com.google.android.material.textfield.TextInputLayout

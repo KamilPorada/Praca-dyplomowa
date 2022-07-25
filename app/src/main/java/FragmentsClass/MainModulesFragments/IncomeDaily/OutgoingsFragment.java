@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
+import DataBase.SharedPreferencesNames;
 import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsViewsClasses.OutgoingsAdapter;
 import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsViewsClasses.OutgoingsItem;
 import HelperClasses.InformationDialog;
@@ -83,9 +84,9 @@ public class OutgoingsFragment extends Fragment {
             {
                 case R.id.button_add_item:
                 {
-                    SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putInt("OUTGOING_OPEN_MODE", 1);
+                    editor.putInt(SharedPreferencesNames.ToolSharedPreferences.OUTGOING_OPEN_MODE, 1);
                     editor.apply();
                     requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddOutgoingsFragment()).commit();
                 }break;
@@ -109,10 +110,10 @@ public class OutgoingsFragment extends Fragment {
         adapter.setOnItemClickListener(new OutgoingsAdapter.OnItemClickListener() {
             @Override
             public void onUpdateClick(int position) {
-                SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
+                SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putInt("OUTGOING_OPEN_MODE", 0);
-                editor.putInt("POSITION_OF_OUTGOING_RV", OutgoingsList.get(position).getIId());
+                editor.putInt(SharedPreferencesNames.ToolSharedPreferences.OUTGOING_OPEN_MODE, 0);
+                editor.putInt(SharedPreferencesNames.ToolSharedPreferences.POSITION_OF_OUTGOING_RV, OutgoingsList.get(position).getIId());
                 editor.apply();
                 requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddOutgoingsFragment()).commit();
             }

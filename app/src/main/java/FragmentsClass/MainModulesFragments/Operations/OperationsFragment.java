@@ -86,9 +86,9 @@ public class OperationsFragment extends Fragment {
                 }break;
                 case R.id.btn_catalog_of_pesticides:
                 {
-                    SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putInt("CATALOG_OF_PESTICIDE_OPEN_MODE", 1);
+                    editor.putInt(SharedPreferencesNames.ToolSharedPreferences.CATALOG_OF_PESTICIDE_OPEN_MODE, 1);
                     editor.apply();
                     fragment = new CatalogOfPesticidesFragment();
                 }break;

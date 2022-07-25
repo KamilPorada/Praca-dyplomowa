@@ -12,6 +12,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import DataBase.DataBaseNames;
+import DataBase.SharedPreferencesNames;
 
 public  class ToolClass {
 
@@ -294,8 +295,8 @@ public  class ToolClass {
     }
 
     public static double getHighgroves(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("FARM_DATA", Context.MODE_PRIVATE);
-        String highgroves = sharedPreferences.getString("HIGHGROVES","0");
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.FarmData.NAME, Context.MODE_PRIVATE);
+        String highgroves = sharedPreferences.getString(SharedPreferencesNames.FarmData.HIGHGROVES,"0");
         return Double.parseDouble(highgroves);
     }
 
@@ -413,14 +414,14 @@ public  class ToolClass {
 
     public static void clearTemporaryCurrentOperations(Context context)
     {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("TEMPORARY_CURRENT_OPERATIONS",Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.TemporaryCurrentOperations.NAME,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("TYPE_OF_PESTICIDES", 0);
-        editor.putString("DATA_OF_OPERATIONS", "");
-        editor.putString("HOUR_OF_OPERATIONS", "");
-        editor.putInt("AMOUNT_OF_HIGHGROVES", 0);
-        editor.putString("PESTICIDES", "");
-        editor.putInt("ID_OF_PESTICIDES", 0);
+        editor.putInt(SharedPreferencesNames.TemporaryCurrentOperations.TYPE_OF_PESTICIDES, 0);
+        editor.putString(SharedPreferencesNames.TemporaryCurrentOperations.DATA_OF_OPERATIONS, "");
+        editor.putString(SharedPreferencesNames.TemporaryCurrentOperations.HOUR_OF_OPERATIONS, "");
+        editor.putInt(SharedPreferencesNames.TemporaryCurrentOperations.AMOUNT_OF_HIGHGROVES, 0);
+        editor.putString(SharedPreferencesNames.TemporaryCurrentOperations.PESTICIDES, "");
+        editor.putInt(SharedPreferencesNames.TemporaryCurrentOperations.ID_OF_PESTICIDES, 0);
         editor.apply();
     }
 

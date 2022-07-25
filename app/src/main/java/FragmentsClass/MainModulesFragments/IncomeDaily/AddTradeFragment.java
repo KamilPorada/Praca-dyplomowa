@@ -34,6 +34,7 @@ import java.util.Objects;
 
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
+import DataBase.SharedPreferencesNames;
 import HelperClasses.InformationDialog;
 import HelperClasses.ShowToast;
 import HelperClasses.ToolClass;
@@ -106,9 +107,9 @@ public class AddTradeFragment extends Fragment {
         cancelButton=view.findViewById(R.id.cancel_button);
         acceptButton=view.findViewById(R.id.accept_button);
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
-        id = sharedPreferences.getInt("POSITION_OF_TRADE_RV", 0);
-        tradeOfPepperOpenMode = sharedPreferences.getInt("TRADE_OF_PEPPER_OPEN_MODE", 1);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
+        id = sharedPreferences.getInt(SharedPreferencesNames.ToolSharedPreferences.POSITION_OF_TRADE_RV, 0);
+        tradeOfPepperOpenMode = sharedPreferences.getInt(SharedPreferencesNames.ToolSharedPreferences.TRADE_OF_PEPPER_OPEN_MODE, 1);
     }
 
     @SuppressLint("SetTextI18n")

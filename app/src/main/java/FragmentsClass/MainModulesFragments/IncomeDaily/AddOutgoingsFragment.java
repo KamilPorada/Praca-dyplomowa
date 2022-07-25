@@ -34,6 +34,7 @@ import java.util.Objects;
 
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
+import DataBase.SharedPreferencesNames;
 import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsViewsClasses.OutgoingsSpinnerAdapter;
 import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsViewsClasses.OutgoingsSpinnerItem;
 import HelperClasses.InformationDialog;
@@ -112,9 +113,9 @@ public class AddOutgoingsFragment extends Fragment {
         acceptButton=view.findViewById(R.id.accept_button);
         editDateButton=view.findViewById(R.id.edit_date_button);
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
-        id = sharedPreferences.getInt("POSITION_OF_OUTGOING_RV", 0);
-        OutgoingOpenMode = sharedPreferences.getInt("OUTGOING_OPEN_MODE", 0);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
+        id = sharedPreferences.getInt(SharedPreferencesNames.ToolSharedPreferences.POSITION_OF_OUTGOING_RV, 0);
+        OutgoingOpenMode = sharedPreferences.getInt(SharedPreferencesNames.ToolSharedPreferences.OUTGOING_OPEN_MODE, 0);
 
     }
 

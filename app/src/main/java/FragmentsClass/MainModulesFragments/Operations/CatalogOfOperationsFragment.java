@@ -23,6 +23,7 @@ import java.util.Calendar;
 
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
+import DataBase.SharedPreferencesNames;
 import FragmentsClass.MainModulesFragments.Operations.CatalogPesticidesClasses.CatalogOfOperationAdapter;
 import FragmentsClass.MainModulesFragments.Operations.CatalogPesticidesClasses.CatalogOfOperationItem;
 import HelperClasses.InformationDialog;
@@ -76,9 +77,9 @@ public class CatalogOfOperationsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         adapter.setOnItemClickListener(position -> {
-            SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
+            SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putInt("POSITION_OF_OPERATION_RV", catalogOfOperationItems.get(position).getId());
+            editor.putInt(SharedPreferencesNames.ToolSharedPreferences.POSITION_OF_OPERATION_RV, catalogOfOperationItems.get(position).getId());
             editor.apply();
             requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new DetailsOfOperationFragment()).commit();
         });

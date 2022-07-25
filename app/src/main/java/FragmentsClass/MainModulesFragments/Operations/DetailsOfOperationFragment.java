@@ -23,6 +23,7 @@ import java.util.Calendar;
 
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
+import DataBase.SharedPreferencesNames;
 import HelperClasses.InformationDialog;
 import HelperClasses.ShowToast;
 import HelperClasses.ToolClass;
@@ -85,8 +86,8 @@ public class DetailsOfOperationFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void loadData() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
-        id = sharedPreferences.getInt("POSITION_OF_OPERATION_RV", 0);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
+        id = sharedPreferences.getInt(SharedPreferencesNames.ToolSharedPreferences.POSITION_OF_OPERATION_RV, 0);
         int status = 0;
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
         Cursor k1=dataBaseHelper.getSpecifyOperationsValues(id);

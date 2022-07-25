@@ -25,6 +25,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Objects;
 
+import DataBase.SharedPreferencesNames;
 import HelperClasses.InformationDialog;
 import HelperClasses.StatisticsHelper;
 import HelperClasses.ToolClass;
@@ -86,12 +87,12 @@ public class FarmFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void loadData() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("FARM_DATA",Context.MODE_PRIVATE);
-        String owner = sharedPreferences.getString("NAME", "");
-        String highgroves = sharedPreferences.getString("HIGHGROVES","");
-        String field = sharedPreferences.getString("FIELD", "") + " ha";
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.FarmData.NAME,Context.MODE_PRIVATE);
+        String owner = sharedPreferences.getString(SharedPreferencesNames.FarmData.OWNER, "-");
+        String highgroves = sharedPreferences.getString(SharedPreferencesNames.FarmData.HIGHGROVES,"0");
+        String field = sharedPreferences.getString(SharedPreferencesNames.FarmData.FIELD, "0.0") + " ha";
         @SuppressLint("DefaultLocale") String money = String.format("%.2f", Math.round(StatisticsHelper.getMoneyFromTrade(context,ToolClass.getActualYear()) * 100.0) / 100.0) + " zł";
-        String outgoing = String.format("%.2f", Math.round(StatisticsHelper.getMoneyFromOutgoings(context,ToolClass.getActualYear()) * 100.0) / 100.0) + " zł";
+        @SuppressLint("DefaultLocale") String outgoing = String.format("%.2f", Math.round(StatisticsHelper.getMoneyFromOutgoings(context,ToolClass.getActualYear()) * 100.0) / 100.0) + " zł";
         howOwner.setText(owner);
         howHighgroves.setText(highgroves);
         howField.setText(field);
@@ -117,7 +118,7 @@ public class FarmFragment extends Fragment {
         Button acceptButton = changeDataDialog.findViewById(R.id.accept_button);
         Button cancelButton = changeDataDialog.findViewById(R.id.cancel_button);
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences("FARM_DATA",Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.FarmData.NAME,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
 
@@ -146,15 +147,15 @@ public class FarmFragment extends Fragment {
             if (!(Objects.requireNonNull(howChangeValue.getText()).toString().compareTo("") == 0)) {
                 switch (id) {
                     case R.id.edit_owner_button: {
-                        editor.putString("NAME", howChangeValue.getText().toString());
+                        editor.putString(SharedPreferencesNames.FarmData.OWNER, howChangeValue.getText().toString());
                     }
                     break;
                     case R.id.edit_highgroves_button: {
-                        editor.putString("HIGHGROVES", howChangeValue.getText().toString());
+                        editor.putString(SharedPreferencesNames.FarmData.HIGHGROVES, howChangeValue.getText().toString());
                     }
                     break;
                     case R.id.edit_field_button: {
-                        editor.putString("FIELD", howChangeValue.getText().toString());
+                        editor.putString(SharedPreferencesNames.FarmData.FIELD, howChangeValue.getText().toString());
                     }
                     break;
                 }

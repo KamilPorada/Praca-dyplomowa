@@ -110,13 +110,13 @@ public class PlanOperationsFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void loadData() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("TEMPORARY_CURRENT_OPERATIONS",Context.MODE_PRIVATE);
-        int checkedRadio = sharedPreferences.getInt("TYPE_OF_PESTICIDES", 0);
-        howDate.setText(sharedPreferences.getString("DATA_OF_OPERATIONS",""));
-        howHour.setText(sharedPreferences.getString("HOUR_OF_OPERATIONS", ""));
-        howHighgroves.setProgress(sharedPreferences.getInt("AMOUNT_OF_HIGHGROVES",0));
-        titleHighgroves.setText("Ilość tuneli do opryskania: " + sharedPreferences.getInt("AMOUNT_OF_HIGHGROVES",0));
-        howPesticide.setText(sharedPreferences.getString("PESTICIDES", ""));
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.TemporaryCurrentOperations.NAME,Context.MODE_PRIVATE);
+        int checkedRadio = sharedPreferences.getInt(SharedPreferencesNames.TemporaryCurrentOperations.TYPE_OF_PESTICIDES, 0);
+        howDate.setText(sharedPreferences.getString(SharedPreferencesNames.TemporaryCurrentOperations.DATA_OF_OPERATIONS,""));
+        howHour.setText(sharedPreferences.getString(SharedPreferencesNames.TemporaryCurrentOperations.HOUR_OF_OPERATIONS, ""));
+        howHighgroves.setProgress(sharedPreferences.getInt(SharedPreferencesNames.TemporaryCurrentOperations.AMOUNT_OF_HIGHGROVES,0));
+        titleHighgroves.setText("Ilość tuneli do opryskania: " + sharedPreferences.getInt(SharedPreferencesNames.TemporaryCurrentOperations.AMOUNT_OF_HIGHGROVES,0));
+        howPesticide.setText(sharedPreferences.getString(SharedPreferencesNames.TemporaryCurrentOperations.PESTICIDES, ""));
 
         sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.BasicData.NAME, Context.MODE_PRIVATE);
         String plantDate = sharedPreferences.getString(SharedPreferencesNames.BasicData.PLANT, "-");
@@ -311,11 +311,11 @@ public class PlanOperationsFragment extends Fragment {
     }
 
     private void openCatalogOfPesticide() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("CATALOG_OF_PESTICIDE_OPEN_MODE", 0);
+        editor.putInt(SharedPreferencesNames.ToolSharedPreferences.CATALOG_OF_PESTICIDE_OPEN_MODE, 0);
         editor.apply();
-        sharedPreferences = context.getSharedPreferences("TEMPORARY_CURRENT_OPERATIONS",Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.TemporaryCurrentOperations.NAME,Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         if(insecticidies.isChecked())
             typeOfPesticides=0;
@@ -323,13 +323,13 @@ public class PlanOperationsFragment extends Fragment {
             typeOfPesticides=1;
         else if(herbicidies.isChecked())
             typeOfPesticides=2;
-        editor.putInt("TYPE_OF_PESTICIDES", typeOfPesticides);
-        editor.putString("DATA_OF_OPERATIONS", Objects.requireNonNull(howDate.getText()).toString());
-        editor.putString("HOUR_OF_OPERATIONS", Objects.requireNonNull(howHour.getText()).toString());
-        editor.putInt("AMOUNT_OF_HIGHGROVES", highgroves);
-        editor.putString("PESTICIDES", howPesticide.getText().toString());
-        editor.putInt("ID_OF_PESTICIDES", 0);
-        editor.putInt("GRACE", 0);
+        editor.putInt(SharedPreferencesNames.TemporaryCurrentOperations.TYPE_OF_PESTICIDES, typeOfPesticides);
+        editor.putString(SharedPreferencesNames.TemporaryCurrentOperations.DATA_OF_OPERATIONS, Objects.requireNonNull(howDate.getText()).toString());
+        editor.putString(SharedPreferencesNames.TemporaryCurrentOperations.HOUR_OF_OPERATIONS, Objects.requireNonNull(howHour.getText()).toString());
+        editor.putInt(SharedPreferencesNames.TemporaryCurrentOperations.AMOUNT_OF_HIGHGROVES, highgroves);
+        editor.putString(SharedPreferencesNames.TemporaryCurrentOperations.PESTICIDES, howPesticide.getText().toString());
+        editor.putInt(SharedPreferencesNames.TemporaryCurrentOperations.ID_OF_PESTICIDES, 0);
+        editor.putInt(SharedPreferencesNames.TemporaryCurrentOperations.GRACE, 0);
         editor.apply();
         requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CatalogOfPesticidesFragment()).commit();
     }
@@ -377,9 +377,9 @@ public class PlanOperationsFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.S)
     private void addOperationsToDataBase() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("TEMPORARY_CURRENT_OPERATIONS",Context.MODE_PRIVATE);
-        int grace = sharedPreferences.getInt("GRACE", 0);
-        int id = sharedPreferences.getInt("ID_OF_PESTICIDES", 0);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.TemporaryCurrentOperations.NAME,Context.MODE_PRIVATE);
+        int grace = sharedPreferences.getInt(SharedPreferencesNames.TemporaryCurrentOperations.GRACE, 0);
+        int id = sharedPreferences.getInt(SharedPreferencesNames.TemporaryCurrentOperations.ID_OF_PESTICIDES, 0);
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_MONTH,ToolClass.getDay(date));

@@ -35,6 +35,7 @@ import java.util.ArrayList;
 
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
+import DataBase.SharedPreferencesNames;
 import FragmentsClass.MainModulesFragments.IncomeDaily.TradeOfPepperViewsClasses.TradePepperAdapter;
 import FragmentsClass.MainModulesFragments.IncomeDaily.TradeOfPepperViewsClasses.TradePepperItem;
 import HelperClasses.InformationDialog;
@@ -96,10 +97,10 @@ public class TradeOfPepperFragment extends Fragment {
         adapter.setOnItemClickListener(new TradePepperAdapter.OnItemClickListener() {
             @Override
             public void onUpdateClick(int position) {
-                SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
+                SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putInt("TRADE_OF_PEPPER_OPEN_MODE", 0);
-                editor.putInt("POSITION_OF_TRADE_RV", TradePepperList.get(position).getIId());
+                editor.putInt(SharedPreferencesNames.ToolSharedPreferences.TRADE_OF_PEPPER_OPEN_MODE, 0);
+                editor.putInt(SharedPreferencesNames.ToolSharedPreferences.POSITION_OF_TRADE_RV, TradePepperList.get(position).getIId());
                 editor.apply();
                 requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddTradeFragment()).commit();
             }
@@ -114,9 +115,9 @@ public class TradeOfPepperFragment extends Fragment {
     private void createListener() {
         buttonComeBack.setOnClickListener( v -> requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new IncomeDailyFragment()).commit());
         buttonAddItem.setOnClickListener(v -> {
-            SharedPreferences sharedPreferences = context.getSharedPreferences("TOOL_SHARED_PREFERENCES",Context.MODE_PRIVATE);
+            SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putInt("TRADE_OF_PEPPER_OPEN_MODE", 1);
+            editor.putInt(SharedPreferencesNames.ToolSharedPreferences.TRADE_OF_PEPPER_OPEN_MODE, 1);
             editor.apply();
             requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddTradeFragment()).commit();
         });
