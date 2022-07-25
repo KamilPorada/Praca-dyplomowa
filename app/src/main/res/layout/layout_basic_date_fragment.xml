@@ -288,7 +288,7 @@
             />
 
         <TextView
-            android:id="@+id/how_money"
+            android:id="@+id/how_first_pepper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/title_of_first_pepper"
@@ -353,7 +353,7 @@
             />
 
         <TextView
-            android:id="@+id/how_outgoing"
+            android:id="@+id/how_last_pepper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/title_of_last_pepper"

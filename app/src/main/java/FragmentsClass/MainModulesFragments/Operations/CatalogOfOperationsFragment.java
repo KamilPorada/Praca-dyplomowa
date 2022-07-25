@@ -134,7 +134,7 @@ public class CatalogOfOperationsFragment extends Fragment {
             }
             //Jeśli data zabiegu mineła i zabieg nie został wykonany usuwamy go, w przeciwnym razie
             //jeżeli rok wykonania zabiegu jest taki sam jak obecny -> dodajemy do widoku
-            if(ToolClass.generateCalendarDate(date).before(ToolClass.generateCurrentCalendarDate()) && status==0)
+            if(ToolClass.generateCalendarDate(date, time).before(ToolClass.generateCurrentCalendarDate()) && status==0)
                 dbHelper.deleteItem(DataBaseNames.OperationsItem.TABLE_NAME,idOfOperation);
             else
                 if(ToolClass.getYear(date)==ToolClass.getActualYear())

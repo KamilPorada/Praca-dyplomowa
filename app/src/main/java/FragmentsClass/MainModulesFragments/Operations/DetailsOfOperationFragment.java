@@ -135,14 +135,13 @@ public class DetailsOfOperationFragment extends Fragment {
                 if (typeOfPesticide==2)
                     howAge.setText("-");
                 else
-                    howAge.setText(String.valueOf(age));
+                    howAge.setText(age + " dni");
                 if(grace==1)
                     howGrace.setText(grace+" dzień");
                 else
                     howGrace.setText(grace+" dni");
             }
         }
-
         //jeżeli data zabiegu jest taka sama jak dzisiejsza oraz zabieg jest nie wykonany
         // to odblokuj przycisk wykonania zabiegu
         Calendar operationDate = ToolClass.generateCalendarDate(howDate.getText().toString());

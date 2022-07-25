@@ -1,5 +1,7 @@
 package FragmentsClass.MainModulesFragments.Notes;
 
+import static HelperClasses.ToolClass.generateStringDate;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,17 +26,22 @@ import androidx.fragment.app.Fragment;
 import com.example.pracadyplomowa.R;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Calendar;
 import java.util.Objects;
 
+import DataBase.SharedPreferencesNames;
 import HelperClasses.InformationDialog;
+import HelperClasses.ShowToast;
 import HelperClasses.StatisticsHelper;
 import HelperClasses.ToolClass;
 
 public class BasicDateFragment extends Fragment {
 
     private Context context;
-//    private TextView howOwner, howHighgroves, howField, howMoney, howOutgoing;
-//    private ImageView editOwnerButton, editHighgrovesButton, editFieldButton;
+    private TextView howSeeds, howPickling, howPlant, howFirstPepper, howLastPepper;
+    private ImageView editSeedsButton, editPicklingButton, editPlantButton, editFirstPepperButton, editLastPepperButton;
+
+    private String date="";
 
     @Nullable
     @Override
@@ -41,9 +49,9 @@ public class BasicDateFragment extends Fragment {
         assert container != null;
         context = container.getContext();
         View view=inflater.inflate(R.layout.layout_basic_date_fragment,container,false);
-//        findViews(view);
-//        createListeners();
-//        loadData();
+        findViews(view);
+        createListeners();
+        loadData();
         return view;
     }
 
@@ -63,107 +71,89 @@ public class BasicDateFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-//    private void findViews(View view) {
-//        howOwner=view.findViewById(R.id.how_owner);
-//        howHighgroves=view.findViewById(R.id.how_highgroves);
-//        howField=view.findViewById(R.id.how_field);
-//        howMoney=view.findViewById(R.id.how_money);
-//        howOutgoing=view.findViewById(R.id.how_outgoing);
-//        editOwnerButton=view.findViewById(R.id.edit_owner_button);
-//        editHighgrovesButton=view.findViewById(R.id.edit_highgroves_button);
-//        editFieldButton=view.findViewById(R.id.edit_field_button);
-//    }
-//
-//    private void createListeners() {
-//        View.OnClickListener listener = v -> {
-//            int id = v.getId();
-//            openChangeFarmDataDialog(id);
-//        };
-//        editOwnerButton.setOnClickListener(listener);
-//        editHighgrovesButton.setOnClickListener(listener);
-//        editFieldButton.setOnClickListener(listener);
-//    }
-//
-//    @SuppressLint("SetTextI18n")
-//    private void loadData() {
-//        SharedPreferences sharedPreferences = context.getSharedPreferences("FARM_DATA",Context.MODE_PRIVATE);
-//        String owner = sharedPreferences.getString("NAME", "");
-//        String highgroves = sharedPreferences.getString("HIGHGROVES","");
-//        String field = sharedPreferences.getString("FIELD", "") + " ha";
-//        @SuppressLint("DefaultLocale") String money = String.format("%.2f", Math.round(StatisticsHelper.getMoneyFromTrade(context,ToolClass.getActualYear()) * 100.0) / 100.0) + " zł";
-//        String outgoing = String.format("%.2f", Math.round(StatisticsHelper.getMoneyFromOutgoings(context,ToolClass.getActualYear()) * 100.0) / 100.0) + " zł";
-//        howOwner.setText(owner);
-//        howHighgroves.setText(highgroves);
-//        howField.setText(field);
-//        howMoney.setText(money);
-//        howOutgoing.setText(outgoing);
-//    }
-//
-//    private void openChangeFarmDataDialog(int id) {
-//        Dialog changeDataDialog = new Dialog(context);
-//        changeDataDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
-//        changeDataDialog.setContentView(R.layout.dialog_change_farm_data);
-//        changeDataDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//        changeDataDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-//        changeDataDialog.show();
-//        createAndAddListeners(changeDataDialog, id);
-//    }
-//
-//    @SuppressLint("NonConstantResourceId")
-//    private void createAndAddListeners(Dialog changeDataDialog, int id) {
-//        ImageView image = changeDataDialog.findViewById(R.id.image);
-//        TextView title = changeDataDialog.findViewById(R.id.title);
-//        TextInputEditText howChangeValue = changeDataDialog.findViewById(R.id.how_change_value);
-//        Button acceptButton = changeDataDialog.findViewById(R.id.accept_button);
-//        Button cancelButton = changeDataDialog.findViewById(R.id.cancel_button);
-//
-//        SharedPreferences sharedPreferences = context.getSharedPreferences("FARM_DATA",Context.MODE_PRIVATE);
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//
-//
-//        switch (id) {
-//            case R.id.edit_owner_button: {
-//                image.setImageResource(R.drawable.image_owner);
-//                title.setText("Edycja właściciela\ngospodarstwa");
-//                howChangeValue.setHint("[Imię i nazwisko]");
-//                howChangeValue.setInputType(0x00000001);
-//            }break;
-//            case R.id.edit_highgroves_button: {
-//                image.setImageResource(R.drawable.image_highgrove);
-//                title.setText("Edycja ilości\ntuneli");
-//                howChangeValue.setHint("[Ilość sztuk]");
-//                howChangeValue.setInputType(0x00000002);
-//            }break;
-//            case R.id.edit_field_button: {
-//                image.setImageResource(R.drawable.image_area_answer);
-//                title.setText("Edycja powierzchni\ngospodarstwa");
-//                howChangeValue.setHint("[ha]");
-//                howChangeValue.setInputType(0x00002002);
-//            }break;
-//        }
-//
-//        acceptButton.setOnClickListener(v -> {
-//            if (!(Objects.requireNonNull(howChangeValue.getText()).toString().compareTo("") == 0)) {
-//                switch (id) {
-//                    case R.id.edit_owner_button: {
-//                        editor.putString("NAME", howChangeValue.getText().toString());
-//                    }
-//                    break;
-//                    case R.id.edit_highgroves_button: {
-//                        editor.putString("HIGHGROVES", howChangeValue.getText().toString());
-//                    }
-//                    break;
-//                    case R.id.edit_field_button: {
-//                        editor.putString("FIELD", howChangeValue.getText().toString());
-//                    }
-//                    break;
-//                }
-//                editor.apply();
-//                changeDataDialog.dismiss();
-//                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new BasicDataFragment()).commit();
-//            }
-//        });
-//
-//        cancelButton.setOnClickListener(v -> changeDataDialog.dismiss());
-//    }
+    private void findViews(View view) {
+        howSeeds=view.findViewById(R.id.how_seeds);
+        howPickling=view.findViewById(R.id.how_pickling);
+        howPlant=view.findViewById(R.id.how_plant);
+        howFirstPepper=view.findViewById(R.id.how_first_pepper);
+        howLastPepper=view.findViewById(R.id.how_last_pepper);
+        editSeedsButton=view.findViewById(R.id.edit_seeds_button);
+        editPicklingButton=view.findViewById(R.id.edit_pickling_button);
+        editPlantButton=view.findViewById(R.id.edit_plant_button);
+        editFirstPepperButton=view.findViewById(R.id.edit_first_pepper_button);
+        editLastPepperButton=view.findViewById(R.id.edit_last_pepper_button);
+    }
+
+    private void createListeners() {
+        View.OnClickListener listener = v -> {
+            int id = v.getId();
+            openChangeFarmDataDialog(id);
+        };
+        editSeedsButton.setOnClickListener(listener);
+        editPicklingButton.setOnClickListener(listener);
+        editPlantButton.setOnClickListener(listener);
+        editFirstPepperButton.setOnClickListener(listener);
+        editLastPepperButton.setOnClickListener(listener);
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void loadData() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.BasicData.NAME,Context.MODE_PRIVATE);
+        howSeeds.setText(sharedPreferences.getString(SharedPreferencesNames.BasicData.SEEDS,"-"));
+        howPickling.setText(sharedPreferences.getString(SharedPreferencesNames.BasicData.PICKLING,"-"));
+        howPlant.setText(sharedPreferences.getString(SharedPreferencesNames.BasicData.PLANT,"-"));
+        howFirstPepper.setText(sharedPreferences.getString(SharedPreferencesNames.BasicData.FIRST_PEPPER,"-"));
+        howLastPepper.setText(sharedPreferences.getString(SharedPreferencesNames.BasicData.LAST_PEPPER,"-"));
+    }
+
+    private void openChangeFarmDataDialog(int id) {
+        Dialog changeDataDialog = new Dialog(context);
+        changeDataDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
+        changeDataDialog.setContentView(R.layout.dialog_change_date);
+        changeDataDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        changeDataDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        changeDataDialog.show();
+        createAndAddListeners(changeDataDialog, id);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    private void createAndAddListeners(Dialog changeDataDialog, int id) {
+        CalendarView calendar = changeDataDialog.findViewById(R.id.calendar);
+        Button btnAccept = changeDataDialog.findViewById(R.id.btn_accept);
+        Button btnCancel = changeDataDialog.findViewById(R.id.btn_cancel);
+
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.BasicData.NAME,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        btnAccept.setOnClickListener(v -> {
+                switch (id) {
+                    case R.id.edit_seeds_button: {
+                        editor.putString(SharedPreferencesNames.BasicData.SEEDS,date);
+                    }break;
+                    case R.id.edit_pickling_button: {
+                        editor.putString(SharedPreferencesNames.BasicData.PICKLING,date);
+                    }break;
+                    case R.id.edit_plant_button: {
+                        editor.putString(SharedPreferencesNames.BasicData.PLANT,date);
+                        editor.putInt(SharedPreferencesNames.BasicData.IS_PLANT_EMPTY,1);
+                    }break;
+                    case R.id.edit_first_pepper_button:{
+                        editor.putString(SharedPreferencesNames.BasicData.FIRST_PEPPER,date);
+                    }break;
+                    case R.id.edit_last_pepper_button:{
+                        editor.putString(SharedPreferencesNames.BasicData.LAST_PEPPER,date);
+                    }break;
+                }
+                editor.apply();
+                changeDataDialog.dismiss();
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new BasicDateFragment()).commit();
+        });
+
+        calendar.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
+            date=generateStringDate(dayOfMonth,month,year);
+        });
+
+        btnCancel.setOnClickListener(v -> changeDataDialog.dismiss());
+    }
 }

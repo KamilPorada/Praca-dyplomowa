@@ -266,6 +266,24 @@ public  class ToolClass {
         }
     }
 
+    public static int substringCalendarDates(Calendar date1, Calendar date2)
+    {
+        int [] dayInMonths={31,28,31,30,31,30,31,31,30,31,30,31};
+        int daysDate1=0, daysDate2=0;
+        int monthDate1=date1.get(Calendar.MONTH);
+        int monthDate2=date2.get(Calendar.MONTH);
+
+        for(int i=0;i<monthDate1;i++)
+            daysDate1=daysDate1+dayInMonths[i];
+        daysDate1=daysDate1+date1.get(Calendar.DAY_OF_MONTH);
+
+        for(int i=0;i<monthDate2;i++)
+            daysDate2=daysDate2+dayInMonths[i];
+        daysDate2=daysDate2+date2.get(Calendar.DAY_OF_MONTH);
+
+        return daysDate1-daysDate2;
+    }
+
     public static boolean checkValidateYear(String data) {
         char[] charDate = data.toCharArray();
         String stringYear = charDate[6] + Character.toString(charDate[7]) +

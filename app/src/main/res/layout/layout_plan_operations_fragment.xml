@@ -272,7 +272,7 @@
             android:textSize="20sp"
             android:layout_marginLeft="-2dp"
             android:fontFamily="@font/crete_round"
-            android:text="Wiek papryki: 90 dni"
+            android:text="Wiek papryki:"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

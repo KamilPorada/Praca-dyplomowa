@@ -18,7 +18,7 @@ public class ShowToast {
                 .setGravity(Gravity.BOTTOM,0, 0)
                 .setText("  "+attention)
                 .setTextSize(Style.TEXTSIZE_MEDIUM)
-                .setDuration(Style.DURATION_SHORT)
+                .setDuration(Style.DURATION_MEDIUM)
                 .setFrame(Style.FRAME_LOLLIPOP)
                 .setColor(PaletteUtils.getSolidColor(PaletteUtils.MATERIAL_RED))
                 .setAnimations(Style.ANIMATIONS_FLY).show();
@@ -31,7 +31,7 @@ public class ShowToast {
                 .setIconResource(Style.ICONPOSITION_LEFT, R.drawable.icon_done)
                 .setGravity(Gravity.BOTTOM,0, 0)
                 .setText("  "+attention)
-                .setDuration(Style.DURATION_SHORT)
+                .setDuration(Style.DURATION_MEDIUM)
                 .setFrame(Style.FRAME_LOLLIPOP)
                 .setColor(PaletteUtils.getSolidColor(PaletteUtils.MATERIAL_GREEN))
                 .setAnimations(Style.ANIMATIONS_FLY).show();

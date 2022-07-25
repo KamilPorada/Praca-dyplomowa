@@ -40,6 +40,7 @@ import java.util.Calendar;
 import java.util.Objects;
 
 import DataBase.DataBaseHelper;
+import DataBase.SharedPreferencesNames;
 import HelperClasses.AlarmReceiver;
 import HelperClasses.InformationDialog;
 import HelperClasses.ShowToast;
@@ -57,7 +58,7 @@ public class PlanOperationsFragment extends Fragment {
     private Button planOperationButton, cancelButton;
 
     private String date, hour, pesticides;
-    private int highgroves, age=90, typeOfPesticides=0;
+    private int highgroves, age, typeOfPesticides=0;
 
 
     @RequiresApi(api = Build.VERSION_CODES.S)
@@ -116,6 +117,14 @@ public class PlanOperationsFragment extends Fragment {
         howHighgroves.setProgress(sharedPreferences.getInt("AMOUNT_OF_HIGHGROVES",0));
         titleHighgroves.setText("Ilość tuneli do opryskania: " + sharedPreferences.getInt("AMOUNT_OF_HIGHGROVES",0));
         howPesticide.setText(sharedPreferences.getString("PESTICIDES", ""));
+
+        sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.BasicData.NAME, Context.MODE_PRIVATE);
+        String plantDate = sharedPreferences.getString(SharedPreferencesNames.BasicData.PLANT, "-");
+        Calendar calendarplantDate = ToolClass.generateCalendarDate(plantDate);
+        Calendar todayDate = ToolClass.generateCurrentCalendarDate();
+        age=ToolClass.substringCalendarDates(todayDate,calendarplantDate);
+        howAge.setText("Wiek papryki: " + age + " dni");
+
         switch (checkedRadio)
         {
             case 0:
@@ -147,34 +156,34 @@ public class PlanOperationsFragment extends Fragment {
         }
     }
 
+    @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @RequiresApi(api = Build.VERSION_CODES.S)
     private void createListeners() {
         @SuppressLint("NonConstantResourceId") View.OnClickListener listener = v -> {
-            int id=v.getId();
-            switch (id)
-            {
-                case R.id.edit_date_button:
-                {
+            int id = v.getId();
+            switch (id) {
+                case R.id.edit_date_button: {
                     openEditDataDialog();
-                }break;
-                case R.id.edit_hour_button:
-                {
+                }
+                break;
+                case R.id.edit_hour_button: {
                     openEditHourDialog();
-                }break;
-                case R.id.add_pesticide_button:
-                {
+                }
+                break;
+                case R.id.add_pesticide_button: {
                     openCatalogOfPesticide();
-                }break;
-                case R.id.button_plan_operations:
-                {
+                }
+                break;
+                case R.id.button_plan_operations: {
                     validateData();
-                }break;
-                case R.id.button_cancel:
-                {
+                }
+                break;
+                case R.id.button_cancel: {
                     ShowToast toast = new ShowToast();
                     toast.showErrorToast(context, "UWAGA!\n" + "  Przerwałeś proces planowania zabiegu!", R.drawable.icon_information);
                     requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OperationsFragment()).commit();
-                }break;
+                }
+                break;
             }
         };
         editDateButton.setOnClickListener(listener);
@@ -188,7 +197,7 @@ public class PlanOperationsFragment extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 titleHighgroves.setText("Ilość tuneli do opryskania: " + progress);
-                highgroves=progress;
+                highgroves = progress;
             }
 
             @Override
@@ -204,27 +213,23 @@ public class PlanOperationsFragment extends Fragment {
 
         howHighgroves.setMax((int) ToolClass.getHighgroves(context));
 
-        pesticidesGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId)
-                {
-                    case R.id.insecticidies:
-                    {
-                        typeOfPesticides=0;
-                        howAge.setText("Wiek papryki: " + age + " dni");
-                    }break;
-                    case R.id.fungicidies:
-                    {
-                        typeOfPesticides=1;
-                        howAge.setText("Wiek papryki: " + age + " dni");
-                    }break;
-                    case R.id.herbicidies:
-                    {
-                        typeOfPesticides=2;
-                        howAge.setText("Wiek papryki: -");
-                    }break;
+        pesticidesGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.insecticidies: {
+                    typeOfPesticides = 0;
+                    howAge.setText("Wiek papryki: " + age + " dni");
                 }
+                break;
+                case R.id.fungicidies: {
+                    typeOfPesticides = 1;
+                    howAge.setText("Wiek papryki: " + age + " dni");
+                }
+                break;
+                case R.id.herbicidies: {
+                    typeOfPesticides = 2;
+                    howAge.setText("Wiek papryki: -");
+                }
+                break;
             }
         });
     }
@@ -264,9 +269,7 @@ public class PlanOperationsFragment extends Fragment {
         btnAccept.setOnClickListener(listener);
         btnCancel.setOnClickListener(listener);
 
-        calendar.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
-            date=generateStringDate(dayOfMonth,month,year);
-        });
+        calendar.setOnDateChangeListener((view, year, month, dayOfMonth) -> date=generateStringDate(dayOfMonth,month,year));
     }
 
     private void openEditHourDialog() {
@@ -304,9 +307,7 @@ public class PlanOperationsFragment extends Fragment {
         btnAccept.setOnClickListener(listener);
         btnCancel.setOnClickListener(listener);
 
-        clock.setOnTimeChangedListener((view, hourOfDay, minute) -> {
-            hour=ToolClass.generateStringTime(hourOfDay,minute);
-        });
+        clock.setOnTimeChangedListener((view, hourOfDay, minute) -> hour=ToolClass.generateStringTime(hourOfDay,minute));
     }
 
     private void openCatalogOfPesticide() {

@@ -16,7 +16,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.pracadyplomowa.R;
 
+import DataBase.SharedPreferencesNames;
 import HelperClasses.InformationDialog;
+import HelperClasses.ShowToast;
 import HelperClasses.ToolClass;
 
 public class OperationsFragment extends Fragment {
@@ -65,8 +67,18 @@ public class OperationsFragment extends Fragment {
             {
                 case R.id.btn_plan_operations:
                 {
-                    ToolClass.clearTemporaryCurrentOperations(context);
-                    fragment = new PlanOperationsFragment();
+                    SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.BasicData.NAME,Context.MODE_PRIVATE);
+                    int flag = sharedPreferences.getInt(SharedPreferencesNames.BasicData.IS_PLANT_EMPTY,0);
+
+                    if(flag==0){
+                        ShowToast toast = new ShowToast();
+                        toast.showErrorToast(context, "UZUPEŁNIJ POLE DATA ZASADZENIA!\n"+ "  Przejdź -> Notatki gospodarstwa", R.drawable.icon_edit_calendar);
+                        fragment = new OperationsFragment();
+                    }
+                    else {
+                        ToolClass.clearTemporaryCurrentOperations(context);
+                        fragment = new PlanOperationsFragment();
+                    }
                 }break;
                 case R.id. btn_daily_operations:
                 {
