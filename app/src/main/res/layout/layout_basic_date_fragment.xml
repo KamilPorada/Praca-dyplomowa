@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_farm_fragment"
+    android:background="@color/backgroundColor"
+    android:layout_marginTop="55dp"
+    android:layout_marginBottom="70dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/shape_rectangle_with_top_and_bottom_line"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/crete_round"
+                android:text="Podstawowe\ndaty"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="30dp"
+                android:layout_marginLeft="20dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/image" />
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:padding="10dp"
+                    app:tint="@color/white"
+                    android:src="@drawable/image_basic_date"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/first_block"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/title_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/shape_bottom_line">
+
+        <ImageView
+            android:id="@+id/image_seeds"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:tint="@color/blackToWhite"
+            android:src="@drawable/image_hand_seeds"/>
+
+        <TextView
+            android:id="@+id/title_of_seeds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/image_seeds"
+            app:layout_constraintRight_toLeftOf="@id/edit_seeds_button"
+            android:textColor="@color/blackToWhite"
+            android:textSize="24sp"
+            android:layout_marginLeft="5dp"
+            android:fontFamily="@font/crete_round"
+            android:text="Data zasiewu"
+            />
+
+        <TextView
+            android:id="@+id/how_seeds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/title_of_seeds"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/image_seeds"
+            app:layout_constraintRight_toLeftOf="@id/edit_seeds_button"
+            android:textColor="@color/blackToWhite"
+            android:textSize="24sp"
+            android:layout_marginLeft="5dp"
+            android:fontFamily="@font/rajdhani"
+            android:text="02.02.2022"
+            />
+
+        <ImageButton
+            android:id="@+id/edit_seeds_button"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/title_of_seeds"
+            app:layout_constraintRight_toRightOf="parent"
+            android:backgroundTint="@color/mainColor"
+            android:src="@drawable/icon_edit"
+            android:background="@drawable/shape_button_2"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/second_block"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/first_block"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/shape_bottom_line">
+
+        <ImageView
+            android:id="@+id/image_pickling"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:tint="@color/blackToWhite"
+            android:src="@drawable/image_pickling"/>
+
+        <TextView
+            android:id="@+id/title_of_pickling"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/image_pickling"
+            app:layout_constraintRight_toLeftOf="@id/edit_pickling_button"
+            android:textColor="@color/blackToWhite"
+            android:textSize="24sp"
+            android:layout_marginLeft="5dp"
+            android:fontFamily="@font/crete_round"
+            android:text="Data pikowania"
+            />
+
+        <TextView
+            android:id="@+id/how_pickling"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/title_of_pickling"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/image_pickling"
+            app:layout_constraintRight_toLeftOf="@id/edit_pickling_button"
+            android:textColor="@color/blackToWhite"
+            android:textSize="24sp"
+            android:layout_marginLeft="5dp"
+            android:fontFamily="@font/rajdhani"
+            android:text="08.03.2022"
+            />
+
+        <ImageButton
+            android:id="@+id/edit_pickling_button"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/title_of_pickling"
+            app:layout_constraintRight_toRightOf="parent"
+            android:backgroundTint="@color/mainColor"
+            android:src="@drawable/icon_edit"
+            android:background="@drawable/shape_button_2"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/third_block"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/second_block"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/shape_bottom_line">
+
+        <ImageView
+            android:id="@+id/image_plant"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:tint="@color/blackToWhite"
+            android:src="@drawable/image_plant_pepper"/>
+
+        <TextView
+            android:id="@+id/title_of_plant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/image_plant"
+            app:layout_constraintRight_toLeftOf="@id/edit_plant_button"
+            android:textColor="@color/blackToWhite"
+            android:textSize="24sp"
+            android:layout_marginLeft="5dp"
+            android:fontFamily="@font/crete_round"
+            android:text="Data zasadzenia"
+            />
+
+        <TextView
+            android:id="@+id/how_plant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/title_of_plant"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/image_plant"
+            app:layout_constraintRight_toLeftOf="@id/edit_plant_button"
+            android:textColor="@color/blackToWhite"
+            android:textSize="24sp"
+            android:layout_marginLeft="5dp"
+            android:fontFamily="@font/rajdhani"
+            android:text="20.04.2022"
+            />
+
+        <ImageButton
+            android:id="@+id/edit_plant_button"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/title_of_plant"
+            app:layout_constraintRight_toRightOf="parent"
+            android:backgroundTint="@color/mainColor"
+            android:src="@drawable/icon_edit"
+            android:background="@drawable/shape_button_2"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fourth_block"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/third_block"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/shape_bottom_line">
+
+        <ImageView
+            android:id="@+id/image_first_pepper"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:src="@drawable/first_pepper" />
+
+        <TextView
+            android:id="@+id/title_of_first_pepper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/image_first_pepper"
+            app:layout_constraintRight_toLeftOf="@id/edit_first_pepper_button"
+            android:textColor="@color/blackToWhite"
+            android:textSize="24sp"
+            android:layout_marginLeft="5dp"
+            android:fontFamily="@font/crete_round"
+            android:text="Pierwsze zbiory"
+            />
+
+        <TextView
+            android:id="@+id/how_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/title_of_first_pepper"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/image_first_pepper"
+            app:layout_constraintRight_toLeftOf="@id/edit_first_pepper_button"
+            android:textColor="@color/blackToWhite"
+            android:textSize="24sp"
+            android:layout_marginLeft="5dp"
+            android:fontFamily="@font/rajdhani"
+            android:text="17.07.2022"
+            />
+
+        <ImageButton
+            android:id="@+id/edit_first_pepper_button"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/title_of_first_pepper"
+            app:layout_constraintRight_toRightOf="parent"
+            android:backgroundTint="@color/mainColor"
+            android:src="@drawable/icon_edit"
+            android:background="@drawable/shape_button_2"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fiveth_block"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/fourth_block"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/shape_bottom_line">
+
+        <ImageView
+            android:id="@+id/image_last_pepper"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:padding="15dp"
+            android:src="@drawable/grey_pepper" />
+
+        <TextView
+            android:id="@+id/title_of_last_pepper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/image_last_pepper"
+            app:layout_constraintRight_toLeftOf="@id/edit_last_pepper_button"
+            android:textColor="@color/blackToWhite"
+            android:textSize="24sp"
+            android:layout_marginLeft="5dp"
+            android:fontFamily="@font/crete_round"
+            android:text="Ostatnie zbiory"
+            />
+
+        <TextView
+            android:id="@+id/how_outgoing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/title_of_last_pepper"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/image_last_pepper"
+            app:layout_constraintRight_toLeftOf="@id/edit_last_pepper_button"
+            android:textColor="@color/blackToWhite"
+            android:textSize="24sp"
+            android:layout_marginLeft="5dp"
+            android:fontFamily="@font/rajdhani"
+            android:text="21.10.2022"
+            />
+
+        <ImageButton
+            android:id="@+id/edit_last_pepper_button"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/title_of_last_pepper"
+            app:layout_constraintRight_toRightOf="parent"
+            android:backgroundTint="@color/mainColor"
+            android:src="@drawable/icon_edit"
+            android:background="@drawable/shape_button_2"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>

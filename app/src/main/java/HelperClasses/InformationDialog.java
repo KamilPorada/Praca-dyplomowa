@@ -16,6 +16,8 @@ public class InformationDialog {
         InformationDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
         InformationDialog.setContentView(R.layout.dialog_information);
         InformationDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        InformationDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
         InformationDialog.show();
         findInformationDialogViews(InformationDialog, describes);
     }

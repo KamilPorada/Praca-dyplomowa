@@ -42,7 +42,6 @@
             app:tint="@color/white" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     <CalendarView
         android:id="@+id/calendar"
         android:layout_width="0dp"

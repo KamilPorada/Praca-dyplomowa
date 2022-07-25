@@ -104,6 +104,7 @@
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_add_new_trade.xml" value="0.264" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_add_outgoings.xml" value="0.176" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_balance.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_basic_date_fragment.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_calculator_of_concentration.xml" value="0.2" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_calculator_of_field_fragment.xml" value="0.21467391304347827" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_calculator_of_plants_fragment.xml" value="0.21467391304347827" />
@@ -122,10 +123,11 @@
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_instruction_of_operation_fragment.xml" value="0.264" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_monthly_weight_from_pepper_chart.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_monthly_weight_from_pepper_chart_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_notes_fragment.xml" value="0.152" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_operations_fragment.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_outgoings.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_outgoings_monthly_weight_from_pepper_chart_fragment.xml" value="0.2" />
-        <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_plan_operations_fragment.xml" value="0.264" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_plan_operations_fragment.xml" value="0.2" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_price_of_pepper_chart.xml" value="0.2" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_sell_peppper.xml" value="0.16304347826086957" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/layout_statistics_of_outgoings.xml" value="0.25416666666666665" />

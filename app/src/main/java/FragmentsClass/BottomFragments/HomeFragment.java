@@ -9,6 +9,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +21,7 @@ import com.example.pracadyplomowa.R;
 
 import FragmentsClass.MainModulesFragments.Calculators.CalculatorsFragment;
 import FragmentsClass.MainModulesFragments.IncomeDaily.IncomeDailyFragment;
+import FragmentsClass.MainModulesFragments.Notes.NotesFragment;
 import FragmentsClass.MainModulesFragments.Operations.OperationsFragment;
 import HelperClasses.InformationDialog;
 import HelperClasses.ToolClass;
@@ -26,7 +29,6 @@ import HelperClasses.ToolClass;
 public class HomeFragment extends Fragment {
 
     private Context context;
-
     private ConstraintLayout btnCalculator, btnIncomeDaily, btnOperations,
             btnNotes, btnImportantPlaces, btnControlOfWater;
 
@@ -103,7 +105,7 @@ public class HomeFragment extends Fragment {
                 }break;
                 case R.id.btn_notes:
                 {
-
+                    fragment = new NotesFragment();
                 }break;
                 case R.id.btn_important_places:
                 {

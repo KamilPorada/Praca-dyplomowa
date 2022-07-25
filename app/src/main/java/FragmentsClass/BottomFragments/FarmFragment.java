@@ -97,9 +97,6 @@ public class FarmFragment extends Fragment {
         howField.setText(field);
         howMoney.setText(money);
         howOutgoing.setText(outgoing);
-        editOwnerButton.animate().rotationY(360).setDuration(2000);
-        editFieldButton.animate().rotationY(360).setDuration(2000);
-        editHighgrovesButton.animate().rotationY(360).setDuration(2000);
     }
 
     private void openChangeFarmDataDialog(int id) {

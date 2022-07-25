@@ -132,11 +132,13 @@ public class CatalogOfOperationsFragment extends Fragment {
                 else
                     stringStatus="Wykonano";
             }
-            //Jeśli data zabiegu mineła i zabieg nie został wykonany usuwamy go, w przeciwnym razie dodajemy do widoku
+            //Jeśli data zabiegu mineła i zabieg nie został wykonany usuwamy go, w przeciwnym razie
+            //jeżeli rok wykonania zabiegu jest taki sam jak obecny -> dodajemy do widoku
             if(ToolClass.generateCalendarDate(date).before(ToolClass.generateCurrentCalendarDate()) && status==0)
                 dbHelper.deleteItem(DataBaseNames.OperationsItem.TABLE_NAME,idOfOperation);
             else
-                catalogOfOperationItems.add(new CatalogOfOperationItem(idOfOperation, date, time, stringStatus, graceString, pesticide, endOgGrace, image, describe));
+                if(ToolClass.getYear(date)==ToolClass.getActualYear())
+                    catalogOfOperationItems.add(new CatalogOfOperationItem(idOfOperation, date, time, stringStatus, graceString, pesticide, endOgGrace, image, describe));
         }
     }
 
