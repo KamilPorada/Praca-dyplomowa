@@ -68,10 +68,20 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 DataBaseNames.OperationsItem.COLUMN_STATUS + " INTEGER NOT NULL" +
                 ");";
 
+        final String CREATE_TABLE_NOTES = "CREATE TABLE " +
+                DataBaseNames.NotesItem.TABLE_NAME + " (" +
+                DataBaseNames.NotesItem._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                DataBaseNames.NotesItem.COLUMN_TITLE + " TEXT NOT NULL," +
+                DataBaseNames.NotesItem.COLUMN_DATE + " TEXT NOT NULL," +
+                DataBaseNames.NotesItem.COLUMN_DESCRIBE + " TEXT NOT NULL," +
+                DataBaseNames.NotesItem.COLUMN_IMAGE + " INTEGER NOT NULL" +
+                ");";
+
         db.execSQL(CREATE_TABLE_TRADE_OF_PEPPER_ITEM);
         db.execSQL(CREATE_TABLE_OUTGOINGS);
         db.execSQL(CREATE_TABLE_CATALOG_OF_PESTICIDES);
         db.execSQL(CREATE_TABLE_OPERATIONS);
+        db.execSQL(CREATE_TABLE_NOTES);
 
         ToolClass.fillCatalogOfPesticides(db);
     }
@@ -83,6 +93,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + DataBaseNames.OutgoingsItem.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DataBaseNames.PesticidesItem.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DataBaseNames.PesticidesItem.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DataBaseNames.NotesItem.TABLE_NAME);
 
         onCreate(db);
     }
@@ -324,6 +335,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(DataBaseNames.OperationsItem.COLUMN_STATUS,status);
 
         db.update(DataBaseNames.OperationsItem.TABLE_NAME,values,DataBaseNames.OperationsItem._ID + " LIKE " + id,null);
+    }
+
+    public void addNoteItem(String title, String date, String describe, int image) {
+        SQLiteDatabase db=getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(DataBaseNames.NotesItem.COLUMN_TITLE, title);
+        values.put(DataBaseNames.NotesItem.COLUMN_DATE, date);
+        values.put(DataBaseNames.NotesItem.COLUMN_DESCRIBE, describe);
+        values.put(DataBaseNames.NotesItem.COLUMN_IMAGE, image);
+        db.insertOrThrow(DataBaseNames.NotesItem.TABLE_NAME,null,values);
     }
 }
 

@@ -33,7 +33,7 @@ public class DataBaseNames {
         public static final String COLUMN_TYPE_OF_DOSE = "typeOfDose";
         public static final String COLUMN_OF_GRACE = "grace";
         public static final String COLUMN_NOTES = "notes";
-        public static final  String COLUMN_IMAGE = "image";
+        public static final String COLUMN_IMAGE = "image";
     }
     public static final class OperationsItem implements BaseColumns{
         public static final String TABLE_NAME = "operationsItem";
@@ -45,5 +45,12 @@ public class DataBaseNames {
         public static final String COLUMN_HIGHGROVES = "highgroves";
         public static final String COLUMN_FLUID = "fluid";
         public static final String COLUMN_STATUS = "status";
+    }
+    public static final class NotesItem implements  BaseColumns{
+        public static final String TABLE_NAME = "notesItem";
+        public static final String COLUMN_TITLE = "titleNote";
+        public static final String COLUMN_DATE = "dateNote";
+        public static final String COLUMN_DESCRIBE = "describeNote";
+        public static final String COLUMN_IMAGE = "imageNote";
     }
 }

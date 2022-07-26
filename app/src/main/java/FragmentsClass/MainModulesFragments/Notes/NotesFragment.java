@@ -2,6 +2,7 @@ package FragmentsClass.MainModulesFragments.Notes;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.pracadyplomowa.R;
 
+import DataBase.SharedPreferencesNames;
 import FragmentsClass.MainModulesFragments.IncomeDaily.BalanceFragment;
 import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsFragment;
 import FragmentsClass.MainModulesFragments.IncomeDaily.TradeOfPepperFragment;
@@ -73,7 +75,11 @@ public class NotesFragment extends Fragment {
                     }break;
                     case R.id.btn_add_note:
                     {
-
+                        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putInt(SharedPreferencesNames.ToolSharedPreferences.NOTE_OPEN_MODE, 1);
+                        editor.apply();
+                        fragment = new AddNoteFragment();
                     }break;
                     case R.id.btn_my_note:
                     {
