@@ -19,6 +19,15 @@
         android:background="@drawable/shape_rectangle_with_top_and_bottom_line"
         >
 
+        <ImageView
+            android:id="@+id/button_come_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/icon_come_back"
+            app:tint="@color/white" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/group"
             android:layout_width="wrap_content"

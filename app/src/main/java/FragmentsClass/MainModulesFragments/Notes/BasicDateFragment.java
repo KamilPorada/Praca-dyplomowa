@@ -40,6 +40,7 @@ public class BasicDateFragment extends Fragment {
     private Context context;
     private TextView howSeeds, howPickling, howPlant, howFirstPepper, howLastPepper;
     private ImageView editSeedsButton, editPicklingButton, editPlantButton, editFirstPepperButton, editLastPepperButton;
+    private ImageView buttonComeBack;
 
     private String date="";
 
@@ -82,6 +83,7 @@ public class BasicDateFragment extends Fragment {
         editPlantButton=view.findViewById(R.id.edit_plant_button);
         editFirstPepperButton=view.findViewById(R.id.edit_first_pepper_button);
         editLastPepperButton=view.findViewById(R.id.edit_last_pepper_button);
+        buttonComeBack=view.findViewById(R.id.button_come_back);
     }
 
     private void createListeners() {
@@ -94,6 +96,8 @@ public class BasicDateFragment extends Fragment {
         editPlantButton.setOnClickListener(listener);
         editFirstPepperButton.setOnClickListener(listener);
         editLastPepperButton.setOnClickListener(listener);
+
+        buttonComeBack.setOnClickListener(v ->                 requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new NotesFragment()).commit());
     }
 
     @SuppressLint("SetTextI18n")

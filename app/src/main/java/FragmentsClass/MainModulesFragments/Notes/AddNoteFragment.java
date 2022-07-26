@@ -50,7 +50,6 @@ public class AddNoteFragment extends Fragment {
 
     private Context context;
     private ImageView image;
-    private TextView title;
     private TextInputEditText howTitle, howDate, howDescribe;
     private Button cancelButton, acceptButton;
     private ImageView editDateButton, addImageButton;
@@ -90,7 +89,6 @@ public class AddNoteFragment extends Fragment {
 
     private void findViews(View view) {
         image=view.findViewById(R.id.image);
-        title=view.findViewById(R.id.title);
         howTitle=view.findViewById(R.id.how_title);
         howDate=view.findViewById(R.id.how_date);
         howDescribe=view.findViewById(R.id.how_describe);
@@ -135,9 +133,9 @@ public class AddNoteFragment extends Fragment {
         acceptButton.setOnClickListener(listener);
         cancelButton.setOnClickListener(listener);
 
-
         editDateButton.setOnClickListener(v -> openEditDataDialog());
         addImageButton.setOnClickListener(v -> openAddImageDialog());
+
 
     }
 
