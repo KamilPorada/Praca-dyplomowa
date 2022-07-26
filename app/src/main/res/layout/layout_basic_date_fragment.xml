@@ -21,8 +21,8 @@
 
         <ImageView
             android:id="@+id/button_come_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:src="@drawable/icon_come_back"

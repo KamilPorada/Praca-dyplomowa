@@ -10,20 +10,14 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,15 +27,11 @@ import androidx.fragment.app.Fragment;
 import com.example.pracadyplomowa.R;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
 import DataBase.SharedPreferencesNames;
-import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsFragment;
-import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsViewsClasses.OutgoingsSpinnerAdapter;
-import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsViewsClasses.OutgoingsSpinnerItem;
 import HelperClasses.InformationDialog;
 import HelperClasses.ShowToast;
 import HelperClasses.ToolClass;
@@ -50,12 +40,14 @@ public class AddNoteFragment extends Fragment {
 
     private Context context;
     private ImageView image;
+    private TextView title;
     private TextInputEditText howTitle, howDate, howDescribe;
     private Button cancelButton, acceptButton;
     private ImageView editDateButton, addImageButton;
 
     private int notesMode, id, drawable=0;
     private String calendarDate;
+    private boolean click=false;
 
     @Nullable
     @Override
@@ -89,6 +81,7 @@ public class AddNoteFragment extends Fragment {
 
     private void findViews(View view) {
         image=view.findViewById(R.id.image);
+        title=view.findViewById(R.id.title);
         howTitle=view.findViewById(R.id.how_title);
         howDate=view.findViewById(R.id.how_date);
         howDescribe=view.findViewById(R.id.how_describe);
@@ -98,7 +91,7 @@ public class AddNoteFragment extends Fragment {
         addImageButton=view.findViewById(R.id.add_image_button);
 
         SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
-//        id = sharedPreferences.getInt(SharedPreferencesNames.ToolSharedPreferences.POSITION_OF_TRADE_RV, 0);
+        id = sharedPreferences.getInt(SharedPreferencesNames.ToolSharedPreferences.POSITION_OF_NOTE_RV, 0);
         notesMode = sharedPreferences.getInt(SharedPreferencesNames.ToolSharedPreferences.NOTE_OPEN_MODE, 1);
 
     }
@@ -107,6 +100,17 @@ public class AddNoteFragment extends Fragment {
     private void loadData() {
         if(notesMode==0)
         {
+            DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+            Cursor k = dataBaseHelper.getSpecifyNotesValues(id);
+            k.moveToFirst();
+            title.setText("Edycja Notatki");
+            image.setImageResource(k.getInt(k.getColumnIndexOrThrow(DataBaseNames.NotesItem.COLUMN_IMAGE)));
+            howTitle.setText(k.getString(k.getColumnIndexOrThrow(DataBaseNames.NotesItem.COLUMN_TITLE)));
+            howDate.setText(k.getString(k.getColumnIndexOrThrow(DataBaseNames.NotesItem.COLUMN_DATE)));
+            howDescribe.setText(k.getString(k.getColumnIndexOrThrow(DataBaseNames.NotesItem.COLUMN_DESCRIBE)));
+            addImageButton.setImageResource(R.drawable.icon_edit);
+            drawable=k.getInt(k.getColumnIndexOrThrow(DataBaseNames.NotesItem.COLUMN_IMAGE));
+
 
         }
     }
@@ -166,14 +170,13 @@ public class AddNoteFragment extends Fragment {
         {
             case 0:
             {
-//                dataBaseHelper.updateOutgoingItems(id,currentCategory, idOfCategory, Objects.requireNonNull(howDescribe.getText()).toString(),Double.parseDouble(Objects.requireNonNull(howPrice.getText()).toString()),
-//                        Objects.requireNonNull(howDate.getText()).toString());
-//                toast.showSuccessfulToast(context, "SUKCES\n" + "  Pomyślnie edytowałeś wydatek!");
-//                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OutgoingsFragment()).commit();
+                dataBaseHelper.updateNote(id, Objects.requireNonNull(howTitle.getText()).toString(), Objects.requireNonNull(howDate.getText()).toString(), Objects.requireNonNull(howDescribe.getText()).toString(), drawable);
+                toast.showSuccessfulToast(context, "SUKCES\n" + "  Pomyślnie edytowałeś notatkę!");
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new NotesFragment()).commit();
             }break;
             case 1:
             {
-                dataBaseHelper.addNoteItem(howTitle.getText().toString(), howDate.getText().toString(), howDescribe.getText().toString(),drawable);
+                dataBaseHelper.addNote(Objects.requireNonNull(howTitle.getText()).toString(), Objects.requireNonNull(howDate.getText()).toString(), Objects.requireNonNull(howDescribe.getText()).toString(),drawable);
                 toast.showSuccessfulToast(context, "SUKCES\n" + "  Pomyślnie dodałeś nową notatke!");
                 requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new NotesFragment()).commit();
             }break;
@@ -265,9 +268,11 @@ public class AddNoteFragment extends Fragment {
         Button cancelButton = addImageDialog.findViewById(R.id.cancel_button);
 
         View.OnClickListener listener = new View.OnClickListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public void onClick(View v) {
                 int id = v.getId();
+                click=true;
                 clearCheckedBackground();
                 switch (id)
                 {
@@ -458,23 +463,21 @@ public class AddNoteFragment extends Fragment {
         imageLineChart.setOnClickListener(listener);
         imageDone.setOnClickListener(listener);
 
-        View.OnClickListener listener1 = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int id = v.getId();
-                switch (id) {
-                    case R.id.accept_button: {
-                        addImageDialog.dismiss();
-                        image.setImageResource(drawable);
+        @SuppressLint("NonConstantResourceId") View.OnClickListener listener1 = v -> {
+            int id = v.getId();
+            switch (id) {
+                case R.id.accept_button: {
+                    addImageDialog.dismiss();
+                    image.setImageResource(drawable);
+                    if(click)
                         addImageButton.setVisibility(View.INVISIBLE);
-                    }
-                    break;
-                    case R.id.cancel_button:
-                    {
-                        drawable=0;
-                        addImageDialog.dismiss();
-                    }break;
                 }
+                break;
+                case R.id.cancel_button:
+                {
+                    drawable=0;
+                    addImageDialog.dismiss();
+                }break;
             }
         };
         acceptButton.setOnClickListener(listener1);

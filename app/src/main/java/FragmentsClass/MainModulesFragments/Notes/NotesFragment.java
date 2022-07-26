@@ -17,9 +17,6 @@ import androidx.fragment.app.Fragment;
 import com.example.pracadyplomowa.R;
 
 import DataBase.SharedPreferencesNames;
-import FragmentsClass.MainModulesFragments.IncomeDaily.BalanceFragment;
-import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsFragment;
-import FragmentsClass.MainModulesFragments.IncomeDaily.TradeOfPepperFragment;
 import HelperClasses.InformationDialog;
 
 public class NotesFragment extends Fragment {
@@ -63,31 +60,28 @@ public class NotesFragment extends Fragment {
     }
 
     private void createListeners() {
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int id=v.getId();
-                switch (id)
+        @SuppressLint("NonConstantResourceId") View.OnClickListener listener = v -> {
+            int id=v.getId();
+            switch (id)
+            {
+                case R.id.btn_basic_date:
                 {
-                    case R.id.btn_basic_date:
-                    {
-                        fragment=new BasicDateFragment();
-                    }break;
-                    case R.id.btn_add_note:
-                    {
-                        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putInt(SharedPreferencesNames.ToolSharedPreferences.NOTE_OPEN_MODE, 1);
-                        editor.apply();
-                        fragment = new AddNoteFragment();
-                    }break;
-                    case R.id.btn_my_note:
-                    {
-
-                    }break;
-                }
-                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+                    fragment=new BasicDateFragment();
+                }break;
+                case R.id.btn_add_note:
+                {
+                    SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt(SharedPreferencesNames.ToolSharedPreferences.NOTE_OPEN_MODE, 1);
+                    editor.apply();
+                    fragment = new AddNoteFragment();
+                }break;
+                case R.id.btn_my_note:
+                {
+                    fragment = new MyNotesFragment();
+                }break;
             }
+            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
         };
         btnBasicDate.setOnClickListener(listener);
         btnAddNote.setOnClickListener(listener);

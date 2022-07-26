@@ -24,16 +24,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.pracadyplomowa.R;
-import com.google.android.material.textfield.TextInputEditText;
-
-import java.util.Calendar;
-import java.util.Objects;
 
 import DataBase.SharedPreferencesNames;
 import HelperClasses.InformationDialog;
-import HelperClasses.ShowToast;
-import HelperClasses.StatisticsHelper;
-import HelperClasses.ToolClass;
 
 public class BasicDateFragment extends Fragment {
 
@@ -97,7 +90,7 @@ public class BasicDateFragment extends Fragment {
         editFirstPepperButton.setOnClickListener(listener);
         editLastPepperButton.setOnClickListener(listener);
 
-        buttonComeBack.setOnClickListener(v ->                 requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new NotesFragment()).commit());
+        buttonComeBack.setOnClickListener(v -> requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new NotesFragment()).commit());
     }
 
     @SuppressLint("SetTextI18n")
@@ -154,9 +147,7 @@ public class BasicDateFragment extends Fragment {
                 requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new BasicDateFragment()).commit();
         });
 
-        calendar.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
-            date=generateStringDate(dayOfMonth,month,year);
-        });
+        calendar.setOnDateChangeListener((view, year, month, dayOfMonth) -> date=generateStringDate(dayOfMonth,month,year));
 
         btnCancel.setOnClickListener(v -> changeDataDialog.dismiss());
     }

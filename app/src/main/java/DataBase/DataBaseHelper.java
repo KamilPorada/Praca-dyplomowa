@@ -241,21 +241,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String[] args ={id+""};
         db.delete(tableName,"_id=?",args);
     }
-    public Cursor getItemID(String tableName, String columnID, String columnDataPassword, String passwordKey){
-        String[] columns={columnID};
-        String selection = columnDataPassword+" LIKE ?";
-        String[] selection_args= {passwordKey};
-        SQLiteDatabase db =getReadableDatabase();
-        return db.query(tableName, columns, selection,selection_args,null,null,null);
-    }
-    public Cursor getItemIDFromName(String tableName, String columnID, String nameFromDB, String nameFromRV){
-        String[] columns={columnID};
-        String selection = nameFromDB+" LIKE ?";
-        String[] selection_args= {nameFromRV};
-        SQLiteDatabase db =getReadableDatabase();
-        return db.query(tableName, columns, selection,selection_args,null,null,null);
-    }
-
 
 
 
@@ -337,7 +322,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.update(DataBaseNames.OperationsItem.TABLE_NAME,values,DataBaseNames.OperationsItem._ID + " LIKE " + id,null);
     }
 
-    public void addNoteItem(String title, String date, String describe, int image) {
+    public void addNote(String title, String date, String describe, int image) {
         SQLiteDatabase db=getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(DataBaseNames.NotesItem.COLUMN_TITLE, title);
@@ -345,6 +330,32 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(DataBaseNames.NotesItem.COLUMN_DESCRIBE, describe);
         values.put(DataBaseNames.NotesItem.COLUMN_IMAGE, image);
         db.insertOrThrow(DataBaseNames.NotesItem.TABLE_NAME,null,values);
+    }
+
+    public Cursor getNotes(){
+        String[] columns={DataBaseNames.NotesItem._ID, DataBaseNames.NotesItem.COLUMN_TITLE,
+                          DataBaseNames.NotesItem.COLUMN_DATE, DataBaseNames.NotesItem.COLUMN_DESCRIBE,
+                          DataBaseNames.NotesItem.COLUMN_IMAGE};
+        SQLiteDatabase db =getReadableDatabase();
+        return db.query(DataBaseNames.NotesItem.TABLE_NAME,columns, null,null,null,null,null);
+    }
+
+    public void updateNote(int id, String title, String date, String describe, int image) {
+        SQLiteDatabase db =getWritableDatabase();
+        ContentValues values =new ContentValues();
+        values.put(DataBaseNames.NotesItem.COLUMN_TITLE,title);
+        values.put(DataBaseNames.NotesItem.COLUMN_DATE,date);
+        values.put(DataBaseNames.NotesItem.COLUMN_DESCRIBE,describe);
+        values.put(DataBaseNames.NotesItem.COLUMN_IMAGE,image);
+
+        db.update(DataBaseNames.NotesItem.TABLE_NAME,values,DataBaseNames.NotesItem._ID + " LIKE " + id,null);
+    }
+
+    public Cursor getSpecifyNotesValues(int id) {
+        String[] columns={DataBaseNames.NotesItem.COLUMN_TITLE, DataBaseNames.NotesItem.COLUMN_DATE,
+                          DataBaseNames.NotesItem.COLUMN_DESCRIBE, DataBaseNames.NotesItem.COLUMN_IMAGE};
+        SQLiteDatabase db =getReadableDatabase();
+        return db.query(DataBaseNames.NotesItem.TABLE_NAME, columns, DataBaseNames.NotesItem._ID + " LIKE " + id,null,null,null,null);
     }
 }
 
