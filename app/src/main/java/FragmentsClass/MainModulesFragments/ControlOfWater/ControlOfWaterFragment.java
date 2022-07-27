@@ -24,9 +24,9 @@ import HelperClasses.InformationDialog;
 
 public class ControlOfWaterFragment extends Fragment {
 
-    ConstraintLayout btnPlantPlantation, btnDailyOfPlanting, btnMissWater;
+    ConstraintLayout btnWaterPlantation, btnDailyOfWatering, btnMissWater;
 
-    Fragment fragment = null;
+    Fragment fragment;
     Context context;
 
     @Nullable
@@ -57,8 +57,8 @@ public class ControlOfWaterFragment extends Fragment {
     }
 
     private void findViews(View view) {
-        btnPlantPlantation=view.findViewById(R.id.btn_plant_plantation);
-        btnDailyOfPlanting=view.findViewById(R.id.btn_daily_of_planting);
+        btnWaterPlantation=view.findViewById(R.id.btn_water_plantation);
+        btnDailyOfWatering=view.findViewById(R.id.btn_daily_of_watering);
         btnMissWater=view.findViewById(R.id.btn_miss_water);
     }
 
@@ -67,11 +67,11 @@ public class ControlOfWaterFragment extends Fragment {
             int id=v.getId();
             switch (id)
             {
-                case R.id.btn_plant_plantation:
+                case R.id.btn_water_plantation:
                 {
-
+                    fragment = new WaterPlantationFragment();
                 }break;
-                case R.id. btn_daily_of_planting:
+                case R.id. btn_daily_of_watering:
                 {
 
                 }break;
@@ -82,6 +82,9 @@ public class ControlOfWaterFragment extends Fragment {
             }
             requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
         };
+        btnWaterPlantation.setOnClickListener(listener);
+        btnDailyOfWatering.setOnClickListener(listener);
+        btnMissWater.setOnClickListener(listener);
     }
 }
 

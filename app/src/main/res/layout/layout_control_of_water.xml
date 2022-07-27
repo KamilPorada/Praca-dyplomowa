@@ -52,11 +52,11 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/btn_plant_plantation"
+            android:id="@+id/btn_water_plantation"
             android:layout_width="match_parent"
             android:layout_height="130dp"
             app:layout_constraintTop_toBottomOf="@+id/title_block"
-            app:layout_constraintBottom_toTopOf="@+id/btn_daily_of_planting"
+            app:layout_constraintBottom_toTopOf="@+id/btn_daily_of_watering"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_margin="10dp"
@@ -65,7 +65,7 @@
             >
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/planting_layout"
+                android:id="@+id/water_layout"
                 android:layout_width="150dp"
                 android:layout_height="match_parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -80,7 +80,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     android:padding="10dp"
-                    android:src="@drawable/image_add_new_plant"
+                    android:src="@drawable/image_add_new_water"
                     app:tint="@color/white" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -89,19 +89,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rajdhani"
-                android:text="Nawadnianie\nplantacji"
+                android:text="Planowanie\nnawadniania\nplantacji"
                 android:textAlignment="center"
                 android:textColor="@color/blackToWhite"
                 android:textSize="25dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/planting_layout"
+                app:layout_constraintLeft_toRightOf="@id/water_layout"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/btn_daily_of_planting"
+            android:id="@+id/btn_daily_of_watering"
             android:layout_width="match_parent"
             android:layout_height="130dp"
             android:layout_margin="10dp"
@@ -109,11 +109,11 @@
             app:layout_constraintBottom_toTopOf="@+id/btn_miss_water"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_plant_plantation"
+            app:layout_constraintTop_toBottomOf="@id/btn_water_plantation"
             android:clickable="true">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/daily_of_planting_layout"
+                android:id="@+id/daily_of_watering_layout"
                 android:layout_width="150dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/shape_right_solid_main_tile"
@@ -124,8 +124,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="10dp"
-                    android:src="@drawable/image_daily_of_planting"
+                    android:src="@drawable/image_daily_of_watering"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -142,7 +143,7 @@
                 android:textColor="@color/blackToWhite"
                 android:textSize="25dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/daily_of_planting_layout"
+                app:layout_constraintLeft_toRightOf="@id/daily_of_watering_layout"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -152,7 +153,7 @@
             android:id="@+id/btn_miss_water"
             android:layout_width="match_parent"
             android:layout_height="130dp"
-            app:layout_constraintTop_toBottomOf="@id/btn_daily_of_planting"
+            app:layout_constraintTop_toBottomOf="@id/btn_daily_of_watering"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
