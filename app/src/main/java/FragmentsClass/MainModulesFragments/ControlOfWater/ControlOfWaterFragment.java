@@ -69,6 +69,13 @@ public class ControlOfWaterFragment extends Fragment {
             {
                 case R.id.btn_water_plantation:
                 {
+                    SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(SharedPreferencesNames.ToolSharedPreferences.AMOUNT_OF_HIGHGROVES_IN_EACH_ROUND, "");
+                    editor.putString(SharedPreferencesNames.ToolSharedPreferences.TIMES_OF_EACH_ROUND,"");
+                    editor.putInt(SharedPreferencesNames.ToolSharedPreferences.ROUNDS_OF_WATERING,0);
+                    editor.apply();
+
                     fragment = new WaterPlantationFragment();
                 }break;
                 case R.id. btn_daily_of_watering:

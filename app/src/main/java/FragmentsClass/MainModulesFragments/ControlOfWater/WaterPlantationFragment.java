@@ -26,6 +26,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pracadyplomowa.R;
@@ -38,10 +39,14 @@ import java.util.Objects;
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
 import DataBase.SharedPreferencesNames;
+import FragmentsClass.MainModulesFragments.ControlOfWater.ControlOfWaterViewsClasses.RoundAdapter;
+import FragmentsClass.MainModulesFragments.ControlOfWater.ControlOfWaterViewsClasses.RoundItem;
 import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsFragment;
 import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsViewsClasses.OutgoingsSpinnerAdapter;
 import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsViewsClasses.OutgoingsSpinnerItem;
 import FragmentsClass.MainModulesFragments.Operations.CatalogOfOperationsFragment;
+import FragmentsClass.MainModulesFragments.Operations.CatalogPesticidesClasses.CatalogOfPesticideAdapter;
+import FragmentsClass.MainModulesFragments.Operations.CatalogPesticidesClasses.CatalogOfPesticideItem;
 import HelperClasses.InformationDialog;
 import HelperClasses.ShowToast;
 import HelperClasses.ToolClass;
@@ -49,13 +54,14 @@ import HelperClasses.ToolClass;
 public class WaterPlantationFragment extends Fragment {
 
     private Context context;
+    private final ArrayList<RoundItem> roundItems = new ArrayList<>();
 
     private TextInputEditText howEfficiency, howDate;
     private ImageButton saveEfficiencyButton, editDateButton, addRoundButton;
     private RecyclerView recyclerView;
     private Button buttonAccept, buttonCancel;
 
-    private int round=1;
+    private int roundsOfWatering=1;
     private String calendarDate="", amountOfHighgrovesInEachRound="", timesOfEachRound="";
     private Boolean save=true;
 
@@ -67,20 +73,10 @@ public class WaterPlantationFragment extends Fragment {
         assert container != null;
         context=container.getContext();
         findViews(view);
-        loadData();
         createListeners();
+        //startSettings();
+        loadData();
         return view;
-    }
-
-    private void loadData() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
-        String stringEfficiency = String.valueOf(sharedPreferences.getFloat(SharedPreferencesNames.ToolSharedPreferences.EFFICIENCY_OF_PUMP,0.0f));
-        if(stringEfficiency.compareTo("0.0")!=0){
-            howEfficiency.setText(String.valueOf(sharedPreferences.getFloat(SharedPreferencesNames.ToolSharedPreferences.EFFICIENCY_OF_PUMP,0.0f)));
-            howEfficiency.setEnabled(false);
-            saveEfficiencyButton.setImageResource(R.drawable.icon_edit);
-            save=false;
-        }
     }
 
     @Override
@@ -110,6 +106,14 @@ public class WaterPlantationFragment extends Fragment {
         recyclerView=view.findViewById(R.id.recycler_view);
         buttonAccept=view.findViewById(R.id.button_accept);
         buttonCancel=view.findViewById(R.id.button_cancel);
+    }
+
+    private void startSettings() {
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
+        RoundAdapter adapter = new RoundAdapter(roundItems);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
     }
 
     private void createListeners() {
@@ -160,6 +164,17 @@ public class WaterPlantationFragment extends Fragment {
 
         buttonAccept.setOnClickListener(buttonListener);
         buttonCancel.setOnClickListener(buttonListener);
+    }
+
+    private void loadData() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
+        String stringEfficiency = String.valueOf(sharedPreferences.getFloat(SharedPreferencesNames.ToolSharedPreferences.EFFICIENCY_OF_PUMP,0.0f));
+        if(stringEfficiency.compareTo("0.0")!=0){
+            howEfficiency.setText(String.valueOf(sharedPreferences.getFloat(SharedPreferencesNames.ToolSharedPreferences.EFFICIENCY_OF_PUMP,0.0f)));
+            howEfficiency.setEnabled(false);
+            saveEfficiencyButton.setImageResource(R.drawable.icon_edit);
+            save=false;
+        }
     }
 
     private void saveEfficiencyOfPump() {
@@ -242,6 +257,7 @@ public class WaterPlantationFragment extends Fragment {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
                 int id = v.getId();
                 switch (id)
                 {
@@ -256,6 +272,13 @@ public class WaterPlantationFragment extends Fragment {
                         {
                             amountOfHighgrovesInEachRound=amountOfHighgrovesInEachRound+howHighgroves.getText().toString()+"|";
                             timesOfEachRound=timesOfEachRound+howTime.getText().toString()+"|";
+                            roundItems.add(new RoundItem(roundsOfWatering, howHighgroves.getText().toString(), howTime.getText().toString()));
+                            roundsOfWatering++;
+                            recyclerView.setHasFixedSize(true);
+                            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
+                            RoundAdapter adapter = new RoundAdapter(roundItems);
+                            recyclerView.setLayoutManager(layoutManager);
+                            recyclerView.setAdapter(adapter);
                         }
                         addTimeAndHighgroveDialog.dismiss();
                     }break;
