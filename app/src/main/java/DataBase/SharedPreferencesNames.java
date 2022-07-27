@@ -16,6 +16,7 @@ public class SharedPreferencesNames {
         public static final String TRADE_OF_PEPPER_OPEN_MODE = "TRADE_OF_PEPPER_OPEN_MODE";
         public static final String NOTE_OPEN_MODE = "NOTE_OPEN_MODE";
         public static final String POSITION_OF_NOTE_RV = "POSITION_OF_NOTE_RV";
+        public static final String EFFICIENCY_OF_PUMP = "EFFICIENCY_OF_PUMP";
     }
 
     public static final class TemporaryCurrentOperations{
