@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import com.example.pracadyplomowa.R;
 
 import FragmentsClass.MainModulesFragments.Calculators.CalculatorsFragment;
+import FragmentsClass.MainModulesFragments.ControlOfWater.ControlOfWaterFragment;
 import FragmentsClass.MainModulesFragments.IncomeDaily.IncomeDailyFragment;
 import FragmentsClass.MainModulesFragments.Notes.NotesFragment;
 import FragmentsClass.MainModulesFragments.Operations.OperationsFragment;
@@ -95,23 +96,23 @@ public class HomeFragment extends Fragment {
                 {
                     fragment = new CalculatorsFragment();
                 }break;
-                case R.id.btn_income_daily:
+                case R.id.btn_notes:
                 {
-                    fragment = new IncomeDailyFragment();
+                    fragment = new NotesFragment();
                 }break;
                 case R.id.btn_operations:
                 {
                     fragment = new OperationsFragment();
                 }break;
-                case R.id.btn_notes:
+                case R.id.btn_control_of_water:
                 {
-                    fragment = new NotesFragment();
+                    fragment = new ControlOfWaterFragment();
+                }break;
+                case R.id.btn_income_daily:
+                {
+                    fragment = new IncomeDailyFragment();
                 }break;
                 case R.id.btn_important_places:
-                {
-
-                }break;
-                case R.id.btn_control_of_water:
                 {
 
                 }break;
