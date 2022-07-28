@@ -257,7 +257,6 @@ public class WaterPlantationFragment extends Fragment {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
                 int id = v.getId();
                 switch (id)
                 {
@@ -291,13 +290,15 @@ public class WaterPlantationFragment extends Fragment {
 
     private void validateData() {
         ShowToast toast = new ShowToast();
-        if(Objects.requireNonNull(howDate.getText()).toString().compareTo("")==0 || Objects.requireNonNull(howEfficiency.getText()).toString().compareTo("")==0 ||
-           Objects.requireNonNull(amountOfHighgrovesInEachRound.compareTo("")==0))
+        if(Objects.requireNonNull(howDate.getText()).toString().compareTo("")==0 || Objects.requireNonNull(howEfficiency.getText()).toString().compareTo("")==0)
                 toast.showErrorToast(context, "BŁĄD DANYCH!\n"+"  Uzupełnij wszystkie pola!", R.drawable.icon_information);
         else {
             if(ToolClass.checkValidateData(howDate.getText().toString()))
                 if(ToolClass.checkValidateYear(howDate.getText().toString()))
-                    addItem();
+                    if(Objects.requireNonNull(amountOfHighgrovesInEachRound.compareTo("")!=0))
+                        addItem();
+                    else
+                        toast.showErrorToast(context, "Brak dodanych tur!\n" + "  Dodaj turę podlewania!", R.drawable.image_drop_of_water);
                 else
                     toast.showErrorToast(context, "Podaj poprawny rok!\n" + "  Mamy aktualnie " + ToolClass.getActualYear() + " rok!", R.drawable.icon_calendar);
             else

@@ -5,17 +5,18 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardBackgroundColor="@color/backgroundColor"
-    android:layout_marginTop="2dp"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp"
     android:id="@+id/main_parent"
+    android:backgroundTint="@color/backgroundColor"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_margin="2dp"
-        android:padding="2dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="1dp"
+        android:padding="1dp"
+        android:background="@drawable/shape_black_rectangle"
         >
 
         <TextView
@@ -25,87 +26,82 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:textSize="25sp"
+            android:textSize="18sp"
             android:layout_marginLeft="2dp"
             android:textColor="@color/blackToWhite"
             android:fontFamily="@font/alata"
             android:textAlignment="center"
             android:text="TURA 1"
             android:padding="5dp"
-            android:background="@drawable/shape_bottom_line"
             />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/highgroves_group"
+        <TextView
+            android:id="@+id/title_highgroves"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/how_highgroves"
             app:layout_constraintLeft_toRightOf="@id/how_round"
-            app:layout_constraintRight_toLeftOf="@id/time_group">
-
-        <ImageView
-            android:id="@+id/image_highgrove"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/image_highgrove"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:tint="@color/blackToWhite" />
+            app:layout_constraintRight_toLeftOf="@id/title_time"
+            android:textColor="@color/blackToWhite"
+            android:fontFamily="@font/alata"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:text="Iość tuneli:"/>
 
         <TextView
             android:id="@+id/how_highgroves"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_highgroves"
+            app:layout_constraintLeft_toLeftOf="@id/title_highgroves"
+            app:layout_constraintRight_toRightOf="@id/title_highgroves"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/image_highgrove"
-            android:textSize="30sp"
-            android:layout_marginLeft="2dp"
-            android:textColor="@color/blackToWhite"
-            android:fontFamily="@font/alata"
             android:textAlignment="center"
+            android:textColor="@color/blackToWhite"
+            android:textSize="18sp"
+            android:fontFamily="@font/rajdhani"
             android:text="6"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/time_group"
+        <TextView
+            android:id="@+id/title_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/how_time"
+            app:layout_constraintLeft_toRightOf="@id/title_highgroves"
+            app:layout_constraintRight_toLeftOf="@id/image"
+            android:textColor="@color/blackToWhite"
+            android:fontFamily="@font/alata"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:text="Czas:"/>
+
+        <TextView
+            android:id="@+id/how_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/title_time"
+            app:layout_constraintLeft_toLeftOf="@id/title_time"
+            app:layout_constraintRight_toRightOf="@id/title_time"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/highgroves_group"
-            app:layout_constraintRight_toRightOf="parent">
+            android:textAlignment="center"
+            android:textColor="@color/blackToWhite"
+            android:textSize="18sp"
+            android:fontFamily="@font/rajdhani"
+            android:text="50 min."/>
 
-            <ImageView
-                android:id="@+id/image_time"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/icon_clock"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:tint="@color/blackToWhite" />
-
-            <TextView
-                android:id="@+id/how_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/image_time"
-                android:textSize="28sp"
-                android:layout_marginLeft="2dp"
-                android:textColor="@color/blackToWhite"
-                android:fontFamily="@font/alata"
-                android:textAlignment="center"
-                android:text="50 min"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/image_drop_of_water"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.cardview.widget.CardView>

@@ -204,7 +204,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toRightOf="@id/image_drop_of_water"
             app:layout_constraintRight_toRightOf="parent"
-            android:src="@drawable/grey_pepper"
+            android:src="@drawable/image_grey_pepper"
             android:padding="3dp"
             android:background="@drawable/shape_black_rectangle"
             app:tint="@color/blackToWhite" />

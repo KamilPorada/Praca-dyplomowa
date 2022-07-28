@@ -280,7 +280,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:src="@drawable/first_pepper" />
+            android:src="@drawable/image_first_pepper" />
 
         <TextView
             android:id="@+id/title_of_first_pepper"
@@ -345,7 +345,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:padding="15dp"
-            android:src="@drawable/grey_pepper" />
+            android:src="@drawable/image_grey_pepper" />
 
         <TextView
             android:id="@+id/title_of_last_pepper"

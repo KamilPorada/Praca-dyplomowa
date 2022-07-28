@@ -322,7 +322,7 @@ public class AddNoteFragment extends Fragment {
                     }break;
                     case R.id.image_pepper:{
                         imagePepper.setBackgroundResource(R.drawable.shape_background_color_rectangle_with_main_color_stroke);
-                        drawable=R.drawable.grey_pepper;
+                        drawable=R.drawable.image_grey_pepper;
                     }break;
                     case R.id.image_weed:{
                         imageWeed.setBackgroundResource(R.drawable.shape_background_color_rectangle_with_main_color_stroke);
