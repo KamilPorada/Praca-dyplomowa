@@ -75,7 +75,7 @@ public class WaterPlantationFragment extends Fragment {
         context=container.getContext();
         findViews(view);
         createListeners();
-        //startSettings();
+        startSettings();
         loadData();
         return view;
     }
