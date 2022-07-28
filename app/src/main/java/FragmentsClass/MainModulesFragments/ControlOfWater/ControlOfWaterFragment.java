@@ -73,7 +73,7 @@ public class ControlOfWaterFragment extends Fragment {
                 }break;
                 case R.id. btn_daily_of_watering:
                 {
-
+                    fragment = new DailyOfWateringFragment();
                 }break;
                 case R.id.btn_miss_water:
                 {

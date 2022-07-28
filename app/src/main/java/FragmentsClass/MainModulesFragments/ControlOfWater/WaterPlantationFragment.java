@@ -157,6 +157,8 @@ public class WaterPlantationFragment extends Fragment {
                     }break;
                     case R.id.button_cancel:
                     {
+                        ShowToast toast = new ShowToast();
+                        toast.showErrorToast(context, "UWAGA!\n" + "  Przerwałeś planowanie nawadniania!", R.drawable.icon_information);
                         requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ControlOfWaterFragment()).commit();
                     }break;
                 }

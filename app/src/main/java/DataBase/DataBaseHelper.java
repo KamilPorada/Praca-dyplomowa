@@ -392,5 +392,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(DataBaseNames.WaterPlantationItem.COLUMN_STATUS,status);
         db.insertOrThrow(DataBaseNames.WaterPlantationItem.TABLE_NAME,null,values);
     }
+
+    public Cursor getWateringPlantationItems(){
+        String[] columns={DataBaseNames.WaterPlantationItem._ID, DataBaseNames.WaterPlantationItem.COLUMN_EFFICIENCY_OF_PUMP,
+                          DataBaseNames.WaterPlantationItem.COLUMN_DATE, DataBaseNames.WaterPlantationItem.COLUMN_AMOUNT_OF_HIGHGROVES_IN_EACH_ROUND,
+                          DataBaseNames.WaterPlantationItem.COLUMN_TIMES_OF_EACH_ROUND, DataBaseNames.WaterPlantationItem.COLUMN_STATUS};
+        SQLiteDatabase db =getReadableDatabase();
+        return db.query(DataBaseNames.WaterPlantationItem.TABLE_NAME,columns, null,null,null,null,null);
+    }
+
 }
 

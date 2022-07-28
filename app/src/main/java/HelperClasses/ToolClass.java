@@ -455,4 +455,40 @@ public  class ToolClass {
                 return R.drawable.image_outgoings;
         }
     }
+
+    public static int sumString(String string)
+    {
+        //0123456
+        //6|10|2|
+        char[] charString = string.toCharArray();
+        char[] tempChar = {' ',' ',' '};
+        int sum=0;
+        int l=0;
+        for (int i=0;i<charString.length;i++)
+        {
+            if(charString[i]=='|')
+            {
+                String actualString = new String(tempChar);
+                actualString=actualString.trim();
+                sum=sum+Integer.parseInt(actualString);
+                tempChar[0] = ' ';
+                tempChar[1] = ' ';
+                tempChar[2] = ' ';
+                l=0;
+            }
+            else{
+                tempChar[l]=charString[i];
+                l++;
+            }
+        }
+
+        return sum;
+    }
+
+    public static String getStringTime(int minutes)
+    {
+        return minutes/60 + "h " + minutes%60 + "min";
+    }
+
+
 }
