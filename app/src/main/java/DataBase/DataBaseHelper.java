@@ -77,11 +77,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 DataBaseNames.NotesItem.COLUMN_IMAGE + " INTEGER NOT NULL" +
                 ");";
 
+        final String CREATE_TABLE_WATER_PLANTATION = "CREATE TABLE " +
+                DataBaseNames.WaterPlantationItem.TABLE_NAME + " (" +
+                DataBaseNames.WaterPlantationItem._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                DataBaseNames.WaterPlantationItem.COLUMN_EFFICIENCY_OF_PUMP + " REAL NOT NULL," +
+                DataBaseNames.WaterPlantationItem.COLUMN_DATE + " TEXT NOT NULL," +
+                DataBaseNames.WaterPlantationItem.COLUMN_AMOUNT_OF_HIGHGROVES_IN_EACH_ROUND + " TEXT NOT NULL," +
+                DataBaseNames.WaterPlantationItem.COLUMN_TIMES_OF_EACH_ROUND + " TEXT NOT NULL," +
+                DataBaseNames.WaterPlantationItem.COLUMN_STATUS + " INTEGER NOT NULL" +
+                ");";
+
         db.execSQL(CREATE_TABLE_TRADE_OF_PEPPER_ITEM);
         db.execSQL(CREATE_TABLE_OUTGOINGS);
         db.execSQL(CREATE_TABLE_CATALOG_OF_PESTICIDES);
         db.execSQL(CREATE_TABLE_OPERATIONS);
         db.execSQL(CREATE_TABLE_NOTES);
+        db.execSQL(CREATE_TABLE_WATER_PLANTATION);
 
         ToolClass.fillCatalogOfPesticides(db);
     }
@@ -94,6 +105,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + DataBaseNames.PesticidesItem.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DataBaseNames.PesticidesItem.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DataBaseNames.NotesItem.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DataBaseNames.WaterPlantationItem.TABLE_NAME);
+
 
         onCreate(db);
     }
@@ -322,6 +335,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.update(DataBaseNames.OperationsItem.TABLE_NAME,values,DataBaseNames.OperationsItem._ID + " LIKE " + id,null);
     }
 
+
+
+
+
+
+
     public void addNote(String title, String date, String describe, int image) {
         SQLiteDatabase db=getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -356,6 +375,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                           DataBaseNames.NotesItem.COLUMN_DESCRIBE, DataBaseNames.NotesItem.COLUMN_IMAGE};
         SQLiteDatabase db =getReadableDatabase();
         return db.query(DataBaseNames.NotesItem.TABLE_NAME, columns, DataBaseNames.NotesItem._ID + " LIKE " + id,null,null,null,null);
+    }
+
+
+
+
+
+
+    public void addWaterPlantation(double efficiency, String date, String highgroves, String times, int status) {
+        SQLiteDatabase db=getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(DataBaseNames.WaterPlantationItem.COLUMN_EFFICIENCY_OF_PUMP,efficiency);
+        values.put(DataBaseNames.WaterPlantationItem.COLUMN_DATE,date);
+        values.put(DataBaseNames.WaterPlantationItem.COLUMN_AMOUNT_OF_HIGHGROVES_IN_EACH_ROUND,highgroves);
+        values.put(DataBaseNames.WaterPlantationItem.COLUMN_TIMES_OF_EACH_ROUND,times);
+        values.put(DataBaseNames.WaterPlantationItem.COLUMN_STATUS,status);
+        db.insertOrThrow(DataBaseNames.WaterPlantationItem.TABLE_NAME,null,values);
     }
 }
 

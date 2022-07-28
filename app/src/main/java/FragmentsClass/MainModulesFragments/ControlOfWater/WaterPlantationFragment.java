@@ -62,6 +62,7 @@ public class WaterPlantationFragment extends Fragment {
     private Button buttonAccept, buttonCancel;
 
     private int roundsOfWatering=1;
+    private int highgroves=0;
     private String calendarDate="", amountOfHighgrovesInEachRound="", timesOfEachRound="";
     private Boolean save=true;
 
@@ -257,6 +258,7 @@ public class WaterPlantationFragment extends Fragment {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ShowToast toast = new ShowToast();
                 int id = v.getId();
                 switch (id)
                 {
@@ -269,15 +271,20 @@ public class WaterPlantationFragment extends Fragment {
                         if(howHighgroves.getText().toString().compareTo("")!=0 &&
                            howTime.getText().toString().compareTo("")!=0)
                         {
-                            amountOfHighgrovesInEachRound=amountOfHighgrovesInEachRound+howHighgroves.getText().toString()+"|";
-                            timesOfEachRound=timesOfEachRound+howTime.getText().toString()+"|";
-                            roundItems.add(new RoundItem(roundsOfWatering, howHighgroves.getText().toString(), howTime.getText().toString()));
-                            roundsOfWatering++;
-                            recyclerView.setHasFixedSize(true);
-                            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
-                            RoundAdapter adapter = new RoundAdapter(roundItems);
-                            recyclerView.setLayoutManager(layoutManager);
-                            recyclerView.setAdapter(adapter);
+                            if(highgroves+Integer.parseInt(howHighgroves.getText().toString())>ToolClass.getHighgroves(context))
+                                toast.showErrorToast(context, "Zbyt duża liczba tuneli!\n" + "  Posiadasz " + (int)ToolClass.getHighgroves(context) + " tuneli foliowych!", R.drawable.icon_information);
+                            else {
+                                amountOfHighgrovesInEachRound = amountOfHighgrovesInEachRound + howHighgroves.getText().toString() + "|";
+                                timesOfEachRound = timesOfEachRound + howTime.getText().toString() + "|";
+                                roundItems.add(new RoundItem(roundsOfWatering, howHighgroves.getText().toString(), howTime.getText().toString()));
+                                roundsOfWatering++;
+                                highgroves=highgroves+Integer.parseInt(howHighgroves.getText().toString());
+                                recyclerView.setHasFixedSize(true);
+                                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
+                                RoundAdapter adapter = new RoundAdapter(roundItems);
+                                recyclerView.setLayoutManager(layoutManager);
+                                recyclerView.setAdapter(adapter);
+                            }
                         }
                         addTimeAndHighgroveDialog.dismiss();
                     }break;
@@ -307,6 +314,12 @@ public class WaterPlantationFragment extends Fragment {
     }
 
     private void addItem() {
+        ShowToast toast = new ShowToast();
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+        dataBaseHelper.addWaterPlantation(Double.parseDouble(howEfficiency.getText().toString()), howDate.getText().toString(),
+                                          amountOfHighgrovesInEachRound, timesOfEachRound, 0);
+        toast.showSuccessfulToast(context, "SUKCES\n" + "  Pomyślnie zaplanowałeś podlewanie plantacji!");
+        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ControlOfWaterFragment()).commit();
 
     }
 

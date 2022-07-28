@@ -172,7 +172,7 @@ public class AddNoteFragment extends Fragment {
             {
                 dataBaseHelper.updateNote(id, Objects.requireNonNull(howTitle.getText()).toString(), Objects.requireNonNull(howDate.getText()).toString(), Objects.requireNonNull(howDescribe.getText()).toString(), drawable);
                 toast.showSuccessfulToast(context, "SUKCES\n" + "  Pomyślnie edytowałeś notatkę!");
-                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new NotesFragment()).commit();
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyNotesFragment()).commit();
             }break;
             case 1:
             {
