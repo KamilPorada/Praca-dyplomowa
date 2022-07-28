@@ -88,7 +88,7 @@ public class DailyOfWateringFragment extends Fragment {
         adapter.setOnItemClickListener(new WateringAdapter.OnItemClickListener() {
             @Override
             public void onDoneClick(int position) {
-
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new WaterPepperFragment()).commit();
             }
 
             @Override
