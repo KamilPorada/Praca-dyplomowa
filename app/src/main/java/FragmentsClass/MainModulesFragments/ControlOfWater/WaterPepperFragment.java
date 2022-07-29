@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,12 +30,15 @@ import com.example.pracadyplomowa.R;
 
 import java.util.ArrayList;
 
+import DataBase.DataBaseHelper;
+import DataBase.DataBaseNames;
 import DataBase.SharedPreferencesNames;
 import FragmentsClass.MainModulesFragments.ControlOfWater.ControlOfWaterViewsClasses.DropOfWaterAdapter;
 import FragmentsClass.MainModulesFragments.ControlOfWater.ControlOfWaterViewsClasses.DropOfWaterItem;
 import FragmentsClass.MainModulesFragments.ControlOfWater.ControlOfWaterViewsClasses.WateringAdapter;
 import FragmentsClass.MainModulesFragments.ControlOfWater.ControlOfWaterViewsClasses.WateringItem;
 import HelperClasses.InformationDialog;
+import HelperClasses.ToolClass;
 import HelperClasses.temp.WateringService;
 
 public class WaterPepperFragment extends Fragment {
@@ -43,14 +48,16 @@ public class WaterPepperFragment extends Fragment {
     private RecyclerView recyclerView;
 
     private TextView titleOfRound, howHighgroves, howTime, howEfficiency, titleofWatering, time;
-    private ImageView imageOfWatering;
-    private Button defaultButton;
+    private ImageView imageOfWatering, buttonComeBack;
+    private ImageButton resumeButton, pauseButton, stopButton;
 
-    AnimationDrawable animationDrawable;
+    private AnimationDrawable animationDroppingWater;
 
-    int id;
+    private int[] highgroves, times;
+    private int id, actualRound, actualHighgroces, actualTime, amountOfRound;
+    private double efficiency;
 
-    String dots = "";
+    private String dots = "";
 
     @Nullable
     @Override
@@ -59,9 +66,9 @@ public class WaterPepperFragment extends Fragment {
         assert container != null;
         context=container.getContext();
         findViews(view);
+        loadData();
         startSettings();
         createListeners();
-        startService();
         return view;
     }
 
@@ -87,6 +94,10 @@ public class WaterPepperFragment extends Fragment {
 
             boolean end = intent.getBooleanExtra("end", false);
 
+            if (end)
+                stopServicee();
+
+
         }
     };
 
@@ -94,9 +105,7 @@ public class WaterPepperFragment extends Fragment {
         Intent wateringIntent = new Intent(context, WateringService.class);
         ContextCompat.startForegroundService(context, wateringIntent);
 
-        imageOfWatering.setBackgroundResource(R.drawable.animation_dropping_of_water);
-        animationDrawable = (AnimationDrawable) imageOfWatering.getBackground();
-        animationDrawable.start();
+        animationDroppingWater.start();
 
     }
 
@@ -126,21 +135,47 @@ public class WaterPepperFragment extends Fragment {
 
 
     private void findViews(View view) {
-        recyclerView=view.findViewById(R.id.recycler_view);
-        defaultButton=view.findViewById(R.id.default_button);
+        titleOfRound=view.findViewById(R.id.title_of_round);
+        howHighgroves=view.findViewById(R.id.how_highgroves);
+        howTime=view.findViewById(R.id.how_time);
+        howEfficiency=view.findViewById(R.id.how_efficiency);
         titleofWatering=view.findViewById(R.id.title_of_watering);
         time=view.findViewById(R.id.time);
         imageOfWatering=view.findViewById(R.id.image_of_watering);
+        buttonComeBack=view.findViewById(R.id.button_come_back);
+        resumeButton=view.findViewById(R.id.resume_button);
+        pauseButton=view.findViewById(R.id.pause_button);
+        stopButton=view.findViewById(R.id.stop_button);
+        recyclerView=view.findViewById(R.id.recycler_view);
+
 
         SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
         id = sharedPreferences.getInt(SharedPreferencesNames.ToolSharedPreferences.POSITION_OF_WATERING_RV, 0);
     }
 
+    private void loadData() {
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+        Cursor k = dataBaseHelper.getSpecifyWateringPlantationValues(id);
+        k.moveToFirst();
+
+        amountOfRound = k.getInt(k.getColumnIndexOrThrow(DataBaseNames.WaterPlantationItem.COLUMN_AMOUNT_OF_ROUND));
+        efficiency = k.getDouble(k.getColumnIndexOrThrow(DataBaseNames.WaterPlantationItem.COLUMN_EFFICIENCY_OF_PUMP));
+        highgroves= ToolClass.separateString(k.getString(k.getColumnIndexOrThrow(DataBaseNames.WaterPlantationItem.COLUMN_AMOUNT_OF_HIGHGROVES_IN_EACH_ROUND)));
+        times=ToolClass.separateString(k.getString(k.getColumnIndexOrThrow(DataBaseNames.WaterPlantationItem.COLUMN_TIMES_OF_EACH_ROUND)));
+
+    }
+
     private void createListeners() {
-        defaultButton.setOnClickListener(new View.OnClickListener() {
+        stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 stopServicee();
+            }
+        });
+        resumeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startService();
             }
         });
 
@@ -149,7 +184,8 @@ public class WaterPepperFragment extends Fragment {
     private void stopServicee() {
         Intent wateringIntent = new Intent(context, WateringService.class);
         context.stopService(wateringIntent);
-        animationDrawable.stop();
+        animationDroppingWater.stop();
+        titleofWatering.setText("Tura zakończona");
     }
 
 
@@ -160,6 +196,9 @@ public class WaterPepperFragment extends Fragment {
         DropOfWaterAdapter adapter = new DropOfWaterAdapter(dropOfWaterItems);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
+        imageOfWatering.setBackgroundResource(R.drawable.animation_dropping_of_water);
+        animationDroppingWater = (AnimationDrawable) imageOfWatering.getBackground();
 
         dropOfWaterItems.add(new DropOfWaterItem(1,R.drawable.image_drop_of_water_main_color));
         dropOfWaterItems.add(new DropOfWaterItem(2,R.drawable.image_drop_of_water_main_color));

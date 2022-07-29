@@ -319,7 +319,7 @@ public class WaterPlantationFragment extends Fragment {
         ShowToast toast = new ShowToast();
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
         dataBaseHelper.addWaterPlantation(Double.parseDouble(howEfficiency.getText().toString()), howDate.getText().toString(),
-                                          amountOfHighgrovesInEachRound, timesOfEachRound, 0);
+                                          amountOfHighgrovesInEachRound, timesOfEachRound, --roundsOfWatering, 0);
         toast.showSuccessfulToast(context, "SUKCES\n" + "  Pomyślnie zaplanowałeś podlewanie plantacji!");
         requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ControlOfWaterFragment()).commit();
 

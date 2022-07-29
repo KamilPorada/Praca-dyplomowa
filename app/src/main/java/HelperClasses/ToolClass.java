@@ -490,5 +490,32 @@ public  class ToolClass {
         return minutes/60 + "h " + minutes%60 + "min";
     }
 
+    public static int[] separateString(String string) {
+        int[] highgrovesTab = new int[100];
+        char[] charString = string.toCharArray();
+        char[] tempChar = {' ',' ',' '};
+        int lTempChar=0, lHighgrovesTab=0;
+
+        for (int i=0;i<charString.length;i++)
+        {
+            if(charString[i]=='|')
+            {
+                String actualString = new String(tempChar);
+                actualString=actualString.trim();
+                highgrovesTab[lHighgrovesTab]=Integer.parseInt(actualString);
+                lHighgrovesTab++;
+                tempChar[0] = ' ';
+                tempChar[1] = ' ';
+                tempChar[2] = ' ';
+                lTempChar=0;
+            }
+            else{
+                tempChar[lTempChar]=charString[i];
+                lTempChar++;
+            }
+        }
+        return highgrovesTab;
+    }
+
 
 }

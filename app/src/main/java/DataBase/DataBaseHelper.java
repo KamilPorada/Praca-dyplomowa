@@ -84,6 +84,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 DataBaseNames.WaterPlantationItem.COLUMN_DATE + " TEXT NOT NULL," +
                 DataBaseNames.WaterPlantationItem.COLUMN_AMOUNT_OF_HIGHGROVES_IN_EACH_ROUND + " TEXT NOT NULL," +
                 DataBaseNames.WaterPlantationItem.COLUMN_TIMES_OF_EACH_ROUND + " TEXT NOT NULL," +
+                DataBaseNames.WaterPlantationItem.COLUMN_AMOUNT_OF_ROUND + " INTEGER NOT NULL," +
                 DataBaseNames.WaterPlantationItem.COLUMN_STATUS + " INTEGER NOT NULL" +
                 ");";
 
@@ -382,13 +383,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
 
-    public void addWaterPlantation(double efficiency, String date, String highgroves, String times, int status) {
+    public void addWaterPlantation(double efficiency, String date, String highgroves, String times, int rounds, int status) {
         SQLiteDatabase db=getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(DataBaseNames.WaterPlantationItem.COLUMN_EFFICIENCY_OF_PUMP,efficiency);
         values.put(DataBaseNames.WaterPlantationItem.COLUMN_DATE,date);
         values.put(DataBaseNames.WaterPlantationItem.COLUMN_AMOUNT_OF_HIGHGROVES_IN_EACH_ROUND,highgroves);
         values.put(DataBaseNames.WaterPlantationItem.COLUMN_TIMES_OF_EACH_ROUND,times);
+        values.put(DataBaseNames.WaterPlantationItem.COLUMN_AMOUNT_OF_ROUND,rounds);
         values.put(DataBaseNames.WaterPlantationItem.COLUMN_STATUS,status);
         db.insertOrThrow(DataBaseNames.WaterPlantationItem.TABLE_NAME,null,values);
     }
@@ -396,9 +398,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public Cursor getWateringPlantationItems(){
         String[] columns={DataBaseNames.WaterPlantationItem._ID, DataBaseNames.WaterPlantationItem.COLUMN_EFFICIENCY_OF_PUMP,
                           DataBaseNames.WaterPlantationItem.COLUMN_DATE, DataBaseNames.WaterPlantationItem.COLUMN_AMOUNT_OF_HIGHGROVES_IN_EACH_ROUND,
-                          DataBaseNames.WaterPlantationItem.COLUMN_TIMES_OF_EACH_ROUND, DataBaseNames.WaterPlantationItem.COLUMN_STATUS};
+                          DataBaseNames.WaterPlantationItem.COLUMN_TIMES_OF_EACH_ROUND, DataBaseNames.WaterPlantationItem.COLUMN_AMOUNT_OF_ROUND,
+                          DataBaseNames.WaterPlantationItem.COLUMN_STATUS};
         SQLiteDatabase db =getReadableDatabase();
         return db.query(DataBaseNames.WaterPlantationItem.TABLE_NAME,columns, null,null,null,null,null);
+    }
+
+    public Cursor getSpecifyWateringPlantationValues(int id) {
+        String[] columns={DataBaseNames.WaterPlantationItem.COLUMN_EFFICIENCY_OF_PUMP,
+                DataBaseNames.WaterPlantationItem.COLUMN_DATE, DataBaseNames.WaterPlantationItem.COLUMN_AMOUNT_OF_HIGHGROVES_IN_EACH_ROUND,
+                DataBaseNames.WaterPlantationItem.COLUMN_TIMES_OF_EACH_ROUND, DataBaseNames.WaterPlantationItem.COLUMN_AMOUNT_OF_ROUND,
+                DataBaseNames.WaterPlantationItem.COLUMN_STATUS};
+        SQLiteDatabase db =getReadableDatabase();
+        return db.query(DataBaseNames.WaterPlantationItem.TABLE_NAME, columns, DataBaseNames.NotesItem._ID + " LIKE " + id,null,null,null,null);
     }
 
 }

@@ -59,6 +59,7 @@ public class DataBaseNames {
         public static final String COLUMN_DATE = "date";
         public static final String COLUMN_AMOUNT_OF_HIGHGROVES_IN_EACH_ROUND = "amountOfHighhgrovesInEachRound";
         public static final String COLUMN_TIMES_OF_EACH_ROUND = "timesOfEachRound";
+        public static final String COLUMN_AMOUNT_OF_ROUND = "COLUMN_AMOUNT_OF_ROUND";
         public static final String COLUMN_STATUS = "status";
     }
 }
