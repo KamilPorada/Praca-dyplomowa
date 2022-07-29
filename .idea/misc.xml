@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/animation_dropping_of_water.xml" value="0.1455" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/bottom_shape_dialog.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/icon_calendar.xml" value="0.133" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/icon_clock.xml" value="0.133" />
@@ -168,6 +169,7 @@
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/menu/tollbar_menu_farm.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/menu/tollbar_menu_home.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/menu/toollbar_menu_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/xml/animation_of_dropping_water.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>

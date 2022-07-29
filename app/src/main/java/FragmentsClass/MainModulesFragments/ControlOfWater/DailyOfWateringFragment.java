@@ -3,6 +3,7 @@ package FragmentsClass.MainModulesFragments.ControlOfWater;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
+import DataBase.SharedPreferencesNames;
 import FragmentsClass.MainModulesFragments.ControlOfWater.ControlOfWaterViewsClasses.WateringAdapter;
 import FragmentsClass.MainModulesFragments.ControlOfWater.ControlOfWaterViewsClasses.WateringItem;
 import HelperClasses.InformationDialog;
@@ -88,6 +90,10 @@ public class DailyOfWateringFragment extends Fragment {
         adapter.setOnItemClickListener(new WateringAdapter.OnItemClickListener() {
             @Override
             public void onDoneClick(int position) {
+                SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt(SharedPreferencesNames.ToolSharedPreferences.POSITION_OF_WATERING_RV, wateringItems.get(position).getIId());
+                editor.apply();
                 requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new WaterPepperFragment()).commit();
             }
 

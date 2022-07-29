@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/animation_dropping_water_1"
+          android:duration="100"/>
+    <item android:drawable="@drawable/animation_dropping_water_2"
+          android:duration="100"/>
+    <item android:drawable="@drawable/animation_dropping_water_3"
+          android:duration="100"/>
+    <item android:drawable="@drawable/animation_dropping_water_4"
+          android:duration="100"/>
+    <item android:drawable="@drawable/animation_dropping_water_5"
+          android:duration="100"/>
+    <item android:drawable="@drawable/animation_dropping_water_6"
+          android:duration="100"/>
+    <item android:drawable="@drawable/animation_dropping_water_7"
+          android:duration="100"/>
+    <item android:drawable="@drawable/animation_dropping_water_8"
+          android:duration="100"/>
+    <item android:drawable="@drawable/animation_dropping_water_9"
+          android:duration="100"/>
+    <item android:drawable="@drawable/animation_dropping_water_10"
+          android:duration="100"/>
+    <item android:drawable="@drawable/animation_dropping_water_11"
+          android:duration="100"/>
+    <item android:drawable="@drawable/animation_dropping_water_12"
+          android:duration="100"/>
+    <item android:drawable="@drawable/animation_dropping_water_13"
+          android:duration="100"/>
+    <item android:drawable="@drawable/animation_dropping_water_14"
+          android:duration="100"/>
+    <item android:drawable="@drawable/animation_dropping_water_15"
+          android:duration="100"/>
+</animation-list>

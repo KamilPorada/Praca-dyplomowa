@@ -16,6 +16,14 @@
         app:layout_constraintRight_toRightOf="parent"
         android:background="@drawable/shape_rectangle_with_top_and_bottom_line">
 
+        <ImageView
+            android:id="@+id/button_come_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/icon_come_back"
+            app:tint="@color/white" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/group"
@@ -25,6 +33,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
+
             <ImageView
                 android:id="@+id/title_image"
                 android:layout_width="80dp"
@@ -51,27 +60,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/first_block"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        app:layout_constraintTop_toBottomOf="@id/title_block"
-        android:background="@drawable/shape_bottom_line">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            app:layout_constraintTop_toBottomOf="@id/title_block"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:padding="2dp"
-            android:scrollbars="vertical"
-            android:nestedScrollingEnabled="false"
-            android:background="@color/backgroundColor"/>
-
-    </androidx.core.widget.NestedScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/second_block"
@@ -79,7 +68,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="5dp"
         android:paddingBottom="10dp"
-        app:layout_constraintTop_toBottomOf="@id/first_block"
+        app:layout_constraintTop_toBottomOf="@id/title_block"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:background="@drawable/shape_bottom_line">
@@ -184,22 +173,32 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:textSize="28sp"
+            android:textSize="25sp"
             android:textColor="@color/blackToWhite"
             android:textAlignment="center"
             android:fontFamily="@font/crete_round"
-            android:text="Trwa podlewanie..."/>
+            android:text="Trwa podlewanie"/>
 
         <ImageView
-            android:id="@+id/image_of_watering"
-            android:layout_width="280dp"
-            android:layout_height="280dp"
+            android:id="@+id/image_tap"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             app:layout_constraintTop_toBottomOf="@id/title_of_watering"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:src="@drawable/image_drop_of_water"
-            android:padding="50dp"
-            app:tint="#03A9F4" />
+            android:src="@drawable/image_tap"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="10dp"/>
+
+        <ImageView
+            android:id="@+id/image_of_watering"
+            android:layout_width="60dp"
+            android:layout_height="150dp"
+            app:layout_constraintTop_toBottomOf="@id/image_tap"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            android:layout_marginRight="10dp"/>
 
         <TextView
             android:id="@+id/time"
@@ -227,43 +226,42 @@
         app:layout_constraintRight_toRightOf="parent"
         android:background="@drawable/shape_bottom_line">
 
-        <ImageButton
-            android:id="@+id/resume_button"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/pause_button"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/icon_resume"
-            android:background="@drawable/shape_black_rectangle"
-            app:tint="@color/blackToWhite" />
-
-       <ImageButton
-           android:id="@+id/pause_button"
-           android:layout_width="50dp"
-           android:layout_height="50dp"
+       <Button
+           android:id="@+id/default_button"
+           android:layout_width="280dp"
+           android:layout_height="wrap_content"
            app:layout_constraintTop_toTopOf="parent"
-           app:layout_constraintBottom_toBottomOf="parent"
            app:layout_constraintLeft_toLeftOf="parent"
            app:layout_constraintRight_toRightOf="parent"
-           android:src="@drawable/icon_pause"
-           android:background="@drawable/shape_black_rectangle"
-           app:tint="@color/blackToWhite" />
-
-        <ImageButton
-            android:id="@+id/stop_button"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/pause_button"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/icon_stop"
-            android:background="@drawable/shape_black_rectangle"
-            app:tint="@color/blackToWhite" />
-
+           android:text="Rozpocznij podlewanie"
+           android:drawableLeft="@drawable/icon_pause"
+           android:background="@drawable/shape_main_color_rectangle_with_white_stroke"
+           android:drawableTint="@color/white" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/fiveth_block"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/fourth_block"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/shape_bottom_line">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/title_block"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:padding="2dp"
+            android:scrollbars="vertical"
+            android:nestedScrollingEnabled="false"
+            android:background="@color/backgroundColor"/>
+
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
