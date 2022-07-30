@@ -47,4 +47,13 @@ public class SharedPreferencesNames {
         public static final String FIRST_PEPPER = "FIRST_PEPPER_DATA";
         public static final String LAST_PEPPER = "LAST_PEPPER_DATA";
     }
+
+    public static final class WateringData {
+        public static final String NAME = "WATERING_DATA";
+        public static final String TIME = "TIME";
+        public static final String TIMER_ENABLED = "TIMER_ENABLED";
+        public static final String WATERING_ENABLED = "WATERING_ENABLED";
+        public static final String ROUND_ENABLED = "ROUND_ENABLED";
+        public static final String ACTUAL_ROUND = "ACTUAL_ROUND";
+    }
 }

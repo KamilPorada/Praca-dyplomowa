@@ -517,5 +517,19 @@ public  class ToolClass {
         return highgrovesTab;
     }
 
+    public static String generateCountDownTimerTime(long time)
+    {
+        String stringTime = "";
+        if(time/60 < 10)
+            stringTime = stringTime + "0" + time/60 + ":";
+        else
+            stringTime = stringTime + time/60 + ":";
+        if(time%60 < 10)
+            stringTime = stringTime + "0" + time%60;
+        else
+            stringTime = stringTime + time%60;
+        return stringTime;
+    }
+
 
 }
