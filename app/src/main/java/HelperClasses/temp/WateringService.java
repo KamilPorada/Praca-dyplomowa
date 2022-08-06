@@ -40,9 +40,6 @@ public class WateringService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         time = intent.getIntExtra(SharedPreferencesNames.WateringData.TIME,0)*60000;
-        System.out.println("CZAS SERWISOWY:"+ time);
-
-
 
         Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
@@ -57,15 +54,14 @@ public class WateringService extends Service {
 
         startForeground(1, notification);
 
-        countDownTimer = new CountDownTimer(5000,1000) {
+        countDownTimer = new CountDownTimer(20000,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                System.out.println(millisUntilFinished/1000);
                 broadcastIntent.putExtra(SharedPreferencesNames.WateringData.TIME, millisUntilFinished/1000);
-                broadcastIntent.putExtra(SharedPreferencesNames.WateringData.TIMER_ENABLED, true);
                 SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(SharedPreferencesNames.WateringData.NAME,Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean(SharedPreferencesNames.WateringData.ROUND_ENABLED, true);
+                editor.putBoolean(SharedPreferencesNames.WateringData.TIMER_ENABLED, true);
+                editor.putBoolean(SharedPreferencesNames.WateringData.THIRD_SETTING,false);
                 editor.apply();
                 sendBroadcast(broadcastIntent);
             }
@@ -75,7 +71,8 @@ public class WateringService extends Service {
                 broadcastIntent.putExtra(SharedPreferencesNames.WateringData.TIMER_ENABLED, false);
                 SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(SharedPreferencesNames.WateringData.NAME,Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean(SharedPreferencesNames.WateringData.ROUND_ENABLED, false);
+                editor.putBoolean(SharedPreferencesNames.WateringData.TIMER_ENABLED, false);
+                editor.putBoolean(SharedPreferencesNames.WateringData.THIRD_SETTING,true);
                 editor.apply();
                 sendBroadcast(broadcastIntent);
             }
@@ -90,10 +87,9 @@ public class WateringService extends Service {
         super.onDestroy();
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(SharedPreferencesNames.WateringData.NAME,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(SharedPreferencesNames.WateringData.ROUND_ENABLED, false);
-        editor.putInt(SharedPreferencesNames.WateringData.TIME,time);
+        editor.putBoolean(SharedPreferencesNames.WateringData.TIMER_ENABLED, false);
+        editor.putBoolean(SharedPreferencesNames.WateringData.THIRD_SETTING,true);
         editor.apply();
-        System.out.println("STOP " + sharedPreferences.getBoolean(SharedPreferencesNames.WateringData.ROUND_ENABLED,false));
         countDownTimer.cancel();
     }
 

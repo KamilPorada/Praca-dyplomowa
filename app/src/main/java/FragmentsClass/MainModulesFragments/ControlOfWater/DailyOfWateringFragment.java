@@ -94,6 +94,11 @@ public class DailyOfWateringFragment extends Fragment {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putInt(SharedPreferencesNames.ToolSharedPreferences.POSITION_OF_WATERING_RV, wateringItems.get(position).getIId());
                 editor.apply();
+
+//                sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.WateringData.NAME,Context.MODE_PRIVATE);
+//                editor.putBoolean(SharedPreferencesNames.WateringData.WATERING_ENABLED,false);
+//                editor.apply();
+
                 requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new WaterPepperFragment()).commit();
             }
 
