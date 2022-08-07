@@ -1,6 +1,7 @@
 package FragmentsClass.MainModulesFragments.ControlOfWater;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,19 +10,22 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,11 +40,10 @@ import DataBase.DataBaseNames;
 import DataBase.SharedPreferencesNames;
 import FragmentsClass.MainModulesFragments.ControlOfWater.ControlOfWaterViewsClasses.DropOfWaterAdapter;
 import FragmentsClass.MainModulesFragments.ControlOfWater.ControlOfWaterViewsClasses.DropOfWaterItem;
-import FragmentsClass.MainModulesFragments.ControlOfWater.ControlOfWaterViewsClasses.WateringAdapter;
-import FragmentsClass.MainModulesFragments.ControlOfWater.ControlOfWaterViewsClasses.WateringItem;
 import HelperClasses.InformationDialog;
 import HelperClasses.ShowToast;
 import HelperClasses.ToolClass;
+import HelperClasses.temp.WateringChannel;
 import HelperClasses.temp.WateringService;
 
 public class WaterPepperFragment extends Fragment {
@@ -48,22 +51,21 @@ public class WaterPepperFragment extends Fragment {
     private Context context;
     private final ArrayList<DropOfWaterItem> dropOfWaterItems = new ArrayList<>();
     private RecyclerView recyclerView;
-
     private TextView titleOfRound, howHighgroves, howTime, howEfficiency, titleofWatering, time;
     private ImageView imageOfWatering, buttonComeBack, imageTap, imageValve, stopButton;
     private Button resumeButton;
 
     private AnimationDrawable animationDroppingWater;
+    private NotificationCompat.Builder notification;
+    private NotificationManagerCompat notificationManager;
+    private Thread thread;
 
-    private int[] highgroves, times;
-    private int id, actualRound, actualHighgroces, actualTime, amountOfRound;
-    private double efficiency;
-
+    private String dots = "", contentOfNotification, titleOfNotification;
     private long timerTime;
     private boolean timerEnabled, firstSetting, secondSetting, thirdSetting, fourthSetting, fivethSetting;
-
-    private String dots = "";
-
+    private int[] highgroves, times;
+    private int id, actualRound, amountOfRound;
+    private double efficiency;
 
     @Nullable
     @Override
@@ -96,7 +98,7 @@ public class WaterPepperFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().registerReceiver(broadcastReceiver, new IntentFilter(new IntentFilter(WateringService.NAME_OF_BROADCAST_INTENT)));
+        requireActivity().registerReceiver(broadcastReceiver, new IntentFilter(new IntentFilter(WateringService.NAME_OF_BROADCAST_INTENT)));
     }
 
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -107,33 +109,13 @@ public class WaterPepperFragment extends Fragment {
 
             timerEnabled = sharedPreferences.getBoolean(SharedPreferencesNames.WateringData.TIMER_ENABLED,false);
             timerTime=intent.getLongExtra(SharedPreferencesNames.WateringData.TIME,0);
-
             time.setText(ToolClass.generateCountDownTimerTime(timerTime));
-            dots=dots+".";
-            titleofWatering.setText("Trwa podlewanie"+dots);
-            if(dots.length()>3)
-                dots="";
 
-            if(timerEnabled){
-                editor.putBoolean(SharedPreferencesNames.WateringData.SECOND_SETTING,true);
-                editor.apply();
-            }
-            else
-            {
-                editor.putBoolean(SharedPreferencesNames.WateringData.SECOND_SETTING,false);
-                editor.apply();
-            }
+            editor.putBoolean(SharedPreferencesNames.WateringData.SECOND_SETTING, timerEnabled);
+            editor.apply();
             loadData();
         }
     };
-
-    private void startService() {
-        Intent wateringIntent = new Intent(context, WateringService.class);
-        wateringIntent.putExtra(SharedPreferencesNames.WateringData.TIME, times[actualRound-1]);
-        ContextCompat.startForegroundService(context, wateringIntent);
-        animationDroppingWater.start();
-        refreshRecyclerView();
-    }
 
     private void findViews(View view) {
         titleOfRound=view.findViewById(R.id.title_of_round);
@@ -155,12 +137,9 @@ public class WaterPepperFragment extends Fragment {
         id = sharedPreferences.getInt(SharedPreferencesNames.ToolSharedPreferences.POSITION_OF_WATERING_RV, 0);
     }
 
+    @SuppressLint("SetTextI18n")
     private void loadData() {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.WateringData.NAME,Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-//        editor.putInt(SharedPreferencesNames.WateringData.ACTUAL_ROUND, 1);
-//        editor.apply();
 
         actualRound = sharedPreferences.getInt(SharedPreferencesNames.WateringData.ACTUAL_ROUND, 1);
         firstSetting = sharedPreferences.getBoolean(SharedPreferencesNames.WateringData.FIRST_SETTING,false);
@@ -186,15 +165,11 @@ public class WaterPepperFragment extends Fragment {
         howTime.setText(times[actualRound - 1] + " min");
         howEfficiency.setText((int) efficiency + " l/min");
 
-//        if(times[actualRound - 1]<10)
-//            time.setText("0" + times[actualRound - 1] + ":00");
-//        else
-//            time.setText(times[actualRound - 1] + ":00");
-
 
         if(!firstSetting)   // START PODLEWANIE NIE ROZPOCZĘTE
         {
-            imageOfWatering.setVisibility(View.VISIBLE);
+            titleofWatering.setText("Wciśnij przycisk aby rozpocząć!");
+            imageOfWatering.setVisibility(View.INVISIBLE);
             imageTap.setVisibility(View.VISIBLE);
             imageValve.setVisibility(View.INVISIBLE);
         }
@@ -202,26 +177,36 @@ public class WaterPepperFragment extends Fragment {
         {
             if(secondSetting) // TRWA PODLEWANIE
             {
+                titleofWatering.setText("Trwa podlewanie");
                 imageOfWatering.setVisibility(View.VISIBLE);
                 imageTap.setVisibility(View.VISIBLE);
                 imageValve.setVisibility(View.INVISIBLE);
+                resumeButton.setEnabled(false);
+                resumeButton.setBackgroundColor(Color.GRAY);
                 animationDroppingWater.start();
+                dots=dots+".";
+                titleofWatering.setText("Trwa podlewanie"+dots);
+                if(dots.length()>3)
+                    dots="";
             }
             else            //POMIĘDZYRUNDZIE
             {
                 if(thirdSetting && !fivethSetting)   // PRZEKREC ZAWORY
                 {
                     titleofWatering.setText("Przekreć zawory!");
+                    contentOfNotification="Tura zakończona, przekręć zawory!";
+                    titleOfNotification = "Tura " + actualRound;
                     imageOfWatering.setVisibility(View.INVISIBLE);
                     imageTap.setVisibility(View.INVISIBLE);
                     imageValve.setVisibility(View.VISIBLE);
                     resumeButton.setEnabled(false);
                     resumeButton.setBackgroundColor(Color.GRAY);
+                    imageValve.setClickable(true);
                 }
                 else if(fourthSetting)  //NASTĘPNA RUNDA
                 {
-                    titleofWatering.setText("Trwa podlewanie");
-                    imageOfWatering.setVisibility(View.VISIBLE);
+                    titleofWatering.setText("Wciśnij przycisk aby kontynuować!");
+                    imageOfWatering.setVisibility(View.INVISIBLE);
                     imageTap.setVisibility(View.VISIBLE);
                     imageValve.setVisibility(View.INVISIBLE);
                     animationDroppingWater.stop();
@@ -229,6 +214,8 @@ public class WaterPepperFragment extends Fragment {
                 else if(fivethSetting)  //WYLĄCZ POMPE
                 {
                     titleofWatering.setText("Wyłącz pompę!");
+                    contentOfNotification="Podlewanie zakończone, wyłącz pompę!";
+                    titleOfNotification = "Tura " + actualRound;
                     imageOfWatering.setVisibility(View.INVISIBLE);
                     imageTap.setVisibility(View.INVISIBLE);
                     imageValve.setVisibility(View.VISIBLE);
@@ -237,6 +224,8 @@ public class WaterPepperFragment extends Fragment {
                     resumeButton.setText("Zakończ");
                     resumeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_stop_circle,0,0,0);
                     actualRound++;
+                    stopButton.setVisibility(View.INVISIBLE);
+                    imageValve.setClickable(false);
                 }
             }
         }
@@ -253,7 +242,7 @@ public class WaterPepperFragment extends Fragment {
                 dropOfWaterItems.add(new DropOfWaterItem(i,R.drawable.image_drop_of_water_main_color));
             else if(i==actualRound && timerEnabled)
                 dropOfWaterItems.add(new DropOfWaterItem(i,R.drawable.image_drop_of_water_blue));
-            else if(i==actualRound && !timerEnabled)
+            else if(i == actualRound)
                 dropOfWaterItems.add(new DropOfWaterItem(i,R.drawable.image_drop_of_water));
             else if(i>actualRound)
                 dropOfWaterItems.add(new DropOfWaterItem(i,R.drawable.image_drop_of_water));
@@ -267,76 +256,153 @@ public class WaterPepperFragment extends Fragment {
     }
 
     private void createListeners() {
-        resumeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonComeBack.setOnClickListener(v -> requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ControlOfWaterFragment()).commit());
+
+        stopButton.setOnClickListener(v -> openAttentionDialog());
+
+        resumeButton.setOnClickListener(v -> {
+            SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.WateringData.NAME,Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            if(actualRound==1) {
+                editor.putBoolean(SharedPreferencesNames.WateringData.FIRST_SETTING, true);
+                editor.apply();
+            }
+            if(resumeButton.getText().toString().compareTo("Zakończ")==0)
+            {
+                ShowToast toast = new ShowToast();
+                toast.showSuccessfulToast(context, "SUKCES\n" + "  Pomyślnie zakończyłeś nawadnianie!");
+                editor.putInt(SharedPreferencesNames.WateringData.ACTUAL_ROUND, 1);
+                editor.putBoolean(SharedPreferencesNames.WateringData.FIRST_SETTING,false);
+                editor.putBoolean(SharedPreferencesNames.WateringData.SECOND_SETTING,false);
+                editor.putBoolean(SharedPreferencesNames.WateringData.THIRD_SETTING,false);
+                editor.putBoolean(SharedPreferencesNames.WateringData.FOURTH_SETTING,false);
+                editor.putBoolean(SharedPreferencesNames.WateringData.FIVETH_SETTING,false);
+                editor.apply();
+                notificationManager.cancelAll();
+                thread.interrupt();
+                Intent wateringIntent = new Intent(context, WateringService.class);
+                context.stopService(wateringIntent);
+                DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+                dataBaseHelper.updateSpecifyWatering(id, 1);
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ControlOfWaterFragment()).commit();
+            }
+            else {
+                resumeButton.setEnabled(false);
+                resumeButton.setBackgroundColor(Color.GRAY);
+                editor.putBoolean(SharedPreferencesNames.WateringData.THIRD_SETTING,false);
+                editor.putBoolean(SharedPreferencesNames.WateringData.FOURTH_SETTING,false);
+                editor.putBoolean(SharedPreferencesNames.WateringData.FIVETH_SETTING,false);
+                editor.apply();
+                    if(actualRound==amountOfRound)
+                    {
+                        editor.putBoolean(SharedPreferencesNames.WateringData.THIRD_SETTING,false);
+                        editor.putBoolean(SharedPreferencesNames.WateringData.FOURTH_SETTING,false);
+                        editor.putBoolean(SharedPreferencesNames.WateringData.FIVETH_SETTING,true);
+                        editor.apply();
+                    }
+                startService();
+            }
+        });
+
+        imageValve.setOnClickListener(v -> {
+            if(imageValve.getVisibility()==View.VISIBLE )
+            {
+                resumeButton.setEnabled(true);
+                resumeButton.setBackgroundColor(ContextCompat.getColor(context, R.color.mainColor));
                 SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.WateringData.NAME,Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-
-                if(actualRound==1) {
-                    editor.putBoolean(SharedPreferencesNames.WateringData.FIRST_SETTING, true);
-                    editor.apply();
-                }
-
-                    if(resumeButton.getText().toString().compareTo("Zakończ")==0)
-                {
-                    ShowToast toast = new ShowToast();
-                    toast.showSuccessfulToast(context, "Koniec!");
-                    editor.putInt(SharedPreferencesNames.WateringData.ACTUAL_ROUND, 1);
-                    editor.putBoolean(SharedPreferencesNames.WateringData.FIRST_SETTING,false);
-                    editor.putBoolean(SharedPreferencesNames.WateringData.SECOND_SETTING,false);
-                    editor.putBoolean(SharedPreferencesNames.WateringData.THIRD_SETTING,false);
-                    editor.putBoolean(SharedPreferencesNames.WateringData.FOURTH_SETTING,false);
-                    editor.putBoolean(SharedPreferencesNames.WateringData.FIVETH_SETTING,false);
-                    editor.apply();
-                    Intent wateringIntent = new Intent(context, WateringService.class);
-                    context.stopService(wateringIntent);
-                    requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ControlOfWaterFragment()).commit();
-                }
-                else {
-                    resumeButton.setEnabled(false);
-                    resumeButton.setBackgroundColor(Color.GRAY);
-                    editor.putBoolean(SharedPreferencesNames.WateringData.THIRD_SETTING,false);
-                    editor.putBoolean(SharedPreferencesNames.WateringData.FOURTH_SETTING,false);
-                    editor.putBoolean(SharedPreferencesNames.WateringData.FIVETH_SETTING,false);
-                    editor.apply();
-                        if(actualRound==amountOfRound)
-                        {
-                            editor.putBoolean(SharedPreferencesNames.WateringData.THIRD_SETTING,false);
-                            editor.putBoolean(SharedPreferencesNames.WateringData.FOURTH_SETTING,false);
-                            editor.putBoolean(SharedPreferencesNames.WateringData.FIVETH_SETTING,true);
-                            editor.apply();
-                        }
-                    startService();
-                }
+                editor.putBoolean(SharedPreferencesNames.WateringData.THIRD_SETTING,false);
+                editor.putBoolean(SharedPreferencesNames.WateringData.FOURTH_SETTING,true);
+                editor.putBoolean(SharedPreferencesNames.WateringData.FIVETH_SETTING,false);
+                editor.putInt(SharedPreferencesNames.WateringData.ACTUAL_ROUND, ++actualRound);
+                editor.apply();
+                loadData();
             }
         });
-//        stopButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                stopServicee();
-//                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new WaterPepperFragment()).commit();
-//            }
-//        });
+    }
 
-        imageValve.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(imageValve.getVisibility()==View.VISIBLE)
-                {
-                    resumeButton.setEnabled(true);
-                    resumeButton.setBackgroundColor(getResources().getColor(R.color.mainColor));
-                    SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.WateringData.NAME,Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean(SharedPreferencesNames.WateringData.THIRD_SETTING,false);
-                    editor.putBoolean(SharedPreferencesNames.WateringData.FOURTH_SETTING,true);
-                    editor.putBoolean(SharedPreferencesNames.WateringData.FIVETH_SETTING,false);
-                    editor.putInt(SharedPreferencesNames.WateringData.ACTUAL_ROUND, ++actualRound);
-                    editor.apply();
-                    loadData();
+    private void startService() {
+        Intent wateringIntent = new Intent(context, WateringService.class);
+        wateringIntent.putExtra(SharedPreferencesNames.WateringData.TIME, times[actualRound-1]);
+        ContextCompat.startForegroundService(context, wateringIntent);
+        animationDroppingWater.start();
+        refreshRecyclerView();
+        buildNotification();
+    }
+
+    private void buildNotification() {
+        notification = new NotificationCompat.Builder(context,WateringChannel.ID_OF_CHANNEL_2)
+                .setSmallIcon(R.drawable.icon_drop_of_water)
+                .setContentTitle(titleOfNotification)
+                .setContentText("Trwa podlewanie")
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .setOngoing(true)
+                .setOnlyAlertOnce(true)
+                .setProgress(times[actualRound-1]*60, 0, true);
+
+        notificationManager = NotificationManagerCompat.from(context);
+        notificationManager.notify(2, notification.build());
+
+        thread = new Thread(() -> {
+            SystemClock.sleep(1000);
+            for (int progress = 1; progress <= times[actualRound-1]*60; progress++) {
+                if(timerEnabled) {
+                    notification.setProgress(times[actualRound-1]*60, progress, false);
+                    notification.setContentTitle(titleOfNotification);
+                    notificationManager.notify(2, notification.build());
+                    SystemClock.sleep(1000);
                 }
+                else
+                    break;
             }
+            notification.setContentText(contentOfNotification)
+                    .setProgress(0, 0, false)
+                    .setContentTitle(titleOfNotification)
+                    .setContentText(contentOfNotification)
+                    .setOngoing(false);
+            notificationManager.notify(2, notification.build());
         });
+        thread.start();
+    }
+
+    private void openAttentionDialog() {
+        Dialog attentionDialog = new Dialog(context);
+        attentionDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
+        attentionDialog.setContentView(R.layout.dialog_attention);
+        attentionDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        attentionDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        attentionDialog.show();
+        createDialogListenerss(attentionDialog);
+    }
+
+    private void createDialogListenerss(Dialog attentionDialog) {
+        Button stopButton = attentionDialog.findViewById(R.id.stop_button);
+        Button comeBackButton = attentionDialog.findViewById(R.id.come_back_button);
+
+        stopButton.setOnClickListener(v -> {
+            ShowToast toast = new ShowToast();
+            Intent wateringIntent = new Intent(context, WateringService.class);
+            context.stopService(wateringIntent);
+            SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.WateringData.NAME,Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean(SharedPreferencesNames.WateringData.FIRST_SETTING,false);
+            editor.putBoolean(SharedPreferencesNames.WateringData.SECOND_SETTING,false);
+            editor.putBoolean(SharedPreferencesNames.WateringData.THIRD_SETTING,false);
+            editor.putBoolean(SharedPreferencesNames.WateringData.FOURTH_SETTING,false);
+            editor.putBoolean(SharedPreferencesNames.WateringData.FIVETH_SETTING,false);
+            editor.putInt(SharedPreferencesNames.WateringData.ACTUAL_ROUND, 1);
+            editor.apply();
+            attentionDialog.dismiss();
+            timerEnabled=false;
+            notificationManager.cancelAll();
+            thread.interrupt();
+            contentOfNotification = "Podlewanie zostało przerwane!";
+            titleOfNotification = "Uwaga!";
+            toast.showErrorToast(context, "UWAGA!\n" + "  Przerwałeś nawadnianie plantacji!", R.drawable.icon_drop_of_water);
+            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ControlOfWaterFragment()).commit();
+        });
+        comeBackButton.setOnClickListener(v -> attentionDialog.dismiss());
     }
 }
 

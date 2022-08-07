@@ -1,17 +1,12 @@
 package HelperClasses.temp;
 
 import android.app.Notification;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.os.IBinder;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
@@ -19,8 +14,6 @@ import androidx.core.app.NotificationCompat;
 import com.example.pracadyplomowa.R;
 
 import DataBase.SharedPreferencesNames;
-import FragmentsClass.MainModulesFragments.ControlOfWater.WaterPepperFragment;
-import MainClass.MainActivity;
 
 public class WateringService extends Service {
 
@@ -41,20 +34,15 @@ public class WateringService extends Service {
 
         time = intent.getIntExtra(SharedPreferencesNames.WateringData.TIME,0)*60000;
 
-        Intent notificationIntent = new Intent(this, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
-
-        Notification notification = new NotificationCompat.Builder(this, WateringChannel.ID_OF_CHANNEL)
-                .setContentTitle("Watering Service")
-                .setContentText("I' m watering pepper now!")
-                .setSmallIcon(R.drawable.icon_information)
-                .setContentIntent(pendingIntent)
+        Notification notification = new NotificationCompat.Builder(this, WateringChannel.ID_OF_CHANNEL_1)
+                .setContentTitle("Usługa podlewania")
+                .setContentText("Trwa nawadnianie plantacji papryki!")
+                .setSmallIcon(R.drawable.image_tap)
                 .build();
 
         startForeground(1, notification);
 
-        countDownTimer = new CountDownTimer(20000,1000) {
+        countDownTimer = new CountDownTimer(5000,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 broadcastIntent.putExtra(SharedPreferencesNames.WateringData.TIME, millisUntilFinished/1000);

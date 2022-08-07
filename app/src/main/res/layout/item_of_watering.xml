@@ -214,7 +214,7 @@
                 android:background="@color/mainColor"
                 android:clickable="true"
                 android:padding="3dp"
-                android:src="@drawable/icon_done"
+                android:src="@drawable/image_tap"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/remove_item"
                 app:layout_constraintTop_toTopOf="parent"

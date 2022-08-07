@@ -95,9 +95,6 @@ public class DailyOfWateringFragment extends Fragment {
                 editor.putInt(SharedPreferencesNames.ToolSharedPreferences.POSITION_OF_WATERING_RV, wateringItems.get(position).getIId());
                 editor.apply();
 
-//                sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.WateringData.NAME,Context.MODE_PRIVATE);
-//                editor.putBoolean(SharedPreferencesNames.WateringData.WATERING_ENABLED,false);
-//                editor.apply();
 
                 requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new WaterPepperFragment()).commit();
             }
@@ -123,10 +120,11 @@ public class DailyOfWateringFragment extends Fragment {
             String  highgroves = String.valueOf(ToolClass.sumString(stringHighgroves));
             int minutes = ToolClass.sumString(stringTimes);
             String stringTime = ToolClass.getStringTime(minutes);
-            String usageOfWater = String.valueOf((int) efficiency*minutes) + " l";
+            String usageOfWater = (int) efficiency * minutes + " l";
 
             if(ToolClass.getActualYear()==ToolClass.getYear(date))
-                wateringItems.add(new WateringItem(id, efficiency, date, highgroves, stringTime, usageOfWater, status));
+                if(status==0)
+                    wateringItems.add(new WateringItem(id, efficiency, date, highgroves, stringTime, usageOfWater, status));
         }
 
     }

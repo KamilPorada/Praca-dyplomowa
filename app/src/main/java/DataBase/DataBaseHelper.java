@@ -413,5 +413,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return db.query(DataBaseNames.WaterPlantationItem.TABLE_NAME, columns, DataBaseNames.NotesItem._ID + " LIKE " + id,null,null,null,null);
     }
 
+    public void updateSpecifyWatering(int id, int status) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(DataBaseNames.WaterPlantationItem.COLUMN_STATUS,status);
+
+        db.update(DataBaseNames.WaterPlantationItem.TABLE_NAME,values,DataBaseNames.WaterPlantationItem._ID + " LIKE " + id,null);
+    }
+
 }
 

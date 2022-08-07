@@ -182,11 +182,11 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:textSize="25sp"
+            android:textSize="22sp"
             android:textColor="@color/blackToWhite"
             android:textAlignment="center"
             android:fontFamily="@font/crete_round"
-            android:text="Trwa podlewanie"/>
+            android:text="Wciśnij przycisk aby rozpocząć!"/>
 
         <ImageView
             android:id="@+id/image_tap"
@@ -232,7 +232,7 @@
             android:textColor="@color/blackToWhite"
             android:textAlignment="center"
             android:fontFamily="@font/alata"
-            android:text=""/>
+            android:text="00:00"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -257,7 +257,6 @@
             android:text="Rozpocznij"
             android:textColor="@color/white"
             android:drawableLeft="@drawable/icon_start"
-            android:drawableTint="@color/white"
             android:background="@drawable/shape_main_color_rectangle_with_white_stroke"
             />
 

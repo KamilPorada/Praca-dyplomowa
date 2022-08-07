@@ -73,7 +73,12 @@ public class ControlOfWaterFragment extends Fragment {
                 }break;
                 case R.id. btn_daily_of_watering:
                 {
-                    fragment = new DailyOfWateringFragment();
+                    SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.WateringData.NAME,Context.MODE_PRIVATE);
+                    boolean mode = sharedPreferences.getBoolean(SharedPreferencesNames.WateringData.FIRST_SETTING, false);
+                    if(mode)
+                        fragment = new WaterPepperFragment();
+                    else
+                        fragment = new DailyOfWateringFragment();
                 }break;
                 case R.id.btn_miss_water:
                 {
