@@ -458,26 +458,21 @@ public  class ToolClass {
 
     public static int sumString(String string)
     {
-        //0123456
-        //6|10|2|
         char[] charString = string.toCharArray();
         char[] tempChar = {' ',' ',' '};
         int sum=0;
         int l=0;
-        for (int i=0;i<charString.length;i++)
-        {
-            if(charString[i]=='|')
-            {
+        for (char c : charString) {
+            if (c == '|') {
                 String actualString = new String(tempChar);
-                actualString=actualString.trim();
-                sum=sum+Integer.parseInt(actualString);
+                actualString = actualString.trim();
+                sum = sum + Integer.parseInt(actualString);
                 tempChar[0] = ' ';
                 tempChar[1] = ' ';
                 tempChar[2] = ' ';
-                l=0;
-            }
-            else{
-                tempChar[l]=charString[i];
+                l = 0;
+            } else {
+                tempChar[l] = c;
                 l++;
             }
         }
@@ -496,21 +491,18 @@ public  class ToolClass {
         char[] tempChar = {' ',' ',' '};
         int lTempChar=0, lHighgrovesTab=0;
 
-        for (int i=0;i<charString.length;i++)
-        {
-            if(charString[i]=='|')
-            {
+        for (char c : charString) {
+            if (c == '|') {
                 String actualString = new String(tempChar);
-                actualString=actualString.trim();
-                highgrovesTab[lHighgrovesTab]=Integer.parseInt(actualString);
+                actualString = actualString.trim();
+                highgrovesTab[lHighgrovesTab] = Integer.parseInt(actualString);
                 lHighgrovesTab++;
                 tempChar[0] = ' ';
                 tempChar[1] = ' ';
                 tempChar[2] = ' ';
-                lTempChar=0;
-            }
-            else{
-                tempChar[lTempChar]=charString[i];
+                lTempChar = 0;
+            } else {
+                tempChar[lTempChar] = c;
                 lTempChar++;
             }
         }

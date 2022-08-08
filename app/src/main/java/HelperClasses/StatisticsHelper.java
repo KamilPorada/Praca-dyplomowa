@@ -143,4 +143,27 @@ public class StatisticsHelper {
         return sum;
     }
 
+    public static double calculateMonthlyUsagesOfWater(Context context, int month, int year)
+    {
+        DataBaseHelper db = new DataBaseHelper(context);
+        String date;
+        String times;
+        double efficiency;
+        double itemSum=0;
+        int status;
+        Cursor cursor = db.getWateringPlantationItems();
+        while (cursor.moveToNext())
+        {
+            date = cursor.getString(cursor.getColumnIndexOrThrow(DataBaseNames.WaterPlantationItem.COLUMN_DATE));
+            times = cursor.getString(cursor.getColumnIndexOrThrow(DataBaseNames.WaterPlantationItem.COLUMN_TIMES_OF_EACH_ROUND));
+            efficiency = cursor.getDouble(cursor.getColumnIndexOrThrow(DataBaseNames.WaterPlantationItem.COLUMN_EFFICIENCY_OF_PUMP));
+            status = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseNames.WaterPlantationItem.COLUMN_STATUS));
+            if(ToolClass.getYear(date) == year)
+                if(ToolClass.getMonth(date)==month)
+                    if(status==1)
+                        itemSum=itemSum+(ToolClass.sumString(times)*efficiency);
+        }
+        return itemSum;
+    }
+
 }

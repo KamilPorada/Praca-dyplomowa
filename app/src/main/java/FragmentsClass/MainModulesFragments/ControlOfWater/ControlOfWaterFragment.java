@@ -82,7 +82,7 @@ public class ControlOfWaterFragment extends Fragment {
                 }break;
                 case R.id.btn_miss_water:
                 {
-
+                    fragment = new UsagesOfWaterFragment();
                 }break;
             }
             requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();

@@ -42,7 +42,7 @@ public class WateringService extends Service {
 
         startForeground(1, notification);
 
-        countDownTimer = new CountDownTimer(5000,1000) {
+        countDownTimer = new CountDownTimer(time,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 broadcastIntent.putExtra(SharedPreferencesNames.WateringData.TIME, millisUntilFinished/1000);

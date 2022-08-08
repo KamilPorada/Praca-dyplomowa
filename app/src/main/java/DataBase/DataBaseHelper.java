@@ -286,7 +286,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 DataBaseNames.PesticidesItem.COLUMN_TYPE_OF_PESTICIDE, DataBaseNames.PesticidesItem.COLUMN_DOSE,
                 DataBaseNames.PesticidesItem.COLUMN_TYPE_OF_DOSE, DataBaseNames.PesticidesItem.COLUMN_OF_GRACE,
                 DataBaseNames.PesticidesItem.COLUMN_NOTES, DataBaseNames.PesticidesItem.COLUMN_IMAGE};
-        String selection = DataBaseNames.PesticidesItem.COLUMN_NAME_OF_PESTICIDES+" LIKE ?";
         SQLiteDatabase db =getReadableDatabase();
         return db.query(DataBaseNames.PesticidesItem.TABLE_NAME, columns, DataBaseNames.PesticidesItem._ID + " LIKE " + id,null,null,null,null);
     }
