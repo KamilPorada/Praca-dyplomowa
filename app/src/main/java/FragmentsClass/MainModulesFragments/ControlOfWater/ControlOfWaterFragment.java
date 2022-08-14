@@ -17,9 +17,6 @@ import androidx.fragment.app.Fragment;
 import com.example.pracadyplomowa.R;
 
 import DataBase.SharedPreferencesNames;
-import FragmentsClass.MainModulesFragments.Notes.AddNoteFragment;
-import FragmentsClass.MainModulesFragments.Notes.BasicDateFragment;
-import FragmentsClass.MainModulesFragments.Notes.MyNotesFragment;
 import HelperClasses.InformationDialog;
 
 public class ControlOfWaterFragment extends Fragment {

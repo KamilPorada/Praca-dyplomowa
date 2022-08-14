@@ -1,4 +1,4 @@
-package HelperClasses.temp;
+package HelperClasses.WateringHelperClasses;
 
 import android.app.Application;
 import android.app.NotificationChannel;

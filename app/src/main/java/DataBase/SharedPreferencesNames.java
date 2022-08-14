@@ -52,6 +52,7 @@ public class SharedPreferencesNames {
         public static final String NAME = "WATERING_DATA";
         public static final String TIME = "TIME";
         public static final String ACTUAL_ROUND = "ACTUAL_ROUND";
+        public static final String AMOUNT_OF_ROUND = "AMOUNT_OF_ROUND";
         public static final String TIMER_ENABLED = "TIMER_ENABLED";
         public static final String FIRST_SETTING = "FIRST_SETTING";
         public static final String SECOND_SETTING = "SECOND_SETTING";

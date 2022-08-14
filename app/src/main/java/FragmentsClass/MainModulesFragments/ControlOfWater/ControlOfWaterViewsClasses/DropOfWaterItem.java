@@ -1,8 +1,8 @@
 package FragmentsClass.MainModulesFragments.ControlOfWater.ControlOfWaterViewsClasses;
 
 public class DropOfWaterItem {
-    private int IRound;
-    private int IImage;
+    private final int IRound;
+    private final int IImage;
 
     public DropOfWaterItem(int round, int image) {
         this.IRound = round;

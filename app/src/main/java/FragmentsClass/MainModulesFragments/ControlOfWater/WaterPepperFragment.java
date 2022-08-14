@@ -12,7 +12,6 @@ import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,8 +23,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -43,8 +40,7 @@ import FragmentsClass.MainModulesFragments.ControlOfWater.ControlOfWaterViewsCla
 import HelperClasses.InformationDialog;
 import HelperClasses.ShowToast;
 import HelperClasses.ToolClass;
-import HelperClasses.temp.WateringChannel;
-import HelperClasses.temp.WateringService;
+import HelperClasses.WateringHelperClasses.WateringService;
 
 public class WaterPepperFragment extends Fragment {
 
@@ -56,11 +52,8 @@ public class WaterPepperFragment extends Fragment {
     private Button resumeButton;
 
     private AnimationDrawable animationDroppingWater;
-    private NotificationCompat.Builder notification;
-    private NotificationManagerCompat notificationManager;
-    private Thread thread;
 
-    private String dots = "", contentOfNotification, titleOfNotification;
+    private String dots = "";
     private long timerTime;
     private boolean timerEnabled, firstSetting, secondSetting, thirdSetting, fourthSetting, fivethSetting;
     private int[] highgroves, times;
@@ -160,6 +153,7 @@ public class WaterPepperFragment extends Fragment {
         highgroves= ToolClass.separateString(k.getString(k.getColumnIndexOrThrow(DataBaseNames.WaterPlantationItem.COLUMN_AMOUNT_OF_HIGHGROVES_IN_EACH_ROUND)));
         times=ToolClass.separateString(k.getString(k.getColumnIndexOrThrow(DataBaseNames.WaterPlantationItem.COLUMN_TIMES_OF_EACH_ROUND)));
 
+
         titleOfRound.setText("TURA " + actualRound);
         howHighgroves.setText(String.valueOf(highgroves[actualRound-1]));
         howTime.setText(times[actualRound - 1] + " min");
@@ -169,6 +163,7 @@ public class WaterPepperFragment extends Fragment {
         if(!firstSetting)   // START PODLEWANIE NIE ROZPOCZĘTE
         {
             titleofWatering.setText("Wciśnij przycisk aby rozpocząć!");
+            time.setText(ToolClass.generateCountDownTimerTime(times[actualRound-1]* 60L));
             imageOfWatering.setVisibility(View.INVISIBLE);
             imageTap.setVisibility(View.VISIBLE);
             imageValve.setVisibility(View.INVISIBLE);
@@ -194,8 +189,7 @@ public class WaterPepperFragment extends Fragment {
                 if(thirdSetting && !fivethSetting)   // PRZEKREC ZAWORY
                 {
                     titleofWatering.setText("Przekreć zawory!");
-                    contentOfNotification="Tura zakończona, przekręć zawory!";
-                    titleOfNotification = "Tura " + actualRound;
+                    time.setText("00:00");
                     imageOfWatering.setVisibility(View.INVISIBLE);
                     imageTap.setVisibility(View.INVISIBLE);
                     imageValve.setVisibility(View.VISIBLE);
@@ -206,6 +200,7 @@ public class WaterPepperFragment extends Fragment {
                 else if(fourthSetting)  //NASTĘPNA RUNDA
                 {
                     titleofWatering.setText("Wciśnij przycisk aby kontynuować!");
+                    time.setText(ToolClass.generateCountDownTimerTime(times[actualRound-1]* 60L));
                     imageOfWatering.setVisibility(View.INVISIBLE);
                     imageTap.setVisibility(View.VISIBLE);
                     imageValve.setVisibility(View.INVISIBLE);
@@ -214,8 +209,7 @@ public class WaterPepperFragment extends Fragment {
                 else if(fivethSetting)  //WYLĄCZ POMPE
                 {
                     titleofWatering.setText("Wyłącz pompę!");
-                    contentOfNotification="Podlewanie zakończone, wyłącz pompę!";
-                    titleOfNotification = "Tura " + actualRound;
+                    time.setText("00:00");
                     imageOfWatering.setVisibility(View.INVISIBLE);
                     imageTap.setVisibility(View.INVISIBLE);
                     imageValve.setVisibility(View.VISIBLE);
@@ -278,9 +272,8 @@ public class WaterPepperFragment extends Fragment {
                 editor.putBoolean(SharedPreferencesNames.WateringData.THIRD_SETTING,false);
                 editor.putBoolean(SharedPreferencesNames.WateringData.FOURTH_SETTING,false);
                 editor.putBoolean(SharedPreferencesNames.WateringData.FIVETH_SETTING,false);
+                editor.putInt(SharedPreferencesNames.WateringData.AMOUNT_OF_ROUND,amountOfRound);
                 editor.apply();
-                notificationManager.cancelAll();
-                thread.interrupt();
                 Intent wateringIntent = new Intent(context, WateringService.class);
                 context.stopService(wateringIntent);
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
@@ -328,42 +321,6 @@ public class WaterPepperFragment extends Fragment {
         ContextCompat.startForegroundService(context, wateringIntent);
         animationDroppingWater.start();
         refreshRecyclerView();
-        buildNotification();
-    }
-
-    private void buildNotification() {
-        notification = new NotificationCompat.Builder(context,WateringChannel.ID_OF_CHANNEL_2)
-                .setSmallIcon(R.drawable.icon_drop_of_water)
-                .setContentTitle(titleOfNotification)
-                .setContentText("Trwa podlewanie")
-                .setPriority(NotificationCompat.PRIORITY_LOW)
-                .setOngoing(true)
-                .setOnlyAlertOnce(true)
-                .setProgress(times[actualRound-1]*60, 0, true);
-
-        notificationManager = NotificationManagerCompat.from(context);
-        notificationManager.notify(2, notification.build());
-
-        thread = new Thread(() -> {
-            SystemClock.sleep(1000);
-            for (int progress = 1; progress <= times[actualRound-1]*60; progress++) {
-                if(timerEnabled) {
-                    notification.setProgress(times[actualRound-1]*60, progress, false);
-                    notification.setContentTitle(titleOfNotification);
-                    notificationManager.notify(2, notification.build());
-                    SystemClock.sleep(1000);
-                }
-                else
-                    break;
-            }
-            notification.setContentText(contentOfNotification)
-                    .setProgress(0, 0, false)
-                    .setContentTitle(titleOfNotification)
-                    .setContentText(contentOfNotification)
-                    .setOngoing(false);
-            notificationManager.notify(2, notification.build());
-        });
-        thread.start();
     }
 
     private void openAttentionDialog() {
@@ -395,10 +352,6 @@ public class WaterPepperFragment extends Fragment {
             editor.apply();
             attentionDialog.dismiss();
             timerEnabled=false;
-            notificationManager.cancelAll();
-            thread.interrupt();
-            contentOfNotification = "Podlewanie zostało przerwane!";
-            titleOfNotification = "Uwaga!";
             toast.showErrorToast(context, "UWAGA!\n" + "  Przerwałeś nawadnianie plantacji!", R.drawable.icon_drop_of_water);
             requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ControlOfWaterFragment()).commit();
         });

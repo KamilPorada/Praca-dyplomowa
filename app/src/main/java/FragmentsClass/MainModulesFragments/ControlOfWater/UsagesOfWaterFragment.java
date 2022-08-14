@@ -1,8 +1,6 @@
 package FragmentsClass.MainModulesFragments.ControlOfWater;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,7 +11,6 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -25,15 +22,10 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.util.ArrayList;
 
-import DataBase.SharedPreferencesNames;
 import HelperClasses.InformationDialog;
 import HelperClasses.StatisticsHelper;
 import HelperClasses.ToolClass;
@@ -79,16 +71,12 @@ public class UsagesOfWaterFragment extends Fragment {
     }
 
     private void createListeners() {
-        buttonComeBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ControlOfWaterFragment()).commit();
-            }
-        });
+        buttonComeBack.setOnClickListener(v -> requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ControlOfWaterFragment()).commit());
     }
 
     private void createChart() {
         ArrayList<BarEntry> months = new ArrayList<>();
+        months.add(new BarEntry(5, (float) StatisticsHelper.calculateMonthlyUsagesOfWater(context,5, ToolClass.getActualYear())));
         months.add(new BarEntry(6, (float) StatisticsHelper.calculateMonthlyUsagesOfWater(context,6, ToolClass.getActualYear())));
         months.add(new BarEntry(7, (float) StatisticsHelper.calculateMonthlyUsagesOfWater(context,7, ToolClass.getActualYear())));
         months.add(new BarEntry(8, (float) StatisticsHelper.calculateMonthlyUsagesOfWater(context,8, ToolClass.getActualYear())));
@@ -124,7 +112,11 @@ public class UsagesOfWaterFragment extends Fragment {
         xAxis.setValueFormatter(new ValueFormatter() {
             @Override
             public String getAxisLabel(float value, AxisBase axis) {
-                if(Math.round(value)==6)
+                if(Math.round(value)==4)
+                    return "Kwiecień";
+                else if(Math.round(value)==5)
+                    return "Maj";
+                else if(Math.round(value)==6)
                     return "Czerwiec";
                 else if(Math.round(value)==7)
                     return "Lipiec";

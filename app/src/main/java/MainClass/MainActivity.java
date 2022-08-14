@@ -35,6 +35,7 @@ import FragmentsClass.BottomFragments.AboutApplicationFragment;
 import FragmentsClass.BottomFragments.FarmFragment;
 import FragmentsClass.BottomFragments.HomeFragment;
 import FragmentsClass.MainModulesFragments.Calculators.CalculatorsFragment;
+import FragmentsClass.MainModulesFragments.ControlOfWater.WaterPepperFragment;
 import FragmentsClass.MainModulesFragments.IncomeDaily.IncomeDailyFragment;
 import HelperClasses.AlarmReceiver;
 import HelperClasses.NotificationHelper;
@@ -53,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         findViews();
         startSettings();
         createListeners();
@@ -88,8 +88,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerToggle.syncState();
         toolSeason.setText(toolSeason.getText()+" "+ ToolClass.getActualYear());
         ToolClass.clearTemporaryCurrentOperations(this);
-
-
     }
 
     @SuppressLint("NonConstantResourceId")

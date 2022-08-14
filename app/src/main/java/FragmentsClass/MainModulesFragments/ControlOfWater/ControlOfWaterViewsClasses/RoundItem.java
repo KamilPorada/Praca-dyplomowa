@@ -1,9 +1,9 @@
 package FragmentsClass.MainModulesFragments.ControlOfWater.ControlOfWaterViewsClasses;
 
 public class RoundItem {
-    private int IId;
-    private String IHighgroves;
-    private String ITime;
+    private final int IId;
+    private final String IHighgroves;
+    private final String ITime;
 
     public RoundItem(int id, String highgroves, String time) {
         this.IId = id;

@@ -1,13 +1,13 @@
 package FragmentsClass.MainModulesFragments.ControlOfWater.ControlOfWaterViewsClasses;
 
 public class WateringItem {
-    private int IId;
-    private double IEfficiency;
-    private String IDate;
-    private String IHighgroves;
-    private String ITime;
-    private String IUsageOfWater;
-    private int IStatus;
+    private final int IId;
+    private final double IEfficiency;
+    private final String IDate;
+    private final String IHighgroves;
+    private final String ITime;
+    private final String IUsageOfWater;
+    private final int IStatus;
 
     public WateringItem(int id, double efficiency, String date, String highgroves, String time, String usageOfWater, int status) {
         this.IId = id;

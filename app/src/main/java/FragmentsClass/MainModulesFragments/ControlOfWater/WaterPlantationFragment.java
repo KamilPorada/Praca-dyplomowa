@@ -6,7 +6,6 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -15,13 +14,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,20 +28,12 @@ import com.example.pracadyplomowa.R;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Objects;
 
 import DataBase.DataBaseHelper;
-import DataBase.DataBaseNames;
 import DataBase.SharedPreferencesNames;
 import FragmentsClass.MainModulesFragments.ControlOfWater.ControlOfWaterViewsClasses.RoundAdapter;
 import FragmentsClass.MainModulesFragments.ControlOfWater.ControlOfWaterViewsClasses.RoundItem;
-import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsFragment;
-import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsViewsClasses.OutgoingsSpinnerAdapter;
-import FragmentsClass.MainModulesFragments.IncomeDaily.OutgoingsViewsClasses.OutgoingsSpinnerItem;
-import FragmentsClass.MainModulesFragments.Operations.CatalogOfOperationsFragment;
-import FragmentsClass.MainModulesFragments.Operations.CatalogPesticidesClasses.CatalogOfPesticideAdapter;
-import FragmentsClass.MainModulesFragments.Operations.CatalogPesticidesClasses.CatalogOfPesticideItem;
 import HelperClasses.InformationDialog;
 import HelperClasses.ShowToast;
 import HelperClasses.ToolClass;
@@ -119,25 +106,22 @@ public class WaterPlantationFragment extends Fragment {
 
     private void createListeners() {
 
-        View.OnClickListener imageListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int id =v.getId();
-                switch (id)
+        @SuppressLint("NonConstantResourceId") View.OnClickListener imageListener = v -> {
+            int id =v.getId();
+            switch (id)
+            {
+                case R.id.save_efficiency_button:
                 {
-                    case R.id.save_efficiency_button:
-                    {
-                        saveEfficiencyOfPump();
-                    }break;
-                    case R.id.edit_date_button:
-                    {
-                        openEditDataDialog();
-                    }break;
-                    case R.id.add_round_button:
-                    {
-                        openAddTimeAndHighgroveDialog();
-                    }break;
-                }
+                    saveEfficiencyOfPump();
+                }break;
+                case R.id.edit_date_button:
+                {
+                    openEditDataDialog();
+                }break;
+                case R.id.add_round_button:
+                {
+                    openAddTimeAndHighgroveDialog();
+                }break;
             }
         };
 
@@ -145,23 +129,20 @@ public class WaterPlantationFragment extends Fragment {
         editDateButton.setOnClickListener(imageListener);
         addRoundButton.setOnClickListener(imageListener);
 
-        View.OnClickListener buttonListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int id = v.getId();
-                switch (id)
+        @SuppressLint("NonConstantResourceId") View.OnClickListener buttonListener = v -> {
+            int id = v.getId();
+            switch (id)
+            {
+                case R.id.button_accept:
                 {
-                    case R.id.button_accept:
-                    {
-                        validateData();
-                    }break;
-                    case R.id.button_cancel:
-                    {
-                        ShowToast toast = new ShowToast();
-                        toast.showErrorToast(context, "UWAGA!\n" + "  Przerwałeś planowanie nawadniania!", R.drawable.icon_information);
-                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ControlOfWaterFragment()).commit();
-                    }break;
-                }
+                    validateData();
+                }break;
+                case R.id.button_cancel:
+                {
+                    ShowToast toast = new ShowToast();
+                    toast.showErrorToast(context, "UWAGA!\n" + "  Przerwałeś planowanie nawadniania!", R.drawable.icon_information);
+                    requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ControlOfWaterFragment()).commit();
+                }break;
             }
         };
 
@@ -191,7 +172,7 @@ public class WaterPlantationFragment extends Fragment {
         }
         else
         {
-            if(howEfficiency.getText().toString().compareTo("")!=0){
+            if(Objects.requireNonNull(howEfficiency.getText()).toString().compareTo("")!=0){
                 editor.putFloat(SharedPreferencesNames.ToolSharedPreferences.EFFICIENCY_OF_PUMP, Float.parseFloat(howEfficiency.getText().toString()));
                 editor.apply();
                 howEfficiency.setEnabled(false);
@@ -257,40 +238,37 @@ public class WaterPlantationFragment extends Fragment {
         Button acceptButton = addTimeAndHighgroveDialog.findViewById(R.id.accept_button);
         Button cancelButton = addTimeAndHighgroveDialog.findViewById(R.id.cancel_button);
 
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ShowToast toast = new ShowToast();
-                int id = v.getId();
-                switch (id)
+        @SuppressLint("NonConstantResourceId") View.OnClickListener listener = v -> {
+            ShowToast toast = new ShowToast();
+            int id = v.getId();
+            switch (id)
+            {
+                case R.id.cancel_button:
                 {
-                    case R.id.cancel_button:
+                    addTimeAndHighgroveDialog.dismiss();
+                }break;
+                case R.id.accept_button:
+                {
+                    if(Objects.requireNonNull(howHighgroves.getText()).toString().compareTo("")!=0 &&
+                       Objects.requireNonNull(howTime.getText()).toString().compareTo("")!=0)
                     {
-                        addTimeAndHighgroveDialog.dismiss();
-                    }break;
-                    case R.id.accept_button:
-                    {
-                        if(howHighgroves.getText().toString().compareTo("")!=0 &&
-                           howTime.getText().toString().compareTo("")!=0)
-                        {
-                            if(highgroves+Integer.parseInt(howHighgroves.getText().toString())>ToolClass.getHighgroves(context))
-                                toast.showErrorToast(context, "Zbyt duża liczba tuneli!\n" + "  Posiadasz " + (int)ToolClass.getHighgroves(context) + " tuneli foliowych!", R.drawable.icon_information);
-                            else {
-                                amountOfHighgrovesInEachRound = amountOfHighgrovesInEachRound + howHighgroves.getText().toString() + "|";
-                                timesOfEachRound = timesOfEachRound + howTime.getText().toString() + "|";
-                                roundItems.add(new RoundItem(roundsOfWatering, howHighgroves.getText().toString(), howTime.getText().toString()));
-                                roundsOfWatering++;
-                                highgroves=highgroves+Integer.parseInt(howHighgroves.getText().toString());
-                                recyclerView.setHasFixedSize(true);
-                                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
-                                RoundAdapter adapter = new RoundAdapter(roundItems);
-                                recyclerView.setLayoutManager(layoutManager);
-                                recyclerView.setAdapter(adapter);
-                            }
+                        if(highgroves+Integer.parseInt(howHighgroves.getText().toString())>ToolClass.getHighgroves(context))
+                            toast.showErrorToast(context, "Zbyt duża liczba tuneli!\n" + "  Posiadasz " + (int)ToolClass.getHighgroves(context) + " tuneli foliowych!", R.drawable.icon_information);
+                        else {
+                            amountOfHighgrovesInEachRound = amountOfHighgrovesInEachRound + howHighgroves.getText().toString() + "|";
+                            timesOfEachRound = timesOfEachRound + howTime.getText().toString() + "|";
+                            roundItems.add(new RoundItem(roundsOfWatering, howHighgroves.getText().toString(), howTime.getText().toString()));
+                            roundsOfWatering++;
+                            highgroves=highgroves+Integer.parseInt(howHighgroves.getText().toString());
+                            recyclerView.setHasFixedSize(true);
+                            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
+                            RoundAdapter adapter = new RoundAdapter(roundItems);
+                            recyclerView.setLayoutManager(layoutManager);
+                            recyclerView.setAdapter(adapter);
                         }
-                        addTimeAndHighgroveDialog.dismiss();
-                    }break;
-                }
+                    }
+                    addTimeAndHighgroveDialog.dismiss();
+                }break;
             }
         };
         cancelButton.setOnClickListener(listener);
@@ -304,7 +282,7 @@ public class WaterPlantationFragment extends Fragment {
         else {
             if(ToolClass.checkValidateData(howDate.getText().toString()))
                 if(ToolClass.checkValidateYear(howDate.getText().toString()))
-                    if(Objects.requireNonNull(amountOfHighgrovesInEachRound.compareTo("")!=0))
+                    if(amountOfHighgrovesInEachRound.compareTo("")!=0)
                         addItem();
                     else
                         toast.showErrorToast(context, "Brak dodanych tur!\n" + "  Dodaj turę podlewania!", R.drawable.image_drop_of_water);
@@ -318,13 +296,11 @@ public class WaterPlantationFragment extends Fragment {
     private void addItem() {
         ShowToast toast = new ShowToast();
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
-        dataBaseHelper.addWaterPlantation(Double.parseDouble(howEfficiency.getText().toString()), howDate.getText().toString(),
+        dataBaseHelper.addWaterPlantation(Double.parseDouble(Objects.requireNonNull(howEfficiency.getText()).toString()), howDate.getText().toString(),
                                           amountOfHighgrovesInEachRound, timesOfEachRound, --roundsOfWatering, 0);
         toast.showSuccessfulToast(context, "SUKCES\n" + "  Pomyślnie zaplanowałeś podlewanie plantacji!");
         requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ControlOfWaterFragment()).commit();
-
     }
-
 }
 
 
