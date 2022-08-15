@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/calculators_layout"
+    android:layout_marginTop="55dp"
+    android:layout_marginBottom="70dp">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/title_block"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/shape_rectangle_with_top_and_bottom_line">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <ImageView
+                android:id="@+id/title_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/title"
+                android:src="@drawable/image_add_location"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/title_image"
+                android:layout_marginLeft="20dp"
+                android:textSize="30sp"
+                android:textColor="@color/white"
+                android:textAlignment="textStart"
+                android:fontFamily="@font/crete_round"
+                android:text="Nowa\nlokalizacja"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/first_block"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/title_block"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/shape_bottom_line">
+
+        <TextView
+            android:id="@+id/title_of_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:textColor="@color/blackToWhite"
+            android:textSize="20sp"
+            android:layout_marginLeft="-2dp"
+            android:fontFamily="@font/crete_round"
+            android:text="Nazwa lokalizacji:"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/how_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:startIconDrawable="@drawable/icon_place"
+            app:startIconTint="@color/mainColor"
+            app:endIconMode="clear_text"
+            app:layout_constraintTop_toBottomOf="@id/title_of_location"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="30"
+                android:inputType="text"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/second_block"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/first_block"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/shape_bottom_line">
+
+        <TextView
+            android:id="@+id/title_of_world"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textColor="@color/blackToWhite"
+            android:textSize="22sp"
+            android:fontFamily="@font/alata"
+            android:textAlignment="center"
+            android:text="Kliknij aby wczytać\nwspółrzędne geograficzne"
+            />
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:layout_constraintTop_toBottomOf="@id/title_of_world"
+            app:layout_constraintBottom_toTopOf="@id/how_coordinate"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_margin="20dp"
+            android:src="@drawable/icon_my_location"
+            app:tint="@color/blackToWhite"
+            />
+
+        <TextView
+            android:id="@+id/how_coordinate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/image"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textColor="@color/blackToWhite"
+            android:textSize="28sp"
+            android:fontFamily="@font/rajdhani"
+            android:textAlignment="center"
+            android:textFontWeight="1000"
+            android:text="52°15′N 21°00′E"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/second_block"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:background="@drawable/shape_button"
+        android:textColor="@color/white"
+        android:text="Zapisz"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+

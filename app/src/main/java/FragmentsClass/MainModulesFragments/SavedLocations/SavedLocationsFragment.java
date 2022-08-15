@@ -70,7 +70,7 @@ public class SavedLocationsFragment extends Fragment {
             {
                 case R.id.btn_add_location:
                 {
-
+                    fragment = new AddLocationFragment();
                 }break;
                 case R.id. btn_daily_of_locations:
                 {
