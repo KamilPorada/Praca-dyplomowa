@@ -24,6 +24,7 @@ import FragmentsClass.MainModulesFragments.ControlOfWater.ControlOfWaterFragment
 import FragmentsClass.MainModulesFragments.IncomeDaily.IncomeDailyFragment;
 import FragmentsClass.MainModulesFragments.Notes.NotesFragment;
 import FragmentsClass.MainModulesFragments.Operations.OperationsFragment;
+import FragmentsClass.MainModulesFragments.SavedLocations.SavedLocationsFragment;
 import HelperClasses.InformationDialog;
 import HelperClasses.ToolClass;
 
@@ -114,7 +115,7 @@ public class HomeFragment extends Fragment {
                 }break;
                 case R.id.btn_important_places:
                 {
-
+                    fragment = new SavedLocationsFragment();
                 }break;
             }
             requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
