@@ -74,7 +74,7 @@ public class SavedLocationsFragment extends Fragment {
                 }break;
                 case R.id. btn_daily_of_locations:
                 {
-
+                    fragment = new DailyOfLocationsFragment();
                 }break;
                 case R.id.btn_poland_with_locations:
                 {

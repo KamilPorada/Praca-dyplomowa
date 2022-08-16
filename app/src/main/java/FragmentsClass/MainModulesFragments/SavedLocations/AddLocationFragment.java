@@ -2,6 +2,7 @@ package FragmentsClass.MainModulesFragments.SavedLocations;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.AnimationDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -23,7 +24,6 @@ import com.example.pracadyplomowa.R;
 import com.google.android.material.textfield.TextInputEditText;
 
 import DataBase.DataBaseHelper;
-import FragmentsClass.MainModulesFragments.Operations.OperationsFragment;
 import HelperClasses.InformationDialog;
 import HelperClasses.ShowToast;
 import HelperClasses.ToolClass;
@@ -33,9 +33,12 @@ public class AddLocationFragment extends Fragment {
     private Context context;
     private TextInputEditText howLocation;
     private ImageView image, buttonComeBack;
-    private TextView howCoordinate;
+    private TextView howCoordinate, titleOfWorld;
     private Button buttonSave;
 
+    private LocationManager locationManager;
+    private LocationListener listener;
+    private AnimationDrawable roundingWorldAnimation;
     private boolean readCoordinate = false;
     private double latitude, longitude;
 
@@ -70,6 +73,7 @@ public class AddLocationFragment extends Fragment {
         howLocation = view.findViewById(R.id.location);
         image = view.findViewById(R.id.image);
         howCoordinate = view.findViewById(R.id.how_coordinate);
+        titleOfWorld = view.findViewById(R.id.title_of_world);
         buttonSave = view.findViewById(R.id.button_save);
         buttonComeBack = view.findViewById(R.id.button_come_back);
     }
@@ -92,14 +96,21 @@ public class AddLocationFragment extends Fragment {
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-                LocationListener listener = new LocationListener() {
+                locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+                listener = new LocationListener() {
                     @Override
                     public void onLocationChanged(@NonNull Location location) {
                         latitude = location.getLatitude();
                         longitude = location.getLongitude();
                         howCoordinate.setText(ToolClass.generateStringCoordinate(latitude) + "N\n" +
                                               ToolClass.generateStringCoordinate(longitude) + "E");
+                        image.setImageResource(R.drawable.image_empty_background);
+                        image.setBackgroundResource(R.drawable.animation_rounding_world);
+                        roundingWorldAnimation = (AnimationDrawable) image.getBackground();
+                        roundingWorldAnimation.start();
+                        titleOfWorld.setText("Prawidłowo odczytano\nwspółrzędne geograficzne!");
+                        if(!readCoordinate)
+                            image.animate().scaleYBy(0.2f).scaleXBy(0.2f).setDuration(3000);
                         readCoordinate = true;
                     }
                 };
@@ -107,6 +118,7 @@ public class AddLocationFragment extends Fragment {
                     && ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     return;
                 }
+                image.setClickable(false);
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, listener);
             }
         });
@@ -130,6 +142,8 @@ public class AddLocationFragment extends Fragment {
         db.addLocation(howLocation.getText().toString(),latitude,longitude);
         ShowToast toast = new ShowToast();
         toast.showSuccessfulToast(context, "SUKCES\n" + "  Pomyślnie zapisałeś lokalizacje!");
+        locationManager.removeUpdates(listener);
+        roundingWorldAnimation.stop();
         requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SavedLocationsFragment()).commit();
     }
 }
