@@ -22,6 +22,8 @@ import androidx.fragment.app.Fragment;
 import com.example.pracadyplomowa.R;
 import com.google.android.material.textfield.TextInputEditText;
 
+import DataBase.DataBaseHelper;
+import FragmentsClass.MainModulesFragments.Operations.OperationsFragment;
 import HelperClasses.InformationDialog;
 import HelperClasses.ShowToast;
 import HelperClasses.ToolClass;
@@ -35,6 +37,7 @@ public class AddLocationFragment extends Fragment {
     private Button buttonSave;
 
     private boolean readCoordinate = false;
+    private double latitude, longitude;
 
     @Nullable
     @Override
@@ -93,16 +96,10 @@ public class AddLocationFragment extends Fragment {
                 LocationListener listener = new LocationListener() {
                     @Override
                     public void onLocationChanged(@NonNull Location location) {
-//                        howCoordinate.setText(String.valueOf(location.getLatitude()) + "   " + location.getLongitude());
-                        double x = location.getLatitude();
-                        double y = location.getLongitude();
-                        //1° = 60`
-                        //różnica = x`
-
-
-
-                        howCoordinate.setText(ToolClass.generateStringCoordinate(x) + "N\n" + ToolClass.generateStringCoordinate(y) + "E");
-                        System.out.println(Math.round(Math.abs(100*(Math.abs(60*(x-(Math.round(x)-1))-1)-Math.abs(Math.round(60*(x-(Math.round(x)-1)))-1)))));
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
+                        howCoordinate.setText(ToolClass.generateStringCoordinate(latitude) + "N\n" +
+                                              ToolClass.generateStringCoordinate(longitude) + "E");
                         readCoordinate = true;
                     }
                 };
@@ -129,6 +126,11 @@ public class AddLocationFragment extends Fragment {
     }
 
     private void addToDatabase() {
+        DataBaseHelper db = new DataBaseHelper(context);
+        db.addLocation(howLocation.getText().toString(),latitude,longitude);
+        ShowToast toast = new ShowToast();
+        toast.showSuccessfulToast(context, "SUKCES\n" + "  Pomyślnie zapisałeś lokalizacje!");
+        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SavedLocationsFragment()).commit();
     }
 }
 

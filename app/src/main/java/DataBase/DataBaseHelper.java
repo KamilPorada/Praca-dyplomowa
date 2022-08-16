@@ -88,12 +88,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 DataBaseNames.WaterPlantationItem.COLUMN_STATUS + " INTEGER NOT NULL" +
                 ");";
 
+        final String CREATE_TABLE_LOCATIONS = "CREATE TABLE " +
+                DataBaseNames.LocationItem.TABLE_NAME + " (" +
+                DataBaseNames.LocationItem._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                DataBaseNames.LocationItem.COLUMN_NAME_OF_LOCATION + " TEXT NOT NULL," +
+                DataBaseNames.LocationItem.COLUMN_LATITUDE + " REAL NOT NULL," +
+                DataBaseNames.LocationItem.COLUMN_LONGITUDE + " REAL NOT NULL" +
+                ");";
+
         db.execSQL(CREATE_TABLE_TRADE_OF_PEPPER_ITEM);
         db.execSQL(CREATE_TABLE_OUTGOINGS);
         db.execSQL(CREATE_TABLE_CATALOG_OF_PESTICIDES);
         db.execSQL(CREATE_TABLE_OPERATIONS);
         db.execSQL(CREATE_TABLE_NOTES);
         db.execSQL(CREATE_TABLE_WATER_PLANTATION);
+        db.execSQL(CREATE_TABLE_LOCATIONS);
 
         ToolClass.fillCatalogOfPesticides(db);
     }
@@ -107,7 +116,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + DataBaseNames.PesticidesItem.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DataBaseNames.NotesItem.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DataBaseNames.WaterPlantationItem.TABLE_NAME);
-
+        db.execSQL("DROP TABLE IF EXISTS " + DataBaseNames.LocationItem.TABLE_NAME);
 
         onCreate(db);
     }
@@ -418,6 +427,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(DataBaseNames.WaterPlantationItem.COLUMN_STATUS,status);
 
         db.update(DataBaseNames.WaterPlantationItem.TABLE_NAME,values,DataBaseNames.WaterPlantationItem._ID + " LIKE " + id,null);
+    }
+
+    public void addLocation(String name, double latitude, double longitude) {
+        SQLiteDatabase db=getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(DataBaseNames.LocationItem.COLUMN_NAME_OF_LOCATION,name);
+        values.put(DataBaseNames.LocationItem.COLUMN_LATITUDE,latitude);
+        values.put(DataBaseNames.LocationItem.COLUMN_LONGITUDE,longitude);
+
+        db.insertOrThrow(DataBaseNames.LocationItem.TABLE_NAME,null,values);
     }
 
 }
