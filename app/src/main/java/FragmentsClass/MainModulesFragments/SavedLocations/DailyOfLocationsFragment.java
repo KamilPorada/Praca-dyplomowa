@@ -1,25 +1,44 @@
 package FragmentsClass.MainModulesFragments.SavedLocations;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
+import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pracadyplomowa.R;
 
+import java.util.ArrayList;
+
+import DataBase.DataBaseHelper;
+import DataBase.DataBaseNames;
+import FragmentsClass.MainModulesFragments.Notes.MyNotesFragment;
+import FragmentsClass.MainModulesFragments.SavedLocations.SavedLocationsViewsClasses.LocationAdapter;
+import FragmentsClass.MainModulesFragments.SavedLocations.SavedLocationsViewsClasses.LocationItem;
 import HelperClasses.InformationDialog;
+import HelperClasses.ShowToast;
 
 public class DailyOfLocationsFragment extends Fragment {
 
     private Context context;
+    private final ArrayList<LocationItem> locationItems = new ArrayList<>();
+    private ImageView buttonComeBack;
+    private RecyclerView recyclerView;
 
     @Nullable
     @Override
@@ -29,6 +48,8 @@ public class DailyOfLocationsFragment extends Fragment {
         context=container.getContext();
         findViews(view);
         createListeners();
+        startSettings();
+        loadData();
         return view;
     }
 
@@ -49,11 +70,92 @@ public class DailyOfLocationsFragment extends Fragment {
     }
 
     private void findViews(View view) {
-
+        buttonComeBack = view.findViewById(R.id.button_come_back);
+        recyclerView=view.findViewById(R.id.recycler_view);
     }
 
     private void createListeners() {
+        buttonComeBack.setOnClickListener(v -> requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SavedLocationsFragment()).commit());
+    }
 
+    private void startSettings() {
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
+        LocationAdapter adapter = new LocationAdapter(locationItems);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new LocationAdapter.OnItemClickListener() {
+            @Override
+            public void onShowClick(int position) {
+
+            }
+
+            @Override
+            public void onDeleteClick(int position) {
+                openDialogQuestion(position);
+            }
+        });
+    }
+
+    private void loadData()
+    {
+        DataBaseHelper db = new DataBaseHelper(context);
+        Cursor c = db.getLocations();
+        while (c.moveToNext())
+        {
+            int id = c.getInt(c.getColumnIndexOrThrow(DataBaseNames.LocationItem._ID));
+            String name = c.getString(c.getColumnIndexOrThrow(DataBaseNames.LocationItem.COLUMN_NAME_OF_LOCATION));
+            double latitude = c.getDouble(c.getColumnIndexOrThrow(DataBaseNames.LocationItem.COLUMN_LATITUDE));
+            double longitude = c.getDouble(c.getColumnIndexOrThrow(DataBaseNames.LocationItem.COLUMN_LONGITUDE));
+
+            locationItems.add(new LocationItem(id,name,latitude,longitude));
+        }
+    }
+
+    // ------------------------DELETE ITEM WINDOW EVENTS---------------------------//
+
+    private void openDialogQuestion(int position) {
+        Dialog questionWindow = new Dialog(context);
+        questionWindow.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
+        questionWindow.setContentView(R.layout.dialog_question);
+        questionWindow.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        questionWindow.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        questionWindow.show();
+        createAndAddListener(questionWindow, position);
+    }
+
+
+    private void createAndAddListener(Dialog questionWindow, int position) {
+        Button cancelButton = questionWindow.findViewById(R.id.cancel_button);
+        Button deleteButton = questionWindow.findViewById(R.id.delete_button);
+        @SuppressLint("NonConstantResourceId") View.OnClickListener listener = v -> {
+            int id=v.getId();
+            switch (id)
+            {
+                case R.id.cancel_button:
+                {
+                    questionWindow.dismiss();
+                }break;
+                case R.id.delete_button:
+                {
+                    deleteItem(position);
+                    questionWindow.dismiss();
+                }break;
+            }
+        };
+        cancelButton.setOnClickListener(listener);
+        deleteButton.setOnClickListener(listener);
+    }
+
+    private void deleteItem(int position) {
+        DataBaseHelper db = new DataBaseHelper(context);
+        db.deleteItem(DataBaseNames.LocationItem.TABLE_NAME,locationItems.get(position).getIId());
+        ShowToast toast = new ShowToast();
+        toast.showSuccessfulToast(context, "SUKCES\n" + "  Pomyślnie usunąłeś lokalizację!");
+        Fragment fragment = new DailyOfLocationsFragment();
+        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+        loadData();
     }
 }
 

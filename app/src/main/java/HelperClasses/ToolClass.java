@@ -528,7 +528,7 @@ public  class ToolClass {
         int grade = (int) Math.round(coordinate-1);
         int minutes = (int) Math.abs(Math.round(60*(coordinate-(Math.round(coordinate)-1)))-1);
         int secundes = (int) Math.round(Math.abs(100*(Math.abs(60*(coordinate-(Math.round(coordinate)-1))-1)-Math.abs(Math.round(60*(coordinate-(Math.round(coordinate)-1)))-1))));
-        return grade+"° " + minutes + "' " + secundes + "'' ";
+        return grade+"°" + minutes + "'" + secundes + "''";
     }
 
 

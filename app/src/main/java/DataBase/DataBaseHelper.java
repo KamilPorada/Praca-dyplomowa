@@ -439,5 +439,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.insertOrThrow(DataBaseNames.LocationItem.TABLE_NAME,null,values);
     }
 
+    public Cursor getLocations(){
+        String[] columns={DataBaseNames.LocationItem._ID, DataBaseNames.LocationItem.COLUMN_NAME_OF_LOCATION,
+                          DataBaseNames.LocationItem.COLUMN_LATITUDE, DataBaseNames.LocationItem.COLUMN_LONGITUDE};
+        SQLiteDatabase db =getReadableDatabase();
+        return db.query(DataBaseNames.LocationItem.TABLE_NAME,columns, null,null,null,null,null);
+    }
+
 }
 
