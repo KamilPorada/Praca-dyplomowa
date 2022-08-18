@@ -3,6 +3,7 @@ package FragmentsClass.MainModulesFragments.SavedLocations;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -27,6 +28,8 @@ import java.util.ArrayList;
 
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
+import DataBase.SharedPreferencesNames;
+import FragmentsClass.MainModulesFragments.Notes.AddNoteFragment;
 import FragmentsClass.MainModulesFragments.Notes.MyNotesFragment;
 import FragmentsClass.MainModulesFragments.SavedLocations.SavedLocationsViewsClasses.LocationAdapter;
 import FragmentsClass.MainModulesFragments.SavedLocations.SavedLocationsViewsClasses.LocationItem;
@@ -88,7 +91,11 @@ public class DailyOfLocationsFragment extends Fragment {
         adapter.setOnItemClickListener(new LocationAdapter.OnItemClickListener() {
             @Override
             public void onShowClick(int position) {
-
+                SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt(SharedPreferencesNames.ToolSharedPreferences.POSITION_OF_LOCATION_RV, locationItems.get(position).getIId());
+                editor.apply();
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DetailsOfLocationFragment()).commit();
             }
 
             @Override

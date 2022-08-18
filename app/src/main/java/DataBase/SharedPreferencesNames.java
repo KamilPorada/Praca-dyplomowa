@@ -18,6 +18,7 @@ public class SharedPreferencesNames {
         public static final String POSITION_OF_NOTE_RV = "POSITION_OF_NOTE_RV";
         public static final String EFFICIENCY_OF_PUMP = "EFFICIENCY_OF_PUMP";
         public static final String POSITION_OF_WATERING_RV = "POSITION_OF_WATERING_RV";
+        public static final String POSITION_OF_LOCATION_RV = "POSITION_OF_LOCATION_RV";
     }
 
     public static final class TemporaryCurrentOperations{
@@ -59,6 +60,5 @@ public class SharedPreferencesNames {
         public static final String THIRD_SETTING = "THIRD_SETTING";
         public static final String FOURTH_SETTING = "FOURTH_SETTING";
         public static final String FIVETH_SETTING = "FIVETH_SETTING";
-
     }
 }
