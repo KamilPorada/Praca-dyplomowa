@@ -78,7 +78,7 @@ public class SavedLocationsFragment extends Fragment {
                 }break;
                 case R.id.btn_poland_with_locations:
                 {
-
+                    fragment = new MarketsOnMapFragment();
                 }break;
             }
             requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();

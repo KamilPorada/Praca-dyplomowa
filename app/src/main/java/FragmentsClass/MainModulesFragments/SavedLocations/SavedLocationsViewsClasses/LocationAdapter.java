@@ -33,7 +33,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
 
     public static class LocationViewHolder extends RecyclerView.ViewHolder {
         public TextView howLocation, howCoordinate;
-        public ImageButton showLocationButton, removeButton;
+        public ImageView showLocationButton, removeButton;
 
         public LocationViewHolder(View itemView, final LocationAdapter.OnItemClickListener listener) {
             super(itemView);

@@ -69,4 +69,16 @@ public class DataBaseNames {
         public static final String COLUMN_LATITUDE = "latitude";
         public static final String COLUMN_LONGITUDE = "longitude";
     }
+
+    public static final class MarketItem implements BaseColumns{
+        public static final String TABLE_NAME = "marketItem";
+        public static final String COLUMN_NAME = "name";
+        public static final String COLUMN_LATITUDE = "latitude";
+        public static final String COLUMN_LONGITUDE = "longitude";
+        public static final String COLUMN_ADDRESS = "address";
+        public static final String COLUMN_VOIVODESHIP = "voivodeship";
+        public static final String COLUMN_EMAIL = "email";
+        public static final String COLUMN_NUMBER = "number";
+        public static final String COLUMN_IMAGE = "image";
+    }
 }

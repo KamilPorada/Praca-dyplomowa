@@ -96,6 +96,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 DataBaseNames.LocationItem.COLUMN_LONGITUDE + " REAL NOT NULL" +
                 ");";
 
+        final String CREATE_TABLE_MARKETS = "CREATE TABLE " +
+                DataBaseNames.MarketItem.TABLE_NAME + " (" +
+                DataBaseNames.MarketItem._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                DataBaseNames.MarketItem.COLUMN_NAME + " TEXT NOT NULL," +
+                DataBaseNames.MarketItem.COLUMN_LATITUDE + " REAL NOT NULL," +
+                DataBaseNames.MarketItem.COLUMN_LONGITUDE + " REAL NOT NULL," +
+                DataBaseNames.MarketItem.COLUMN_ADDRESS + " TEXT NOT NULL," +
+                DataBaseNames.MarketItem.COLUMN_VOIVODESHIP + " TEXT NOT NULL," +
+                DataBaseNames.MarketItem.COLUMN_EMAIL + " TEXT NOT NULL," +
+                DataBaseNames.MarketItem.COLUMN_NUMBER + " TEXT NOT NULL," +
+                DataBaseNames.MarketItem.COLUMN_IMAGE + " INTEGER NOT NULL" +
+                ");";
+
         db.execSQL(CREATE_TABLE_TRADE_OF_PEPPER_ITEM);
         db.execSQL(CREATE_TABLE_OUTGOINGS);
         db.execSQL(CREATE_TABLE_CATALOG_OF_PESTICIDES);
@@ -103,8 +116,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_NOTES);
         db.execSQL(CREATE_TABLE_WATER_PLANTATION);
         db.execSQL(CREATE_TABLE_LOCATIONS);
+        db.execSQL(CREATE_TABLE_MARKETS);
 
         ToolClass.fillCatalogOfPesticides(db);
+        ToolClass.fillMarkets(db);
     }
 
 
@@ -117,6 +132,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + DataBaseNames.NotesItem.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DataBaseNames.WaterPlantationItem.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DataBaseNames.LocationItem.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DataBaseNames.MarketItem.TABLE_NAME);
 
         onCreate(db);
     }
@@ -451,6 +467,24 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                           DataBaseNames.LocationItem.COLUMN_LATITUDE, DataBaseNames.LocationItem.COLUMN_LONGITUDE};
         SQLiteDatabase db =getReadableDatabase();
         return db.query(DataBaseNames.LocationItem.TABLE_NAME, columns, DataBaseNames.LocationItem._ID + " LIKE " + id,null,null,null,null);
+    }
+
+    public Cursor getMarkets(){
+        String[] columns={DataBaseNames.MarketItem._ID, DataBaseNames.MarketItem.COLUMN_NAME, DataBaseNames.MarketItem.COLUMN_LATITUDE,
+                          DataBaseNames.MarketItem.COLUMN_LONGITUDE, DataBaseNames.MarketItem.COLUMN_ADDRESS, DataBaseNames.MarketItem.COLUMN_VOIVODESHIP,
+                          DataBaseNames.MarketItem.COLUMN_EMAIL, DataBaseNames.MarketItem.COLUMN_NUMBER, DataBaseNames.MarketItem.COLUMN_IMAGE};
+        SQLiteDatabase db =getReadableDatabase();
+        return db.query(DataBaseNames.MarketItem.TABLE_NAME,columns, null,null,null,null,null);
+    }
+
+    public Cursor getSpecifyMarkets(String title) {
+        String[] columns={DataBaseNames.MarketItem.COLUMN_ADDRESS, DataBaseNames.MarketItem.COLUMN_VOIVODESHIP,
+                          DataBaseNames.MarketItem.COLUMN_EMAIL, DataBaseNames.MarketItem.COLUMN_NUMBER,
+                          DataBaseNames.MarketItem.COLUMN_IMAGE};
+        String selection = DataBaseNames.MarketItem.COLUMN_NAME + " LIKE ?";
+        String[] selection_args= {title};
+        SQLiteDatabase db =getReadableDatabase();
+        return db.query(DataBaseNames.MarketItem.TABLE_NAME, columns, selection,selection_args,null,null,null);
     }
 
 }

@@ -531,5 +531,25 @@ public  class ToolClass {
         return grade+"°" + minutes + "'" + secundes + "''";
     }
 
+    private static String createMarketItemInsertQuery(String name, double latitude, double longitude, String address,
+                                                      String voivodeship, String email, String number, int image) {
+        return "INSERT INTO " + DataBaseNames.MarketItem.TABLE_NAME + "(" +
+                DataBaseNames.MarketItem.COLUMN_NAME + ", " +
+                DataBaseNames.MarketItem.COLUMN_LATITUDE + ", " +
+                DataBaseNames.MarketItem.COLUMN_LONGITUDE + ", " +
+                DataBaseNames.MarketItem.COLUMN_ADDRESS + ", " +
+                DataBaseNames.MarketItem.COLUMN_VOIVODESHIP + ", " +
+                DataBaseNames.MarketItem.COLUMN_EMAIL + ", " +
+                DataBaseNames.MarketItem.COLUMN_NUMBER + ", " +
+                DataBaseNames.MarketItem.COLUMN_IMAGE + ") VALUES (" +
+                "'" + name + "'" + ", " + "'" + latitude + "'" + ", " + "'" + longitude + "'" + ", " + "'" + address
+                + "'" + ", " + "'" + voivodeship + "'" + ", " + "'" + email + "'" + ", " + "'" + number + "'" + ", " +
+                "'" + image + "'" + ");";
+    }
 
+    public static void fillMarkets(SQLiteDatabase sqLiteDatabase)
+    {
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("DOLNOŚLĄSKIE CENTRUM HURTU ROLNO - SPOŻYWCZEGO S.A.", 51.067458015375365, 16.9672698131961,"Giełdowa 4, 52-438 Wrocław, Polska", "Dolnośląskie","www.dchrs.com.pl", "713-340-920", R.drawable.icon_location));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("LUBELSKI RYNEK HURTOWY S.A. ELIZÓWKA", 51.287933937949, 22.58066668302514, "Ciecierzyn 65, 21-003 Ciecierzyn, Polska", "Lubelskie", "info@elizowka.pl", "817-563-930", R.drawable.icon_location));
+    }
 }
