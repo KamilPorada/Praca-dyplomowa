@@ -1,8 +1,10 @@
 package FragmentsClass.MainModulesFragments.SavedLocations;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.drawable.AnimationDrawable;
 import android.location.Location;
 import android.location.LocationListener;
@@ -22,17 +24,31 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.pracadyplomowa.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.textfield.TextInputEditText;
 
 import DataBase.DataBaseHelper;
+import DataBase.DataBaseNames;
 import DataBase.SharedPreferencesNames;
 import HelperClasses.InformationDialog;
 import HelperClasses.ShowToast;
 import HelperClasses.ToolClass;
 
-public class DetailsOfLocationFragment extends Fragment {
+public class DetailsOfLocationFragment extends Fragment implements OnMapReadyCallback {
 
+    private GoogleMap locationMap;
     private Context context;
+
+    private TextView howLocation, howCoordinate;
+    private ImageView buttonComeBack;
+
+    private double latitude, longitude;
+    private String name;
 
     @Nullable
     @Override
@@ -41,6 +57,7 @@ public class DetailsOfLocationFragment extends Fragment {
         assert container != null;
         context = container.getContext();
         findViews(view);
+        startSettings();
         loadData();
         createListeners();
         return view;
@@ -63,17 +80,60 @@ public class DetailsOfLocationFragment extends Fragment {
     }
 
     private void findViews(View view) {
-
+        howLocation = view.findViewById(R.id.how_location);
+        howCoordinate = view.findViewById(R.id.how_coordinate);
+        buttonComeBack = view.findViewById(R.id.button_come_back);
     }
 
-    private void loadData()
-    {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME,Context.MODE_PRIVATE);
+    private void startSettings() {
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+    }
+
+    private void loadData() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME, Context.MODE_PRIVATE);
         int id = sharedPreferences.getInt(SharedPreferencesNames.ToolSharedPreferences.POSITION_OF_LOCATION_RV, 0);
+        DataBaseHelper db = new DataBaseHelper(context);
+        Cursor c = db.getSpecifyLocation(id);
+        c.moveToFirst();
+        name = c.getString(c.getColumnIndexOrThrow(DataBaseNames.LocationItem.COLUMN_NAME_OF_LOCATION));
+        latitude = c.getDouble(c.getColumnIndexOrThrow(DataBaseNames.LocationItem.COLUMN_LATITUDE));
+        longitude = c.getDouble(c.getColumnIndexOrThrow(DataBaseNames.LocationItem.COLUMN_LONGITUDE));
+
+        howLocation.setText(name);
+        howCoordinate.setText(ToolClass.generateStringCoordinate(latitude) + "N  " +
+                ToolClass.generateStringCoordinate(longitude) + "E");
+
     }
 
     private void createListeners() {
+        buttonComeBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DailyOfLocationsFragment()).commit();
+            }
+        });
+    }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        locationMap = googleMap;
+        LatLng location = new LatLng(latitude, longitude);
+        locationMap.addMarker(new MarkerOptions().position(location).title(name));
+        locationMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        locationMap.setMyLocationEnabled(true);
+        locationMap.getUiSettings().setMyLocationButtonEnabled(true);
+        locationMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 12.0f));
     }
 }
 

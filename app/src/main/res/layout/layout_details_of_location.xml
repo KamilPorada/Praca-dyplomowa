@@ -75,10 +75,11 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.fragment.app.FragmentContainerView
+    <fragment
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         app:layout_constraintTop_toBottomOf="@id/title_block"
         app:layout_constraintBottom_toBottomOf="parent"/>
 

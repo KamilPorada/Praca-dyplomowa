@@ -446,5 +446,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return db.query(DataBaseNames.LocationItem.TABLE_NAME,columns, null,null,null,null,null);
     }
 
+    public Cursor getSpecifyLocation(int id) {
+        String[] columns={DataBaseNames.LocationItem.COLUMN_NAME_OF_LOCATION,
+                          DataBaseNames.LocationItem.COLUMN_LATITUDE, DataBaseNames.LocationItem.COLUMN_LONGITUDE};
+        SQLiteDatabase db =getReadableDatabase();
+        return db.query(DataBaseNames.LocationItem.TABLE_NAME, columns, DataBaseNames.LocationItem._ID + " LIKE " + id,null,null,null,null);
+    }
+
 }
 
