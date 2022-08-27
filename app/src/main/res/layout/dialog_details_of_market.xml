@@ -40,21 +40,32 @@
             app:tint="@color/white" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/image_address"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/first_block"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/top"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="5dp"
+        >
+
+    <ImageView
+        android:id="@+id/image_address"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toTopOf="@id/how_address"
+        app:layout_constraintBottom_toBottomOf="@id/how_address"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:src="@drawable/icon_location"
-        app:tint="@color/blackToWhite" />
+        app:tint="@color/blackToWhite"
+        />
 
     <TextView
         android:id="@+id/how_address"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/image_address"
-        app:layout_constraintBottom_toBottomOf="@id/image_address"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@id/image_address"
         app:layout_constraintRight_toRightOf="parent"
         android:textColor="@color/blackToWhite"
@@ -65,11 +76,24 @@
         android:text="Giełdowa 4, 52-438 Wrocław, Polska"
         />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/second_block"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/first_block"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="5dp"
+        >
+
     <ImageView
         android:id="@+id/image_email"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        app:layout_constraintTop_toBottomOf="@id/image_address"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toTopOf="@id/how_email"
+        app:layout_constraintBottom_toBottomOf="@id/how_email"
         app:layout_constraintLeft_toLeftOf="parent"
         android:src="@drawable/icon_email"
         app:tint="@color/blackToWhite" />
@@ -78,8 +102,8 @@
         android:id="@+id/how_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/image_email"
-        app:layout_constraintBottom_toBottomOf="@id/image_email"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/image_email"
         app:layout_constraintRight_toRightOf="parent"
         android:textColor="@color/blackToWhite"
@@ -90,11 +114,24 @@
         android:text="www.dchrs.com.pl"
         />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/third_block"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/second_block"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="5dp"
+        >
+
     <ImageView
         android:id="@+id/image_telephone"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        app:layout_constraintTop_toBottomOf="@id/image_email"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toTopOf="@id/how_telephone"
+        app:layout_constraintBottom_toBottomOf="@id/how_telephone"
         app:layout_constraintLeft_toLeftOf="parent"
         android:src="@drawable/icon_telephone"
         app:tint="@color/blackToWhite" />
@@ -103,8 +140,7 @@
         android:id="@+id/how_telephone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/image_telephone"
-        app:layout_constraintBottom_toBottomOf="@id/image_telephone"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@id/image_telephone"
         app:layout_constraintRight_toRightOf="parent"
         android:textColor="@color/blackToWhite"
@@ -114,17 +150,20 @@
         android:textAlignment="center"
         android:text="713-340-920"
         />
-    
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-<!--    <Button-->
-<!--        android:id="@+id/btn_come_back"-->
-<!--        android:layout_width="130dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        android:text="Powrót"-->
-<!--        android:textColor="@color/white" />-->
+
+    <Button
+        android:id="@+id/btn_come_back"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toBottomOf="@id/third_block"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="Powrót"
+        android:textColor="@color/white" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

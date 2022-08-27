@@ -1,15 +1,20 @@
 package FragmentsClass.MainModulesFragments.SavedLocations;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -100,18 +105,13 @@ public class MarketsOnMapFragment extends Fragment implements OnMapReadyCallback
 
             LatLng location = new LatLng(latitude, longitude);
             Marker marker = locationMap.addMarker(new MarkerOptions().position(location).title(name));
-            marker.setSnippet(c.getString(c.getColumnIndexOrThrow(DataBaseNames.MarketItem.COLUMN_ADDRESS)));
-
+            marker.hideInfoWindow();
 
             locationMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
                     String title = marker.getTitle();
-                    DataBaseHelper db = new DataBaseHelper(context);
-                    Cursor c = db.getSpecifyMarkets(title);
-                    c.moveToFirst();
-                    ShowToast toast = new ShowToast();
-                    toast.showSuccessfulToast(context,c.getString(c.getColumnIndexOrThrow(DataBaseNames.MarketItem.COLUMN_VOIVODESHIP)));
+                    openMarketDialog(title);
                     return false;
                 }
             });
@@ -131,6 +131,38 @@ public class MarketsOnMapFragment extends Fragment implements OnMapReadyCallback
         locationMap.setMyLocationEnabled(true);
         locationMap.getUiSettings().setMyLocationButtonEnabled(true);
         locationMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(52.06, 19.2), 5.8f));
+    }
+
+    private void openMarketDialog(String title) {
+        Dialog marketDialog = new Dialog(context);
+        marketDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
+        marketDialog.setContentView(R.layout.dialog_details_of_market);
+        marketDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        marketDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        marketDialog.show();
+
+        TextView howLocation = marketDialog.findViewById(R.id.how_location);
+        TextView howAddress = marketDialog.findViewById(R.id.how_address);
+        TextView howEmail = marketDialog.findViewById(R.id.how_email);
+        TextView howTelephone = marketDialog.findViewById(R.id.how_telephone);
+        Button btnComeBack = marketDialog.findViewById(R.id.btn_come_back);
+
+        DataBaseHelper db = new DataBaseHelper(context);
+        Cursor c = db.getSpecifyMarkets(title);
+        c.moveToFirst();
+
+        howLocation.setText(title);
+        howAddress.setText(c.getString(c.getColumnIndexOrThrow(DataBaseNames.MarketItem.COLUMN_ADDRESS)));
+        howEmail.setText(c.getString(c.getColumnIndexOrThrow(DataBaseNames.MarketItem.COLUMN_EMAIL)));
+        howTelephone.setText(c.getString(c.getColumnIndexOrThrow(DataBaseNames.MarketItem.COLUMN_NUMBER)));
+
+        btnComeBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                marketDialog.dismiss();
+            }
+        });
+
     }
 }
 
