@@ -103,10 +103,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 DataBaseNames.MarketItem.COLUMN_LATITUDE + " REAL NOT NULL," +
                 DataBaseNames.MarketItem.COLUMN_LONGITUDE + " REAL NOT NULL," +
                 DataBaseNames.MarketItem.COLUMN_ADDRESS + " TEXT NOT NULL," +
-                DataBaseNames.MarketItem.COLUMN_VOIVODESHIP + " TEXT NOT NULL," +
                 DataBaseNames.MarketItem.COLUMN_EMAIL + " TEXT NOT NULL," +
-                DataBaseNames.MarketItem.COLUMN_NUMBER + " TEXT NOT NULL," +
-                DataBaseNames.MarketItem.COLUMN_IMAGE + " INTEGER NOT NULL" +
+                DataBaseNames.MarketItem.COLUMN_NUMBER + " TEXT NOT NULL" +
                 ");";
 
         db.execSQL(CREATE_TABLE_TRADE_OF_PEPPER_ITEM);
@@ -471,16 +469,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public Cursor getMarkets(){
         String[] columns={DataBaseNames.MarketItem._ID, DataBaseNames.MarketItem.COLUMN_NAME, DataBaseNames.MarketItem.COLUMN_LATITUDE,
-                          DataBaseNames.MarketItem.COLUMN_LONGITUDE, DataBaseNames.MarketItem.COLUMN_ADDRESS, DataBaseNames.MarketItem.COLUMN_VOIVODESHIP,
-                          DataBaseNames.MarketItem.COLUMN_EMAIL, DataBaseNames.MarketItem.COLUMN_NUMBER, DataBaseNames.MarketItem.COLUMN_IMAGE};
+                          DataBaseNames.MarketItem.COLUMN_LONGITUDE, DataBaseNames.MarketItem.COLUMN_ADDRESS,
+                          DataBaseNames.MarketItem.COLUMN_EMAIL, DataBaseNames.MarketItem.COLUMN_NUMBER};
         SQLiteDatabase db =getReadableDatabase();
         return db.query(DataBaseNames.MarketItem.TABLE_NAME,columns, null,null,null,null,null);
     }
 
     public Cursor getSpecifyMarkets(String title) {
-        String[] columns={DataBaseNames.MarketItem.COLUMN_ADDRESS, DataBaseNames.MarketItem.COLUMN_VOIVODESHIP,
-                          DataBaseNames.MarketItem.COLUMN_EMAIL, DataBaseNames.MarketItem.COLUMN_NUMBER,
-                          DataBaseNames.MarketItem.COLUMN_IMAGE};
+        String[] columns={DataBaseNames.MarketItem.COLUMN_ADDRESS,
+                          DataBaseNames.MarketItem.COLUMN_EMAIL, DataBaseNames.MarketItem.COLUMN_NUMBER};
         String selection = DataBaseNames.MarketItem.COLUMN_NAME + " LIKE ?";
         String[] selection_args= {title};
         SQLiteDatabase db =getReadableDatabase();

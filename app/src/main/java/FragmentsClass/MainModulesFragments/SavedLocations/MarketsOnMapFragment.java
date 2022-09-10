@@ -112,6 +112,7 @@ public class MarketsOnMapFragment extends Fragment implements OnMapReadyCallback
                 public boolean onMarkerClick(Marker marker) {
                     String title = marker.getTitle();
                     openMarketDialog(title);
+                    marker.setTitle("");
                     return false;
                 }
             });
@@ -160,9 +161,9 @@ public class MarketsOnMapFragment extends Fragment implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 marketDialog.dismiss();
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MarketsOnMapFragment()).commit();
             }
         });
-
     }
 }
 

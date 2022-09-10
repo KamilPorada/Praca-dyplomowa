@@ -532,24 +532,54 @@ public  class ToolClass {
     }
 
     private static String createMarketItemInsertQuery(String name, double latitude, double longitude, String address,
-                                                      String voivodeship, String email, String number, int image) {
+                                                      String email, String number) {
         return "INSERT INTO " + DataBaseNames.MarketItem.TABLE_NAME + "(" +
                 DataBaseNames.MarketItem.COLUMN_NAME + ", " +
                 DataBaseNames.MarketItem.COLUMN_LATITUDE + ", " +
                 DataBaseNames.MarketItem.COLUMN_LONGITUDE + ", " +
                 DataBaseNames.MarketItem.COLUMN_ADDRESS + ", " +
-                DataBaseNames.MarketItem.COLUMN_VOIVODESHIP + ", " +
                 DataBaseNames.MarketItem.COLUMN_EMAIL + ", " +
-                DataBaseNames.MarketItem.COLUMN_NUMBER + ", " +
-                DataBaseNames.MarketItem.COLUMN_IMAGE + ") VALUES (" +
+                DataBaseNames.MarketItem.COLUMN_NUMBER  + ") VALUES (" +
                 "'" + name + "'" + ", " + "'" + latitude + "'" + ", " + "'" + longitude + "'" + ", " + "'" + address
-                + "'" + ", " + "'" + voivodeship + "'" + ", " + "'" + email + "'" + ", " + "'" + number + "'" + ", " +
-                "'" + image + "'" + ");";
+                + "'" + ", "  + "'" + email + "'" + ", " + "'" + number + "'" + ");";
     }
 
     public static void fillMarkets(SQLiteDatabase sqLiteDatabase)
     {
-        sqLiteDatabase.execSQL(createMarketItemInsertQuery("DOLNOŚLĄSKIE CENTRUM HURTU ROLNO - SPOŻYWCZEGO S.A.", 51.067458015375365, 16.9672698131961,"Giełdowa 4, 52-438 Wrocław, Polska", "Dolnośląskie","www.dchrs.com.pl", "713-340-920", R.drawable.icon_location));
-        sqLiteDatabase.execSQL(createMarketItemInsertQuery("LUBELSKI RYNEK HURTOWY S.A. ELIZÓWKA", 51.287933937949, 22.58066668302514, "Ciecierzyn 65, 21-003 Ciecierzyn, Polska", "Lubelskie", "info@elizowka.pl", "817-563-930", R.drawable.icon_location));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("DOLNOŚLĄSKIE CENTRUM HURTU ROLNO - SPOŻYWCZEGO S.A.", 51.067458015375365, 16.9672698131961,"Giełdowa 4, 52-438 Wrocław, Polska","www.dchrs.com.pl", "713-340-920"));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("LUBELSKI RYNEK HURTOWY S.A. ELIZÓWKA", 51.287933937949, 22.58066668302514, "Ciecierzyn 65, 21-003 Ciecierzyn, Polska", "info@elizowka.pl", "817-563-930"));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("PODKARPACKIE CENTRUM HURTOWE AGROHURT S.A.", 50.06324193558357, 22.013968623273676, "Lubelska 46, Rzeszów, Polska", "sekretariat@agrohurtsa.pl", "-"));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("POMORSKIE HURTOWE CENTRUM ROLNO-SPOŻYWCZE S.A. RENK", 54.414770688428774, 18.4775930541707, "Hala spożywcza, Wodnika 50, 80-299 Gdańsk, Polska", "sekretariat@renk.pl", "587-628-000"));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("PRASKA GIEŁDA SPOŻYWCZA", 52.27749739695461, 21.11550216930947, "Marsz. Piłsudskiego 180, 05-091 Ząbki, Polska", "biuro@pgsgrupa.pl", "227-715-701"));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("ROLNO-SPOŻYWCZY RYNEK HURTOWY GIEŁDA ELBLĄSKA S.A.", 54.153633468047154, 19.410822946035793, "Al. Grunwaldzka 2, 82-300 Elbląg, Polska", "marketing@gielda.elblag.pl", "552-339-361"));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("WARSZAWSKI ROLNO-SPOŻYWCZY RYNEK HURTOWY S.A. W BRONISZACH", 52.21789659685473, 20.840972753964206, "Poznańska 98, 05-850 Bronisze, Polska", "bronisze@bronisze.com.pl", "227-215-505"));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("WIELKOPOLSKA GILDIA ROLNO-OGRODNICZA S.A. W POZNANIU", 52.37728043568277, 16.985022287541224, "Franowo 1, 61-302 Poznań, Polska", "bwgro@wgro.com.pl", "618-763-200"));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("GORZOWSKI RYNEK HURTOWY S.A.", 52.72630882271816, 15.245904722762123, "Targowa 11, 66-400 Gorzów Wlkp.", "grh@grh.pl", "957-206-028"));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("ROLNO SPOŻYWCZY RYNEK HURTOWY GIEŁDA KALISKA SP. Z O.O.", 51.72646113885448, 18.09342033861894, "Braci Gillerów 2, Kalisz, Polska", "gielda@gieldakaliska.com.pl", "627-665-979"));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("ŚLĄSKI RYNEK HURTOWY OBROKI SP. Z O.O.", 50.26947255971328, 18.959376261381063, "Obroki 130, 40-833 Katowice, Polska", "info@obroki.pl", "323-594-100"));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("ZIELONOGÓRSKI RYNEK ROLNO-TOWAROWY S.A.", 51.953182535974136, 15.490260946035795, "Zjednoczenia 102, Zielona Góra, Polska", "biuro@zrrt.com.pl", "683-260-067"));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("BESKIDZKI HURT TOWAROWY S.A. BIELSKO-BIAŁA", 49.82535691506033, 18.977842122762123, "Wypoczynkowa 78, Bielsko-Biała, Polska", "biuro@bht.com.pl", "334-960-700"));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("TORUŃSKA GIEŁDA PRZY TOWAROWEJ URBITOR SP. Z O.O.", 53.033375816040106, 18.629339730690532, "Bolesława Chrobrego 105/107, Toruń, Polska", "j.wojciechowski@urbitor.pl", "690-900-300"));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("HURTOWY RYNEK ROLNO-SPOŻYWCZY TARGPIAST SP. Z O.O.", 51.159128298523314, 17.012005423273674, "Obornicka 235, Wrocław, Polska", "targpiast@targpiast.com.pl", "717-125-900"));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("PILSKI RYNEK HURTOWY", 53.14581287998415, 16.774041015345265, "Wawelska 104, Piła, Polska", "prh@prh.pila.pl", "-"));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("PKS GIEŁDA SP.Z O.O.", 50.807736268854676, 19.158721146035795, "Legionów 59, 42-200 Częstochowa, Polska", "-", "343-618-822"));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("ROLNO-PRZEMYSŁOWY RYNEK GIEŁDA HURTOWA", 51.225289232189795, 16.170152838618936, "Bydgoska 18, Legnica, Polska", "gieldalegnica@vp.pl", "768-628-700"));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("ROLNO-SPOŻYWCZY RYNEK HURTOWY S.A. W RADOMIU", 51.399615687776546, 21.185808346035795, "Lubelska 65, Radom, Polska", "rsrh.radom@interia.pl", "483-652-195"));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("RYNEK HURTOWY ROLNO-SPOŻYWCZY FASTY SP. Z O.O.", 53.1620824735286, 23.0688429, "Szosa Knyszyńska 17, 15-694 Fasty, Polska", "biuro@rynek-fasty.pl", "856-641-000"));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("SANDOMIERSKI OGRODNICZY RYNEK HURTOWY S.A.", 50.67895630526668, 21.761427284654737, "Przemysłowa 7, Sandomierz, Polska", "biuro@gieldasan.pl", "158-323-421"));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("ŚWIĘTOKRZYSKI RYNEK HURTOWY", 50.90182750058497, 20.63659823861894, "Magazynowa 4, Kielce, Polska", "biuro@srh.kielce.pl", "-"));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("WAŁBRZYSKI RYNEK HURTOWY S.A.", 50.771494646767266, 16.27178721483372, "Piotra Wysockiego 17, 58-300 Wałbrzych, Polska", "wrh@wrh.pl", "748-439-393"));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("ZACHODNIOPOMORSKIE CENTRUM HURTOWE ROLHURT", 53.385347015846655, 14.474567746035795, "Przecław 52A, 72-005 Przecław, Polska", "wrh@wrh.pl", "913-117-811"));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("ŁÓDZKI RYNEK HURTOWY ZJAZDOWA S.A.", 51.80211113519923, 19.532449367698764, "Budy 4, 91-610 Łódź, Polska", "zjazdowa@zjazdowa.com.pl", "426-365-345"));
+        sqLiteDatabase.execSQL(createMarketItemInsertQuery("PODLASKIE CENTRUM ROLNO-TOWAROWE S.A.", 53.15530364761689, 23.16493106930947, "Generała Władysława Andersa 40 15-113 Białystok Polska", "biuro@podlaskiecentrum.pl", "856-750-005"));
+
+
+
+
+
+
+
+
+
     }
 }

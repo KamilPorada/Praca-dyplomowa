@@ -76,9 +76,7 @@ public class DataBaseNames {
         public static final String COLUMN_LATITUDE = "latitude";
         public static final String COLUMN_LONGITUDE = "longitude";
         public static final String COLUMN_ADDRESS = "address";
-        public static final String COLUMN_VOIVODESHIP = "voivodeship";
         public static final String COLUMN_EMAIL = "email";
         public static final String COLUMN_NUMBER = "number";
-        public static final String COLUMN_IMAGE = "image";
     }
 }
