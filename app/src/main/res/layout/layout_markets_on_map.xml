@@ -54,7 +54,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/title_image"
                 android:layout_marginLeft="20dp"
-                android:textSize="23sp"
+                android:textSize="22sp"
                 android:textColor="@color/white"
                 android:textAlignment="textStart"
                 android:fontFamily="@font/crete_round"
