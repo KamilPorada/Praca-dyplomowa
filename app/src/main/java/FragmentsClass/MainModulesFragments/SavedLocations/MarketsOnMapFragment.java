@@ -6,8 +6,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -21,13 +25,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.pracadyplomowa.R;
+import com.github.mikephil.charting.utils.Utils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -104,7 +112,14 @@ public class MarketsOnMapFragment extends Fragment implements OnMapReadyCallback
             double longitude = c.getDouble(c.getColumnIndexOrThrow(DataBaseNames.MarketItem.COLUMN_LONGITUDE));
 
             LatLng location = new LatLng(latitude, longitude);
-            Marker marker = locationMap.addMarker(new MarkerOptions().position(location).title(name));
+            Drawable vectorDrawable = context.getDrawable(R.drawable.icon_market);
+            int h = ((int) Utils.convertDpToPixel(70));
+            int w = ((int) Utils.convertDpToPixel(60));
+            vectorDrawable.setBounds(0, 0, w, h);
+            Bitmap bm = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_4444);
+            Canvas canvas = new Canvas(bm);
+            vectorDrawable.draw(canvas);
+            Marker marker = locationMap.addMarker(new MarkerOptions().position(location).title(name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
             marker.hideInfoWindow();
 
             locationMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {

@@ -572,14 +572,5 @@ public  class ToolClass {
         sqLiteDatabase.execSQL(createMarketItemInsertQuery("ZACHODNIOPOMORSKIE CENTRUM HURTOWE ROLHURT", 53.385347015846655, 14.474567746035795, "Przecław 52A, 72-005 Przecław, Polska", "wrh@wrh.pl", "913-117-811"));
         sqLiteDatabase.execSQL(createMarketItemInsertQuery("ŁÓDZKI RYNEK HURTOWY ZJAZDOWA S.A.", 51.80211113519923, 19.532449367698764, "Budy 4, 91-610 Łódź, Polska", "zjazdowa@zjazdowa.com.pl", "426-365-345"));
         sqLiteDatabase.execSQL(createMarketItemInsertQuery("PODLASKIE CENTRUM ROLNO-TOWAROWE S.A.", 53.15530364761689, 23.16493106930947, "Generała Władysława Andersa 40 15-113 Białystok Polska", "biuro@podlaskiecentrum.pl", "856-750-005"));
-
-
-
-
-
-
-
-
-
     }
 }

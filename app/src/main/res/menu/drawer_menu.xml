@@ -1,30 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/navCalculator"
-            android:icon="@drawable/image_empty_calculator"
-            android:title="Kalkulatory ogrodnicze" />
-        <item
-            android:id="@+id/navIncomeNotes"
-            android:icon="@drawable/image_empty_money"
-            android:title="Dziennik dochodów" />
-        <item
-            android:id="@+id/navOperations"
-            android:icon="@drawable/image_empty_sprayer"
-            android:title="Zabiegi pielęgnacyjne" />
-        <item
-            android:id="@+id/navNotes"
-            android:icon="@drawable/image_empty_notes"
-            android:title="Notatki farmera" />
-        <item
-            android:id="@+id/navImportantPlaces"
-            android:icon="@drawable/image_empty_map"
-            android:title="Ważne miejsca" />
-        <item
-            android:id="@+id/navClock"
-            android:icon="@drawable/image_empty_clock"
-            android:title="Budzik farmera" />
+    <group>
+    <item
+        android:id="@+id/navHome"
+        android:icon="@drawable/icon_home"
+        android:title="Strona główna" />
+    <item
+        android:id="@+id/navMyFarm"
+        android:icon="@drawable/icon_farm"
+        android:title="Moje gospodarstwo" />
+    <item
+        android:id="@+id/navAboutApplication"
+        android:icon="@drawable/icon_telephone"
+        android:title="O aplikacji" />
+
     </group>
+
+    <item android:checkableBehavior="single"
+        android:title="Moduły aplikacji">
+        <menu>
+            <item
+                android:id="@+id/navCalculator"
+                android:icon="@drawable/icon_calculator"
+                android:title="Kalkulatory ogrodnicze" />
+            <item
+                android:id="@+id/navNotes"
+                android:icon="@drawable/icon_note"
+                android:title="Notatki gospodarstwa" />
+            <item
+                android:id="@+id/navOperations"
+                android:icon="@drawable/icon_pest"
+                android:title="Zabiegi pielęgnacyjne" />
+            <item
+                android:id="@+id/navControlOfWater"
+                android:icon="@drawable/icon_water"
+                android:title="Kontrola nawadniania" />
+            <item
+                android:id="@+id/navIncomeNotes"
+                android:icon="@drawable/icon_money"
+                android:title="Dziennik dochodów" />
+            <item
+                android:id="@+id/navImportantPlaces"
+                android:icon="@drawable/icon_location"
+                android:title="Zapisane lokalizacje" />
+            <item
+                android:id="@+id/navArchive"
+                android:icon="@drawable/icon_archive"
+                android:title="Archiwum" />
+        </menu>
+    </item>
+
 </menu>

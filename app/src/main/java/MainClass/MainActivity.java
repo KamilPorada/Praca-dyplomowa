@@ -35,8 +35,12 @@ import FragmentsClass.BottomFragments.AboutApplicationFragment;
 import FragmentsClass.BottomFragments.FarmFragment;
 import FragmentsClass.BottomFragments.HomeFragment;
 import FragmentsClass.MainModulesFragments.Calculators.CalculatorsFragment;
+import FragmentsClass.MainModulesFragments.ControlOfWater.ControlOfWaterFragment;
 import FragmentsClass.MainModulesFragments.ControlOfWater.WaterPepperFragment;
 import FragmentsClass.MainModulesFragments.IncomeDaily.IncomeDailyFragment;
+import FragmentsClass.MainModulesFragments.Notes.NotesFragment;
+import FragmentsClass.MainModulesFragments.Operations.OperationsFragment;
+import FragmentsClass.MainModulesFragments.SavedLocations.SavedLocationsFragment;
 import HelperClasses.AlarmReceiver;
 import HelperClasses.NotificationHelper;
 import HelperClasses.ToolClass;
@@ -120,27 +124,43 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id=item.getItemId();
         switch (id)
         {
+            case R.id.navHome:
+            {
+                fragment = new HomeFragment();
+            }break;
+            case R.id.navMyFarm:
+            {
+                fragment = new FarmFragment();
+            }break;
+            case R.id.navAboutApplication:
+            {
+                fragment = new AboutApplicationFragment();
+            }break;
             case R.id.navCalculator:
             {
                 fragment = new CalculatorsFragment();
+            }break;
+            case R.id.navNotes:
+            {
+                fragment = new NotesFragment();
+            }break;
+            case R.id.navOperations:
+            {
+                fragment = new OperationsFragment();
+            }break;
+            case R.id.navControlOfWater:
+            {
+                fragment = new ControlOfWaterFragment();
             }break;
             case R.id.navIncomeNotes:
             {
                 fragment = new IncomeDailyFragment();
             }break;
-            case R.id.navOperations:
-            {
-
-            }break;
-            case R.id.navNotes:
-            {
-
-            }break;
             case R.id.navImportantPlaces:
             {
-
+                fragment = new SavedLocationsFragment();
             }break;
-            case R.id.navClock:
+            case R.id.navArchive:
             {
 
             }break;
