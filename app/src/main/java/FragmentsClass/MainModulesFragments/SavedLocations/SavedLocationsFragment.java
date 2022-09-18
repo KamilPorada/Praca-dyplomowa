@@ -2,7 +2,6 @@ package FragmentsClass.MainModulesFragments.SavedLocations;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -16,13 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.pracadyplomowa.R;
 
-import DataBase.SharedPreferencesNames;
-import FragmentsClass.MainModulesFragments.Operations.CatalogOfOperationsFragment;
-import FragmentsClass.MainModulesFragments.Operations.CatalogOfPesticidesFragment;
-import FragmentsClass.MainModulesFragments.Operations.PlanOperationsFragment;
 import HelperClasses.InformationDialog;
-import HelperClasses.ShowToast;
-import HelperClasses.ToolClass;
 
 public class SavedLocationsFragment extends Fragment {
 

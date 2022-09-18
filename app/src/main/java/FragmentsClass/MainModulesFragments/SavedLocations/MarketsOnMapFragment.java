@@ -1,15 +1,14 @@
 package FragmentsClass.MainModulesFragments.SavedLocations;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -25,7 +24,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.pracadyplomowa.R;
@@ -34,7 +32,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -42,10 +39,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
-import DataBase.SharedPreferencesNames;
 import HelperClasses.InformationDialog;
-import HelperClasses.ShowToast;
-import HelperClasses.ToolClass;
 
 public class MarketsOnMapFragment extends Fragment implements OnMapReadyCallback {
 
@@ -88,16 +82,12 @@ public class MarketsOnMapFragment extends Fragment implements OnMapReadyCallback
 
     private void startSettings() {
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        assert mapFragment != null;
         mapFragment.getMapAsync(this);
     }
 
     private void createListeners() {
-        buttonComeBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SavedLocationsFragment()).commit();
-            }
-        });
+        buttonComeBack.setOnClickListener(v -> requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SavedLocationsFragment()).commit());
     }
 
     @Override
@@ -112,7 +102,7 @@ public class MarketsOnMapFragment extends Fragment implements OnMapReadyCallback
             double longitude = c.getDouble(c.getColumnIndexOrThrow(DataBaseNames.MarketItem.COLUMN_LONGITUDE));
 
             LatLng location = new LatLng(latitude, longitude);
-            Drawable vectorDrawable = context.getDrawable(R.drawable.icon_market);
+            @SuppressLint("UseCompatLoadingForDrawables") Drawable vectorDrawable = context.getDrawable(R.drawable.icon_market);
             int h = ((int) Utils.convertDpToPixel(70));
             int w = ((int) Utils.convertDpToPixel(60));
             vectorDrawable.setBounds(0, 0, w, h);
@@ -122,14 +112,11 @@ public class MarketsOnMapFragment extends Fragment implements OnMapReadyCallback
             Marker marker = locationMap.addMarker(new MarkerOptions().position(location).title(name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
             marker.hideInfoWindow();
 
-            locationMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                @Override
-                public boolean onMarkerClick(Marker marker) {
-                    String title = marker.getTitle();
-                    openMarketDialog(title);
-                    marker.setTitle("");
-                    return false;
-                }
+            locationMap.setOnMarkerClickListener(marker1 -> {
+                String title = marker1.getTitle();
+                openMarketDialog(title);
+                marker1.setTitle("");
+                return false;
             });
 
             locationMap.moveCamera(CameraUpdateFactory.newLatLng(location));
@@ -172,12 +159,9 @@ public class MarketsOnMapFragment extends Fragment implements OnMapReadyCallback
         howEmail.setText(c.getString(c.getColumnIndexOrThrow(DataBaseNames.MarketItem.COLUMN_EMAIL)));
         howTelephone.setText(c.getString(c.getColumnIndexOrThrow(DataBaseNames.MarketItem.COLUMN_NUMBER)));
 
-        btnComeBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                marketDialog.dismiss();
-                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MarketsOnMapFragment()).commit();
-            }
+        btnComeBack.setOnClickListener(v -> {
+            marketDialog.dismiss();
+            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MarketsOnMapFragment()).commit();
         });
     }
 }

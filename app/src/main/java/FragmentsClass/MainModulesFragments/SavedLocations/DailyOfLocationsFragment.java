@@ -29,8 +29,6 @@ import java.util.ArrayList;
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
 import DataBase.SharedPreferencesNames;
-import FragmentsClass.MainModulesFragments.Notes.AddNoteFragment;
-import FragmentsClass.MainModulesFragments.Notes.MyNotesFragment;
 import FragmentsClass.MainModulesFragments.SavedLocations.SavedLocationsViewsClasses.LocationAdapter;
 import FragmentsClass.MainModulesFragments.SavedLocations.SavedLocationsViewsClasses.LocationItem;
 import HelperClasses.InformationDialog;

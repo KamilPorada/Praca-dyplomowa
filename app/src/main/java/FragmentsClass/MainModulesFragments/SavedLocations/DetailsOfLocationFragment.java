@@ -1,20 +1,16 @@
 package FragmentsClass.MainModulesFragments.SavedLocations;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.drawable.AnimationDrawable;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,15 +24,14 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.material.textfield.TextInputEditText;
 
 import DataBase.DataBaseHelper;
 import DataBase.DataBaseNames;
 import DataBase.SharedPreferencesNames;
 import HelperClasses.InformationDialog;
-import HelperClasses.ShowToast;
 import HelperClasses.ToolClass;
 
 public class DetailsOfLocationFragment extends Fragment implements OnMapReadyCallback {
@@ -87,9 +82,11 @@ public class DetailsOfLocationFragment extends Fragment implements OnMapReadyCal
 
     private void startSettings() {
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        assert mapFragment != null;
         mapFragment.getMapAsync(this);
     }
 
+    @SuppressLint("SetTextI18n")
     private void loadData() {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesNames.ToolSharedPreferences.NAME, Context.MODE_PRIVATE);
         int id = sharedPreferences.getInt(SharedPreferencesNames.ToolSharedPreferences.POSITION_OF_LOCATION_RV, 0);
@@ -107,19 +104,14 @@ public class DetailsOfLocationFragment extends Fragment implements OnMapReadyCal
     }
 
     private void createListeners() {
-        buttonComeBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DailyOfLocationsFragment()).commit();
-            }
-        });
+        buttonComeBack.setOnClickListener(v -> requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DailyOfLocationsFragment()).commit());
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         locationMap = googleMap;
         LatLng location = new LatLng(latitude, longitude);
-        locationMap.addMarker(new MarkerOptions().position(location).title(name));
+        locationMap.addMarker(new MarkerOptions().position(location).title(name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
         locationMap.moveCamera(CameraUpdateFactory.newLatLng(location));
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling

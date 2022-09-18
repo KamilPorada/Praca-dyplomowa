@@ -285,7 +285,7 @@ public class WaterPlantationFragment extends Fragment {
                     if(amountOfHighgrovesInEachRound.compareTo("")!=0)
                         addItem();
                     else
-                        toast.showErrorToast(context, "Brak dodanych tur!\n" + "  Dodaj turę podlewania!", R.drawable.image_drop_of_water);
+                        toast.showErrorToast(context, "Brak dodanych tur!\n" + "  Dodaj turę podlewania!", R.drawable.icon_drop_of_water);
                 else
                     toast.showErrorToast(context, "Podaj poprawny rok!\n" + "  Mamy aktualnie " + ToolClass.getActualYear() + " rok!", R.drawable.icon_calendar);
             else
@@ -296,7 +296,7 @@ public class WaterPlantationFragment extends Fragment {
     private void addItem() {
         ShowToast toast = new ShowToast();
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
-        dataBaseHelper.addWaterPlantation(Double.parseDouble(Objects.requireNonNull(howEfficiency.getText()).toString()), howDate.getText().toString(),
+        dataBaseHelper.addWaterPlantation(Double.parseDouble(Objects.requireNonNull(howEfficiency.getText()).toString()), Objects.requireNonNull(howDate.getText()).toString(),
                                           amountOfHighgrovesInEachRound, timesOfEachRound, --roundsOfWatering, 0);
         toast.showSuccessfulToast(context, "SUKCES\n" + "  Pomyślnie zaplanowałeś podlewanie plantacji!");
         requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ControlOfWaterFragment()).commit();

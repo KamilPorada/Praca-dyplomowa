@@ -630,10 +630,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fileOutputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
-            toast.showErrorToast(this,"Błąd eksportu danych!",R.drawable.icon_information);
+            toast.showErrorToast(this,"UWAGA!\n  Błąd eksportu danych!",R.drawable.icon_information);
         }
 
-        toast.showSuccessfulToast(this,"Dane zostały wyeksportowane!");
+        toast.showSuccessfulToast(this,"SUKCES!\n  Dane zostały wyeksportowane!");
         choseDataDialog.dismiss();
     }
 

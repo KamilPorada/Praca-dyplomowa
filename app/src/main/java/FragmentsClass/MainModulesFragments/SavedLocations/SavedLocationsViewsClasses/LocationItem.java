@@ -17,31 +17,16 @@ public class LocationItem {
         return IId;
     }
 
-    public void setIId(int IId) {
-        this.IId = IId;
-    }
-
     public String getILocationName() {
         return ILocationName;
-    }
-
-    public void setILocationName(String ILocationName) {
-        this.ILocationName = ILocationName;
     }
 
     public double getILatitude() {
         return ILatitude;
     }
 
-    public void setILatitude(double ILatitude) {
-        this.ILatitude = ILatitude;
-    }
-
     public double getILongitude() {
         return ILongitude;
     }
 
-    public void setILongitude(double ILongitude) {
-        this.ILongitude = ILongitude;
-    }
 }

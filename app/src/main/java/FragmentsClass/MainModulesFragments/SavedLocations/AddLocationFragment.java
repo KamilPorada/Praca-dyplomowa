@@ -1,9 +1,9 @@
 package FragmentsClass.MainModulesFragments.SavedLocations;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.AnimationDrawable;
-import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -22,6 +22,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.pracadyplomowa.R;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.Objects;
 
 import DataBase.DataBaseHelper;
 import HelperClasses.InformationDialog;
@@ -78,55 +80,40 @@ public class AddLocationFragment extends Fragment {
         buttonComeBack = view.findViewById(R.id.button_come_back);
     }
 
+    @SuppressLint("SetTextI18n")
     private void createListeners() {
-        buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                validateData();
-            }
-        });
+        buttonSave.setOnClickListener(v -> validateData());
 
-        buttonComeBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SavedLocationsFragment()).commit();
-            }
-        });
+        buttonComeBack.setOnClickListener(v -> requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SavedLocationsFragment()).commit());
 
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-                listener = new LocationListener() {
-                    @Override
-                    public void onLocationChanged(@NonNull Location location) {
-                        latitude = location.getLatitude();
-                        longitude = location.getLongitude();
-                        howCoordinate.setText(ToolClass.generateStringCoordinate(latitude) + "N\n" +
-                                              ToolClass.generateStringCoordinate(longitude) + "E");
-                        image.setImageResource(R.drawable.image_empty_background);
-                        image.setBackgroundResource(R.drawable.animation_rounding_world);
-                        roundingWorldAnimation = (AnimationDrawable) image.getBackground();
-                        roundingWorldAnimation.start();
-                        titleOfWorld.setText("Prawidłowo odczytano\nwspółrzędne geograficzne!");
-                        if(!readCoordinate)
-                            image.animate().scaleYBy(0.2f).scaleXBy(0.2f).setDuration(3000);
-                        readCoordinate = true;
-                    }
-                };
-                if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    return;
-                }
-                image.setClickable(false);
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, listener);
+        image.setOnClickListener(v -> {
+            locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            listener = location -> {
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+                howCoordinate.setText(ToolClass.generateStringCoordinate(latitude) + "N\n" +
+                                      ToolClass.generateStringCoordinate(longitude) + "E");
+                image.setImageResource(R.drawable.image_empty_background);
+                image.setBackgroundResource(R.drawable.animation_rounding_world);
+                roundingWorldAnimation = (AnimationDrawable) image.getBackground();
+                roundingWorldAnimation.start();
+                titleOfWorld.setText("Prawidłowo odczytano\nwspółrzędne geograficzne!");
+                if(!readCoordinate)
+                    image.animate().scaleYBy(0.2f).scaleXBy(0.2f).setDuration(3000);
+                readCoordinate = true;
+            };
+            if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
             }
+            image.setClickable(false);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, listener);
         });
     }
 
     private void validateData() {
         ShowToast toast = new ShowToast();
-        if(howLocation.getText().toString().compareTo("")==0)
+        if(Objects.requireNonNull(howLocation.getText()).toString().compareTo("")==0)
             toast.showErrorToast(context,"BŁĄD DANYCH!\n  Uzupełnij nazwę lokalizacji!", R.drawable.icon_information);
         else{
             if(!readCoordinate)
@@ -139,7 +126,7 @@ public class AddLocationFragment extends Fragment {
 
     private void addToDatabase() {
         DataBaseHelper db = new DataBaseHelper(context);
-        db.addLocation(howLocation.getText().toString(),latitude,longitude);
+        db.addLocation(Objects.requireNonNull(howLocation.getText()).toString(),latitude,longitude);
         ShowToast toast = new ShowToast();
         toast.showSuccessfulToast(context, "SUKCES\n" + "  Pomyślnie zapisałeś lokalizacje!");
         locationManager.removeUpdates(listener);
