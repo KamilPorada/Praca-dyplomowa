@@ -62,13 +62,19 @@ public class WateringService extends Service {
                 editor.putBoolean(SharedPreferencesNames.WateringData.THIRD_SETTING,false);
                 editor.apply();
                 sendBroadcast(broadcastIntent);
+
+                NotificationCompat.WearableExtender extender = new NotificationCompat.WearableExtender();
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.logo);
+                extender.setBackground(bitmap);
+
                 notificationn = new NotificationCompat.Builder(getApplicationContext(),WateringChannel.ID_OF_CHANNEL_2)
                         .setSmallIcon(R.drawable.icon_drop_of_water)
                         .setContentTitle("Tura " + sharedPreferences.getInt(SharedPreferencesNames.WateringData.ACTUAL_ROUND,1))
                         .setContentText("Pozostały czas: " + ToolClass.generateCountDownTimerTime(millisUntilFinished/1000))
                         .setPriority(NotificationCompat.PRIORITY_LOW)
                         .setOngoing(true)
-                        .setOnlyAlertOnce(true);
+                        .setOnlyAlertOnce(true)
+                        .extend(extender);
 
                 notificationManager = NotificationManagerCompat.from(getApplicationContext());
                 notificationManager.notify(2, notificationn.build());

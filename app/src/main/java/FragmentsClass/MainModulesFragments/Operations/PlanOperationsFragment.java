@@ -276,7 +276,7 @@ public class PlanOperationsFragment extends Fragment {
     private void openEditHourDialog() {
         Dialog editHourDialog = new Dialog(context);
         editHourDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
-        editHourDialog.setContentView(R.layout.dialog_change_hour_of_operations);
+        editHourDialog.setContentView(R.layout.dialog_change_time);
         editHourDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         editHourDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         editHourDialog.show();
