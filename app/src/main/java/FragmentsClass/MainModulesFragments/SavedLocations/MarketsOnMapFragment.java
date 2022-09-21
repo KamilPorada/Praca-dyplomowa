@@ -90,6 +90,37 @@ public class MarketsOnMapFragment extends Fragment implements OnMapReadyCallback
         buttonComeBack.setOnClickListener(v -> requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SavedLocationsFragment()).commit());
     }
 
+
+
+    private void openMarketDialog(String title) {
+        Dialog marketDialog = new Dialog(context);
+        marketDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
+        marketDialog.setContentView(R.layout.dialog_details_of_market);
+        marketDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        marketDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        marketDialog.show();
+
+        TextView howLocation = marketDialog.findViewById(R.id.how_location);
+        TextView howAddress = marketDialog.findViewById(R.id.how_address);
+        TextView howEmail = marketDialog.findViewById(R.id.how_email);
+        TextView howTelephone = marketDialog.findViewById(R.id.how_telephone);
+        Button btnComeBack = marketDialog.findViewById(R.id.btn_come_back);
+
+        DataBaseHelper db = new DataBaseHelper(context);
+        Cursor c = db.getSpecifyMarkets(title);
+        c.moveToFirst();
+
+        howLocation.setText(title);
+        howAddress.setText(c.getString(c.getColumnIndexOrThrow(DataBaseNames.MarketItem.COLUMN_ADDRESS)));
+        howEmail.setText(c.getString(c.getColumnIndexOrThrow(DataBaseNames.MarketItem.COLUMN_EMAIL)));
+        howTelephone.setText(c.getString(c.getColumnIndexOrThrow(DataBaseNames.MarketItem.COLUMN_NUMBER)));
+
+        btnComeBack.setOnClickListener(v -> {
+            marketDialog.dismiss();
+            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MarketsOnMapFragment()).commit();
+        });
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         locationMap = googleMap;
@@ -134,35 +165,6 @@ public class MarketsOnMapFragment extends Fragment implements OnMapReadyCallback
         locationMap.setMyLocationEnabled(true);
         locationMap.getUiSettings().setMyLocationButtonEnabled(true);
         locationMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(52.06, 19.2), 5.8f));
-    }
-
-    private void openMarketDialog(String title) {
-        Dialog marketDialog = new Dialog(context);
-        marketDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
-        marketDialog.setContentView(R.layout.dialog_details_of_market);
-        marketDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        marketDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-        marketDialog.show();
-
-        TextView howLocation = marketDialog.findViewById(R.id.how_location);
-        TextView howAddress = marketDialog.findViewById(R.id.how_address);
-        TextView howEmail = marketDialog.findViewById(R.id.how_email);
-        TextView howTelephone = marketDialog.findViewById(R.id.how_telephone);
-        Button btnComeBack = marketDialog.findViewById(R.id.btn_come_back);
-
-        DataBaseHelper db = new DataBaseHelper(context);
-        Cursor c = db.getSpecifyMarkets(title);
-        c.moveToFirst();
-
-        howLocation.setText(title);
-        howAddress.setText(c.getString(c.getColumnIndexOrThrow(DataBaseNames.MarketItem.COLUMN_ADDRESS)));
-        howEmail.setText(c.getString(c.getColumnIndexOrThrow(DataBaseNames.MarketItem.COLUMN_EMAIL)));
-        howTelephone.setText(c.getString(c.getColumnIndexOrThrow(DataBaseNames.MarketItem.COLUMN_NUMBER)));
-
-        btnComeBack.setOnClickListener(v -> {
-            marketDialog.dismiss();
-            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MarketsOnMapFragment()).commit();
-        });
     }
 }
 

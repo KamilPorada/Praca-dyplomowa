@@ -113,7 +113,6 @@ public class FarmFragment extends Fragment {
 
     @SuppressLint("NonConstantResourceId")
     private void createAndAddListeners(Dialog changeDataDialog, int id) {
-        ImageView image = changeDataDialog.findViewById(R.id.image);
         TextView title = changeDataDialog.findViewById(R.id.title);
         TextInputEditText howChangeValue = changeDataDialog.findViewById(R.id.how_change_value);
         Button acceptButton = changeDataDialog.findViewById(R.id.accept_button);
@@ -125,19 +124,16 @@ public class FarmFragment extends Fragment {
 
         switch (id) {
             case R.id.edit_owner_button: {
-                image.setImageResource(R.drawable.image_owner);
                 title.setText("Edycja właściciela\ngospodarstwa");
                 howChangeValue.setHint("[Imię i nazwisko]");
                 howChangeValue.setInputType(0x00000001);
             }break;
             case R.id.edit_highgroves_button: {
-                image.setImageResource(R.drawable.image_highgrove);
                 title.setText("Edycja ilości\ntuneli");
                 howChangeValue.setHint("[Ilość sztuk]");
                 howChangeValue.setInputType(0x00000002);
             }break;
             case R.id.edit_field_button: {
-                image.setImageResource(R.drawable.image_area_answer);
                 title.setText("Edycja powierzchni\ngospodarstwa");
                 howChangeValue.setHint("[ha]");
                 howChangeValue.setInputType(0x00002002);

@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void openChoseDataDialog() {
         Dialog choseDataDialog = new Dialog(this);
         choseDataDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
-        choseDataDialog.setContentView(R.layout.dialog_chose_category);
+        choseDataDialog.setContentView(R.layout.dialog_export_data);
         choseDataDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         choseDataDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         choseDataDialog.show();

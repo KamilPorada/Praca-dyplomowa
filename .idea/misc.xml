@@ -12,8 +12,11 @@
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/icon_clock.xml" value="0.133" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/icon_done.xml" value="0.133" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/icon_drop_of_water.xml" value="0.146" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/icon_drop_of_water_white.xml" value="0.157" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/icon_edit.xml" value="0.1345" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/icon_edit_calendar.xml" value="0.1535" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/icon_exported_file.xml" value="0.157" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/icon_image.xml" value="0.157" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/icon_instructions.xml" value="0.1455" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/icon_location.xml" value="0.155" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/icon_machine.xml" value="0.1435" />
@@ -25,6 +28,8 @@
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/icon_pest.xml" value="0.155" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/icon_place.xml" value="0.1455" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/icon_question.xml" value="0.2703125" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/icon_read_more.xml" value="0.157" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/icon_remove.xml" value="0.157" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/icon_resume.xml" value="0.1455" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/icon_start.xml" value="0.146" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/icon_stop.xml" value="0.1455" />
@@ -51,6 +56,12 @@
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/shape_circle.xml" value="0.1535" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/shape_circle_calendar.xml" value="0.1535" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/shape_circle_change.xml" value="0.157" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/shape_circle_deliveryt.xml" value="0.157" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/shape_circle_drop_of_water.xml" value="0.157" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/shape_circle_export.xml" value="0.157" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/shape_circle_image.xml" value="0.157" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/shape_circle_remove.xml" value="0.157" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/shape_circle_stop.xml" value="0.157" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/shape_circle_time.xml" value="0.1535" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/shape_edit_text.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/drawable/shape_edit_text2.xml" value="0.14635416666666667" />
@@ -119,7 +130,7 @@
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/dialog_choose.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/dialog_chose_category.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/dialog_chose_image.xml" value="0.264" />
-        <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/dialog_details_of_market.xml" value="0.4" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/dialog_details_of_market.xml" value="0.264" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/dialog_information.xml" value="0.2" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/dialog_question.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/PracaDyplomowa/app/src/main/res/layout/dialog_upadate_or_remove_trade_of_pepper.xml" value="0.25416666666666665" />
