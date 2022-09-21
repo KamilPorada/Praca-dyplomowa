@@ -61,7 +61,7 @@ public class CalculatorOfConcetrationFragment extends Fragment {
         int id=item.getItemId();
         if (id == R.id.information) {
             InformationDialog informationDialog = new InformationDialog();
-            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_calculator_of_plants));
+            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_calculator_of_concentration));
         }
         return super.onOptionsItemSelected(item);
     }

@@ -45,7 +45,7 @@ public class SavedLocationsFragment extends Fragment {
         int id=item.getItemId();
         if (id == R.id.information) {
             InformationDialog informationDialog = new InformationDialog();
-            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_calculators));
+            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_saved_locations));
         }
         return super.onOptionsItemSelected(item);
     }

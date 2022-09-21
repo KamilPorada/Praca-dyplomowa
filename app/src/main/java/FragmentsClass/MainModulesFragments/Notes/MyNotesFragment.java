@@ -66,7 +66,7 @@ public class MyNotesFragment extends Fragment {
         int id=item.getItemId();
         if (id == R.id.information) {
             InformationDialog informationDialog = new InformationDialog();
-            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_outgoings));
+            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_my_note));
         }
         return super.onOptionsItemSelected(item);
     }

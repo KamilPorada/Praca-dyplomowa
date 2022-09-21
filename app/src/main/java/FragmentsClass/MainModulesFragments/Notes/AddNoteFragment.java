@@ -74,7 +74,7 @@ public class AddNoteFragment extends Fragment {
         int id=item.getItemId();
         if (id == R.id.information) {
             InformationDialog informationDialog = new InformationDialog();
-            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_income_daily));
+            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_add_note));
         }
         return super.onOptionsItemSelected(item);
     }

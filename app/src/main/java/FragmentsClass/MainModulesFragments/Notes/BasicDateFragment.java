@@ -60,7 +60,7 @@ public class BasicDateFragment extends Fragment {
         int id=item.getItemId();
         if (id == R.id.information) {
             InformationDialog informationDialog = new InformationDialog();
-            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_farm));
+            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_basic_date));
         }
         return super.onOptionsItemSelected(item);
     }

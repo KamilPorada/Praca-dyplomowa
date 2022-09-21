@@ -71,7 +71,7 @@ public class MarketsOnMapFragment extends Fragment implements OnMapReadyCallback
         int id = item.getItemId();
         if (id == R.id.information) {
             InformationDialog informationDialog = new InformationDialog();
-            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_calculators));
+            informationDialog.openInformationDialog(context, getResources().getString(R.string.describes_markets_on_map));
         }
         return super.onOptionsItemSelected(item);
     }
