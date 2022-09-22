@@ -279,7 +279,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/rajdhani"
-            android:text="@string/opis_finalnych_zalecen_kalkulator_cieczy_roboczej"
+            android:text="@string/final_describes_calculator_of_concentration"
             android:textAlignment="center"
             android:textColor="@color/blackToWhite"
             android:textSize="18dp"

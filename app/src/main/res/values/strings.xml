@@ -52,8 +52,14 @@
     <string name="describes_details_of_locations">Na tej stronie możesz zobaczyć na mapie, zapisaną przez ciebie lokalizacje. W górnej części możesz dostrzec nazwę lokalizacji oraz dokładne współrzędne geograficzne z dokładnością do sekundy kątowej.</string>
     <string name="describes_markets_on_map">Ukazana mapa przedstawia większość polskich rynków hurtowych. Klikając na konkretną pinezkę zobaczysz okno dialogowe zawierające podstawowe informację na temat podanego rynku hurtowego. Przedstawione informacje to: nazwa rynku hurtowego, adres, telefon oraz e-mail.</string>
 
-    <string name="opis_finalnych_zalecen_kalkulator_sadzonek">Rozmiary tunelu foliowego: 0m x 0m\nIlość redlanek w tunelu foliowym: 0\nIlość sadzonek w każdej redlance: 0\nIlość sadzonek w tunelu foliowym: 0</string>
-    <string name="opis_finalnych_zalecen_kalkulator_cieczy_roboczej">Wiek papryki: 0 dni\nIlość tuneli: 0\nIlość wody: 0l\nIlość pestycydu: 0l</string>
+    <string name="final_describes_calculator_of_plant">Rozmiary tunelu foliowego: 0m x 0m\nIlość redlanek w tunelu foliowym: 0\nIlość sadzonek w każdej redlance: 0\nIlość sadzonek w tunelu foliowym: 0</string>
+    <string name="final_describes_calculator_of_concentration">Wiek papryki: 0 dni\nIlość tuneli: 0\nIlość wody: 0l\nIlość pestycydu: 0l</string>
+
+    <string name="describes_note_paragraph">Wszelkie materiały zawarte w aplikacji E-Paprkarz są objęte prawem autorskim i należą do autora aplikacji Kamila Porady. Zawarte treści podlegają ochronie na mocy Ustawy o prawie autorskim i prawach pokrewnych z dnia 4 lutego 1994.</string>
+    <string name="describes_logo">Pomysłodawcą oraz twórcą zamieszczonego loga aplikacji jest Bartosz Płaza. Projekt został wykonany w programie do obróbki grafiki wektorowej\nAdobe Illustrator.</string>
+    <string name="describes_pesticides">Wszelkie informacje zamieszczone w aplikacji na temat środków ochrony roślin pochodzą z katalogu\nProgram Ochrony Roślin Warzywnych na rok 2021.\nWydawnictwo Plantpress.</string>
+    <string name="describes_market">Wszelkie informacje zamieszczone w aplikacji na temat nazwy, dokładnego położenia, adresu e-mail, numeru kontaktowego rynków hurtowych w Polsce pochodzą ze strony internetowej www.sprh.pl.</string>
+    <string name="describes_icon">Ikony wykorzystane podczasz tworzenia aplikacji zostały wykorzystane dzięki uprzejmości strony internetowej www.freepik.com oraz wszystkich autorów którzy stworzyli konkretne ikony. Pozostała część ikon została zaczerpnięta z zasobów Googla udostępnianych narzędziu programistycznemu Android Studio.</string>
 
     <string-array name="colors">
         <item>Czerwona</item>

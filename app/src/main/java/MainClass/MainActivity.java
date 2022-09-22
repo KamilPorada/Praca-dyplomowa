@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     int position=10, chooseYear, chooseCategory;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
