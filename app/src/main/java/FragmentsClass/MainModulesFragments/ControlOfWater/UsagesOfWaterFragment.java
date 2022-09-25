@@ -76,14 +76,14 @@ public class UsagesOfWaterFragment extends Fragment {
 
     private void createChart() {
         ArrayList<BarEntry> months = new ArrayList<>();
+
+        months.add(new BarEntry(4, (float) StatisticsHelper.calculateMonthlyUsagesOfWater(context,4, ToolClass.getActualYear())));
         months.add(new BarEntry(5, (float) StatisticsHelper.calculateMonthlyUsagesOfWater(context,5, ToolClass.getActualYear())));
         months.add(new BarEntry(6, (float) StatisticsHelper.calculateMonthlyUsagesOfWater(context,6, ToolClass.getActualYear())));
         months.add(new BarEntry(7, (float) StatisticsHelper.calculateMonthlyUsagesOfWater(context,7, ToolClass.getActualYear())));
         months.add(new BarEntry(8, (float) StatisticsHelper.calculateMonthlyUsagesOfWater(context,8, ToolClass.getActualYear())));
         months.add(new BarEntry(9, (float) StatisticsHelper.calculateMonthlyUsagesOfWater(context,9, ToolClass.getActualYear())));
         months.add(new BarEntry(10, (float) StatisticsHelper.calculateMonthlyUsagesOfWater(context,10, ToolClass.getActualYear())));
-        months.add(new BarEntry(11, (float) StatisticsHelper.calculateMonthlyUsagesOfWater(context,11, ToolClass.getActualYear())));
-
 
         BarDataSet barDataSet = new BarDataSet(months,"Dane");
         barDataSet.setColors(Color.rgb(0,255,255));
