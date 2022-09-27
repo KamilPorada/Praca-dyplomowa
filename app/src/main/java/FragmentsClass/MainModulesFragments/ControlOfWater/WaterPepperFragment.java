@@ -216,7 +216,7 @@ public class WaterPepperFragment extends Fragment {
                     imageValve.setImageResource(R.drawable.icon_power_off);
                     resumeButton.setEnabled(true);
                     resumeButton.setText("Zakończ");
-                    resumeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_stop_circle,0,0,0);
+                    resumeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_stop_circle_small,0,0,0);
                     actualRound++;
                     stopButton.setVisibility(View.INVISIBLE);
                     imageValve.setClickable(false);
@@ -287,13 +287,13 @@ public class WaterPepperFragment extends Fragment {
                 editor.putBoolean(SharedPreferencesNames.WateringData.FOURTH_SETTING,false);
                 editor.putBoolean(SharedPreferencesNames.WateringData.FIVETH_SETTING,false);
                 editor.apply();
-                    if(actualRound==amountOfRound)
-                    {
-                        editor.putBoolean(SharedPreferencesNames.WateringData.THIRD_SETTING,false);
-                        editor.putBoolean(SharedPreferencesNames.WateringData.FOURTH_SETTING,false);
-                        editor.putBoolean(SharedPreferencesNames.WateringData.FIVETH_SETTING,true);
-                        editor.apply();
-                    }
+                if(actualRound==amountOfRound)
+                {
+                    editor.putBoolean(SharedPreferencesNames.WateringData.THIRD_SETTING,false);
+                    editor.putBoolean(SharedPreferencesNames.WateringData.FOURTH_SETTING,false);
+                    editor.putBoolean(SharedPreferencesNames.WateringData.FIVETH_SETTING,true);
+                    editor.apply();
+                }
                 startService();
             }
         });
@@ -358,5 +358,3 @@ public class WaterPepperFragment extends Fragment {
         comeBackButton.setOnClickListener(v -> attentionDialog.dismiss());
     }
 }
-
-
